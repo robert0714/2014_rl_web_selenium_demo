@@ -30,12 +30,27 @@ public class RlHompage {
 	selenium.click("css=input[type=\"submit\"]");
 	
 	enterRl00001();
+	
     }
 
     public TypingApplication typingApplication() {
 	return new TypingApplication(selenium);
     }
-
+    protected void replacePageTest(){
+	enterRl00001();
+	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+	enterRl00001();
+	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+	enterRl00001();
+	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+	enterRl00001();
+	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+	enterRl00001();
+	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+	enterRl00001();
+	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+	enterRl00001();
+    }
     /**
      * 進入現戶簿頁
      * ***/
