@@ -52,5 +52,12 @@
 			<systemPath>${basedir}/lib/xml-apis.jar</systemPath>
  				<scope>system</scope>
 		</dependency>
+		<dependency>
+			<groupId>informix</groupId>
+			<artifactId>ifxjdbc</artifactId>
+			<version>11.7</version>
+			<systemPath>${basedir}/lib/ifxjdbc.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
 	</dependencies>
 </project>
