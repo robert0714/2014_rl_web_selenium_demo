@@ -6,32 +6,61 @@ import org.openqa.selenium.WebDriverBackedSelenium;
 import com.thoughtworks.selenium.Selenium;
 
 public class RlHompage {
-	WebDriver driver;
-	private Selenium selenium;
-	public RlHompage(final WebDriver driver) {
-		super();
-		this.driver = driver;
-		final String baseUrl = "http://192.168.9.94:6280/rl/";
-		selenium = new WebDriverBackedSelenium(driver, baseUrl);
-		login() ;
-	}
-	public RlHompage(  Selenium selenium) {
-		super();
-		this . selenium = selenium;
-		login() ;
-	}
+    WebDriver driver;
+    private Selenium selenium;
 
-	private void login() {
-		selenium.open("/rl/pages/common/login.jsp");
-		selenium.type("name=j_username", "RF1200123");
-		selenium.type("name=j_password", "RF1200123");
-		selenium.click("css=input[type=\"submit\"]");
-		selenium.waitForPageToLoad("30000");
-		selenium.click("link=戶籍查詢/登記/文件核發");
-		selenium.waitForPageToLoad("30000");
-	}
-	public TypingApplication typingApplication(){
-		return new TypingApplication(selenium);
-	}
+    public RlHompage(final WebDriver driver) {
+	super();
+	this.driver = driver;
+	final String baseUrl = "http://192.168.9.94:6280/rl/";
+	selenium = new WebDriverBackedSelenium(driver, baseUrl);
+	login();
+    }
+
+    public RlHompage(Selenium selenium) {
+	super();
+	this.selenium = selenium;
+	login();
+    }
+
+    private void login() {
+	selenium.open("/rl/pages/common/login.jsp");
+	selenium.type("name=j_username", "RF1200123");
+	selenium.type("name=j_password", "RF1200123");
+	selenium.click("css=input[type=\"submit\"]");
 	
+	enterRl00001();
+    }
+
+    public TypingApplication typingApplication() {
+	return new TypingApplication(selenium);
+    }
+
+    /**
+     * 進入現戶簿頁
+     * ***/
+    protected void enterRl00001() {
+	selenium.waitForPageToLoad("30000");
+	// selenium.click("//ul[@id='navmenu-v']/li/ul/li/a");
+	selenium.click("//ul[@id='navmenu-v']/li");// 進入登記作業,
+	selenium.waitForPageToLoad("30000");
+	selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]");// 進入現戶簿頁
+//	selenium.open("/rl/faces/pages/func/rl00001/rl00001.xhtml");
+	selenium.waitForPageToLoad("30000");
+    }
+
+    /**
+     * 進入解鎖作業
+     * ***/
+    protected void enterRl00003() {
+	selenium.waitForPageToLoad("30000");
+	// selenium.click("//ul[@id='navmenu-v']/li[12]/ul/li[7]/a");
+	selenium.click("//ul[@id='navmenu-v']/li[12]");// 進入解鎖作業,
+	selenium.waitForPageToLoad("30000");
+	selenium.open("/rl/faces/pages/func/rl00003/rl00003.xhtml");
+	selenium.waitForPageToLoad("30000");
+	////td/button
+	selenium.click("//td/button");// 點選按鈕,
+	selenium.waitForPageToLoad("30000");
+    }
 }
