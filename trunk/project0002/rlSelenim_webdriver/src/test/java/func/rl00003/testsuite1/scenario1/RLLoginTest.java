@@ -49,6 +49,6 @@ public class RLLoginTest {
     public void tearDown() throws Exception {
 	// selenium.click("id=logoutButton");
 	// selenium.waitForPageToLoad("30000");
-	// selenium.stop();
+	 selenium.stop();
     }
 }
