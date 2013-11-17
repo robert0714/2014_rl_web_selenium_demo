@@ -17,8 +17,9 @@ public class RlHompage {
 	login();
     }
 
-    public RlHompage(Selenium selenium) {
+    public RlHompage(final Selenium selenium ,final WebDriver driver) {
 	super();
+	this.driver = driver;
 	this.selenium = selenium;
 	login();
     }

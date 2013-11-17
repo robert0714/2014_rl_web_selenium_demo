@@ -10,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.robert.study.rl.common.RlHompage;
@@ -22,16 +23,18 @@ import org.junit.Test;
 
 public class RLLoginTest {
     private Selenium selenium;
+    private  WebDriver driver ;
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {	
-//	final RemoteWebDriver driver = linuxMachine();
+//	 driver = linuxMachine();
+	driver = new FirefoxDriver();
 	final String baseUrl = "http://192.168.10.18:6280/rl/";
 
-	final WebDriver driver = new FirefoxDriver();
+	
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
-	final TableJDBCDao dao =new TableJDBCDao();
-	personIdSiteIdList = dao.getPersonIdSiteIdList();
+//	final TableJDBCDao dao =new TableJDBCDao();
+//	personIdSiteIdList = dao.getPersonIdSiteIdList();
 	
     }
     public RemoteWebDriver linuxMachine() throws MalformedURLException{	
@@ -56,21 +59,27 @@ public class RLLoginTest {
 			continue;
 		    }
 		    final String siteId = stringArray[1];
-		    final RlHompage homepage = new RlHompage(selenium);
-		    selenium.waitForPageToLoad("30000");
-		    final TypingApplication aTypingApplication = homepage.typingApplication();
-		    selenium.waitForPageToLoad("30000");
-		    aTypingApplication.setPersonId(personId);
-		    aTypingApplication.setSiteId(siteId);
-		    aTypingApplication.typingApplication();
-		    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
-		    selenium.waitForPageToLoad("300000");
+		    process(personId, siteId);
+		    
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
 	    }
-	}
-	
+	}else{
+	    process(null, null);
+	}	
+    }
+
+    private void process(final String personId, final String siteId) {
+	final RlHompage homepage = new RlHompage(selenium,driver);
+	selenium.waitForPageToLoad("30000");
+	final TypingApplication aTypingApplication = homepage.typingApplication();
+	selenium.waitForPageToLoad("30000");
+	aTypingApplication.setPersonId(personId);
+	aTypingApplication.setSiteId(siteId);
+	aTypingApplication.typingApplication();
+	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	selenium.waitForPageToLoad("300000");
     }
 
     @After
