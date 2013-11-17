@@ -27,8 +27,8 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {	
-//	 driver = linuxMachine();
-	driver = new FirefoxDriver();
+	 driver = linuxMachine();
+//	driver = new FirefoxDriver();
 	final String baseUrl = "http://192.168.10.18:6280/rl/";
 
 	
