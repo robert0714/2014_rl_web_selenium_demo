@@ -33,8 +33,8 @@ public class RLLoginTest {
 
 	
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
-//	final TableJDBCDao dao =new TableJDBCDao();
-//	personIdSiteIdList = dao.getPersonIdSiteIdList();
+	final TableJDBCDao dao =new TableJDBCDao();
+	personIdSiteIdList = dao.getPersonIdSiteIdList();
 	
     }
     public RemoteWebDriver linuxMachine() throws MalformedURLException{	
