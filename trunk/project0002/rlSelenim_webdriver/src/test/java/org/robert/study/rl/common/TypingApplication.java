@@ -1,5 +1,10 @@
 package org.robert.study.rl.common;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
@@ -10,25 +15,49 @@ public class TypingApplication {
 	private WebDriver driver;
 	private String personId;
 	private String siteId;
+	private Map<String,String> siteIdMap;
 	private Selenium selenium;
 	
 	public TypingApplication(final   Selenium selenium) {
 		super();
 		this . selenium = selenium;
-//		typingApplication() ;
+		this . siteIdMap = getSiteIdMap();
 	}
-
+	private Map<String,String> getSiteIdMap(){
+		Properties props = new Properties();
+		try {
+		    props.load(TestClass.class.getResourceAsStream("RSCD0107.properties"));
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+		final Set<Object> keys = props.keySet();
+		final Map<String, String> siteIdMap = new HashMap<String, String>();
+		for (Object key : keys) {
+		    Object value = props.get(key);
+		    siteIdMap.put(key.toString(), value.toString());
+		}
+		return siteIdMap;
+	    }
 	public void typingApplication() {
+	    	String siteLocation =String.format("label=%s：%s", getSiteId(),siteIdMap.get(getSiteId()));
 	    	selenium.type("document.masterForm.elements[3]", getPersonId());
 	    	selenium.waitForPageToLoad("30000");
-		selenium.type("document.masterForm.elements[4]", getSiteId());
+//		selenium.type("document.masterForm.elements[4]",  getSiteId());
 		selenium.waitForPageToLoad("30000");
+		selenium.runScript("document.getElementsByName('masterForm')[4].value = 10010070;"); 
+//		selenium.select("//select[contains(@id,'items_input')]", "label=10010070：嘉義縣新港鄉");
+		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
+		selenium.waitForPageToLoad("360000");
 		selenium.click("document.masterForm.elements[14]");
 		selenium.waitForPageToLoad("30000");
 		
 		selenium.type("document.masterForm.elements[15]", getPersonId());
 	    	selenium.waitForPageToLoad("30000");
-		selenium.type("document.masterForm.elements[16]", getSiteId());
+		selenium.type("document.masterForm.elements[16]",getSiteId());
+		selenium.waitForPageToLoad("30000");
+		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
+		selenium.waitForPageToLoad("360000");
+		selenium.click("document.masterForm.elements[16]");
 		selenium.waitForPageToLoad("30000");
 		selenium.type("document.masterForm.elements[19]", "本人");
 		selenium.waitForPageToLoad("30000");
@@ -42,7 +71,7 @@ public class TypingApplication {
 
 	public String getPersonId() {
 	    if(StringUtils.isBlank(personId)){
-		personId ="C100217366";
+		personId ="F208368696";
 	    }
 	    return personId;
 	}
@@ -53,7 +82,7 @@ public class TypingApplication {
 
 	public String getSiteId() {
 	    if(StringUtils.isBlank(siteId)){
-		siteId ="65000120";
+		siteId ="10010070";
 	    }
 	    return siteId;
 	}
