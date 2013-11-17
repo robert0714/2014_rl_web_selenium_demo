@@ -16,7 +16,7 @@ import static org.apache.commons.lang3.StringUtils.join;
 
 public class RLLogin {
 	private Selenium selenium;
-
+	private  WebDriver driver ;
 	@Before
 	public void setUp() throws Exception {
 	    	
@@ -27,7 +27,7 @@ public class RLLogin {
 
 	@Test
 	public void testRLLogin() throws Exception {
-		RlHompage homepage  =new RlHompage(selenium);
+		RlHompage homepage  =new RlHompage(selenium,driver);
 		TypingApplication aTypingApplication = homepage.typingApplication();
 	}
 
