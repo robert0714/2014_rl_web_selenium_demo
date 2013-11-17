@@ -18,10 +18,11 @@ public class TypingApplication {
 	private Map<String,String> siteIdMap;
 	private Selenium selenium;
 	
-	public TypingApplication(final   Selenium selenium) {
+	public TypingApplication(final   Selenium selenium,final WebDriver driver) {
 		super();
 		this . selenium = selenium;
 		this . siteIdMap = getSiteIdMap();
+		this.driver =driver;
 	}
 	private Map<String,String> getSiteIdMap(){
 		Properties props = new Properties();
@@ -42,11 +43,13 @@ public class TypingApplication {
 	    	String siteLocation =String.format("label=%s：%s", getSiteId(),siteIdMap.get(getSiteId()));
 	    	selenium.type("document.masterForm.elements[3]", getPersonId());
 	    	selenium.waitForPageToLoad("30000");
-		selenium.type("document.masterForm.elements[4]",  getSiteId());		
+		selenium.type("document.masterForm.elements[4]",  getSiteId());
+		String title = driver.getTitle();
 		selenium.waitForPageToLoad("30000");
 //		selenium.runScript("document.getElementsByName('masterForm')[4].value = 10010070;"); 
 //		selenium.select("//select[contains(@id,'items_input')]", "label=10010070：嘉義縣新港鄉");
 		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
+		
 		selenium.waitForPageToLoad("360000");
 		selenium.click("document.masterForm.elements[14]");
 		selenium.waitForPageToLoad("30000");

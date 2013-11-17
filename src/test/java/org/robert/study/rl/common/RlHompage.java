@@ -35,7 +35,7 @@ public class RlHompage {
     }
 
     public TypingApplication typingApplication() {
-	return new TypingApplication(selenium);
+	return new TypingApplication(selenium,driver);
     }
     protected void replacePageTest(){
 	enterRl00001();
