@@ -92,6 +92,12 @@ public class RLLoginTest {
 	aTypingApplication.typingApplication();
 	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	selenium.waitForPageToLoad("300000");
+	try {
+	    Thread.sleep(6000l);
+	} catch (InterruptedException e) {
+	    e.printStackTrace();
+	}
+	selenium.waitForPageToLoad("300000");
 	final String currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
 	System.out.println(currentUrl);
