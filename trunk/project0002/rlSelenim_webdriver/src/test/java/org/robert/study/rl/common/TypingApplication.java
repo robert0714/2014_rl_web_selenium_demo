@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.internal.MouseAction;
 
 import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.SeleniumException;
 
 public class TypingApplication {
 	private WebDriver driver;
@@ -23,7 +25,7 @@ public class TypingApplication {
 	private Map<String,String> siteIdMap;
 	private Selenium selenium;
 	
-	public TypingApplication(final   Selenium selenium,final WebDriver driver) throws org.openqa.selenium.UnhandledAlertException {
+	public TypingApplication(final   Selenium selenium,final WebDriver driver) throws  UnhandledAlertException,SeleniumException  {
 		super();
 		this . selenium = selenium;
 		this . siteIdMap = getSiteIdMap();
@@ -44,7 +46,7 @@ public class TypingApplication {
 		}
 		return siteIdMap;
 	    }
-	public void typingApplication()throws org.openqa.selenium.UnhandledAlertException  {
+	public void typingApplication()throws  UnhandledAlertException,SeleniumException {
 	    	String siteLocation =String.format("label=%s：%s", getSiteId(),siteIdMap.get(getSiteId()));
 	    	selenium.type("document.masterForm.elements[3]", getPersonId());
 	    	selenium.waitForPageToLoad("30000");
@@ -77,8 +79,8 @@ public class TypingApplication {
 		selenium.type("document.masterForm.elements[19]", "本人");
 		selenium.waitForPageToLoad("30000");
 		
-		
-		selenium.click("document.masterForm.elements[42]");
+		selenium.click("//div/div/button");
+//		selenium.click("document.masterForm.elements[42]");
 //		selenium.click("//body/div[2]/div/div/div");
 		selenium.waitForPageToLoad("30000");
 //		selenium.type("document.masterForm.elements[33]", "本人");
