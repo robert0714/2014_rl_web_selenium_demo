@@ -1,5 +1,6 @@
 package org.robert.study.rl.common;
 
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
@@ -33,8 +34,12 @@ public class HouseholdMaintainPage {
 	    WebElement tabSelected01 = driver.findElement(By.xpath("//a[contains(text(),'戶籍登記作業')]"));
 	    builder.keyDown(Keys.CONTROL).click(tabSelected01).keyUp(Keys.CONTROL);	   
 	    selenium.waitForPageToLoad("300000");
-	    selenium.click("//input[@id='更正變更登記categoryRadio']");
+	    tabSelected01.click();
 	    selenium.waitForPageToLoad("300000");
+	    WebElement tabSelected02 = driver.findElement(By.xpath("//input[@id='更正變更登記categoryRadio']"));
+	    builder.keyDown(Keys.CONTROL).click(tabSelected02).keyUp(Keys.CONTROL);	   
+	    selenium.waitForPageToLoad("300000");
+	    tabSelected02.click();
 	}
     }
     private String retireveWindowId(final String link){

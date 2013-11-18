@@ -60,7 +60,7 @@ public class TypingApplication {
 		selenium.waitForPageToLoad("30000");
 //		selenium.runScript("document.getElementsByName('masterForm')[4].value = 10010070;"); 
 //		selenium.select("//select[contains(@id,'items_input')]", "label=10010070：嘉義縣新港鄉");
-		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
+//		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
 		
 		selenium.waitForPageToLoad("360000");
 		selenium.click("document.masterForm.elements[14]");
