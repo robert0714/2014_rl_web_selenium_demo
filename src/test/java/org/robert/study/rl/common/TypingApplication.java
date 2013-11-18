@@ -23,7 +23,7 @@ public class TypingApplication {
 	private Map<String,String> siteIdMap;
 	private Selenium selenium;
 	
-	public TypingApplication(final   Selenium selenium,final WebDriver driver) {
+	public TypingApplication(final   Selenium selenium,final WebDriver driver) throws org.openqa.selenium.UnhandledAlertException {
 		super();
 		this . selenium = selenium;
 		this . siteIdMap = getSiteIdMap();
@@ -44,7 +44,7 @@ public class TypingApplication {
 		}
 		return siteIdMap;
 	    }
-	public void typingApplication() {
+	public void typingApplication()throws org.openqa.selenium.UnhandledAlertException  {
 	    	String siteLocation =String.format("label=%s：%s", getSiteId(),siteIdMap.get(getSiteId()));
 	    	selenium.type("document.masterForm.elements[3]", getPersonId());
 	    	selenium.waitForPageToLoad("30000");

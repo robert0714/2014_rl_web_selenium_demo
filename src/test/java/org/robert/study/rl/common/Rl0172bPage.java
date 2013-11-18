@@ -9,7 +9,7 @@ public class Rl0172bPage {
     private WebDriver driver;
     private Selenium selenium;
 
-    public Rl0172bPage(final Selenium selenium, final WebDriver driver) {
+    public Rl0172bPage(final Selenium selenium, final WebDriver driver)throws org.openqa.selenium.UnhandledAlertException  {
 	super();
 	this.selenium = selenium;
 	this.driver = driver;
@@ -37,7 +37,7 @@ public class Rl0172bPage {
 	}
 	return lastName;
    }
-    public void switchTab() {
+    public void switchTab()throws org.openqa.selenium.UnhandledAlertException  {
 	final String currentUrl = driver.getCurrentUrl();
 	if (StringUtils.contains(currentUrl, "_rl0172b/rl0172b.xhtml")) {
 	    selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
