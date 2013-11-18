@@ -17,6 +17,7 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.robert.study.rl.common.HouseholdMaintainPage;
+import org.robert.study.rl.common.Rl0172bPage;
 import org.robert.study.rl.common.RlHompage;
 import org.robert.study.rl.common.TypingApplication;
 import org.apache.commons.collections.CollectionUtils;
@@ -116,8 +117,14 @@ public class RLLoginTest {
 	    }
 	}
 	currentUrl = driver.getCurrentUrl();
-	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
-	
+	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/_rl0172b/rl0172b.xhtml?windowId=344
+	if(StringUtils.contains(currentUrl, "_rl0172b/rl0172b.xhtml")){
+	    selenium.waitForPageToLoad("300000");
+	    Rl0172bPage rl0172bPage = new Rl0172bPage(  selenium,   driver);
+	    rl0172bPage.switchTab();
+	    
+	    
+	}
 //	selenium.stop();
 //	try {
 //
