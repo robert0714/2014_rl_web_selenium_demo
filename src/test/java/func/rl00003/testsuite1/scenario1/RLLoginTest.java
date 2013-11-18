@@ -8,6 +8,8 @@ import java.util.Set;
 import com.gargoylesoftware.htmlunit.util.UrlUtils;
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.SeleniumException;
+
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -19,6 +21,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.WebElement;
@@ -41,13 +44,9 @@ public class RLLoginTest {
 	final TableJDBCDao dao =new TableJDBCDao();
 	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = linuxMachine();
-	driver = new FirefoxDriver();
+	driver = new FirefoxDriver();	
 	final String baseUrl = "http://192.168.10.18:6280/rl/";
-
-	
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
-	
-	
     }
     public RemoteWebDriver linuxMachine() throws MalformedURLException{	
 	URL remoteAddress = new URL("http://192.168.9.51:4444/wd/hub");	
@@ -63,6 +62,8 @@ public class RLLoginTest {
     }
     @Test
     public void testRLLogin() throws Exception {
+	final RlHompage homepage = new RlHompage(selenium,driver);
+	selenium.waitForPageToLoad("30000");
 	if(CollectionUtils.isNotEmpty(personIdSiteIdList)){
 	    for(String[] stringArray: personIdSiteIdList){
 		try {
@@ -71,7 +72,7 @@ public class RLLoginTest {
 			continue;
 		    }
 		    final String siteId = stringArray[1];
-		    process(personId, siteId);
+		    process(homepage ,personId, siteId);
 		    selenium.waitForPageToLoad("30000");
 		    Thread.sleep(6000l);
 		    selenium.waitForPageToLoad("30000");
@@ -79,7 +80,7 @@ public class RLLoginTest {
 		   
 		    
 		   
-		} catch (org.openqa.selenium.UnhandledAlertException  e) {
+		} catch (UnhandledAlertException  e) {
 		    // Get the Alert
 		    Alert alert = driver.switchTo().alert();
 		    if (alert != null) {
@@ -135,7 +136,7 @@ public class RLLoginTest {
 		}
 	    }
 	}else{
-	    process(null, null);
+	    process(homepage,null, null);
 	}	
     }
     private String retireveWindowId(final String link){
@@ -147,9 +148,7 @@ public class RLLoginTest {
 	}
 	return null;
     }
-    private void process(final String personId, final String siteId) throws org.openqa.selenium.UnhandledAlertException{
-	final RlHompage homepage = new RlHompage(selenium,driver);
-	selenium.waitForPageToLoad("30000");
+    private void process(final RlHompage homepage  ,final String personId, final String siteId)throws  Exception {	
 	final TypingApplication aTypingApplication = homepage.typingApplication();
 	selenium.waitForPageToLoad("30000");
 	aTypingApplication.setPersonId(personId);
@@ -157,11 +156,9 @@ public class RLLoginTest {
 	aTypingApplication.typingApplication();
 	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	selenium.waitForPageToLoad("300000");
-	try {
-	    Thread.sleep(6000l);
-	} catch (InterruptedException e) {
-	    e.printStackTrace();
-	}
+	
+	Thread.sleep(6000l);
+	
 	selenium.waitForPageToLoad("300000");
 	String currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
@@ -174,14 +171,15 @@ public class RLLoginTest {
 	    selenium.waitForPageToLoad("300000");
 	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	    householdMaintainPage.clickRl1722B(currentUrl);
-	    try {
-		Thread.sleep(6000l);
-	    } catch (InterruptedException e) {
-		e.printStackTrace();
-	    }
+	   
+	   Thread.sleep(6000l);
+	    
 	}
 	currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/_rl0172b/rl0172b.xhtml?windowId=344
+	
+	Thread.sleep(6000l);
+	
 	if(StringUtils.contains(currentUrl, "_rl0172b/rl0172b.xhtml")){
 	    selenium.waitForPageToLoad("300000");
 	    Rl0172bPage rl0172bPage = new Rl0172bPage(  selenium,   driver);
@@ -189,24 +187,9 @@ public class RLLoginTest {
 	    
 	    
 	}
-//	selenium.stop();
-//	try {
-//
-//	    // Get the Alert
-//	    Alert alert = driver.switchTo().alert();
-//
-//	    // Get the Text displayed on Alert using getText() method of Alert class
-//	    String textOnAlert = alert.getText();
-//
-//	    // Click OK button, by calling accept() method of Alert Class
-//	    alert.accept();
-//
-//	    // Verify Alert displayed correct message to user
-//	    // assertEquals("Hello! I am an alert box!",textOnAlert);
-//
-//	} catch (NoAlertPresentException e) {
+	Thread.sleep(6000l);
 	
-//	}
+
     }
 
     @After

@@ -1,15 +1,17 @@
 package org.robert.study.rl.common;
 
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 
 import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.SeleniumException;
 
 public class RlHompage {
     WebDriver driver;
     private Selenium selenium;
 
-    public RlHompage(final WebDriver driver) throws org.openqa.selenium.UnhandledAlertException {
+    public RlHompage(final WebDriver driver) throws  UnhandledAlertException,SeleniumException  {
 	super();
 	this.driver = driver;
 	final String baseUrl = "http://192.168.9.94:6280/rl/";
@@ -17,14 +19,14 @@ public class RlHompage {
 	login();
     }
 
-    public RlHompage(final Selenium selenium ,final WebDriver driver)throws org.openqa.selenium.UnhandledAlertException {
+    public RlHompage(final Selenium selenium ,final WebDriver driver)throws  UnhandledAlertException,SeleniumException  {
 	super();
 	this.driver = driver;
 	this.selenium = selenium;
 	login();
     }
 
-    private void login()throws org.openqa.selenium.UnhandledAlertException  {
+    private void login()throws  UnhandledAlertException,SeleniumException  {
 	selenium.open("/rl/pages/common/login.jsp");
 	selenium.type("name=j_username", "RF1200123");
 	selenium.type("name=j_password", "RF1200123");
@@ -34,7 +36,7 @@ public class RlHompage {
 	
     }
 
-    public TypingApplication typingApplication()throws org.openqa.selenium.UnhandledAlertException  {
+    public TypingApplication typingApplication()throws  UnhandledAlertException,SeleniumException   {
 	return new TypingApplication(selenium,driver);
     }
     protected void replacePageTest(){
