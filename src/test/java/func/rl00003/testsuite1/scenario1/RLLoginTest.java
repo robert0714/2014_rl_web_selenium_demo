@@ -75,10 +75,14 @@ public class RLLoginTest {
 		    selenium.waitForPageToLoad("30000");
 		    Thread.sleep(6000l);
 		    selenium.waitForPageToLoad("30000");
-		    try {
-			// Get the Alert
-			Alert alert = driver.switchTo().alert();
-			if (alert != null) {
+		    
+		   
+		    
+		   
+		} catch (org.openqa.selenium.UnhandledAlertException  e) {
+		    // Get the Alert
+		    Alert alert = driver.switchTo().alert();
+		    if (alert != null) {
 			// Get the Text displayed on Alert using getText() method of Alert class
 			String textOnAlert = alert.getText();
 
@@ -87,16 +91,13 @@ public class RLLoginTest {
 
 			// Verify Alert displayed correct message to user
 			// assertEquals("Hello! I am an alert box!",textOnAlert);
-			}
-		    } catch (NoAlertPresentException e1) {
-			
 		    }
 		    Actions action = new Actions(driver);
 		    action.sendKeys(Keys.ESCAPE);
 		    
 		    String currentWindowId = driver.getWindowHandle();
-		    
-		    //Code that brings up the popup
+
+		    // Code that brings up the popup
 		    Set<String> allWindows = driver.getWindowHandles();
 		    if (!allWindows.isEmpty()) {
 			for (String windowId : allWindows) {
@@ -110,8 +111,8 @@ public class RLLoginTest {
 				    WebElement closeButton = driver.findElement(By.id("closebutton"));
 				    closeButton.click();
 				    break;
-				} catch (NoSuchWindowException e) {
-				    e.printStackTrace();
+				} catch (NoSuchWindowException e1) {
+				    e1.printStackTrace();
 				}
 			    }
 			}
@@ -127,7 +128,6 @@ public class RLLoginTest {
 			    popup.close();
 			}
 		    }
-		} catch (org.openqa.selenium.UnhandledAlertException  e) {
 		    System.out.println("..........................................");
 		    e.printStackTrace();
 		}catch (Exception e) {
