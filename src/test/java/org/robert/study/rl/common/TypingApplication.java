@@ -79,10 +79,22 @@ public class TypingApplication {
 		selenium.type("document.masterForm.elements[19]", "本人");
 		selenium.waitForPageToLoad("30000");
 		
-		selenium.click("//div/div/button");
+		
+		while(true){
+        	    selenium.click("//div/div/button");
+        	    selenium.waitForPageToLoad("30000");
+        	    String currentUrl = driver.getCurrentUrl();
+        	    // http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
+    
+        	    System.out.println(currentUrl);
+        	    if (!StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {    
+        		break;
+    	   	      }
+		}
+		
 //		selenium.click("document.masterForm.elements[42]");
 //		selenium.click("//body/div[2]/div/div/div");
-		selenium.waitForPageToLoad("30000");
+		
 //		selenium.type("document.masterForm.elements[33]", "本人");
 		
 		
