@@ -51,12 +51,12 @@ public class TypingApplication {
 		selenium.type("document.masterForm.elements[4]",  "");
 		Actions builder = new Actions(driver);
 //		    driver.findElement(By.xpath("//input[@id='j_id37_j_id_4e:inputValue']")).sendKeys("444");
-		WebElement masterFormElement = driver.findElement(By.xpath("//input[contains(@id,'inputValue')]"));
-		builder.keyDown(Keys.CONTROL).click(masterFormElement).keyUp(Keys.CONTROL);
+		WebElement selectorElement = driver.findElement(By.xpath("//input[contains(@id,'inputValue')]"));
+		builder.keyDown(Keys.CONTROL).click(selectorElement).keyUp(Keys.CONTROL);
 		selenium.waitForPageToLoad("30000");
-		masterFormElement.click();
+		selectorElement.click();
 		selenium.waitForPageToLoad("30000");
-		masterFormElement.sendKeys(getSiteId());
+		selectorElement.sendKeys(getSiteId());
 		selenium.waitForPageToLoad("30000");
 //		selenium.runScript("document.getElementsByName('masterForm')[4].value = 10010070;"); 
 //		selenium.select("//select[contains(@id,'items_input')]", "label=10010070：嘉義縣新港鄉");
@@ -82,6 +82,9 @@ public class TypingApplication {
 //		selenium.click("//body/div[2]/div/div/div");
 		selenium.waitForPageToLoad("30000");
 //		selenium.type("document.masterForm.elements[33]", "本人");
+		
+		
+		
 	}
 
 	public String getPersonId() {
