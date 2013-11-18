@@ -22,7 +22,7 @@ public class Rl0172bPage {
 	System.out.println(tmp);
 	String[] stringArray = StringUtils.splitPreserveAllTokens(tmp, "：");
 	if(stringArray.length>1){
-	    firstName =stringArray[2];
+	    firstName =StringUtils.trim(stringArray[2]);
 	}
 	return firstName;
   }
@@ -49,7 +49,9 @@ public class Rl0172bPage {
 	    String firstName = retrieveFirstName(element01);
 	    System.out.println("firstName: "+firstName);
 	    System.out.println("lastName: "+lastName);
-	    String text = selenium.getText("document.poopupForm.elements[14]");
+	    selenium.type("document.poopupForm.elements[14]", lastName);
+	    selenium.type("document.poopupForm.elements[17]", lastName);
+	    selenium.type("document.poopupForm.elements[18]", firstName+lastName);
 	    
 	    System.out.println("element1: "+element01);
 	    System.out.println("element2: "+selenium.getText("document.poopupForm.elements[2]"));
