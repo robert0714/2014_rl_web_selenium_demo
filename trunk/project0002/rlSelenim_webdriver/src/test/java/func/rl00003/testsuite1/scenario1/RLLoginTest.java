@@ -77,7 +77,7 @@ public class RLLoginTest {
 	if(StringUtils.contains(link, "windowId=") && StringUtils.contains(link, "?")){
 	    String[] predata = StringUtils.splitPreserveAllTokens(link, "?");
 	    if(predata.length>1){
-		return predata[0];
+		return predata[1];
 	    }
 	}
 	return null;
@@ -98,17 +98,27 @@ public class RLLoginTest {
 	    e.printStackTrace();
 	}
 	selenium.waitForPageToLoad("300000");
-	final String currentUrl = driver.getCurrentUrl();
+	String currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
 	System.out.println(currentUrl);
-	if(StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){	    
-	    
+	if(StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){
 	    selenium.waitForPageToLoad("300000");
 	    HouseholdMaintainPage householdMaintainPage = new HouseholdMaintainPage(  selenium,   driver);
 	    selenium.waitForPageToLoad("300000");
 	    householdMaintainPage.switchTab();
 	    selenium.waitForPageToLoad("300000");
+	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	    householdMaintainPage.clickRl1722B(currentUrl);
+	    try {
+		Thread.sleep(6000l);
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
 	}
+	currentUrl = driver.getCurrentUrl();
+	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
+	
+//	selenium.stop();
 //	try {
 //
 //	    // Get the Alert
@@ -124,7 +134,7 @@ public class RLLoginTest {
 //	    // assertEquals("Hello! I am an alert box!",textOnAlert);
 //
 //	} catch (NoAlertPresentException e) {
-////	    e.printStackTrace();
+	
 //	}
     }
 
