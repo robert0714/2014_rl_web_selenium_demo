@@ -4,15 +4,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import com.gargoylesoftware.htmlunit.util.UrlUtils;
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
+import org.robert.study.rl.common.HouseholdMaintainPage;
 import org.robert.study.rl.common.RlHompage;
 import org.robert.study.rl.common.TypingApplication;
 import org.apache.commons.collections.CollectionUtils;
@@ -27,14 +31,14 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {	
-	 driver = linuxMachine();
-//	driver = new FirefoxDriver();
+//	 driver = linuxMachine();
+	driver = new FirefoxDriver();
 	final String baseUrl = "http://192.168.10.18:6280/rl/";
 
 	
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
-	final TableJDBCDao dao =new TableJDBCDao();
-	personIdSiteIdList = dao.getPersonIdSiteIdList();
+//	final TableJDBCDao dao =new TableJDBCDao();
+//	personIdSiteIdList = dao.getPersonIdSiteIdList();
 	
     }
     public RemoteWebDriver linuxMachine() throws MalformedURLException{	
@@ -69,7 +73,15 @@ public class RLLoginTest {
 	    process(null, null);
 	}	
     }
-
+    private String retireveWindowId(final String link){
+	if(StringUtils.contains(link, "windowId=") && StringUtils.contains(link, "?")){
+	    String[] predata = StringUtils.splitPreserveAllTokens(link, "?");
+	    if(predata.length>1){
+		return predata[0];
+	    }
+	}
+	return null;
+    }
     private void process(final String personId, final String siteId) {
 	final RlHompage homepage = new RlHompage(selenium,driver);
 	selenium.waitForPageToLoad("30000");
@@ -80,6 +92,34 @@ public class RLLoginTest {
 	aTypingApplication.typingApplication();
 	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	selenium.waitForPageToLoad("300000");
+	final String currentUrl = driver.getCurrentUrl();
+	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
+	System.out.println(currentUrl);
+	if(StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){	    
+	    
+	    selenium.waitForPageToLoad("300000");
+	    HouseholdMaintainPage householdMaintainPage = new HouseholdMaintainPage(  selenium,   driver);
+	    selenium.waitForPageToLoad("300000");
+	    householdMaintainPage.switchTab();
+	    selenium.waitForPageToLoad("300000");
+	}
+//	try {
+//
+//	    // Get the Alert
+//	    Alert alert = driver.switchTo().alert();
+//
+//	    // Get the Text displayed on Alert using getText() method of Alert class
+//	    String textOnAlert = alert.getText();
+//
+//	    // Click OK button, by calling accept() method of Alert Class
+//	    alert.accept();
+//
+//	    // Verify Alert displayed correct message to user
+//	    // assertEquals("Hello! I am an alert box!",textOnAlert);
+//
+//	} catch (NoAlertPresentException e) {
+////	    e.printStackTrace();
+//	}
     }
 
     @After
