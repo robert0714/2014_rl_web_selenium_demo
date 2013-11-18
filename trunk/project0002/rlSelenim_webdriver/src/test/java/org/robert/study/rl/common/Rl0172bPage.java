@@ -73,6 +73,9 @@ public class Rl0172bPage {
 	    System.out.println("element16: "+selenium.getText("document.poopupForm.elements[16]"));
 	    System.out.println("element17: "+selenium.getText("document.poopupForm.elements[17]"));
 	    System.out.println("element18: "+selenium.getText("document.poopupForm.elements[18]"));
+	    
+	    selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+	    selenium.click("//button[4]");
 	}
     }
 }

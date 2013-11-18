@@ -44,8 +44,10 @@ public class RLLoginTest {
 	final TableJDBCDao dao =new TableJDBCDao();
 	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = linuxMachine();
-	driver = new FirefoxDriver();	
-	final String baseUrl = "http://192.168.10.18:6280/rl/";
+	driver = new FirefoxDriver();
+	//http://192.168.9.94:6280/rl/pages/common/login.jsp
+	final String baseUrl = "http://192.168.10.18:6180";
+//	final String baseUrl = "http://192.168.10.18:6280/rl/";
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
     }
     public RemoteWebDriver linuxMachine() throws MalformedURLException{	
@@ -76,8 +78,8 @@ public class RLLoginTest {
 		    selenium.waitForPageToLoad("30000");
 		    Thread.sleep(6000l);
 		    selenium.waitForPageToLoad("30000");
-		    
-		   
+		    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+		    homepage.enterRl00001();
 		    
 		   
 		} catch (UnhandledAlertException  e) {
@@ -162,6 +164,7 @@ public class RLLoginTest {
 	selenium.waitForPageToLoad("300000");
 	String currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
+	
 	System.out.println(currentUrl);
 	if(StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){
 	    selenium.waitForPageToLoad("300000");
