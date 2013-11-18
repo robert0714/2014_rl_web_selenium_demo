@@ -32,7 +32,7 @@ public class TypingApplication {
 	private Map<String,String> getSiteIdMap(){
 		Properties props = new Properties();
 		try {
-		    props.load(TestClass.class.getResourceAsStream("RSCD0107.properties"));
+		    props.load(TypingApplication.class.getResourceAsStream("RSCD0107.properties"));
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
