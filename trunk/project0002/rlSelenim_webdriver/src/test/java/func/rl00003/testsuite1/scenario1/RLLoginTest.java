@@ -185,6 +185,11 @@ public class RLLoginTest {
 	    selenium.waitForPageToLoad("300000");
 	    Thread.sleep(6000l);
 	    householdMaintainPage.switchTab();
+	   //發現所需延遲時間需要更久
+	    selenium.waitForPageToLoad("300000");
+	    Thread.sleep(6000l);
+	    selenium.waitForPageToLoad("300000");
+	    Thread.sleep(6000l);
 	    selenium.waitForPageToLoad("300000");
 	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	    householdMaintainPage.clickRl1722B(currentUrl);	   
