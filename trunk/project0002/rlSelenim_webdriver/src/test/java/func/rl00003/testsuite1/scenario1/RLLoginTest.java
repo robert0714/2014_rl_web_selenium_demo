@@ -16,6 +16,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchWindowException;
@@ -49,6 +50,9 @@ public class RLLoginTest {
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 //	final String baseUrl = "http://192.168.10.18:6180";
 	final String baseUrl = "http://192.168.10.18:6280/rl/";
+	
+	final Dimension targetSize = new Dimension(1450,860);
+	driver.manage().window().setSize(targetSize);
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
     }
     public RemoteWebDriver windowsMachine() throws MalformedURLException{	
