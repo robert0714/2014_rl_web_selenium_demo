@@ -41,14 +41,27 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-	final TableJDBCDao dao =new TableJDBCDao();
-	personIdSiteIdList = dao.getPersonIdSiteIdList();
+//	final TableJDBCDao dao =new TableJDBCDao();
+//	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = linuxMachine();
-	driver = new FirefoxDriver();
+	 driver = windowsMachine();
+//	driver = new FirefoxDriver();
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
-	final String baseUrl = "http://192.168.10.18:6180";
-//	final String baseUrl = "http://192.168.10.18:6280/rl/";
+//	final String baseUrl = "http://192.168.10.18:6180";
+	final String baseUrl = "http://192.168.10.18:6280/rl/";
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
+    }
+    public RemoteWebDriver windowsMachine() throws MalformedURLException{	
+	URL remoteAddress = new URL("http://192.168.9.51:4444/wd/hub");	
+	// have tried using the below commented out lines as well, but in all
+	// cases I face errors.
+	// URL remoteAddress = new URL("http://mymachine:4444/grid/register");
+	// URL remoteAddress = new URL("http://mymachine:4444/wd/hub");
+	DesiredCapabilities dc = DesiredCapabilities.firefox();
+	dc.setBrowserName("firefox");	
+	dc.setPlatform(Platform.WINDOWS);
+	RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
+	return driver;
     }
     public RemoteWebDriver linuxMachine() throws MalformedURLException{	
 	URL remoteAddress = new URL("http://192.168.9.51:4444/wd/hub");	
@@ -170,18 +183,18 @@ public class RLLoginTest {
 	    selenium.waitForPageToLoad("300000");
 	    HouseholdMaintainPage householdMaintainPage = new HouseholdMaintainPage(  selenium,   driver);
 	    selenium.waitForPageToLoad("300000");
+	    Thread.sleep(6000l);
 	    householdMaintainPage.switchTab();
 	    selenium.waitForPageToLoad("300000");
 	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-	    householdMaintainPage.clickRl1722B(currentUrl);
-	   
-	   Thread.sleep(6000l);
+	    householdMaintainPage.clickRl1722B(currentUrl);	   
+//	   Thread.sleep(6000l);
 	    
 	}
 	currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/_rl0172b/rl0172b.xhtml?windowId=344
 	
-	Thread.sleep(6000l);
+//	Thread.sleep(6000l);
 	
 	if(StringUtils.contains(currentUrl, "_rl0172b/rl0172b.xhtml")){
 	    selenium.waitForPageToLoad("300000");
