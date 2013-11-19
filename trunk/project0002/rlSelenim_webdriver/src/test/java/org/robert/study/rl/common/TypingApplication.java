@@ -30,18 +30,18 @@ public class TypingApplication {
 		this.driver =driver;
 	}
 	private Map<String,String> getSiteIdMap(){
-		Properties props = new Properties();
-		try {
-		    props.load(TypingApplication.class.getResourceAsStream("RSCD0107.properties"));
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
-		final Set<Object> keys = props.keySet();
+//		Properties props = new Properties();
+//		try {
+//		    props.load(TypingApplication.class.getResourceAsStream("RSCD0107.properties"));
+//		} catch (Exception e) {
+//		    e.printStackTrace();
+//		}
+//		final Set<Object> keys = props.keySet();
 		final Map<String, String> siteIdMap = new HashMap<String, String>();
-		for (Object key : keys) {
-		    Object value = props.get(key);
-		    siteIdMap.put(key.toString(), value.toString());
-		}
+//		for (Object key : keys) {
+//		    Object value = props.get(key);
+//		    siteIdMap.put(key.toString(), value.toString());
+//		}
 		return siteIdMap;
 	    }
 	public void typingApplication()throws  UnhandledAlertException,SeleniumException {
