@@ -41,8 +41,8 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-//	final TableJDBCDao dao =new TableJDBCDao();
-//	personIdSiteIdList = dao.getPersonIdSiteIdList();
+	final TableJDBCDao dao =new TableJDBCDao();
+	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = linuxMachine();
 	 driver = windowsMachine();
 //	driver = new FirefoxDriver();
@@ -215,8 +215,8 @@ public class RLLoginTest {
 
     @After
     public void tearDown() throws Exception {
-	// selenium.click("id=logoutButton");
-	// selenium.waitForPageToLoad("30000");
-//	 selenium.stop();
+	  selenium.click("id=logoutButton");
+	  selenium.waitForPageToLoad("30000");
+    	 selenium.stop();
     }
 }
