@@ -31,11 +31,11 @@ public class RlHompage {
 
     private void login()throws  UnhandledAlertException,SeleniumException  {
 	selenium.open("/rl/pages/common/login.jsp");
-//	selenium.type("name=j_username", "RF1200123");
-//	selenium.type("name=j_password", "RF1200123");
+	selenium.type("name=j_username", "RF1200123");
+	selenium.type("name=j_password", "RF1200123");
 	
-	selenium.type("name=j_username", "RQ0700123");
-	selenium.type("name=j_password", "RQ0700123");
+//	selenium.type("name=j_username", "RQ0700123");
+//	selenium.type("name=j_password", "RQ0700123");
 	
 	selenium.click("css=input[type=\"submit\"]");
 	
