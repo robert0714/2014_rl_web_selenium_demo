@@ -42,8 +42,8 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-//	final TableJDBCDao dao =new TableJDBCDao();
-//	personIdSiteIdList = dao.getPersonIdSiteIdList();
+	final TableJDBCDao dao =new TableJDBCDao();
+	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = linuxMachine();
 //	 driver = windowsMachine();
 	driver = new FirefoxDriver();
@@ -91,6 +91,7 @@ public class RLLoginTest {
 			continue;
 		    }
 		    final String siteId = stringArray[1];
+		    homepage.enterRl00001();
 		    process(homepage ,personId, siteId);
 		    selenium.waitForPageToLoad("30000");
 		    Thread.sleep(6000l);
@@ -162,6 +163,7 @@ public class RLLoginTest {
 		}
 	    }
 	}else{
+	    homepage.enterRl00001();
 	    process(homepage,null, null);
 	}	
     }
@@ -216,6 +218,15 @@ public class RLLoginTest {
 	    Rl0172bPage rl0172bPage = new Rl0172bPage(  selenium,   driver);
 	    rl0172bPage.switchTab();
 	    selenium.waitForPageToLoad("300000");	    
+	}
+	
+	while(true){	    
+	    currentUrl = driver.getCurrentUrl();
+	    System.out.println(currentUrl);
+	    if(StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){
+		break;
+	    }
+	    
 	}
 	driver.switchTo().defaultContent();
 	// Following is the code that scrolls through the page

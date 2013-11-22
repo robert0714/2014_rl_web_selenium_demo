@@ -39,8 +39,6 @@ public class RlHompage {
 	
 	selenium.click("css=input[type=\"submit\"]");
 	
-	enterRl00001();
-	
     }
 
     public TypingApplication typingApplication()throws  UnhandledAlertException,SeleniumException   {
