@@ -56,7 +56,8 @@ public class Rl0172bPage {
 	    String firstName = retrieveFirstName(element01);
 	    System.out.println("firstName: "+firstName);
 	    System.out.println("lastName: "+lastName);
-	    selenium.type("document.poopupForm.elements[14]", lastName);
+	    selenium.type("document.poopupForm.elements[13]", lastName);
+	    selenium.type("document.poopupForm.elements[14]", firstName);
 	    selenium.type("document.poopupForm.elements[17]", firstName);
 	    selenium.type("document.poopupForm.elements[18]", firstName+lastName);
 	    
@@ -180,7 +181,24 @@ public class Rl0172bPage {
 	   String tmpSaveBtn = selenium.getText("//span[4]/button[3]"); //暫存
 	   System.out.println("tmpSaveBtn: "+tmpSaveBtn);
 	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(tmpSaveBtn),"暫存")){
-	       selenium.click("//span[4]/button[3]");//據說是暫存
+//	       selenium.click("//span[4]/button[3]");//據說是暫存
+//	       selenium.waitForPageToLoad("1000");
+	       while(true){	    
+		    String targetUrl = driver.getCurrentUrl();
+		    System.out.println(targetUrl);
+		    System.out.println("rl172Bclick.isVisible(): "+selenium.isVisible("//span[4]/button[3]"));
+		    if(selenium.isVisible("//span[4]/button[3]") && StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")){
+			selenium.click("//span[4]/button[3]");// 據說是暫存
+			selenium.waitForPageToLoad("1000");
+			if (!StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
+			    break;
+			}
+		    }else{
+			break;
+		    }
+		    
+		    
+		}
 	   }
 	   selenium.waitForPageToLoad("1000"); 
 	}
