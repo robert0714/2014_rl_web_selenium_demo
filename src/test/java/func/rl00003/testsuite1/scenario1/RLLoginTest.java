@@ -91,14 +91,13 @@ public class RLLoginTest {
 			continue;
 		    }
 		    final String siteId = stringArray[1];
+		    
+		    selenium.waitForPageToLoad("30000");
+		    if(selenium.isElementPresent("//input[@id='alert_flag")){
+			 selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+		    }
 		    homepage.enterRl00001();
 		    process(homepage ,personId, siteId);
-		    selenium.waitForPageToLoad("30000");
-		    Thread.sleep(6000l);
-		    selenium.waitForPageToLoad("30000");
-		    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
-//		    homepage.enterRl00001();
-		    
 		   
 		} catch (UnhandledAlertException  e) {
 		    if(selenium.isAlertPresent()){
