@@ -29,12 +29,18 @@ public class HouseholdMaintainPage {
 	    selenium.waitForPageToLoad("300000");
 	    WebElement tabSelected01 = driver.findElement(By.xpath("//a[contains(text(),'戶籍登記作業')]"));
 	    selenium.waitForPageToLoad("300000");
+	    System.out.println("tabSelected01.isVisible(): "+selenium.isVisible("//a[contains(text(),'戶籍登記作業')]"));
+	    System.out.println("tabSelected01.isDisplayed(): "+tabSelected01.isDisplayed());
+	    System.out.println("tabSelected01.isEnabled(): "+tabSelected01.isEnabled());
 	    tabSelected01.click();
 	    Thread.sleep(6000l);
 	    selenium.waitForPageToLoad("300000");
-//	    tabSelected01.click();
+	    
 	    WebElement tabSelected02 = driver.findElement(By.xpath("//input[@id='更正變更登記categoryRadio']"));
 	    selenium.waitForPageToLoad("300000");
+	    System.out.println("tabSelected02.isVisible(): "+selenium.isVisible("//input[@id='更正變更登記categoryRadio']"));
+	    System.out.println("tabSelected02.isDisplayed(): "+tabSelected02.isDisplayed());
+	    System.out.println("tabSelected02.isEnabled(): "+tabSelected02.isEnabled());
 	    tabSelected02.click();
 	}
     }
@@ -45,7 +51,10 @@ public class HouseholdMaintainPage {
     public void clickRl1722B(final String currentUrl){	
 	while (true) {	    
 	    WebElement rl172Bclick = driver.findElement(By.xpath("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
+	    System.out.println("rl172Bclick.isDisplayed(): "+rl172Bclick.isDisplayed());
+	    System.out.println("rl172Bclick.isEnabled(): "+rl172Bclick.isEnabled());
 	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	    System.out.println("rl172Bclick.isVisible(): "+selenium.isVisible("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
 	    rl172Bclick.click();	    
 	    selenium.waitForPageToLoad("300000");
 	    final  String targetUrl = driver.getCurrentUrl();

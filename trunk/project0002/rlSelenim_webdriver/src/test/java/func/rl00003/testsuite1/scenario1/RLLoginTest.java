@@ -100,6 +100,13 @@ public class RLLoginTest {
 		    
 		   
 		} catch (UnhandledAlertException  e) {
+		    if(selenium.isAlertPresent()){
+			
+		    }
+		    
+		    if(selenium.isAlertPresent()){
+			
+		    }
 		    // Get the Alert
 		    Alert alert = driver.switchTo().alert();
 		    if (alert != null) {
@@ -203,16 +210,31 @@ public class RLLoginTest {
 	currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/_rl0172b/rl0172b.xhtml?windowId=344
 	
-//	Thread.sleep(6000l);
 	
 	if(StringUtils.contains(currentUrl, "_rl0172b/rl0172b.xhtml")){
 	    selenium.waitForPageToLoad("300000");
 	    Rl0172bPage rl0172bPage = new Rl0172bPage(  selenium,   driver);
 	    rl0172bPage.switchTab();
-	    
-	    
+	    selenium.waitForPageToLoad("300000");	    
 	}
-	Thread.sleep(6000l);
+	driver.switchTo().defaultContent();
+	// Following is the code that scrolls through the page
+	for (int second = 0;; second++) {
+	    if (second >= 3) {
+		break;
+	    }
+	    ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,200)", "");
+
+	    selenium.waitForPageToLoad("1000");
+	}
+	for (int second = 0;; second++) {
+	    if (second >= 10) {
+		break;
+	    }
+	    ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,-200)", "");
+
+	    selenium.waitForPageToLoad("1000");
+	}
 	
 
     }

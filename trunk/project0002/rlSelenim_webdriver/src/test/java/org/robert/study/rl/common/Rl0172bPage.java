@@ -7,6 +7,7 @@ import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
@@ -69,32 +70,8 @@ public class Rl0172bPage {
 	    selenium.waitForPageToLoad("30000");
 	    inputFirstNameElement.sendKeys(firstName+lastName);//故意填錯
 	    
-	    
-//	    selenium.type("//span[contains(@id,'afterMarriedName')]/span/input", firstName+lastName);
-	    //afterFirstName
-//	    selenium.type("document.poopupForm.elements[18]", firstName+lastName);
-	  //select[contains(@id,'items_input')]"
-	  //span[contains(@id,'afterMidenName')]/span/input 
-	  //span[contains(@id,'afterMarriedName')]/span/input
-	    
 	    System.out.println("element1: "+element01);
-	    System.out.println("element2: "+selenium.getText("document.poopupForm.elements[2]"));
-	    System.out.println("element3: "+selenium.getText("document.poopupForm.elements[3]"));
-	    System.out.println("element4: "+selenium.getText("document.poopupForm.elements[4]"));
-	    System.out.println("element5: "+selenium.getText("document.poopupForm.elements[5]"));
-	    System.out.println("element6: "+selenium.getText("document.poopupForm.elements[6]"));
-	    System.out.println("element7: "+selenium.getText("document.poopupForm.elements[7]"));
-	    System.out.println("element8: "+selenium.getText("document.poopupForm.elements[8]"));
-	    System.out.println("element9: "+selenium.getText("document.poopupForm.elements[9]"));
-	    System.out.println("element10: "+selenium.getText("document.poopupForm.elements[10]"));
-	    System.out.println("element11: "+selenium.getText("document.poopupForm.elements[11]"));
-	    System.out.println("element12: "+selenium.getText("document.poopupForm.elements[12]"));
-	    System.out.println("element13: "+selenium.getText("document.poopupForm.elements[13]"));
-	    System.out.println("element14: "+selenium.getText("document.poopupForm.elements[14]"));
-	    System.out.println("element15: "+selenium.getText("document.poopupForm.elements[15]"));
-	    System.out.println("element16: "+selenium.getText("document.poopupForm.elements[16]"));
-	    System.out.println("element17: "+selenium.getText("document.poopupForm.elements[17]"));
-	    System.out.println("element18: "+selenium.getText("document.poopupForm.elements[18]"));
+	    
 	    
 	    selenium.click("//div[contains(@id,'afterItem')]/label");
 	    selenium.click("//div[contains(@id,'afterItem_panel')]/div/ul/li[24]");
@@ -102,71 +79,110 @@ public class Rl0172bPage {
 	    selenium.waitForPageToLoad("300000");
 	  //div[@id='j_id19_j_id_2h:updateReasonCode']/div[2]/span
 	  //div[@id='j_id19_j_id_2h:updateReasonCode_panel']/div/ul/li[2]
+	    WebElement updateReasonCodeElement = driver.findElement(By.xpath("//div[contains(@id,'updateReasonCode')]/div[2]/span"));
+	    System.out.println("updateReasonCodeElement.isDisplayed(): "+updateReasonCodeElement.isDisplayed());
+	    System.out.println("updateReasonCodeElement.isEnabled(): "+updateReasonCodeElement.isEnabled());
+	    selenium.focus("//div[contains(@id,'updateReasonCode')]/div[2]/span");	    
 	    selenium.click("//div[contains(@id,'updateReasonCode')]/div[2]/span");
+	    
+	    WebElement updateReasonCodePanelElement = driver.findElement(By.xpath("//div[contains(@id,'updateReasonCode_panel')]/div/ul/li[2]"));
+	    System.out.println("updateReasonCodePanelElement.isDisplayed(): "+updateReasonCodePanelElement.isDisplayed());
+	    System.out.println("updateReasonCodePanelElement.isEnabled(): "+updateReasonCodePanelElement.isEnabled());
+	    selenium.focus("//div[contains(@id,'updateReasonCode_panel')]/div/ul/li[2]");
 	    selenium.click("//div[contains(@id,'updateReasonCode_panel')]/div/ul/li[2]");
 	    
 	    
 	    selenium.waitForPageToLoad("300000");
-	  //div[@id='j_id19_j_id_2h:orgNameWay']/div[2]/span
-	  //div[@id='j_id19_j_id_2h:orgNameWay_panel']/div/ul/li[3]
-	    selenium.click("//div[contains(@id,'orgNameWay')]/div[2]/span");
-	    selenium.click("//div[contains(@id,'orgNameWay_panel')]/div/ul/li[3]");
-	    selenium.waitForPageToLoad("300000");
-//	    Actions builder = new Actions(driver);
-//	    WebElement selector01Element = driver.findElement(By.xpath("//input[contains(@id,'afterItem')]"));
-//	    builder.keyDown(Keys.CONTROL).click(selector01Element).keyUp(Keys.CONTROL);
-//	    selenium.waitForPageToLoad("30000");
-//	    selector01Element.click();
-//	    selenium.waitForPageToLoad("30000");
-//	    selector01Element.sendKeys("Z：另立名字");
-//	    
-//	    WebElement selector02Element = driver.findElement(By.xpath("//input[contains(@id,'updateReasonCode')]"));
-//	    builder.keyDown(Keys.CONTROL).click(selector02Element).keyUp(Keys.CONTROL);
-//	    selenium.waitForPageToLoad("30000");
-//	    selector02Element.click();
-//	    selenium.waitForPageToLoad("30000");
-//	    selector02Element.sendKeys("Z：另立名字");
-//	    
-//	    WebElement selector03Element = driver.findElement(By.xpath("//input[contains(@id,'updateYyymmddPanel')]"));
-//	    builder.keyDown(Keys.CONTROL).click(selector03Element).keyUp(Keys.CONTROL);
-//	    selenium.waitForPageToLoad("30000");
-//	    selector03Element.click();
-//	    selenium.waitForPageToLoad("30000");
-//	    selector03Element.sendKeys("Z：另立名字");
 	    
+	    WebElement orgNameWayElement = driver.findElement(By.xpath("//div[contains(@id,'orgNameWay')]/div[2]/span"));
+	    System.out.println("orgNameWayElement.isDisplayed(): "+orgNameWayElement.isDisplayed());
+	    System.out.println("orgNameWayElement.isEnabled(): "+orgNameWayElement.isEnabled());
+	    System.out.println("orgNameWayElement.isVisible(): "+selenium.isVisible("//div[contains(@id,'orgNameWay')]/div[2]/span"));
+	    
+	    selenium.focus("//div[contains(@id,'orgNameWay')]/div[2]/span");
+	    selenium.click("//div[contains(@id,'orgNameWay')]/div[2]/span");
+	    
+	    WebElement orgNameWayPanelElement = driver.findElement(By.xpath("//div[contains(@id,'orgNameWay_panel')]/div/ul/li[3]"));
+	    System.out.println("orgNameWayPanelElement.isDisplayed(): "+orgNameWayPanelElement.isDisplayed());
+	    System.out.println("orgNameWayPanelElement.isEnabled(): "+orgNameWayPanelElement.isEnabled());	
+	    selenium.focus("//div[contains(@id,'orgNameWay_panel')]/div/ul/li[3]");
+	    selenium.click("//div[contains(@id,'orgNameWay_panel')]/div/ul/li[3]");
+	    
+	    
+	    selenium.waitForPageToLoad("300000");
 	    WebElement tabFine = driver.findElement(By.xpath("//a[contains(text(),'戶籍記事/罰鍰清單')]"));
 	    builder.keyDown(Keys.CONTROL).click(tabFine).keyUp(Keys.CONTROL);
 	    selenium.waitForPageToLoad("30000");
 	    tabFine.click();
 	    
-//	    selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
-//	    selenium.click("//button[4]");
-	    Actions dragger = new Actions(driver);
-
-	    WebElement draggablePartOfScrollbar = driver.findElement(By.xpath("//table[contains(@id,'risSystemTableForm')]"));
-	    int numberOfPixelsToDragTheScrollbarDown = 50;
-
-	    for (int i = 10; i < 500; i = i + numberOfPixelsToDragTheScrollbarDown) {
-		try {
-		    // this causes a gradual drag of the scroll bar, 10 units at a time
-		    dragger.moveToElement(draggablePartOfScrollbar).clickAndHold().moveByOffset(0, numberOfPixelsToDragTheScrollbarDown).release().perform();
-		    Thread.sleep(1000L);
-		} catch (Exception e1) {
+	    
+	    driver.switchTo().defaultContent();	    
+	    // Following is the code that scrolls through the page
+	    for (int second = 0;; second++) {
+		if (second >= 3) {
+		    break;
 		}
+		((RemoteWebDriver) driver).executeScript("window.scrollBy(0,200)", "");
+		
+		selenium.waitForPageToLoad("1000");
 	    }
-
-	    // now drag opposite way (downwards)
-	    numberOfPixelsToDragTheScrollbarDown = -50;
-	    for (int i = 500; i > 10; i = i + numberOfPixelsToDragTheScrollbarDown) {
-		// this causes a gradual drag of the scroll bar, -10 units at a time
-		dragger.moveToElement(draggablePartOfScrollbar).clickAndHold().moveByOffset(0, numberOfPixelsToDragTheScrollbarDown).release().perform();
-		try {
-		    Thread.sleep(1000L);
-		} catch (InterruptedException e) {
-		    // TODO Auto-generated catch block
-		    e.printStackTrace();
+	    for (int second = 0;; second++) {
+		if (second >= 10) {
+		    break;
 		}
+		((RemoteWebDriver) driver).executeScript("window.scrollBy(0,-200)", "");
+		
+		selenium.waitForPageToLoad("1000");
 	    }
+	    selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+	    selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+	    
+	    selenium.focus("//button[4]");
+	    //
+//	    try {
+//		Thread.sleep(60000);
+//	    } catch (InterruptedException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	    }
+	    ;
+	    for(String btn: selenium.getAllButtons()){
+		 System.out.println("btn: "+btn);
+	    }
+	   String btn01 = selenium.getText("//button[1]");
+	   System.out.println("btn01: "+btn01);
+	   
+	   String btn02 = selenium.getText("//button[2]");
+	   System.out.println("btn02: "+btn02);
+	   
+	   String btn03 = selenium.getText("//button[3]");
+	   System.out.println("btn03: "+btn03);
+	   
+	   String btn04 = selenium.getText("//button[4]");
+	   System.out.println("btn04: "+btn04);
+	   
+	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn01),"資料驗證")){
+	       selenium.click("//button[1]");
+	   }
+	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn02),"資料驗證")){
+	       selenium.click("//button[2]");
+	   }
+	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn03),"資料驗證")){
+	       selenium.click("//button[3]");
+	   }
+	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn04),"資料驗證")){
+	       selenium.click("//button[4]");//據說是關閉視窗
+	   }
+	   String verifyBtn = selenium.getText("//span[4]/button");//資料驗證
+	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(verifyBtn),"資料驗證")){
+	       selenium.click("//span[4]/button");//據說是資料驗證
+	   }
+	   String tmpSaveBtn = selenium.getText("//span[4]/button[3]"); //暫存
+	   System.out.println("tmpSaveBtn: "+tmpSaveBtn);
+	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(tmpSaveBtn),"暫存")){
+	       selenium.click("//span[4]/button[3]");//據說是暫存
+	   }
+	   selenium.waitForPageToLoad("1000"); 
 	}
     }
 }
