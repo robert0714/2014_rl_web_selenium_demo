@@ -37,7 +37,7 @@ public class HouseholdMaintainPage {
 	    Thread.sleep(6000l);
 	    selenium.waitForPageToLoad("300000");
 	    
-	    System.out.println("tabSelected02.isVisible(): "+selenium.isVisible("//input[@id='更正變更登記categoryRadio']"));
+	    System.out.println("tabSelected02.isVisible()<>: "+selenium.isVisible("//input[@id='更正變更登記categoryRadio']"));
 	    WebElement tabSelected02 = driver.findElement(By.xpath("//input[@id='更正變更登記categoryRadio']"));
 	    selenium.waitForPageToLoad("300000");	   
 	    System.out.println("tabSelected02.isDisplayed(): "+tabSelected02.isDisplayed());
@@ -51,7 +51,7 @@ public class HouseholdMaintainPage {
     private final String default02100URL = "_rl02100/rl02100.xhtml";
     public void clickRl1722B(final String currentUrl){	
 	while (true) {
-	    System.out.println("rl172Bclick.isVisible(): "+selenium.isVisible("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
+	    System.out.println("rl172Bclick.isVisible()<HouseholdMaintainPage>: "+selenium.isVisible("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
 	    WebElement rl172Bclick = driver.findElement(By.xpath("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
 	    System.out.println("rl172Bclick.isDisplayed(): "+rl172Bclick.isDisplayed());
 	    System.out.println("rl172Bclick.isEnabled(): "+rl172Bclick.isEnabled());
