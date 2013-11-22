@@ -93,7 +93,8 @@ public class RLLoginTest {
 		    final String siteId = stringArray[1];
 		    
 		    selenium.waitForPageToLoad("30000");
-		    if(selenium.isElementPresent("//input[@id='alert_flag")){
+		    ////div[contains(@id,'orgNameWay')]
+		    if(selenium.isElementPresent("//input[contains(@id,'alert_flag')]")){
 			 selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 		    }
 		    homepage.enterRl00001();
