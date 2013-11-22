@@ -42,16 +42,17 @@ public class HouseholdMaintainPage {
     private static final String OPERATION_PAGE_TEMPLATE = "/pages/func/rl00001/%s?%s";
     private final String default0172BURL = "_rl0172b/rl0172b.xhtml";
     private final String default02100URL = "_rl02100/rl02100.xhtml";
-    public void clickRl1722B(final String currentUrl){
-	WebElement rl172Bclick = driver.findElement(By.xpath("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
-	rl172Bclick.click();
-	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-	selenium.waitForPageToLoad("300000");
-//	String windowId= retireveWindowId(currentUrl);
-//	String rl172Burl = String.format("/rl/faces/pages/func/rl00001/%s?%s", default0172BURL, windowId);
-//	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-//	selenium.open(rl172Burl);
-	
+    public void clickRl1722B(final String currentUrl){	
+	while (true) {	    
+	    WebElement rl172Bclick = driver.findElement(By.xpath("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
+	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	    rl172Bclick.click();	    
+	    selenium.waitForPageToLoad("300000");
+	    final  String targetUrl = driver.getCurrentUrl();
+	    if (StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")) {
+		break;
+	    }
+	}
     }
     private String retireveWindowId(final String link){
 	if(StringUtils.contains(link, "windowId=") && StringUtils.contains(link, "?")){

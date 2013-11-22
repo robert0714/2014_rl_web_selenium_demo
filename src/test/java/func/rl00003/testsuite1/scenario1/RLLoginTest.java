@@ -42,16 +42,16 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-	final TableJDBCDao dao =new TableJDBCDao();
-	personIdSiteIdList = dao.getPersonIdSiteIdList();
+//	final TableJDBCDao dao =new TableJDBCDao();
+//	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = linuxMachine();
-	 driver = windowsMachine();
-//	driver = new FirefoxDriver();
+//	 driver = windowsMachine();
+	driver = new FirefoxDriver();
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 //	final String baseUrl = "http://192.168.10.18:6180";
 	final String baseUrl = "http://192.168.10.18:6280/rl/";
 	
-	final Dimension targetSize = new Dimension(1450,860);
+	final Dimension targetSize = new Dimension(1500,860);
 	driver.manage().window().setSize(targetSize);
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
     }
@@ -96,7 +96,7 @@ public class RLLoginTest {
 		    Thread.sleep(6000l);
 		    selenium.waitForPageToLoad("30000");
 		    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
-		    homepage.enterRl00001();
+//		    homepage.enterRl00001();
 		    
 		   
 		} catch (UnhandledAlertException  e) {
@@ -219,8 +219,8 @@ public class RLLoginTest {
 
     @After
     public void tearDown() throws Exception {
-	  selenium.click("id=logoutButton");
-	  selenium.waitForPageToLoad("30000");
-    	 selenium.stop();
+//	  selenium.click("id=logoutButton");
+//	  selenium.waitForPageToLoad("30000");
+//    	 selenium.stop();
     }
 }
