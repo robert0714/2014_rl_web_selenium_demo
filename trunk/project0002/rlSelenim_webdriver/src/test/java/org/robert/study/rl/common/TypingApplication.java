@@ -46,7 +46,7 @@ public class TypingApplication {
 	    }
 	public void typingApplication()throws  UnhandledAlertException,SeleniumException {
 	    	String siteLocation =String.format("label=%s：%s", getSiteId(),siteIdMap.get(getSiteId()));
-	    	selenium.type("document.masterForm.elements[3]", getPersonId());
+	    	selenium.type("//td[@id='currentPersonIdTD']/span/input", getPersonId());
 	    	selenium.waitForPageToLoad("30000");
 		selenium.type("document.masterForm.elements[4]",  "");
 		Actions builder = new Actions(driver);
@@ -63,18 +63,18 @@ public class TypingApplication {
 //		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
 		
 		selenium.waitForPageToLoad("360000");
-		selenium.click("document.masterForm.elements[14]");
+		selenium.click("//input[@id='applicantSameTxnPerson']");
 		selenium.waitForPageToLoad("30000");
 		
-		selenium.type("document.masterForm.elements[15]", getPersonId());
+		selenium.type("//td[@id='applicant1PersonIdTD']/span/input", getPersonId());
 	    	selenium.waitForPageToLoad("30000");
-		selenium.type("document.masterForm.elements[16]",getSiteId());
+//		selenium.type("document.masterForm.elements[16]",getSiteId());
 		selenium.waitForPageToLoad("30000");
-		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
-		selenium.waitForPageToLoad("360000");
-		selenium.click("document.masterForm.elements[16]");
+//		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
+//		selenium.waitForPageToLoad("360000");
+//		selenium.click("document.masterForm.elements[16]");
 		selenium.waitForPageToLoad("30000");
-		selenium.type("document.masterForm.elements[19]", "本人");
+//		selenium.type("document.masterForm.elements[19]", "本人");
 		selenium.waitForPageToLoad("30000");
 		
 		
