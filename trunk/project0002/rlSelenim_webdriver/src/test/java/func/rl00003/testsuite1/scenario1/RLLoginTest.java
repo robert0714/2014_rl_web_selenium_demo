@@ -148,9 +148,10 @@ public class RLLoginTest {
 	}
 	
 	if (!giveUpOperation && printBtnXpathHit) {
-	    // 預覽申請書會彈跳出視窗	    
+	    // 預覽申請書會彈跳出視窗
+	    int count =0;
 	    privntViewLoop: while (printBtnXpathHit) {
-		Thread.sleep(1000);
+		Thread.sleep(5000);//建議5秒
 		boolean printViewPresent = false;
 		try {
 		    final Set<String> windowHandles = driver.getWindowHandles();
@@ -159,7 +160,8 @@ public class RLLoginTest {
 			if (!StringUtils.equalsIgnoreCase(windowId, parentWindowId)) {
 			    // Switch to the Help Popup Browser Window
 			    driver.switchTo().window(windowId);
-			    if (StringUtils.contains(driver.getCurrentUrl(), "/common/popupContext.xhtml")) {
+			    System.out.println(driver.getCurrentUrl());	
+			    if (StringUtils.contains(currentUrl, "common/popupContent.xhtml")) {
 				// 戶役資訊服務網
 				String title = driver.getTitle();
 				System.out.println("title: " + title);
@@ -186,6 +188,10 @@ public class RLLoginTest {
 		    driver.switchTo().window(parentWindowId);
 		    break privntViewLoop;
 		}
+		if(count>10){
+		    break privntViewLoop;
+		}
+		count++;
 	    }
 	}
 	//div[@id='j_id39_j_id_sx_content']/button
