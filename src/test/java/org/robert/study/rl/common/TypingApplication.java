@@ -6,6 +6,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.UnhandledAlertException;
@@ -17,6 +18,7 @@ import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
 
 public class TypingApplication {
+    protected final  Logger logger = Logger.getLogger(getClass());
     private WebDriver driver;
     private String personId;
     private String siteId;
@@ -82,7 +84,7 @@ public class TypingApplication {
 		//由於點擊等待回應真的很花時間
 		inner : while (StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
 		    Thread.sleep(10000);
-		    System.out.println(driver.getCurrentUrl());
+		    logger.debug(driver.getCurrentUrl());
 		    if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
 			break outer;
 		    }

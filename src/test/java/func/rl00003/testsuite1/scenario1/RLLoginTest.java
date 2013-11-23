@@ -12,6 +12,7 @@ import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.robert.study.rl.common.WebUtils;
 import org.robert.study.rl.common.HouseholdMaintainPage;
 import org.robert.study.rl.common.Rl0172bPage;
@@ -19,11 +20,13 @@ import org.robert.study.rl.common.RlHompage;
 import org.robert.study.rl.common.TypingApplication;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class RLLoginTest {
+    protected static Logger logger = Logger.getLogger(RLLoginTest.class);
     private Selenium selenium;
     private  WebDriver driver ;
     List<String[]> personIdSiteIdList;
@@ -32,8 +35,8 @@ public class RLLoginTest {
 	final TableJDBCDao dao =new TableJDBCDao();
 	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = Utils.linuxMachine();
-	 driver = WebUtils.windowsMachine();
-//	driver = new FirefoxDriver();
+//	 driver = WebUtils.windowsMachine();
+	driver = new FirefoxDriver();
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 //	final String baseUrl = "http://192.168.10.18:6180";
 	final String baseUrl = "http://192.168.10.18:6280/rl/";
@@ -75,35 +78,25 @@ public class RLLoginTest {
 	aTypingApplication.setSiteId(siteId);
 	aTypingApplication.typingApplication();
 	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-	selenium.waitForPageToLoad("300000");
 	
-	Thread.sleep(6000l);
 	
-	selenium.waitForPageToLoad("300000");
-	String currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
 	
 	
-	if(StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){
-	    
+	if(StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")){
 	    
 	    selenium.waitForPageToLoad("300000");
 	    HouseholdMaintainPage householdMaintainPage = new HouseholdMaintainPage(  selenium,   driver);
 	    selenium.waitForPageToLoad("300000");
-	    Thread.sleep(6000l);
 	    householdMaintainPage.switchTab();
 	   //發現所需延遲時間需要更久
-	    selenium.waitForPageToLoad("300000");
-	    Thread.sleep(6000l);
-	    selenium.waitForPageToLoad("300000");
-	    Thread.sleep(6000l);
-	    selenium.waitForPageToLoad("300000");
+	    selenium.waitForPageToLoad("300000");	   
 	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	    householdMaintainPage.clickRl1722B();	   
 //	   Thread.sleep(6000l);
 	    
 	}
-	currentUrl = driver.getCurrentUrl();
+	String currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/_rl0172b/rl0172b.xhtml?windowId=344
 	
 	
