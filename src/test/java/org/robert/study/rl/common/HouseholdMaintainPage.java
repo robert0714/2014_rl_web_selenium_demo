@@ -2,6 +2,7 @@ package org.robert.study.rl.common;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import com.thoughtworks.selenium.Selenium;
 
 public class HouseholdMaintainPage {
+    protected final  Logger logger = Logger.getLogger(getClass());
     private WebDriver driver;
     private Selenium selenium;
 
@@ -29,7 +31,7 @@ public class HouseholdMaintainPage {
 	    }
 //	    Thread.sleep(6000l);
 	    
-	    System.out.println("tabSelected02.isVisible()<>: "+selenium.isVisible("//input[@id='更正變更登記categoryRadio']"));
+	   logger.debug("tabSelected02.isVisible()<>: "+selenium.isVisible("//input[@id='更正變更登記categoryRadio']"));
 	    if(selenium.isElementPresent("//input[@id='更正變更登記categoryRadio']")){
 		WebElement tabSelected02 = driver.findElement(By.xpath("//input[@id='更正變更登記categoryRadio']"));
 		
@@ -52,7 +54,7 @@ public class HouseholdMaintainPage {
 	   
 //	    Thread.sleep(6000l);
 	    
-	    System.out.println("tabSelected02.isVisible()<>: "+selenium.isVisible("//input[@id='更正變更登記categoryRadio']"));
+	   logger.debug("tabSelected02.isVisible()<>: "+selenium.isVisible("//input[@id='更正變更登記categoryRadio']"));
 	    if(selenium.isElementPresent("//input[@id='更正變更登記categoryRadio']")){
 		WebElement tabSelected02 = driver.findElement(By.xpath("//input[@id='更正變更登記categoryRadio']"));
 		
@@ -61,12 +63,12 @@ public class HouseholdMaintainPage {
 	    }
 	    
 	while (true) {
-	    System.out.println("rl172Bclick.isVisible()<HouseholdMaintainPage>: "+selenium.isVisible("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
+	   logger.debug("rl172Bclick.isVisible()<HouseholdMaintainPage>: "+selenium.isVisible("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
 	    
 	    if(selenium.isElementPresent("//a[contains(text(),'姓名變更／冠姓／從姓登記')]")){
 		WebElement rl172Bclick = driver.findElement(By.xpath("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
-		System.out.println("rl172Bclick.isDisplayed(): " + rl172Bclick.isDisplayed());
-		System.out.println("rl172Bclick.isEnabled(): " + rl172Bclick.isEnabled());
+		logger.debug("rl172Bclick.isDisplayed(): " + rl172Bclick.isDisplayed());
+		logger.debug("rl172Bclick.isEnabled(): " + rl172Bclick.isEnabled());
 		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 		rl172Bclick.click();
 		selenium.waitForPageToLoad("300000");

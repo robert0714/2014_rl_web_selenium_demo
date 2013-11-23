@@ -32,8 +32,8 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-	final TableJDBCDao dao =new TableJDBCDao();
-	personIdSiteIdList = dao.getPersonIdSiteIdList();
+//	final TableJDBCDao dao =new TableJDBCDao();
+//	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = Utils.linuxMachine();
 //	 driver = WebUtils.windowsMachine();
 	driver = new FirefoxDriver();
@@ -109,7 +109,7 @@ public class RLLoginTest {
 	
 	while(true){	    
 	    currentUrl = driver.getCurrentUrl();
-	    System.out.println(currentUrl);
+	    logger.debug(currentUrl);
 	    if(StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){
 		break;
 	    }
@@ -124,14 +124,14 @@ public class RLLoginTest {
 	
 	//Save the WindowHandle of Parent Browser Window
 	final String parentWindowId = driver.getWindowHandle();
-	System.out.println("parentWindowId: "+parentWindowId);
+	logger.debug("parentWindowId: "+parentWindowId);
 	boolean printBtnXpathHit =false;
 	final String printBtnXpath = "//div[contains(@id,'sx_content')]/button";
 	
 	if (selenium.isElementPresent(printBtnXpath)) {
 	    final WebElement printBtn = driver.findElement(By.xpath(printBtnXpath));
 	    final  String disabledAttribute = printBtn.getAttribute("disabled");
-	    System.out.println("-----------------disabledAttribute: "+disabledAttribute);
+	    logger.debug("-----------------disabledAttribute: "+disabledAttribute);
 	    if(StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())){
 		printBtnXpathHit=false;
 	    }else if(disabledAttribute==null || StringUtils.equals(disabledAttribute, Boolean.FALSE.toString())){
@@ -154,11 +154,11 @@ public class RLLoginTest {
 			    // Switch to the Help Popup Browser Window
 			    driver.switchTo().window(windowId);
 			    currentUrl=driver.getCurrentUrl();
-			    System.out.println(currentUrl);	
+			    logger.debug(currentUrl);	
 			    if (StringUtils.contains(currentUrl, "common/popupContent.xhtml")) {
 				// 戶役資訊服務網
 				String title = driver.getTitle();
-				System.out.println("title: " + title);
+				logger.debug("title: " + title);
 
 				// *[@id="j_id4_j_id_9:j_id_y"]/span
 				// *[@id="j_id4_j_id_9:j_id_y"]
