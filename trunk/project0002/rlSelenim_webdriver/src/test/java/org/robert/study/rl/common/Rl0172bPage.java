@@ -184,7 +184,7 @@ public class Rl0172bPage {
 				selenium.click(tmpSaveBtnXPath);// 據說是暫存
 				selenium.waitForPageToLoad("60000");
 				while(StringUtils.contains(driver.getCurrentUrl(), rl0172bPartialUlr)){
-				    Thread.sleep(60000);
+				    Thread.sleep(6000);
 				    if (!StringUtils.contains(driver.getCurrentUrl(), rl0172bPartialUlr)) {
 					break;
 				    }
