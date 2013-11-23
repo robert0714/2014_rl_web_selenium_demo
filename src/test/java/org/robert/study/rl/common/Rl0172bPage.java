@@ -186,32 +186,39 @@ public class Rl0172bPage {
 	   if (giveUpOperation){
 	       selenium.click("//button[4]");//據說是關閉視窗
 	   }
-	   final String  tmpSaveBtnXPath = "//span[4]/button[3]";
-	    final String tmpSaveBtnText = selenium.getText(tmpSaveBtnXPath); // 暫存
-	    System.out.println("tmpSaveBtn: " + tmpSaveBtnText);
-	    if (StringUtils.equalsIgnoreCase(StringUtils.trim(tmpSaveBtnText), "暫存")) {
-		// selenium.click("//span[4]/button[3]");//據說是暫存
-		// selenium.waitForPageToLoad("1000");
-		if (!giveUpOperation) {
-		    while (StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
-			String targetUrl = driver.getCurrentUrl();
-			System.out.println(targetUrl);
-			System.out.println("rl172Bclick.isVisible(): " + selenium.isVisible(tmpSaveBtnXPath));
-			System.out.println("rl172Bclick.isEditable(): " + selenium.isEditable(tmpSaveBtnXPath));
+	    if (StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
+		final String tmpSaveBtnXPath = "//span[4]/button[3]";
+		final String tmpSaveBtnText = selenium.getText(tmpSaveBtnXPath); // 暫存
+		System.out.println("tmpSaveBtn: " + tmpSaveBtnText);
+		if (StringUtils.equalsIgnoreCase(StringUtils.trim(tmpSaveBtnText), "暫存")) {
+		    // selenium.click("//span[4]/button[3]");//據說是暫存
+		    // selenium.waitForPageToLoad("1000");
+		    if (!giveUpOperation) {
+			while (StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
+			    String targetUrl = driver.getCurrentUrl();
+			    System.out.println(targetUrl);
+			    System.out.println("rl172Bclick.isVisible(): " + selenium.isVisible(tmpSaveBtnXPath));
+			    System.out.println("rl172Bclick.isEditable(): " + selenium.isEditable(tmpSaveBtnXPath));
 
-			if (selenium.isElementPresent(tmpSaveBtnXPath)  &&selenium.isVisible(tmpSaveBtnXPath) && StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")) {
-			    selenium.click(tmpSaveBtnXPath);// 據說是暫存
-			    selenium.waitForPageToLoad("1000");
-			    if (!StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
+			    if (selenium.isElementPresent(tmpSaveBtnXPath) && selenium.isVisible(tmpSaveBtnXPath)
+				    && StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")) {
+				
+				selenium.click(tmpSaveBtnXPath);// 據說是暫存
+				selenium.waitForPageToLoad("1000");
+				
+				if (!StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
+				    break;
+				}
+				
+			    } else {
 				break;
 			    }
-			} else {
-			    break;
 			}
 		    }
-		}
 
+		}
 	    }
+	   
 	   
 	   selenium.waitForPageToLoad("1000"); 
 	}
