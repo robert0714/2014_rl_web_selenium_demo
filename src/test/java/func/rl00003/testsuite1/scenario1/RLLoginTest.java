@@ -148,9 +148,9 @@ public class RLLoginTest {
 	}
 	
 	if (!giveUpOperation && printBtnXpathHit) {
-	    // 預覽申請書會彈跳出視窗
-	    Thread.sleep(6000);
+	    // 預覽申請書會彈跳出視窗	    
 	    privntViewLoop: while (printBtnXpathHit) {
+		Thread.sleep(1000);
 		boolean printViewPresent = false;
 		try {
 		    final Set<String> windowHandles = driver.getWindowHandles();
