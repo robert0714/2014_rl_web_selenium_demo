@@ -26,6 +26,7 @@ import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.WebElement;
+import org.robert.study.rl.common.ErrorMessageHandle;
 import org.robert.study.rl.common.HouseholdMaintainPage;
 import org.robert.study.rl.common.Rl0172bPage;
 import org.robert.study.rl.common.RlHompage;
@@ -177,8 +178,11 @@ public class RLLoginTest {
 	    selenium.waitForPageToLoad("1000");	    
 	}
 	
+	
+	final String printBtnXpath = "//div[contains(@id,'sx_content')]/button";
+	
 	if (selenium.isElementPresent("//div[contains(@id,'sx_content')]/button")) {
-	    selenium.click("//div[contains(@id,'sx_content')]/button");
+	    ErrorMessageHandle.handleClickBtn(selenium, printBtnXpath);
 	}
 	
 	//div[@id='j_id39_j_id_sx_content']/button
