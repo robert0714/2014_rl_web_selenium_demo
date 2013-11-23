@@ -33,8 +33,8 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-//	final TableJDBCDao dao =new TableJDBCDao();
-//	personIdSiteIdList = dao.getPersonIdSiteIdList();
+	final TableJDBCDao dao =new TableJDBCDao();
+	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = Utils.linuxMachine();
 //	 driver = WebUtils.windowsMachine();
 	driver = new FirefoxDriver();
