@@ -29,7 +29,7 @@ public class Utils {
 	       System.out.println(errorMessage);
 	       System.out.println(errorExtMessage);
 	       selenium.click("//span[4]/button");
-	       if(count>5){
+	       if(count>3){
 		   giveUpOperation=true;
 		   break;
 	       }
