@@ -50,25 +50,29 @@ public class TypingApplication {
 	String siteLocation = String.format("label=%s：%s", getSiteId(), siteIdMap.get(getSiteId()));
 
 	while (true) {
+	    if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+		break;
+	    }
 	    selenium.type("//td[@id='currentPersonIdTD']/span/input", getPersonId());
-	    selenium.waitForPageToLoad("30000");
+	    if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+		break;
+	    }
 	    selenium.type("document.masterForm.elements[4]", "");
-	    // Actions builder = new Actions(driver);
-	    // driver.findElement(By.xpath("//input[@id='j_id37_j_id_4e:inputValue']")).sendKeys("444");
+	    selenium.waitForPageToLoad("30000");
+	    
 	    WebElement selectorElement = driver.findElement(By.xpath("//input[contains(@id,'inputValue')]"));
 	    selenium.focus("//input[contains(@id,'inputValue')]");
 	    // builder.keyDown(Keys.CONTROL).click(selectorElement).keyUp(Keys.CONTROL);
 	    selenium.waitForPageToLoad("30000");
-	    selectorElement.click();
-	    selenium.waitForPageToLoad("30000");
+	    if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+		break;
+	    }
+	    selectorElement.clear();
 	    selectorElement.sendKeys(getSiteId());
-	    // selenium.runScript("document.getElementsByName('masterForm')[4].value = 10010070;");
-	    // selenium.select("//select[contains(@id,'items_input')]",
-	    // "label=10010070：嘉義縣新港鄉");
-	    // selenium.select("//select[contains(@id,'items_input')]",
-	    // siteLocation);
-
 	    selenium.waitForPageToLoad("360000");
+	    if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+		break;
+	    }
 	    selenium.click("//input[@id='applicantSameTxnPerson']");
 	    selenium.waitForPageToLoad("30000");
 
