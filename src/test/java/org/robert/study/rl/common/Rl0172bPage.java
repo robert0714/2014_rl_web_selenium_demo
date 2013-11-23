@@ -56,8 +56,10 @@ public class Rl0172bPage {
 	    String firstName = retrieveFirstName(element01);
 	    System.out.println("firstName: "+firstName);
 	    System.out.println("lastName: "+lastName);
-	    selenium.type("document.poopupForm.elements[13]", lastName);
-	    selenium.type("document.poopupForm.elements[14]", firstName);
+//	    selenium.type("document.poopupForm.elements[13]", lastName);
+//	    selenium.type("document.poopupForm.elements[14]", firstName);
+	    selenium.type("document.poopupForm.elements[14]", lastName);
+	    
 	    selenium.type("document.poopupForm.elements[17]", firstName);
 	    selenium.type("document.poopupForm.elements[18]", firstName+lastName);
 	    
@@ -175,45 +177,30 @@ public class Rl0172bPage {
 	       selenium.click("//button[4]");//據說是關閉視窗
 	   }
 	   boolean giveUpOperation=false;
-	   String verifyBtn = selenium.getText("//span[4]/button");//資料驗證
+	   final String clickBtnXpath ="//span[4]/button";
+	   String verifyBtn = selenium.getText(clickBtnXpath);//資料驗證
 	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(verifyBtn),"資料驗證")){
-	       selenium.click("//span[4]/button");//據說是資料驗證
-	       selenium.waitForPageToLoad("6000");
-	       if( selenium.isElementPresent("//*[@id='growl2_container']/div/div")){
-		   int count=0;
-		  
-		   while(true){			      
-		       String errorMessage =selenium.getText("//*[@id='growl2_container']/div/div/div[2]/span");
-		       String errorExtMessage =selenium.getText("//*[@id='growl2_container']/div/div/div[2]/p");		     
-		       System.out.println(errorMessage);
-		       System.out.println(errorExtMessage);
-		       selenium.click("//span[4]/button");
-		       if(count>5){
-			   giveUpOperation=true;
-			   break;
-		       }
-		       count++;
-		   }
-	       }
+	       giveUpOperation=ErrorMessageHandle.handleClickBtn(selenium, clickBtnXpath);
 	      
 	   }
 	   if (giveUpOperation){
 	       selenium.click("//button[4]");//據說是關閉視窗
 	   }
-	    String tmpSaveBtn = selenium.getText("//span[4]/button[3]"); // 暫存
-	    System.out.println("tmpSaveBtn: " + tmpSaveBtn);
-	    if (StringUtils.equalsIgnoreCase(StringUtils.trim(tmpSaveBtn), "暫存")) {
+	   final String  tmpSaveBtnXPath = "//span[4]/button[3]";
+	    final String tmpSaveBtnText = selenium.getText(tmpSaveBtnXPath); // 暫存
+	    System.out.println("tmpSaveBtn: " + tmpSaveBtnText);
+	    if (StringUtils.equalsIgnoreCase(StringUtils.trim(tmpSaveBtnText), "暫存")) {
 		// selenium.click("//span[4]/button[3]");//據說是暫存
 		// selenium.waitForPageToLoad("1000");
 		if (!giveUpOperation) {
 		    while (true) {
 			String targetUrl = driver.getCurrentUrl();
 			System.out.println(targetUrl);
-			System.out.println("rl172Bclick.isVisible(): " + selenium.isVisible("//span[4]/button[3]"));
-			System.out.println("rl172Bclick.isEditable(): " + selenium.isEditable("//span[4]/button[3]"));
+			System.out.println("rl172Bclick.isVisible(): " + selenium.isVisible(tmpSaveBtnXPath));
+			System.out.println("rl172Bclick.isEditable(): " + selenium.isEditable(tmpSaveBtnXPath));
 
-			if (selenium.isVisible("//span[4]/button[3]") && StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")) {
-			    selenium.click("//span[4]/button[3]");// 據說是暫存
+			if (selenium.isVisible(tmpSaveBtnXPath) && StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")) {
+			    selenium.click(tmpSaveBtnXPath);// 據說是暫存
 			    selenium.waitForPageToLoad("1000");
 			    if (!StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
 				break;

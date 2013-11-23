@@ -17,102 +17,101 @@ import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
 
 public class TypingApplication {
-	private WebDriver driver;
-	private String personId;
-	private String siteId;
-	private Map<String,String> siteIdMap;
-	private Selenium selenium;
-	
-	public TypingApplication(final   Selenium selenium,final WebDriver driver) throws  UnhandledAlertException,SeleniumException  {
-		super();
-		this . selenium = selenium;
-		this . siteIdMap = getSiteIdMap();
-		this.driver =driver;
+    private WebDriver driver;
+    private String personId;
+    private String siteId;
+    private Map<String, String> siteIdMap;
+    private Selenium selenium;
+
+    public TypingApplication(final Selenium selenium, final WebDriver driver) throws UnhandledAlertException, SeleniumException {
+	super();
+	this.selenium = selenium;
+	this.siteIdMap = getSiteIdMap();
+	this.driver = driver;
+    }
+
+    private Map<String, String> getSiteIdMap() {
+	Properties props = new Properties();
+	try {
+	    props.load(TypingApplication.class.getResourceAsStream("RSCD0107.properties"));
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
-	private Map<String,String> getSiteIdMap(){
-		Properties props = new Properties();
-		try {
-		    props.load(TypingApplication.class.getResourceAsStream("RSCD0107.properties"));
-		} catch (Exception e) {
-		    e.printStackTrace();
+	final Set<Object> keys = props.keySet();
+	final Map<String, String> siteIdMap = new HashMap<String, String>();
+	for (Object key : keys) {
+	    Object value = props.get(key);
+	    siteIdMap.put(key.toString(), value.toString());
+	}
+	return siteIdMap;
+    }
+
+    public void typingApplication() throws UnhandledAlertException, SeleniumException {
+	String siteLocation = String.format("label=%s：%s", getSiteId(), siteIdMap.get(getSiteId()));
+
+	while (true) {
+	    selenium.type("//td[@id='currentPersonIdTD']/span/input", getPersonId());
+	    selenium.waitForPageToLoad("30000");
+	    selenium.type("document.masterForm.elements[4]", "");
+	    // Actions builder = new Actions(driver);
+	    // driver.findElement(By.xpath("//input[@id='j_id37_j_id_4e:inputValue']")).sendKeys("444");
+	    WebElement selectorElement = driver.findElement(By.xpath("//input[contains(@id,'inputValue')]"));
+	    selenium.focus("//input[contains(@id,'inputValue')]");
+	    // builder.keyDown(Keys.CONTROL).click(selectorElement).keyUp(Keys.CONTROL);
+	    selenium.waitForPageToLoad("30000");
+	    selectorElement.click();
+	    selenium.waitForPageToLoad("30000");
+	    selectorElement.sendKeys(getSiteId());
+	    // selenium.runScript("document.getElementsByName('masterForm')[4].value = 10010070;");
+	    // selenium.select("//select[contains(@id,'items_input')]",
+	    // "label=10010070：嘉義縣新港鄉");
+	    // selenium.select("//select[contains(@id,'items_input')]",
+	    // siteLocation);
+
+	    selenium.waitForPageToLoad("360000");
+	    selenium.click("//input[@id='applicantSameTxnPerson']");
+	    selenium.waitForPageToLoad("30000");
+
+	    selenium.type("//td[@id='applicant1PersonIdTD']/span/input", getPersonId());
+	    selenium.waitForPageToLoad("30000");
+	    final String searchBtnXpath = "//div/div/button";
+	    if (selenium.isElementPresent(searchBtnXpath) && selenium.isVisible(searchBtnXpath)) {
+		selenium.click(searchBtnXpath);
+		selenium.waitForPageToLoad("30000");
+		String currentUrl = driver.getCurrentUrl();
+		// http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
+
+		System.out.println(currentUrl);
+		if (!StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {
+		    break;
 		}
-		final Set<Object> keys = props.keySet();
-		final Map<String, String> siteIdMap = new HashMap<String, String>();
-		for (Object key : keys) {
-		    Object value = props.get(key);
-		    siteIdMap.put(key.toString(), value.toString());
-		}
-		return siteIdMap;
+	    } else if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+		break;
 	    }
-	public void typingApplication()throws  UnhandledAlertException,SeleniumException {
-	    	String siteLocation =String.format("label=%s：%s", getSiteId(),siteIdMap.get(getSiteId()));
-	    	
-	    	selenium.type("//td[@id='currentPersonIdTD']/span/input", getPersonId());
-	    	selenium.waitForPageToLoad("30000");
-		selenium.type("document.masterForm.elements[4]",  "");
-		Actions builder = new Actions(driver);
-//		    driver.findElement(By.xpath("//input[@id='j_id37_j_id_4e:inputValue']")).sendKeys("444");
-		WebElement selectorElement = driver.findElement(By.xpath("//input[contains(@id,'inputValue')]"));
-		builder.keyDown(Keys.CONTROL).click(selectorElement).keyUp(Keys.CONTROL);
-		selenium.waitForPageToLoad("30000");
-		selectorElement.click();
-		selenium.waitForPageToLoad("30000");
-		selectorElement.sendKeys(getSiteId());
-		selenium.waitForPageToLoad("30000");
-//		selenium.runScript("document.getElementsByName('masterForm')[4].value = 10010070;"); 
-//		selenium.select("//select[contains(@id,'items_input')]", "label=10010070：嘉義縣新港鄉");
-//		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
-		
-		selenium.waitForPageToLoad("360000");
-		selenium.click("//input[@id='applicantSameTxnPerson']");
-		selenium.waitForPageToLoad("30000");
-		
-		selenium.type("//td[@id='applicant1PersonIdTD']/span/input", getPersonId());
-	    	selenium.waitForPageToLoad("30000");
-//		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
-//		selenium.type("document.masterForm.elements[19]", "本人");
-		selenium.waitForPageToLoad("30000");
-		
-		
-		while(true){
-		    final String searchBtnXpath="//div/div/button";
-		    if(selenium.isElementPresent(searchBtnXpath) && selenium.isVisible(searchBtnXpath)){
-			selenium.click(searchBtnXpath);
-			selenium.waitForPageToLoad("30000");
-			String currentUrl = driver.getCurrentUrl();
-			// http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
 
-			System.out.println(currentUrl);
-			if (!StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {
-			    break;
-			}
-		    }else if(!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")){
-			 break;
-		    }
-        	    
-		}		
 	}
+    }
 
-	public String getPersonId() {
-	    if(StringUtils.isBlank(personId)){
-		personId ="F208368696";
-	    }
-	    return personId;
+    public String getPersonId() {
+	if (StringUtils.isBlank(personId)) {
+	    personId = "F208368696";
 	}
+	return personId;
+    }
 
-	public void setPersonId(String personId) {
-	    this.personId = personId;
-	}
+    public void setPersonId(String personId) {
+	this.personId = personId;
+    }
 
-	public String getSiteId() {
-	    if(StringUtils.isBlank(siteId)){
-		siteId ="10010070";
-	    }
-	    return siteId;
+    public String getSiteId() {
+	if (StringUtils.isBlank(siteId)) {
+	    siteId = "10010070";
 	}
+	return siteId;
+    }
 
-	public void setSiteId(String siteId) {
-	    this.siteId = siteId;
-	}
-	
+    public void setSiteId(String siteId) {
+	this.siteId = siteId;
+    }
+
 }
