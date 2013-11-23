@@ -160,7 +160,8 @@ public class RLLoginTest {
 			if (!StringUtils.equalsIgnoreCase(windowId, parentWindowId)) {
 			    // Switch to the Help Popup Browser Window
 			    driver.switchTo().window(windowId);
-			    System.out.println(driver.getCurrentUrl());	
+			    currentUrl=driver.getCurrentUrl();
+			    System.out.println(currentUrl);	
 			    if (StringUtils.contains(currentUrl, "common/popupContent.xhtml")) {
 				// 戶役資訊服務網
 				String title = driver.getTitle();
