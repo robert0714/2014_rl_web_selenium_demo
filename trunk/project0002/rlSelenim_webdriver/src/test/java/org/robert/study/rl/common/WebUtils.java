@@ -10,7 +10,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.thoughtworks.selenium.Selenium;
 
-public class Utils {
+public class WebUtils {
 
     /****
      * 按鈕Xpath為clickBtnXpath點選後

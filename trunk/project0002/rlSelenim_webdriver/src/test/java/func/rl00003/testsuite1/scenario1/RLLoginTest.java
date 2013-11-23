@@ -12,7 +12,7 @@ import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.WebElement;
-import org.robert.study.rl.common.Utils;
+import org.robert.study.rl.common.WebUtils;
 import org.robert.study.rl.common.HouseholdMaintainPage;
 import org.robert.study.rl.common.Rl0172bPage;
 import org.robert.study.rl.common.RlHompage;
@@ -32,7 +32,7 @@ public class RLLoginTest {
 	final TableJDBCDao dao =new TableJDBCDao();
 	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = Utils.linuxMachine();
-	 driver = Utils.windowsMachine();
+	 driver = WebUtils.windowsMachine();
 //	driver = new FirefoxDriver();
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 //	final String baseUrl = "http://192.168.10.18:6180";
@@ -123,7 +123,7 @@ public class RLLoginTest {
 	    
 	}
 	
-	 Utils.scroolbarDownUp(selenium, driver);
+	 WebUtils.scroolbarDownUp(selenium, driver);
 	
 	
 	
@@ -143,7 +143,7 @@ public class RLLoginTest {
 		printBtnXpathHit=false;
 	    }else if(disabledAttribute==null || StringUtils.equals(disabledAttribute, Boolean.FALSE.toString())){
 		printBtnXpathHit=true;
-		giveUpOperation=Utils.handleClickBtn(selenium, printBtnXpath);
+		giveUpOperation=WebUtils.handleClickBtn(selenium, printBtnXpath);
 	    }
 	}
 	

@@ -121,7 +121,7 @@ public class Rl0172bPage {
 	    tabFine.click();
 	    
 	    
-	    Utils.scroolbarDownUp(selenium, driver);
+	    WebUtils.scroolbarDownUp(selenium, driver);
 	    
 	    selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 	    selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
@@ -160,7 +160,7 @@ public class Rl0172bPage {
 	   final String clickBtnXpath ="//span[4]/button";
 	   String verifyBtn = selenium.getText(clickBtnXpath);//資料驗證
 	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(verifyBtn),"資料驗證")){
-	       giveUpOperation=Utils.handleClickBtn(selenium, clickBtnXpath);
+	       giveUpOperation=WebUtils.handleClickBtn(selenium, clickBtnXpath);
 	      
 	   }
 	   if (giveUpOperation){
