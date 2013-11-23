@@ -170,12 +170,17 @@ public class Rl0172bPage {
 	    if (StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
 		final String tmpSaveBtnXPath = "//span[4]/button[3]";
 		final String tmpSaveBtnText = selenium.getText(tmpSaveBtnXPath); // 暫存
+		final WebElement tmpSaveBtn = driver.findElement(By.xpath(tmpSaveBtnXPath));
+		final  String disabledAttribute = tmpSaveBtn.getAttribute("disabled");
 		System.out.println("tmpSaveBtn: " + tmpSaveBtnText);
+		System.out.println("disabledAttribute: " + disabledAttribute);
 		if (StringUtils.equalsIgnoreCase(StringUtils.trim(tmpSaveBtnText), "暫存")) {
 		    // selenium.click("//span[4]/button[3]");//據說是暫存
 		    // selenium.waitForPageToLoad("1000");
 		    if (!giveUpOperation) {
-			while (StringUtils.contains(driver.getCurrentUrl(), rl0172bPartialUlr)) {
+			while (!StringUtils.equals(disabledAttribute, Boolean.TRUE.toString()) 
+				&&
+				StringUtils.contains(driver.getCurrentUrl(), rl0172bPartialUlr)) {
 			    String targetUrl = driver.getCurrentUrl();
 			    System.out.println(targetUrl);
 
