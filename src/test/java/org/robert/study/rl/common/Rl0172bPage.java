@@ -187,6 +187,8 @@ public class Rl0172bPage {
 		    String targetUrl = driver.getCurrentUrl();
 		    System.out.println(targetUrl);
 		    System.out.println("rl172Bclick.isVisible(): "+selenium.isVisible("//span[4]/button[3]"));
+		    System.out.println("rl172Bclick.isVisible(): "+selenium.isEditable("//span[4]/button[3]") );
+		    
 		    if(selenium.isVisible("//span[4]/button[3]") && StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")){
 			selenium.click("//span[4]/button[3]");// 據說是暫存
 			selenium.waitForPageToLoad("1000");
