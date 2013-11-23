@@ -141,7 +141,7 @@ public class RLLoginTest {
 	    System.out.println("-----------------disabledAttribute: "+disabledAttribute);
 	    if(StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())){
 		printBtnXpathHit=false;
-	    }else if(StringUtils.equals(disabledAttribute, Boolean.FALSE.toString())){
+	    }else if(disabledAttribute==null || StringUtils.equals(disabledAttribute, Boolean.FALSE.toString())){
 		printBtnXpathHit=true;
 		giveUpOperation=Utils.handleClickBtn(selenium, printBtnXpath);
 	    }
