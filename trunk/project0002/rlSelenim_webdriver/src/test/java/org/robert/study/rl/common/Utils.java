@@ -28,7 +28,7 @@ public class Utils {
 	       String errorExtMessage =selenium.getText("//*[@id='growl2_container']/div/div/div[2]/p");		     
 	       System.out.println(errorMessage);
 	       System.out.println(errorExtMessage);
-	       selenium.click("//span[4]/button");
+	       selenium.click(clickBtnXpath);
 	       if(count>3){
 		   giveUpOperation=true;
 		   break;
