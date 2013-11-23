@@ -5,10 +5,13 @@ import java.util.Set;
 
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
+import org.openqa.selenium.WebElement;
 import org.robert.study.rl.common.Utils;
 import org.robert.study.rl.common.HouseholdMaintainPage;
 import org.robert.study.rl.common.Rl0172bPage;
@@ -65,7 +68,7 @@ public class RLLoginTest {
 	}	
     }
    
-    private void process(final RlHompage homepage  ,final String personId, final String siteId)throws  Exception {	
+    private void process(final RlHompage homepage  ,final String personId, final String siteId)throws  Exception {
 	final TypingApplication aTypingApplication = homepage.typingApplication();
 	selenium.waitForPageToLoad("30000");
 	aTypingApplication.setPersonId(personId);
@@ -80,8 +83,10 @@ public class RLLoginTest {
 	String currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
 	
-	System.out.println(currentUrl);
+	
 	if(StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){
+	    
+	    
 	    selenium.waitForPageToLoad("300000");
 	    HouseholdMaintainPage householdMaintainPage = new HouseholdMaintainPage(  selenium,   driver);
 	    selenium.waitForPageToLoad("300000");
@@ -121,19 +126,28 @@ public class RLLoginTest {
 	 Utils.scroolbarDownUp(selenium, driver);
 	
 	
-	final String printBtnXpath = "//div[contains(@id,'sx_content')]/button";
+	
 	boolean giveUpOperation=false ;
 	
 	//Save the WindowHandle of Parent Browser Window
 	final String parentWindowId = driver.getWindowHandle();
 	System.out.println("parentWindowId: "+parentWindowId);
 	boolean printBtnXpathHit =false;
+	final String printBtnXpath = "//div[contains(@id,'sx_content')]/button";
+	
 	if (selenium.isElementPresent(printBtnXpath)) {
-	    giveUpOperation=Utils.handleClickBtn(selenium, printBtnXpath);
-	    printBtnXpathHit=true;
+	    final WebElement printBtn = driver.findElement(By.xpath(printBtnXpath));
+	    final  String disabledAttribute = printBtn.getAttribute("disabled");
+	    System.out.println("-----------------disabledAttribute: "+disabledAttribute);
+	    if(StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())){
+		printBtnXpathHit=false;
+	    }else if(StringUtils.equals(disabledAttribute, Boolean.FALSE.toString())){
+		printBtnXpathHit=true;
+		giveUpOperation=Utils.handleClickBtn(selenium, printBtnXpath);
+	    }
 	}
 	
-	if(!giveUpOperation){
+	if(!giveUpOperation && printBtnXpathHit){
 	    //預覽申請書會彈跳出視窗
 	    Thread.sleep(6000);
 	    while (driver.getWindowHandles().size()<2 && printBtnXpathHit) {
