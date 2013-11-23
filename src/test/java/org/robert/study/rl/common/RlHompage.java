@@ -68,8 +68,14 @@ public class RlHompage {
 	    selenium.waitForPageToLoad("30000");
 	    selenium.click("//ul[@id='navmenu-v']/li");// 進入登記作業,
 	    selenium.waitForPageToLoad("30000");
+	    
 	    final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
 	    if (selenium.isVisible(rl00001Xpath) && selenium.isElementPresent(rl00001Xpath)) {
+		
+		if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+		    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+		}
+		
 		selenium.click(rl00001Xpath);// 進入現戶簿頁
 		// selenium.open("/rl/faces/pages/func/rl00001/rl00001.xhtml");
 		selenium.waitForPageToLoad("30000");
