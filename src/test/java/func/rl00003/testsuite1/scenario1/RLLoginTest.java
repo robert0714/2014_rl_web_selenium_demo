@@ -6,6 +6,12 @@ import java.util.Set;
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 
+import func.rl.common.HouseholdMaintainPage;
+import func.rl.common.Rl0172bPage;
+import func.rl.common.RlHompage;
+import func.rl.common.TypingApplication;
+import func.rl.common.WebUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchWindowException;
@@ -13,11 +19,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.robert.study.rl.common.WebUtils;
-import org.robert.study.rl.common.HouseholdMaintainPage;
-import org.robert.study.rl.common.Rl0172bPage;
-import org.robert.study.rl.common.RlHompage;
-import org.robert.study.rl.common.TypingApplication;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
