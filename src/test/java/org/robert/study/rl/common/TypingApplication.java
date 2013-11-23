@@ -46,6 +46,7 @@ public class TypingApplication {
 	    }
 	public void typingApplication()throws  UnhandledAlertException,SeleniumException {
 	    	String siteLocation =String.format("label=%s：%s", getSiteId(),siteIdMap.get(getSiteId()));
+	    	
 	    	selenium.type("//td[@id='currentPersonIdTD']/span/input", getPersonId());
 	    	selenium.waitForPageToLoad("30000");
 		selenium.type("document.masterForm.elements[4]",  "");
@@ -68,35 +69,27 @@ public class TypingApplication {
 		
 		selenium.type("//td[@id='applicant1PersonIdTD']/span/input", getPersonId());
 	    	selenium.waitForPageToLoad("30000");
-//		selenium.type("document.masterForm.elements[16]",getSiteId());
-		selenium.waitForPageToLoad("30000");
 //		selenium.select("//select[contains(@id,'items_input')]", siteLocation);
-//		selenium.waitForPageToLoad("360000");
-//		selenium.click("document.masterForm.elements[16]");
-		selenium.waitForPageToLoad("30000");
 //		selenium.type("document.masterForm.elements[19]", "本人");
 		selenium.waitForPageToLoad("30000");
 		
 		
 		while(true){
-        	    selenium.click("//div/div/button");
-        	    selenium.waitForPageToLoad("30000");
-        	    String currentUrl = driver.getCurrentUrl();
-        	    // http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
-    
-        	    System.out.println(currentUrl);
-        	    if (!StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {    
-        		break;
-    	   	      }
-		}
-		
-//		selenium.click("document.masterForm.elements[42]");
-//		selenium.click("//body/div[2]/div/div/div");
-		
-//		selenium.type("document.masterForm.elements[33]", "本人");
-		
-		
-		
+		    if(selenium.isElementPresent("//div/div/button")){
+			selenium.click("//div/div/button");
+			selenium.waitForPageToLoad("30000");
+			String currentUrl = driver.getCurrentUrl();
+			// http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
+
+			System.out.println(currentUrl);
+			if (!StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {
+			    break;
+			}
+		    }else if(!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")){
+			 break;
+		    }
+        	    
+		}		
 	}
 
 	public String getPersonId() {
