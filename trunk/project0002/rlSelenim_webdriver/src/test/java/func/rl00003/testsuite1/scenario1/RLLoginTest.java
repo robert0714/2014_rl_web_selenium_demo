@@ -26,8 +26,8 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-//	final TableJDBCDao dao =new TableJDBCDao();
-//	personIdSiteIdList = dao.getPersonIdSiteIdList();
+	final TableJDBCDao dao =new TableJDBCDao();
+	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = Utils.linuxMachine();
 	 driver = Utils.windowsMachine();
 //	driver = new FirefoxDriver();
@@ -127,15 +127,16 @@ public class RLLoginTest {
 	//Save the WindowHandle of Parent Browser Window
 	final String parentWindowId = driver.getWindowHandle();
 	System.out.println("parentWindowId: "+parentWindowId);
-	
-	if (selenium.isElementPresent("//div[contains(@id,'sx_content')]/button")) {
+	boolean printBtnXpathHit =false;
+	if (selenium.isElementPresent(printBtnXpath)) {
 	    giveUpOperation=Utils.handleClickBtn(selenium, printBtnXpath);
+	    printBtnXpathHit=true;
 	}
 	
 	if(!giveUpOperation){
 	    //預覽申請書會彈跳出視窗
 	    Thread.sleep(6000);
-	    while (driver.getWindowHandles().size()<2) {
+	    while (driver.getWindowHandles().size()<2 && printBtnXpathHit) {
 		boolean printViewPresent =false;
 		try {
 		    final Set<String> windowHandles = driver.getWindowHandles();
