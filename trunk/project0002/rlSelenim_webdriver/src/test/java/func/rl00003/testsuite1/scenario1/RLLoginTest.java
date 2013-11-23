@@ -1,32 +1,12 @@
 package func.rl00003.testsuite1.scenario1;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
-import java.util.Set;
-
-import com.gargoylesoftware.htmlunit.util.UrlUtils;
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
-import com.thoughtworks.selenium.SeleniumException;
-
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchWindowException;
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
-import org.openqa.selenium.WebElement;
-import org.robert.study.rl.common.ErrorMessageHandle;
+import org.robert.study.rl.common.Utils;
 import org.robert.study.rl.common.HouseholdMaintainPage;
 import org.robert.study.rl.common.Rl0172bPage;
 import org.robert.study.rl.common.RlHompage;
@@ -45,8 +25,8 @@ public class RLLoginTest {
     public void setUp() throws Exception {
 	final TableJDBCDao dao =new TableJDBCDao();
 	personIdSiteIdList = dao.getPersonIdSiteIdList();
-//	 driver = linuxMachine();
-	 driver = windowsMachine();
+//	 driver = Utils.linuxMachine();
+	 driver = Utils.windowsMachine();
 //	driver = new FirefoxDriver();
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 //	final String baseUrl = "http://192.168.10.18:6180";
@@ -56,30 +36,7 @@ public class RLLoginTest {
 	driver.manage().window().setSize(targetSize);
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
     }
-    public RemoteWebDriver windowsMachine() throws MalformedURLException{	
-	URL remoteAddress = new URL("http://192.168.9.51:4444/wd/hub");	
-	// have tried using the below commented out lines as well, but in all
-	// cases I face errors.
-	// URL remoteAddress = new URL("http://mymachine:4444/grid/register");
-	// URL remoteAddress = new URL("http://mymachine:4444/wd/hub");
-	DesiredCapabilities dc = DesiredCapabilities.firefox();
-	dc.setBrowserName("firefox");	
-	dc.setPlatform(Platform.WINDOWS);
-	RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
-	return driver;
-    }
-    public RemoteWebDriver linuxMachine() throws MalformedURLException{	
-	URL remoteAddress = new URL("http://192.168.9.51:4444/wd/hub");	
-	// have tried using the below commented out lines as well, but in all
-	// cases I face errors.
-	// URL remoteAddress = new URL("http://mymachine:4444/grid/register");
-	// URL remoteAddress = new URL("http://mymachine:4444/wd/hub");
-	DesiredCapabilities dc = DesiredCapabilities.firefox();
-	dc.setBrowserName("firefox");	
-	dc.setPlatform(Platform.LINUX);
-	RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
-	return driver;
-    }
+    
     @Test
     public void testRLLogin() throws Exception {
 	final RlHompage homepage = new RlHompage(selenium,driver);
@@ -159,30 +116,14 @@ public class RLLoginTest {
 	    }
 	    
 	}
-	driver.switchTo().defaultContent();
-	// Following is the code that scrolls through the page
-	for (int second = 0;; second++) {
-	    if (second >= 3) {
-		break;
-	    }
-	    ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,200)", "");
-
-	    selenium.waitForPageToLoad("1000");
-	}
-	for (int second = 0;; second++) {
-	    if (second >= 10) {
-		break;
-	    }
-	    ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,-200)", "");
-
-	    selenium.waitForPageToLoad("1000");	    
-	}
+	
+	 Utils.scroolbarDownUp(selenium, driver);
 	
 	
 	final String printBtnXpath = "//div[contains(@id,'sx_content')]/button";
 	
 	if (selenium.isElementPresent("//div[contains(@id,'sx_content')]/button")) {
-	    ErrorMessageHandle.handleClickBtn(selenium, printBtnXpath);
+	    Utils.handleClickBtn(selenium, printBtnXpath);
 	}
 	
 	//div[@id='j_id39_j_id_sx_content']/button

@@ -9,7 +9,7 @@ import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
 
 public class RlHompage {
-    WebDriver driver;
+    private  WebDriver driver;
     private Selenium selenium;
 
     public RlHompage(final WebDriver driver) throws  UnhandledAlertException,SeleniumException  {
