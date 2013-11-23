@@ -1,6 +1,8 @@
 package func.rl00003.testsuite1.scenario1;
 
 import java.util.List;
+import java.util.Set;
+
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.Dimension;
@@ -24,8 +26,8 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-	final TableJDBCDao dao =new TableJDBCDao();
-	personIdSiteIdList = dao.getPersonIdSiteIdList();
+//	final TableJDBCDao dao =new TableJDBCDao();
+//	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = Utils.linuxMachine();
 	 driver = Utils.windowsMachine();
 //	driver = new FirefoxDriver();
@@ -124,38 +126,52 @@ public class RLLoginTest {
 	
 	//Save the WindowHandle of Parent Browser Window
 	final String parentWindowId = driver.getWindowHandle();
+	System.out.println("parentWindowId: "+parentWindowId);
 	
 	if (selenium.isElementPresent("//div[contains(@id,'sx_content')]/button")) {
 	    giveUpOperation=Utils.handleClickBtn(selenium, printBtnXpath);
 	}
+	
 	if(!giveUpOperation){
 	    //預覽申請書會彈跳出視窗
-	    try {
-		// Switch to the Help Popup Browser Window
-		driver.switchTo().window("printViewWindow");
-		//戶役資訊服務網		
-		String title =driver.getTitle();
-		System.out.println("title: "+title);
-		
-		
-		//*[@id="j_id4_j_id_9:j_id_y"]/span
-		//*[@id="j_id4_j_id_9:j_id_y"]
-		selenium.click("//form/div/div/div/div[2]/button");//端未列印
-		//form/div/div/div/div[2]/button[2]
-//		selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
-		
-	    } catch (NoSuchWindowException e) {
-		e.printStackTrace();
+	    Thread.sleep(6000);
+	    while (driver.getWindowHandles().size()<2) {
+		boolean printViewPresent =false;
+		try {
+		    final Set<String> windowHandles = driver.getWindowHandles();
+		    for(final String windowId:windowHandles){
+			if(!StringUtils.equalsIgnoreCase(windowId, parentWindowId)){
+			    // Switch to the Help Popup Browser Window
+			    driver.switchTo().window(windowId);
+			    if(StringUtils.contains(driver.getCurrentUrl(), "/common/popupContext.xhtml")){
+				// 戶役資訊服務網
+				String title = driver.getTitle();
+				System.out.println("title: " + title);
+
+				// *[@id="j_id4_j_id_9:j_id_y"]/span
+				// *[@id="j_id4_j_id_9:j_id_y"]
+				selenium.click("//form/div/div/div/div[2]/button");// 端未列印
+				// form/div/div/div/div[2]/button[2]
+				// selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
+				printViewPresent =true;
+				break;
+			    }
+			}
+		    }		} catch (NoSuchWindowException e) {
+		    e.printStackTrace();
+		}
+
+		if (printViewPresent) {
+		    // Close the Help Popup Window
+		    driver.close();
+
+		    // Move back to the Parent Browser Window
+		    driver.switchTo().window(parentWindowId);
+		    break;
+		}		
 	    }
 	    
-	    // Close the Help Popup Window
-	    driver.close();
-	    
-	    // Move back to the Parent Browser Window
-	    driver.switchTo().window(parentWindowId);
 	}
-	
-	
 	//div[@id='j_id39_j_id_sx_content']/button
     }
 
