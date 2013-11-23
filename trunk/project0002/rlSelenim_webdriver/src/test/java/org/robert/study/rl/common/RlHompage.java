@@ -1,6 +1,7 @@
 package org.robert.study.rl.common;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
@@ -11,7 +12,7 @@ import com.thoughtworks.selenium.SeleniumException;
 public class RlHompage {
     private  WebDriver driver;
     private Selenium selenium;
-
+    protected final  Logger logger = Logger.getLogger(getClass());
     public RlHompage(final WebDriver driver) throws  UnhandledAlertException,SeleniumException  {
 	super();
 	this.driver = driver;
@@ -82,7 +83,7 @@ public class RlHompage {
 		String currentUrl = driver.getCurrentUrl();
 		// http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
 
-		System.out.println(currentUrl);
+		logger.debug(currentUrl);
 		if (StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {
 		    break;
 		}

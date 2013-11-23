@@ -13,7 +13,7 @@ import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
 
 public class Rl0172bPage {
-    protected final  Logger logger = Logger.getLogger(getClass());
+    protected final static  Logger logger = Logger.getLogger(Rl0172bPage.class);
     private WebDriver driver;
     private Selenium selenium;
 
@@ -29,7 +29,7 @@ public class Rl0172bPage {
 	int pos = StringUtils.indexOf(element01, "(");
 	int end = StringUtils.indexOf(element01, ")");	
 	String tmp =StringUtils.substring(element01, pos, end);
-	System.out.println(tmp);
+	logger.debug(tmp);
 	String[] stringArray = StringUtils.splitPreserveAllTokens(tmp, "：");
 	if(stringArray.length>1){
 	    firstName =StringUtils.trim(stringArray[2]);
@@ -178,8 +178,8 @@ public class Rl0172bPage {
 		final String tmpSaveBtnText = selenium.getText(tmpSaveBtnXPath); // 暫存
 		final WebElement tmpSaveBtn = driver.findElement(By.xpath(tmpSaveBtnXPath));
 		final  String disabledAttribute = tmpSaveBtn.getAttribute("disabled");
-		System.out.println("tmpSaveBtn: " + tmpSaveBtnText);
-		System.out.println("disabledAttribute: " + disabledAttribute);
+		logger.debug("tmpSaveBtn: " + tmpSaveBtnText);
+		logger.debug("disabledAttribute: " + disabledAttribute);
 		if (StringUtils.equalsIgnoreCase(StringUtils.trim(tmpSaveBtnText), "暫存")) {
 		    // selenium.click("//span[4]/button[3]");//據說是暫存
 		    // selenium.waitForPageToLoad("1000");
@@ -210,7 +210,7 @@ public class Rl0172bPage {
 	    }
 	   
 	   
-	   selenium.waitForPageToLoad("1000"); 
+	   selenium.waitForPageToLoad("100000"); 
 	}
     }
 }
