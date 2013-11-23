@@ -193,13 +193,13 @@ public class Rl0172bPage {
 		// selenium.click("//span[4]/button[3]");//據說是暫存
 		// selenium.waitForPageToLoad("1000");
 		if (!giveUpOperation) {
-		    while (true) {
+		    while (StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
 			String targetUrl = driver.getCurrentUrl();
 			System.out.println(targetUrl);
 			System.out.println("rl172Bclick.isVisible(): " + selenium.isVisible(tmpSaveBtnXPath));
 			System.out.println("rl172Bclick.isEditable(): " + selenium.isEditable(tmpSaveBtnXPath));
 
-			if (selenium.isVisible(tmpSaveBtnXPath) && StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")) {
+			if (selenium.isElementPresent(tmpSaveBtnXPath)  &&selenium.isVisible(tmpSaveBtnXPath) && StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")) {
 			    selenium.click(tmpSaveBtnXPath);// 據說是暫存
 			    selenium.waitForPageToLoad("1000");
 			    if (!StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {

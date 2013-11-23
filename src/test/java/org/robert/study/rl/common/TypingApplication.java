@@ -46,32 +46,29 @@ public class TypingApplication {
 	return siteIdMap;
     }
 
-    public void typingApplication() throws UnhandledAlertException, SeleniumException {
+    public void typingApplication() throws UnhandledAlertException, SeleniumException, InterruptedException {
 	String siteLocation = String.format("label=%s：%s", getSiteId(), siteIdMap.get(getSiteId()));
 
-	while (true) {
-	    if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-		break;
-	    }
+	
+	outer: while ( StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+	    
 	    selenium.type("//td[@id='currentPersonIdTD']/span/input", getPersonId());
 	    if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-		break;
+		break outer;
 	    }
-	    selenium.type("document.masterForm.elements[4]", "");
-	    selenium.waitForPageToLoad("30000");
 	    
 	    WebElement selectorElement = driver.findElement(By.xpath("//input[contains(@id,'inputValue')]"));
 	    selenium.focus("//input[contains(@id,'inputValue')]");
 	    // builder.keyDown(Keys.CONTROL).click(selectorElement).keyUp(Keys.CONTROL);
 	    selenium.waitForPageToLoad("30000");
 	    if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-		break;
+		break outer;
 	    }
 	    selectorElement.clear();
 	    selectorElement.sendKeys(getSiteId());
 	    selenium.waitForPageToLoad("360000");
 	    if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-		break;
+		break outer;
 	    }
 	    selenium.click("//input[@id='applicantSameTxnPerson']");
 	    selenium.waitForPageToLoad("30000");
@@ -79,18 +76,24 @@ public class TypingApplication {
 	    selenium.type("//td[@id='applicant1PersonIdTD']/span/input", getPersonId());
 	    selenium.waitForPageToLoad("30000");
 	    final String searchBtnXpath = "//div/div/button";
-	    if (selenium.isElementPresent(searchBtnXpath) && selenium.isVisible(searchBtnXpath)) {
+	    if (selenium.isElementPresent(searchBtnXpath) && selenium.isVisible(searchBtnXpath)&& StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
 		selenium.click(searchBtnXpath);
-		selenium.waitForPageToLoad("30000");
-		String currentUrl = driver.getCurrentUrl();
-		// http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
-
-		System.out.println(currentUrl);
-		if (!StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {
-		    break;
+		int count =0;
+		//由於點擊等待回應真的很花時間
+		inner : while (StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+		    Thread.sleep(10000);
+		    System.out.println(driver.getCurrentUrl());
+		    if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
+			break outer;
+		    }
+		    count++;
+		    if(count>10){
+			break inner;
+		    }
 		}
+		
 	    } else if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-		break;
+		break outer;
 	    }
 
 	}
