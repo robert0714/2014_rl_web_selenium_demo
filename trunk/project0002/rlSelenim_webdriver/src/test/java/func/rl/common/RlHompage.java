@@ -65,9 +65,10 @@ public class RlHompage {
      * ***/
     public void enterRl00001() {
 	
-	while(true){
+	while(selenium.isElementPresent("//*[@id='navmenu-v']/li") ){
+	    
 	    selenium.waitForPageToLoad("30000");
-	    selenium.click("//ul[@id='navmenu-v']/li");// 進入登記作業,
+	    selenium.click("//*[@id='navmenu-v']/li");// 進入登記作業,
 	    selenium.waitForPageToLoad("30000");
 	    
 	    final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";

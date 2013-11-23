@@ -78,7 +78,10 @@ public class RLLoginTest {
 	aTypingApplication.setPersonId(personId);
 	aTypingApplication.setSiteId(siteId);
 	aTypingApplication.typingApplication();
-	selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	
+	if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	}
 	
 	
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
@@ -92,7 +95,9 @@ public class RLLoginTest {
 	    householdMaintainPage.switchTab();
 	   //發現所需延遲時間需要更久
 	    selenium.waitForPageToLoad("300000");	   
-	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	    if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	    }
 	    householdMaintainPage.clickRl1722B();	   
 //	   Thread.sleep(6000l);
 	    
@@ -160,7 +165,7 @@ public class RLLoginTest {
 				// 戶役資訊服務網
 				String title = driver.getTitle();
 				logger.debug("title: " + title);
-
+				WebUtils.scroolbarDownUp(selenium, driver);
 				// *[@id="j_id4_j_id_9:j_id_y"]/span
 				// *[@id="j_id4_j_id_9:j_id_y"]
 				selenium.click("//form/div/div/div/div[2]/button");// 端未列印
