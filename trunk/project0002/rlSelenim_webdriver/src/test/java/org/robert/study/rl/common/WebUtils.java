@@ -3,6 +3,7 @@ package org.robert.study.rl.common;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -11,7 +12,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import com.thoughtworks.selenium.Selenium;
 
 public class WebUtils {
-
+    protected static final  Logger logger = Logger.getLogger(WebUtils.class);
     /****
      * 按鈕Xpath為clickBtnXpath點選後
      * 針對訊息作處理
@@ -26,8 +27,8 @@ public class WebUtils {
 	   while(true){			      
 	       String errorMessage =selenium.getText("//*[@id='growl2_container']/div/div/div[2]/span");
 	       String errorExtMessage =selenium.getText("//*[@id='growl2_container']/div/div/div[2]/p");		     
-	       System.out.println(errorMessage);
-	       System.out.println(errorExtMessage);
+	       logger.info(errorMessage);
+	       logger.info(errorExtMessage);
 	       selenium.click(clickBtnXpath);
 	       if(count>3){
 		   giveUpOperation=true;
