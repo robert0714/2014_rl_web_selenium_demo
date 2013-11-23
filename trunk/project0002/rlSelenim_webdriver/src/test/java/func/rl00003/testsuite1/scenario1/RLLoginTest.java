@@ -4,6 +4,7 @@ import java.util.List;
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.robert.study.rl.common.Utils;
@@ -52,9 +53,7 @@ public class RLLoginTest {
 
 		selenium.waitForPageToLoad("30000");
 		// //div[contains(@id,'orgNameWay')]
-		if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
-		    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-		}
+		
 		homepage.enterRl00001();
 		process(homepage, personId, siteId);
 	    }
@@ -122,13 +121,40 @@ public class RLLoginTest {
 	
 	final String printBtnXpath = "//div[contains(@id,'sx_content')]/button";
 	boolean giveUpOperation=false ;
+	
+	//Save the WindowHandle of Parent Browser Window
+	final String parentWindowId = driver.getWindowHandle();
+	
 	if (selenium.isElementPresent("//div[contains(@id,'sx_content')]/button")) {
 	    giveUpOperation=Utils.handleClickBtn(selenium, printBtnXpath);
 	}
 	if(!giveUpOperation){
 	    //預覽申請書會彈跳出視窗
+	    try {
+		// Switch to the Help Popup Browser Window
+		driver.switchTo().window("printViewWindow");
+		//戶役資訊服務網		
+		String title =driver.getTitle();
+		System.out.println("title: "+title);
+		
+		
+		//*[@id="j_id4_j_id_9:j_id_y"]/span
+		//*[@id="j_id4_j_id_9:j_id_y"]
+		selenium.click("//form/div/div/div/div[2]/button");//端未列印
+		//form/div/div/div/div[2]/button[2]
+//		selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
+		
+	    } catch (NoSuchWindowException e) {
+		e.printStackTrace();
+	    }
 	    
+	    // Close the Help Popup Window
+	    driver.close();
+	    
+	    // Move back to the Parent Browser Window
+	    driver.switchTo().window(parentWindowId);
 	}
+	
 	
 	//div[@id='j_id39_j_id_sx_content']/button
     }
