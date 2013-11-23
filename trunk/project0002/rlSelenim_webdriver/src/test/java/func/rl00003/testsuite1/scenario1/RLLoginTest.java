@@ -121,9 +121,13 @@ public class RLLoginTest {
 	
 	
 	final String printBtnXpath = "//div[contains(@id,'sx_content')]/button";
-	
+	boolean giveUpOperation=false ;
 	if (selenium.isElementPresent("//div[contains(@id,'sx_content')]/button")) {
-	    Utils.handleClickBtn(selenium, printBtnXpath);
+	    giveUpOperation=Utils.handleClickBtn(selenium, printBtnXpath);
+	}
+	if(!giveUpOperation){
+	    //預覽申請書會彈跳出視窗
+	    
 	}
 	
 	//div[@id='j_id39_j_id_sx_content']/button
