@@ -75,8 +75,9 @@ public class TypingApplication {
 		
 		
 		while(true){
-		    if(selenium.isElementPresent("//div/div/button")){
-			selenium.click("//div/div/button");
+		    final String searchBtnXpath="//div/div/button";
+		    if(selenium.isElementPresent(searchBtnXpath) && selenium.isVisible(searchBtnXpath)){
+			selenium.click(searchBtnXpath);
 			selenium.waitForPageToLoad("30000");
 			String currentUrl = driver.getCurrentUrl();
 			// http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
