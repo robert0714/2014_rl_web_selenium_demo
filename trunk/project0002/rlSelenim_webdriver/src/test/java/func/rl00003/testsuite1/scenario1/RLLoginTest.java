@@ -42,8 +42,8 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-	final TableJDBCDao dao =new TableJDBCDao();
-	personIdSiteIdList = dao.getPersonIdSiteIdList();
+//	final TableJDBCDao dao =new TableJDBCDao();
+//	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = linuxMachine();
 //	 driver = windowsMachine();
 	driver = new FirefoxDriver();
@@ -244,10 +244,14 @@ public class RLLoginTest {
 	    }
 	    ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,-200)", "");
 
-	    selenium.waitForPageToLoad("1000");
+	    selenium.waitForPageToLoad("1000");	    
 	}
 	
-
+	if (selenium.isElementPresent("//div[contains(@id,'sx_content')]/button")) {
+	    selenium.click("//div[contains(@id,'sx_content')]/button");
+	}
+	
+	//div[@id='j_id39_j_id_sx_content']/button
     }
 
     @After
