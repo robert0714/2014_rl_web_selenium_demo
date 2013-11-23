@@ -147,18 +147,18 @@ public class RLLoginTest {
 	    }
 	}
 	
-	if(!giveUpOperation && printBtnXpathHit){
-	    //預覽申請書會彈跳出視窗
+	if (!giveUpOperation && printBtnXpathHit) {
+	    // 預覽申請書會彈跳出視窗
 	    Thread.sleep(6000);
-	    while (driver.getWindowHandles().size()<2 && printBtnXpathHit) {
-		boolean printViewPresent =false;
+	    privntViewLoop: while (driver.getWindowHandles().size() < 2 && printBtnXpathHit) {
+		boolean printViewPresent = false;
 		try {
 		    final Set<String> windowHandles = driver.getWindowHandles();
-		    for(final String windowId:windowHandles){
-			if(!StringUtils.equalsIgnoreCase(windowId, parentWindowId)){
+		    for (final String windowId : windowHandles) {
+			if (!StringUtils.equalsIgnoreCase(windowId, parentWindowId)) {
 			    // Switch to the Help Popup Browser Window
 			    driver.switchTo().window(windowId);
-			    if(StringUtils.contains(driver.getCurrentUrl(), "/common/popupContext.xhtml")){
+			    if (StringUtils.contains(driver.getCurrentUrl(), "/common/popupContext.xhtml")) {
 				// 戶役資訊服務網
 				String title = driver.getTitle();
 				System.out.println("title: " + title);
@@ -168,11 +168,12 @@ public class RLLoginTest {
 				selenium.click("//form/div/div/div/div[2]/button");// 端未列印
 				// form/div/div/div/div[2]/button[2]
 				// selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
-				printViewPresent =true;
-				break;
+				printViewPresent = true;
+				break privntViewLoop;
 			    }
 			}
-		    }		} catch (NoSuchWindowException e) {
+		    }
+		} catch (NoSuchWindowException e) {
 		    e.printStackTrace();
 		}
 
@@ -183,9 +184,8 @@ public class RLLoginTest {
 		    // Move back to the Parent Browser Window
 		    driver.switchTo().window(parentWindowId);
 		    break;
-		}		
+		}
 	    }
-	    
 	}
 	//div[@id='j_id39_j_id_sx_content']/button
     }
