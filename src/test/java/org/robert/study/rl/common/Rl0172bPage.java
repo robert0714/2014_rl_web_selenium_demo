@@ -16,6 +16,8 @@ public class Rl0172bPage {
     private WebDriver driver;
     private Selenium selenium;
 
+    private final String rl0172bPartialUlr ="_rl0172b/rl0172b.xhtml";
+    
     public Rl0172bPage(final Selenium selenium, final WebDriver driver)throws  UnhandledAlertException,SeleniumException  {
 	super();
 	this.selenium = selenium;
@@ -44,9 +46,9 @@ public class Rl0172bPage {
 	}
 	return lastName;
    }
-    public void switchTab()throws  UnhandledAlertException,SeleniumException  {
+    public void switchTab()throws  UnhandledAlertException,SeleniumException, InterruptedException  {
 	final String currentUrl = driver.getCurrentUrl();
-	if (StringUtils.contains(currentUrl, "_rl0172b/rl0172b.xhtml")) {
+	if (StringUtils.contains(currentUrl, rl0172bPartialUlr)) {
 	    selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 	    selenium.waitForPageToLoad("300000");
 	    selenium.click("//a[contains(text(),'當事人、申請資料')]");
@@ -119,35 +121,13 @@ public class Rl0172bPage {
 	    tabFine.click();
 	    
 	    
-	    driver.switchTo().defaultContent();	    
-	    // Following is the code that scrolls through the page
-	    for (int second = 0;; second++) {
-		if (second >= 3) {
-		    break;
-		}
-		((RemoteWebDriver) driver).executeScript("window.scrollBy(0,200)", "");
-		
-		selenium.waitForPageToLoad("1000");
-	    }
-	    for (int second = 0;; second++) {
-		if (second >= 10) {
-		    break;
-		}
-		((RemoteWebDriver) driver).executeScript("window.scrollBy(0,-200)", "");
-		
-		selenium.waitForPageToLoad("1000");
-	    }
+	    Utils.scroolbarDownUp(selenium, driver);
+	    
 	    selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 	    selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 	    
 	    selenium.focus("//button[4]");
-	    //
-//	    try {
-//		Thread.sleep(60000);
-//	    } catch (InterruptedException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	    }
+	    
 	    ;
 	    for(String btn: selenium.getAllButtons()){
 		 System.out.println("btn: "+btn);
@@ -180,12 +160,13 @@ public class Rl0172bPage {
 	   final String clickBtnXpath ="//span[4]/button";
 	   String verifyBtn = selenium.getText(clickBtnXpath);//資料驗證
 	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(verifyBtn),"資料驗證")){
-	       giveUpOperation=ErrorMessageHandle.handleClickBtn(selenium, clickBtnXpath);
+	       giveUpOperation=Utils.handleClickBtn(selenium, clickBtnXpath);
 	      
 	   }
 	   if (giveUpOperation){
 	       selenium.click("//button[4]");//據說是關閉視窗
 	   }
+	   selenium.waitForPageToLoad("1000"); 
 	    if (StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
 		final String tmpSaveBtnXPath = "//span[4]/button[3]";
 		final String tmpSaveBtnText = selenium.getText(tmpSaveBtnXPath); // 暫存
@@ -194,22 +175,20 @@ public class Rl0172bPage {
 		    // selenium.click("//span[4]/button[3]");//據說是暫存
 		    // selenium.waitForPageToLoad("1000");
 		    if (!giveUpOperation) {
-			while (StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
+			while (StringUtils.contains(driver.getCurrentUrl(), rl0172bPartialUlr)) {
 			    String targetUrl = driver.getCurrentUrl();
 			    System.out.println(targetUrl);
-			    System.out.println("rl172Bclick.isVisible(): " + selenium.isVisible(tmpSaveBtnXPath));
-			    System.out.println("rl172Bclick.isEditable(): " + selenium.isEditable(tmpSaveBtnXPath));
 
 			    if (selenium.isElementPresent(tmpSaveBtnXPath) && selenium.isVisible(tmpSaveBtnXPath)
-				    && StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")) {
-				
+				    && StringUtils.contains(targetUrl, rl0172bPartialUlr)) {				
 				selenium.click(tmpSaveBtnXPath);// 據說是暫存
-				selenium.waitForPageToLoad("1000");
-				
-				if (!StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
-				    break;
+				selenium.waitForPageToLoad("60000");
+				while(StringUtils.contains(driver.getCurrentUrl(), rl0172bPartialUlr)){
+				    Thread.sleep(60000);
+				    if (!StringUtils.contains(driver.getCurrentUrl(), rl0172bPartialUlr)) {
+					break;
+				    }
 				}
-				
 			    } else {
 				break;
 			    }
