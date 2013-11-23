@@ -63,22 +63,23 @@ public class RlHompage {
      * 進入現戶簿頁
      * ***/
     public void enterRl00001() {
-	selenium.waitForPageToLoad("30000");
-	// selenium.click("//ul[@id='navmenu-v']/li/ul/li/a");
-	selenium.click("//ul[@id='navmenu-v']/li");// 進入登記作業,
-	selenium.waitForPageToLoad("30000");
+	
 	while(true){
-	    
-	    selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]");// 進入現戶簿頁
-	    // selenium.open("/rl/faces/pages/func/rl00001/rl00001.xhtml");
 	    selenium.waitForPageToLoad("30000");
-	    String currentUrl = driver.getCurrentUrl();
-	    // http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
+	    selenium.click("//ul[@id='navmenu-v']/li");// 進入登記作業,
+	    selenium.waitForPageToLoad("30000");
+	    if (selenium.isElementPresent("//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]")) {
+		selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]");// 進入現戶簿頁
+		// selenium.open("/rl/faces/pages/func/rl00001/rl00001.xhtml");
+		selenium.waitForPageToLoad("30000");
+		String currentUrl = driver.getCurrentUrl();
+		// http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
 
-	    System.out.println(currentUrl);
-	    if (StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {    
-		break;
-	   }
+		System.out.println(currentUrl);
+		if (StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {
+		    break;
+		}
+	    }
 	}
 	
 	
