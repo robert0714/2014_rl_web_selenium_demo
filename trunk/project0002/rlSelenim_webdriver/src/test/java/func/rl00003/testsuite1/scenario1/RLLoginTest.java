@@ -154,6 +154,7 @@ public class RLLoginTest {
 		boolean printViewPresent = false;
 		try {
 		    final Set<String> windowHandles = driver.getWindowHandles();
+		    browerWindowLoop:
 		    for (final String windowId : windowHandles) {
 			if (!StringUtils.equalsIgnoreCase(windowId, parentWindowId)) {
 			    // Switch to the Help Popup Browser Window
@@ -169,7 +170,7 @@ public class RLLoginTest {
 				// form/div/div/div/div[2]/button[2]
 				// selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
 				printViewPresent = true;
-				break privntViewLoop;
+				break browerWindowLoop;
 			    }
 			}
 		    }
@@ -183,7 +184,7 @@ public class RLLoginTest {
 
 		    // Move back to the Parent Browser Window
 		    driver.switchTo().window(parentWindowId);
-		    break;
+		    break privntViewLoop;
 		}
 	    }
 	}
