@@ -89,7 +89,7 @@ public class TypingApplication {
 			break outer;
 		    }
 		    count++;
-		    if(count>10){
+		    if(count>5){
 			break inner;
 		    }
 		}

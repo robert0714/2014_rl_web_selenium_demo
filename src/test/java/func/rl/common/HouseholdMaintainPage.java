@@ -51,8 +51,6 @@ public class HouseholdMaintainPage {
 		tabSelected01.click();
 		selenium.waitForPageToLoad("300000");
 	    }
-	   
-//	    Thread.sleep(6000l);
 	    
 	   logger.debug("tabSelected02.isVisible()<>: "+selenium.isVisible("//input[@id='更正變更登記categoryRadio']"));
 	    if(selenium.isElementPresent("//input[@id='更正變更登記categoryRadio']")){
@@ -62,7 +60,7 @@ public class HouseholdMaintainPage {
 		selenium.waitForPageToLoad("300000");
 	    }
 	    
-	while (true) {
+	
 	   logger.debug("rl172Bclick.isVisible()<HouseholdMaintainPage>: "+selenium.isVisible("//a[contains(text(),'姓名變更／冠姓／從姓登記')]"));
 	    
 	    if(selenium.isElementPresent("//a[contains(text(),'姓名變更／冠姓／從姓登記')]")){
@@ -73,11 +71,7 @@ public class HouseholdMaintainPage {
 		rl172Bclick.click();
 		selenium.waitForPageToLoad("300000");
 	    }
-	    final  String targetUrl = driver.getCurrentUrl();
-	    if (StringUtils.contains(targetUrl, "_rl0172b/rl0172b.xhtml")) {
-		break;
-	    }
-	}
+	
     }
     
 }
