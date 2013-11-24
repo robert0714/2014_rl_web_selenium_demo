@@ -88,4 +88,23 @@ public class WebUtils {
 	RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
 	return driver;
     }
+    public static  boolean handleRLAlert(final  Selenium selenium){
+	       boolean giveUpOperation=false ;
+	       selenium.waitForPageToLoad("6000");
+	       if( selenium.isElementPresent("//*[@id='growl2_container']/div/div")){
+		   int count=0;	  
+		   while(true){			      
+		       String errorMessage =selenium.getText("//*[@id='growl2_container']/div/div/div[2]/span");
+		       String errorExtMessage =selenium.getText("//*[@id='growl2_container']/div/div/div[2]/p");		     
+		       logger.info(errorMessage);
+		       logger.info(errorExtMessage);
+		       if(count>3){
+			   giveUpOperation=true;
+			   break;
+		       }
+		       count++;
+		   }
+	       }
+	       return giveUpOperation;
+	   }
 }
