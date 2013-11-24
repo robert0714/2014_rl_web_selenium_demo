@@ -108,7 +108,8 @@ public class TypingApplication {
 
     public String getPersonId() {
 	if (StringUtils.isBlank(personId)) {
-	    personId = "F208368696";
+//	    personId = "F208368696";
+	    personId = "C268351856";
 	}
 	return personId;
     }
@@ -119,7 +120,8 @@ public class TypingApplication {
 
     public String getSiteId() {
 	if (StringUtils.isBlank(siteId)) {
-	    siteId = "10010070";
+	    siteId = "65000120";
+//	    siteId = "10010070";
 	}
 	return siteId;
     }
