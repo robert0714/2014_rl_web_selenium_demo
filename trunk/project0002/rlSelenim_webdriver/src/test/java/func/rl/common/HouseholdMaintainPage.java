@@ -71,7 +71,7 @@ public class HouseholdMaintainPage {
 	    selenium.click(printBtnXpath);
 	    selenium.waitForPageToLoad("30000");
 	    while(StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")){
-		Thread.sleep(30000);
+		Thread.sleep(3000);
 	    }
 	    WebUtils.scroolbarDownUp(selenium, driver);
 	}
