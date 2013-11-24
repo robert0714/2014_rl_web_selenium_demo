@@ -7,6 +7,7 @@ import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 
 import func.rl.common.HouseholdMaintainPage;
+import func.rl.common.PagePartialURL;
 import func.rl.common.Rl0172bPage;
 import func.rl.common.Rl02a10Page;
 import func.rl.common.RlHompage;
@@ -123,7 +124,7 @@ public class RLLoginTest {
 	    while (true) {
 		currentUrl = driver.getCurrentUrl();
 		logger.debug(currentUrl);
-		if (StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")) {
+		if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
 		    break;
 		}
 		Thread.sleep(5000);
@@ -132,12 +133,19 @@ public class RLLoginTest {
 	}
 	 WebUtils.scroolbarDownUp(selenium, driver);
 	
-	if (householdMaintainPage != null) {
+	if (householdMaintainPage != null && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
 	    householdMaintainPage.processPrintView();
-	    selenium.refresh();
+	    if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+		selenium.refresh();
+	    }
+	    
 	    householdMaintainPage.processAppyCahange();
 	}
-	selenium.refresh();
+	if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	    selenium.refresh();
+	}
 	selenium.waitForPageToLoad("300000");
 	//進入2A10
 	Rl02a10Page rl02a10Page =new Rl02a10Page(selenium, driver);

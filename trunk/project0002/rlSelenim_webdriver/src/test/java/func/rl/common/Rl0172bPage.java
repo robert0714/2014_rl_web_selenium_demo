@@ -139,11 +139,12 @@ public class Rl0172bPage {
 		nationalityElement.sendKeys("022");
 		selenium.waitForPageToLoad("30000");
 	    }
-	    selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+	    
 	    
     }
     public void inputData02()throws  UnhandledAlertException,SeleniumException, InterruptedException  {
 	 WebUtils.scroolbarDownUp(selenium, driver);
+	 selenium.waitForPageToLoad("30000");
 	 selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 	 selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 

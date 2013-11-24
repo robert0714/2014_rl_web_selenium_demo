@@ -55,7 +55,7 @@ public class HouseholdMaintainPage {
      * 存檔測試程序
      * *****/
     public void processAppyCahange() throws InterruptedException {	
-	boolean printable = false;
+	boolean hitable = false;
 	final String printBtnXpath = "//*[@id='saveBtnId']";
 	//*[@id='saveBtnId']
 	//div[contains(@id,'saveBtnId')]/button
@@ -64,14 +64,14 @@ public class HouseholdMaintainPage {
 	    final String disabledAttribute = printBtn.getAttribute("disabled");
 	    logger.debug("-----------------disabledAttribute: " + disabledAttribute);
 	    if (StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())) {
-		printable = false;
+		hitable = false;
 	    } else if (disabledAttribute == null || StringUtils.equals(disabledAttribute, Boolean.FALSE.toString())) {
-		printable = true;
+		hitable = true;
 		
 	    }
 	}
 
-	if ( printable) {
+	if ( hitable) {
 	    if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
 		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	    }
@@ -79,6 +79,9 @@ public class HouseholdMaintainPage {
 	    selenium.waitForPageToLoad("30000");
 	    while(StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")){
 		Thread.sleep(3000);
+		if(!StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")){
+		    break;
+		}
 	    }
 	    WebUtils.scroolbarDownUp(selenium, driver);
 	}
