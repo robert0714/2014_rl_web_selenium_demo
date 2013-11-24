@@ -33,8 +33,8 @@ public class RLLoginTest {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-	final TableJDBCDao dao =new TableJDBCDao();
-	personIdSiteIdList = dao.getPersonIdSiteIdList();
+//	final TableJDBCDao dao =new TableJDBCDao();
+//	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = WebUtils.linuxMachine();
 	 driver = WebUtils.windowsMachine();
 //	driver = new FirefoxDriver();
@@ -115,17 +115,20 @@ public class RLLoginTest {
 	    selenium.waitForPageToLoad("300000");
 	    Rl0172bPage rl0172bPage = new Rl0172bPage(  selenium,   driver);
 	    rl0172bPage.switchTab();
-	    selenium.waitForPageToLoad("300000");	    
+	    selenium.waitForPageToLoad("300000");
+	    
+	    while (true) {
+		currentUrl = driver.getCurrentUrl();
+		logger.debug(currentUrl);
+		if (StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")) {
+		    break;
+		}
+		Thread.sleep(5000);
+		selenium.refresh();
+	    }
 	}
 	
-	while(true){	    
-	    currentUrl = driver.getCurrentUrl();
-	    logger.debug(currentUrl);
-	    if(StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){
-		break;
-	    }
-	    
-	}
+	
 	
 	 WebUtils.scroolbarDownUp(selenium, driver);
 	

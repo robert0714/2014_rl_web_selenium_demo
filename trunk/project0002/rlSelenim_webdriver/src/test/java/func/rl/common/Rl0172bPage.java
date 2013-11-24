@@ -132,45 +132,50 @@ public class Rl0172bPage {
 	    selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 	    selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 	    
-	    selenium.focus("//button[4]");
+//	    selenium.focus("//button[4]");
 	    
 	    ;
-	    for(String btn: selenium.getAllButtons()){
-		logger.debug("btn: "+btn);
-	    }
-	   String btn01 = selenium.getText("//button[1]");
-	  logger.debug("btn01: "+btn01);
-	   
-	   String btn02 = selenium.getText("//button[2]");
-	  logger.debug("btn02: "+btn02);
-	   
-	   String btn03 = selenium.getText("//button[3]");
-	  logger.debug("btn03: "+btn03);
-	   
-	   String btn04 = selenium.getText("//button[4]");
-	  logger.debug("btn04: "+btn04);
-	   
-	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn01),"資料驗證")){
-	       selenium.click("//button[1]");
-	   }
-	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn02),"資料驗證")){
-	       selenium.click("//button[2]");
-	   }
-	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn03),"資料驗證")){
-	       selenium.click("//button[3]");
-	   }
-	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn04),"資料驗證")){
-	       selenium.click("//button[4]");//據說是關閉視窗
-	   }
+//	    for(String btn: selenium.getAllButtons()){
+//		logger.debug("btn: "+btn);
+//	    }
+//	   String btn01 = selenium.getText("//button[1]");
+//	  logger.debug("btn01: "+btn01);
+//	   
+//	   String btn02 = selenium.getText("//button[2]");
+//	  logger.debug("btn02: "+btn02);
+//	   
+//	   String btn03 = selenium.getText("//button[3]");
+//	  logger.debug("btn03: "+btn03);
+//	   
+//	   String btn04 = selenium.getText("//button[4]");
+//	  logger.debug("btn04: "+btn04);
+//	   
+//	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn01),"資料驗證")){
+//	     
+//	   }
+//	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn02),"資料驗證")){
+//	       selenium.click("//button[2]");
+//	   }
+//	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn03),"資料驗證")){
+//	       selenium.click("//button[3]");
+//	   }
+//	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn04),"資料驗證")){
+//	       selenium.click("//button[4]");//據說是關閉視窗
+//	   }
+	    final String clickBtnXpath ="//*[contains(@id,'verifyAppData')]";//資料驗證
+	    selenium.focus(clickBtnXpath);
+	    selenium.click(clickBtnXpath);
+	    
 	   boolean giveUpOperation=false;
-	   final String clickBtnXpath ="//span[4]/button";
+	 
 	   String verifyBtn = selenium.getText(clickBtnXpath);//資料驗證
 	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(verifyBtn),"資料驗證")){
 	       giveUpOperation=WebUtils.handleClickBtn(selenium, clickBtnXpath);
 	      
 	   }
 	   if (giveUpOperation){
-	       selenium.click("//button[4]");//據說是關閉視窗
+	     //*[@id="j_id19_j_id_2h:doCancel"]
+	       selenium.click("//*[contains(@id,'doCancel')]");//據說是關閉視窗
 	   }
 	   selenium.waitForPageToLoad("1000"); 
 	    if (StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
@@ -204,6 +209,8 @@ public class Rl0172bPage {
 				break;
 			    }
 			}
+		    }else{
+			
 		    }
 
 		}
