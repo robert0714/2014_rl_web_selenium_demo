@@ -62,7 +62,37 @@ public class WebUtils {
 	    selenium.waitForPageToLoad("1000");
 	}
    }
+   /***
+    * 讓捲軸下跑
+    * **/
+   public static void scroolbarDown(final  Selenium selenium,final  WebDriver driver){
+	driver.switchTo().defaultContent();
+	// Following is the code that scrolls through the page
+	for (int second = 0;; second++) {
+	    if (second >= 3) {
+		break;
+	    }
+	    ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,200)", "");
 
+	    selenium.waitForPageToLoad("1000");
+	}
+   }
+   /***
+    * 讓捲軸上跑
+    * **/
+   public static void scroolbarUp(final  Selenium selenium,final  WebDriver driver){
+	driver.switchTo().defaultContent();
+	// Following is the code that scrolls through the page
+	
+	for (int second = 0;; second++) {
+	    if (second >= 10) {
+		break;
+	    }
+	    ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,-200)", "");
+
+	    selenium.waitForPageToLoad("1000");
+	}
+   }
     public static RemoteWebDriver windowsMachine() throws MalformedURLException {
 	URL remoteAddress = new URL("http://192.168.9.51:4444/wd/hub");
 	// have tried using the below commented out lines as well, but in all

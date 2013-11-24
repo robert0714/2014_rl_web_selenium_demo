@@ -97,7 +97,9 @@ public class RLLoginTest {
 	    selenium.waitForPageToLoad("300000");
 	    householdMaintainPage = new HouseholdMaintainPage(  selenium,   driver);
 	    selenium.waitForPageToLoad("300000");
-	    householdMaintainPage.switchTab();
+	    while(!householdMaintainPage.switchTab()){
+		logger.debug("轉不過去");
+	    }
 	   //發現所需延遲時間需要更久
 	    selenium.waitForPageToLoad("300000");	   
 	    if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
@@ -127,9 +129,6 @@ public class RLLoginTest {
 		selenium.refresh();
 	    }
 	}
-	
-	
-	
 	 WebUtils.scroolbarDownUp(selenium, driver);
 	
 	if (householdMaintainPage != null) {
@@ -139,6 +138,40 @@ public class RLLoginTest {
 	}
 	selenium.refresh();
 	selenium.waitForPageToLoad("300000");
+	//進入2A10
+	while(true){
+	    Thread.sleep(1000);
+	    if(StringUtils.contains(driver.getCurrentUrl(), "_rl02a10/rl02a10.xhtml")){
+		logger.info("進入2A10");
+		WebUtils.scroolbarDownUp(selenium, driver);
+		selenium.click("//*[@id='growl2_container']/div/div/div");
+		selenium.click("//*[@id='rl02a10infos_data']/tr/td[2]/div");
+		selenium.click("//input[@id='tabViewId:agreedPrtOldPhoto:0']");
+		selenium.click("//a[contains(@href, 'familyMemberTab')]");
+		selenium.click("//a[contains(text(),'申請人/受委託人')]");
+		selenium.click("//a[contains(@href, '#tabViewId:familyMemberTab')]");
+		selenium.click("//a[contains(text(),'申請人/受委託人')]");
+		selenium.click("//a[contains(text(),'當事人/請領')]");
+		WebUtils.scroolbarDown(selenium, driver);
+		selenium.click("//fieldset[@id='rl02a10']/div/button[3]");//關閉視窗
+		if (selenium.isElementPresent("//*[@id='confirmDialog2']")) {
+		    //*[@id='j_id19_j_id_c3']
+		    //*[@id='confirmDialog2']
+		    //*[@id='confirm2']
+		    //*[@id='decline2']
+		    selenium.click("//*[@id='decline2']");
+		}
+		break;
+	    }else if (StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){
+		
+	    }else{
+		break;
+	    }
+	  
+	
+	  
+	}
+	
     }
 
     @After
