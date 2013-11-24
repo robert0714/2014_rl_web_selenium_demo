@@ -12,6 +12,8 @@ import org.monte.screenrecorder.ScreenRecorder;
 import static org.monte.media.AudioFormatKeys.*;
 import static org.monte.media.VideoFormatKeys.*;
 import org.junit.*;
+
+import func.rl.common.WebUtils;
 import static org.junit.Assert.*;
 import java.awt.*;
 
@@ -44,7 +46,8 @@ public class GoogleSearch {
 			null);
 
 		// Create a new instance of the Firefox driver
-		driver = new FirefoxDriver();
+//		driver = new FirefoxDriver();
+		driver=WebUtils.windowsMachine();
 		
 		//Call the start method of ScreenRecorder to begin recording
 		screenRecorder.start();
