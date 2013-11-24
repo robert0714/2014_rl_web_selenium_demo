@@ -2,9 +2,13 @@ package func.rl.common;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
@@ -72,6 +76,12 @@ public class RlHompage {
 	    selenium.waitForPageToLoad("30000");
 	    
 	    final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
+	    
+	    WebElement rl00001Element = driver.findElement(By.xpath(rl00001Xpath));
+	    WebDriverWait wait = new WebDriverWait(driver, 10);
+	    
+	    wait.until(ExpectedConditions.visibilityOf(rl00001Element));    
+	    
 	    if (selenium.isVisible(rl00001Xpath) && selenium.isElementPresent(rl00001Xpath)) {
 		
 		if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
