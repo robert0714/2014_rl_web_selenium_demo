@@ -134,7 +134,7 @@ public class RLLoginTest {
 	
 	if (householdMaintainPage != null) {
 	    householdMaintainPage.processPrintView();
-	    selenium.waitForPageToLoad("300000");
+	    selenium.refresh();
 	    householdMaintainPage.processAppyCahange();
 	}
 	selenium.refresh();

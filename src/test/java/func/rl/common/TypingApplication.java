@@ -88,7 +88,7 @@ public class TypingApplication {
 		int count =0;
 		//由於點擊等待回應真的很花時間
 		inner : while (StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-		    Thread.sleep(10000);
+		    Thread.sleep(5000);//等待5秒
 		    logger.debug(driver.getCurrentUrl());
 		    if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
 			break outer;
