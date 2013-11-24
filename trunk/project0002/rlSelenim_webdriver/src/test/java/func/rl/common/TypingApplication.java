@@ -78,8 +78,13 @@ public class TypingApplication {
 	    selenium.type("//td[@id='applicant1PersonIdTD']/span/input", getPersonId());
 	    selenium.waitForPageToLoad("30000");
 	    final String searchBtnXpath = "//div/div/button";
+	    
 	    if (selenium.isElementPresent(searchBtnXpath) && selenium.isVisible(searchBtnXpath)&& StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-		selenium.click(searchBtnXpath);
+		boolean giveUpOperation=WebUtils.handleClickBtn(selenium, searchBtnXpath);
+		if(giveUpOperation){
+		    throw new  InterruptedException();
+		}
+//		selenium.click(searchBtnXpath);
 		int count =0;
 		//由於點擊等待回應真的很花時間
 		inner : while (StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
