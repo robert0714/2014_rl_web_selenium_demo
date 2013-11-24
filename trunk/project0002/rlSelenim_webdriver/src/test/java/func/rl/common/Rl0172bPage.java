@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
@@ -116,9 +118,7 @@ public class Rl0172bPage {
 	    selenium.waitForPageToLoad("300000");
 	    selenium.click("//div[contains(@id,'updateReasonCode_panel')]/div/ul/li[2]");
 	    	    
-	    selenium.waitForPageToLoad("300000");
-	    	   
-	   logger.debug("orgNameWayElement.isVisible(): "+selenium.isVisible("//div[contains(@id,'orgNameWay')]/div[2]/span"));
+	    selenium.waitForPageToLoad("300000");	    
 	    
 	    selenium.focus("//div[contains(@id,'orgNameWay')]/div[2]/span");
 	    selenium.waitForPageToLoad("300000");
@@ -129,7 +129,7 @@ public class Rl0172bPage {
 	    selenium.waitForPageToLoad("300000");
 	    
 	    WebUtils.scroolbarDownUp(selenium, driver);
-	    
+	   
 	    if (selenium.isElementPresent(nationalityACXpath)) {
 		selenium.focus(nationalityACXpath);
 		logger.info("selenium.getLocation(): " +selenium.getLocation());
@@ -139,7 +139,8 @@ public class Rl0172bPage {
 		nationalityElement.sendKeys("022");
 		selenium.waitForPageToLoad("30000");
 	    }
-	    WebUtils.scroolbarDownUp(selenium, driver);
+	    selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+	    
     }
     public void inputData02()throws  UnhandledAlertException,SeleniumException, InterruptedException  {
 	 WebUtils.scroolbarDownUp(selenium, driver);
