@@ -75,7 +75,7 @@ public class TypingApplication {
 	    selenium.click("//input[@id='applicantSameTxnPerson']");
 	    selenium.waitForPageToLoad("30000");
 
-	    selenium.type("//td[@id='applicant1PersonIdTD']/span/input", getPersonId());
+//	    selenium.type("//td[@id='applicant1PersonIdTD']/span/input", getPersonId());
 	    selenium.waitForPageToLoad("30000");
 	    final String searchBtnXpath = "//div/div/button";
 	    

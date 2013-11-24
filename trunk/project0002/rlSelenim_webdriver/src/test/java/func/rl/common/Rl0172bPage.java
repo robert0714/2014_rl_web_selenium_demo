@@ -57,10 +57,27 @@ public class Rl0172bPage {
 	    String element01 =selenium.getText("document.poopupForm.elements[1]");
 	    String lastName = retrieveLastName(element01);
 	    String firstName = retrieveFirstName(element01);
+	    
+	    
+	    
 	   logger.debug("firstName: "+firstName);
 	   logger.debug("lastName: "+lastName);
+	   
+	    selenium.waitForPageToLoad("300000");
+
+	    final String nationalityACXpath = "//*[contains(@id,'mainNationalityAC')]";
+
+	    if (selenium.isElementPresent(nationalityACXpath)) {
+		selenium.focus(nationalityACXpath);
+		WebElement nationalityElement = driver.findElement(By.xpath(nationalityACXpath));
+		nationalityElement.sendKeys("022");
+		selenium.waitForPageToLoad("30000");
+	    }
+	   
+	   
 //	    selenium.type("document.poopupForm.elements[13]", lastName);
 //	    selenium.type("document.poopupForm.elements[14]", firstName);
+	    selenium.focus("//*[contains(@id,'beforeMidenName')]/span/input");
 	    selenium.type("//*[contains(@id,'beforeMidenName')]/span/input", lastName);
 	    selenium.type("//*[contains(@id,'beforeFirstName')]/span/input", firstName);
 	    
@@ -69,7 +86,7 @@ public class Rl0172bPage {
 	    selenium.type("//span[contains(@id,'afterMidenName')]/span/input", lastName);
 	    String afterFirstNameXpath = "//*[contains(@id,'afterFirstName')]/span/input";
 	    selenium.focus(afterFirstNameXpath);//故意填錯
-	    Actions builder = new Actions(driver);
+	    
 	    WebElement inputFirstNameElement = driver.findElement(By.xpath(afterFirstNameXpath));	   
 	    selenium.waitForPageToLoad("30000");
 	    inputFirstNameElement.clear();
@@ -90,78 +107,40 @@ public class Rl0172bPage {
 	    selenium.waitForPageToLoad("300000");
 	  //div[@id='j_id19_j_id_2h:updateReasonCode']/div[2]/span
 	  //div[@id='j_id19_j_id_2h:updateReasonCode_panel']/div/ul/li[2]
-	    WebElement updateReasonCodeElement = driver.findElement(By.xpath("//div[contains(@id,'updateReasonCode')]/div[2]/span"));
-	   logger.debug("updateReasonCodeElement.isDisplayed(): "+updateReasonCodeElement.isDisplayed());
-	   logger.debug("updateReasonCodeElement.isEnabled(): "+updateReasonCodeElement.isEnabled());
+	   
 	    selenium.focus("//div[contains(@id,'updateReasonCode')]/div[2]/span");	    
 	    selenium.click("//div[contains(@id,'updateReasonCode')]/div[2]/span");
 	    
-	    WebElement updateReasonCodePanelElement = driver.findElement(By.xpath("//div[contains(@id,'updateReasonCode_panel')]/div/ul/li[2]"));
-	   logger.debug("updateReasonCodePanelElement.isDisplayed(): "+updateReasonCodePanelElement.isDisplayed());
-	   logger.debug("updateReasonCodePanelElement.isEnabled(): "+updateReasonCodePanelElement.isEnabled());
+	    
 	    selenium.focus("//div[contains(@id,'updateReasonCode_panel')]/div/ul/li[2]");
 	    selenium.click("//div[contains(@id,'updateReasonCode_panel')]/div/ul/li[2]");
 	    
 	    
 	    selenium.waitForPageToLoad("300000");
 	    
-	    WebElement orgNameWayElement = driver.findElement(By.xpath("//div[contains(@id,'orgNameWay')]/div[2]/span"));
-	   logger.debug("orgNameWayElement.isDisplayed(): "+orgNameWayElement.isDisplayed());
-	   logger.debug("orgNameWayElement.isEnabled(): "+orgNameWayElement.isEnabled());
+	   
 	   logger.debug("orgNameWayElement.isVisible(): "+selenium.isVisible("//div[contains(@id,'orgNameWay')]/div[2]/span"));
 	    
 	    selenium.focus("//div[contains(@id,'orgNameWay')]/div[2]/span");
 	    selenium.click("//div[contains(@id,'orgNameWay')]/div[2]/span");
 	    
-	    WebElement orgNameWayPanelElement = driver.findElement(By.xpath("//div[contains(@id,'orgNameWay_panel')]/div/ul/li[3]"));
-	   logger.debug("orgNameWayPanelElement.isDisplayed(): "+orgNameWayPanelElement.isDisplayed());
-	   logger.debug("orgNameWayPanelElement.isEnabled(): "+orgNameWayPanelElement.isEnabled());	
+	   
 	    selenium.focus("//div[contains(@id,'orgNameWay_panel')]/div/ul/li[3]");
 	    selenium.click("//div[contains(@id,'orgNameWay_panel')]/div/ul/li[3]");
 	    
 	    
 	    selenium.waitForPageToLoad("300000");
-	    WebElement tabFine = driver.findElement(By.xpath("//a[contains(text(),'戶籍記事/罰鍰清單')]"));
-	    builder.keyDown(Keys.CONTROL).click(tabFine).keyUp(Keys.CONTROL);
-	    selenium.waitForPageToLoad("30000");
-	    tabFine.click();
 	    
 	    
 	    WebUtils.scroolbarDownUp(selenium, driver);
+
+	    
+	    
 	    
 	    selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 	    selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 	    
-//	    selenium.focus("//button[4]");
-	    
-	    ;
-//	    for(String btn: selenium.getAllButtons()){
-//		logger.debug("btn: "+btn);
-//	    }
-//	   String btn01 = selenium.getText("//button[1]");
-//	  logger.debug("btn01: "+btn01);
-//	   
-//	   String btn02 = selenium.getText("//button[2]");
-//	  logger.debug("btn02: "+btn02);
-//	   
-//	   String btn03 = selenium.getText("//button[3]");
-//	  logger.debug("btn03: "+btn03);
-//	   
-//	   String btn04 = selenium.getText("//button[4]");
-//	  logger.debug("btn04: "+btn04);
-//	   
-//	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn01),"資料驗證")){
-//	     
-//	   }
-//	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn02),"資料驗證")){
-//	       selenium.click("//button[2]");
-//	   }
-//	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn03),"資料驗證")){
-//	       selenium.click("//button[3]");
-//	   }
-//	   if(StringUtils.equalsIgnoreCase(StringUtils.trim(btn04),"資料驗證")){
-//	       selenium.click("//button[4]");//據說是關閉視窗
-//	   }
+	   
 	    final String clickBtnXpath ="//*[contains(@id,'verifyAppData')]";//資料驗證
 	    selenium.focus(clickBtnXpath);
 	    selenium.click(clickBtnXpath);
