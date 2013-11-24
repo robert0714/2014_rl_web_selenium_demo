@@ -144,7 +144,7 @@ public class RLLoginTest {
 	    if(StringUtils.contains(driver.getCurrentUrl(), "_rl02a10/rl02a10.xhtml")){
 		logger.info("進入2A10");
 		WebUtils.scroolbarDownUp(selenium, driver);
-		selenium.click("//*[@id='growl2_container']/div/div/div");
+		
 		selenium.click("//*[@id='rl02a10infos_data']/tr/td[2]/div");
 		selenium.click("//input[@id='tabViewId:agreedPrtOldPhoto:0']");
 		selenium.click("//a[contains(@href, 'familyMemberTab')]");
@@ -159,7 +159,8 @@ public class RLLoginTest {
 		    //*[@id='confirmDialog2']
 		    //*[@id='confirm2']
 		    //*[@id='decline2']
-		    selenium.click("//*[@id='decline2']");
+		    selenium.click("//*[@id='confirm2']");//確認
+//		    selenium.click("//*[@id='decline2']");//取消
 		}
 		break;
 	    }else if (StringUtils.contains(currentUrl, "/rl00001/householdMaintain.xhtml")){
