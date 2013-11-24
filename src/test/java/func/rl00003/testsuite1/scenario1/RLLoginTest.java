@@ -35,9 +35,9 @@ public class RLLoginTest {
     public void setUp() throws Exception {
 	final TableJDBCDao dao =new TableJDBCDao();
 	personIdSiteIdList = dao.getPersonIdSiteIdList();
-//	 driver = Utils.linuxMachine();
-//	 driver = WebUtils.windowsMachine();
-	driver = new FirefoxDriver();
+//	 driver = WebUtils.linuxMachine();
+	 driver = WebUtils.windowsMachine();
+//	driver = new FirefoxDriver();
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 //	final String baseUrl = "http://192.168.10.18:6180";
 	final String baseUrl = "http://192.168.10.18:6280/rl/";
@@ -64,7 +64,12 @@ public class RLLoginTest {
 		// //div[contains(@id,'orgNameWay')]
 		
 		homepage.enterRl00001();
-		process(homepage, personId, siteId);
+		try {
+		    process(homepage, personId, siteId);
+		} catch (Exception e) {
+		    e.printStackTrace();
+		    WebUtils.handleRLAlert(selenium);
+		}
 	    }
 	}else{
 	    homepage.enterRl00001();

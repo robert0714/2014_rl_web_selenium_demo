@@ -21,10 +21,10 @@ public class WebUtils {
    public static  boolean handleClickBtn(final  Selenium selenium,final String clickBtnXpath){
        boolean giveUpOperation=false ;
        selenium.click(clickBtnXpath);//據說是資料驗證
-       selenium.waitForPageToLoad("6000");
+       selenium.waitForPageToLoad("60000");//等待6秒...不見得msg出來,改成60秒
        if( selenium.isElementPresent("//*[@id='growl2_container']/div/div")){
 	   int count=0;	  
-	   while(true){			      
+	   while(true){
 	       String errorMessage =selenium.getText("//*[@id='growl2_container']/div/div/div[2]/span");
 	       String errorExtMessage =selenium.getText("//*[@id='growl2_container']/div/div/div[2]/p");		     
 	       logger.info(errorMessage);
