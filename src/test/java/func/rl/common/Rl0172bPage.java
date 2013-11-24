@@ -114,8 +114,6 @@ public class Rl0172bPage {
 	    selenium.focus("//div[contains(@id,'updateReasonCode')]/div[2]/span");	    
 	    selenium.click("//div[contains(@id,'updateReasonCode')]/div[2]/span");
 	    
-	    
-	    selenium.focus("//div[contains(@id,'updateReasonCode_panel')]/div/ul/li[2]");
 	    selenium.click("//div[contains(@id,'updateReasonCode_panel')]/div/ul/li[2]");
 	    
 	    
@@ -127,8 +125,6 @@ public class Rl0172bPage {
 	    selenium.focus("//div[contains(@id,'orgNameWay')]/div[2]/span");
 	    selenium.click("//div[contains(@id,'orgNameWay')]/div[2]/span");
 	    
-	   
-	    selenium.focus("//div[contains(@id,'orgNameWay_panel')]/div/ul/li[3]");
 	    selenium.click("//div[contains(@id,'orgNameWay_panel')]/div/ul/li[3]");
 	    
 	    
