@@ -118,9 +118,10 @@ public class Rl0172bPage {
 	  //div[@id='j_id19_j_id_2h:updateReasonCode']/div[2]/span
 	  //div[@id='j_id19_j_id_2h:updateReasonCode_panel']/div/ul/li[2]
 	   
-	    selenium.focus("//div[contains(@id,'updateReasonCode')]/div[2]/span");	    
+	    selenium.focus("//div[contains(@id,'updateReasonCode')]/div[2]/span");
+	    selenium.waitForPageToLoad("300000");
 	    selenium.click("//div[contains(@id,'updateReasonCode')]/div[2]/span");
-	    
+	    selenium.waitForPageToLoad("300000");
 	    selenium.click("//div[contains(@id,'updateReasonCode_panel')]/div/ul/li[2]");
 	    	    
 	    selenium.waitForPageToLoad("300000");
@@ -128,8 +129,9 @@ public class Rl0172bPage {
 	   logger.debug("orgNameWayElement.isVisible(): "+selenium.isVisible("//div[contains(@id,'orgNameWay')]/div[2]/span"));
 	    
 	    selenium.focus("//div[contains(@id,'orgNameWay')]/div[2]/span");
+	    selenium.waitForPageToLoad("300000");
 	    selenium.click("//div[contains(@id,'orgNameWay')]/div[2]/span");
-	    
+	    selenium.waitForPageToLoad("300000");
 	    selenium.click("//div[contains(@id,'orgNameWay_panel')]/div/ul/li[3]");
 	    
 	    selenium.waitForPageToLoad("300000");
