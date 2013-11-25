@@ -77,7 +77,15 @@ public class Rl0172bPage {
 
 	    final String nationalityACXpath = "//input[contains(@id,'mainNationalityAC')]";
 
-	    
+	    if (selenium.isElementPresent(nationalityACXpath)) {
+		selenium.focus(nationalityACXpath);
+		logger.info("selenium.getLocation(): " +selenium.getLocation());
+		WebElement nationalityElement = driver.findElement(By.xpath(nationalityACXpath));
+		
+		//如果是使用//*[contains(@id,'mainNationalityAC')],則會沒有辦法將value傳入		
+		nationalityElement.sendKeys("022");
+		selenium.waitForPageToLoad("30000");
+	    }
 	   
 	   
 //	    selenium.type("document.poopupForm.elements[13]", lastName);
@@ -130,15 +138,7 @@ public class Rl0172bPage {
 	    
 	    WebUtils.scroolbarDownUp(selenium, driver);
 	   
-	    if (selenium.isElementPresent(nationalityACXpath)) {
-		selenium.focus(nationalityACXpath);
-		logger.info("selenium.getLocation(): " +selenium.getLocation());
-		WebElement nationalityElement = driver.findElement(By.xpath(nationalityACXpath));
-		
-		//如果是使用//*[contains(@id,'mainNationalityAC')],則會沒有辦法將value傳入		
-		nationalityElement.sendKeys("022");
-		selenium.waitForPageToLoad("30000");
-	    }
+
 	    
 	    
     }
