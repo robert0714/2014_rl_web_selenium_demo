@@ -90,6 +90,7 @@ public class RlHompage {
 		
 		selenium.click(rl00001Xpath);// 進入現戶簿頁
 		// selenium.open("/rl/faces/pages/func/rl00001/rl00001.xhtml");
+		
 		selenium.waitForPageToLoad("30000");
 		String currentUrl = driver.getCurrentUrl();
 		// http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
