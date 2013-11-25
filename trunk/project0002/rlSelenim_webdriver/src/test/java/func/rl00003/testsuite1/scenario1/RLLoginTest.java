@@ -108,22 +108,26 @@ public class RLLoginTest {
 		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	    }
 	    householdMaintainPage.clickRl1722B();	   
-//	   Thread.sleep(6000l);
+
 	    
 	}
-	String currentUrl = driver.getCurrentUrl();
 	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/_rl0172b/rl0172b.xhtml?windowId=344
-	
-	
-	if(StringUtils.contains(currentUrl, "_rl0172b/rl0172b.xhtml")){
+	int count =0;
+	while(!StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")){
+	    Thread.sleep(6000l);
+	    if(count>5){
+		break;
+	    }
+	    count++;
+	}
+	if(StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")){
 	    selenium.waitForPageToLoad("300000");
 	    Rl0172bPage rl0172bPage = new Rl0172bPage(  selenium,   driver);
 	    rl0172bPage.switchTab();
 	    selenium.waitForPageToLoad("300000");
 	    
-	    while (true) {
-		currentUrl = driver.getCurrentUrl();
-		logger.debug(currentUrl);
+	    while (StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
+		logger.debug(driver.getCurrentUrl());
 		if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
 		    break;
 		}
