@@ -50,7 +50,7 @@ public class Rl02a10Page {
 			}
 			break;
 		    }else if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")){
-			
+			break;
 		    }else{
 			break;
 		    }
