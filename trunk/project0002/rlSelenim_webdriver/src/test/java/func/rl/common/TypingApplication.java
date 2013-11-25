@@ -82,6 +82,10 @@ public class TypingApplication {
 	    if (selenium.isElementPresent(searchBtnXpath) && selenium.isVisible(searchBtnXpath)&& StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
 		boolean giveUpOperation=WebUtils.handleClickBtn(selenium, searchBtnXpath);
 		if(giveUpOperation){
+		    if (selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
+			selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+		    }
+		    selenium.refresh();
 		    throw new  InterruptedException();
 		}
 //		selenium.click(searchBtnXpath);
