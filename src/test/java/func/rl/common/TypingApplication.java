@@ -22,34 +22,32 @@ public class TypingApplication {
     private WebDriver driver;
     private String personId;
     private String siteId;
-    private Map<String, String> siteIdMap;
     private Selenium selenium;
 
     public TypingApplication(final Selenium selenium, final WebDriver driver) throws UnhandledAlertException, SeleniumException {
 	super();
 	this.selenium = selenium;
-	this.siteIdMap = getSiteIdMap();
 	this.driver = driver;
     }
 
-    private Map<String, String> getSiteIdMap() {
-	Properties props = new Properties();
-	try {
-	    props.load(TypingApplication.class.getResourceAsStream("RSCD0107.properties"));
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-	final Set<Object> keys = props.keySet();
-	final Map<String, String> siteIdMap = new HashMap<String, String>();
-	for (Object key : keys) {
-	    Object value = props.get(key);
-	    siteIdMap.put(key.toString(), value.toString());
-	}
-	return siteIdMap;
-    }
+//    private Map<String, String> getSiteIdMap() {
+//	Properties props = new Properties();
+//	try {
+//	    props.load(TypingApplication.class.getResourceAsStream("RSCD0107.properties"));
+//	} catch (Exception e) {
+//	    e.printStackTrace();
+//	}
+//	final Set<Object> keys = props.keySet();
+//	final Map<String, String> siteIdMap = new HashMap<String, String>();
+//	for (Object key : keys) {
+//	    Object value = props.get(key);
+//	    siteIdMap.put(key.toString(), value.toString());
+//	}
+//	return siteIdMap;
+//    }
 
     public void typingApplication() throws UnhandledAlertException, SeleniumException, InterruptedException {
-	String siteLocation = String.format("label=%s：%s", getSiteId(), siteIdMap.get(getSiteId()));
+//	String siteLocation = String.format("label=%s：%s", getSiteId(), siteIdMap.get(getSiteId()));
 
 	
 	outer: while ( StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
