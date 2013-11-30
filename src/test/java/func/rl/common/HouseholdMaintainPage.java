@@ -57,6 +57,7 @@ public class HouseholdMaintainPage {
     public void processAppyCahange() throws InterruptedException {	
 	boolean hitable = false;
 	final String printBtnXpath = "//*[@id='saveBtnId']";
+	Thread.sleep(1000);
 	//*[@id='saveBtnId']
 	//div[contains(@id,'saveBtnId')]/button
 	if (selenium.isElementPresent(printBtnXpath)) {
@@ -70,7 +71,7 @@ public class HouseholdMaintainPage {
 		
 	    }
 	}
-
+	Thread.sleep(1000);
 	if ( hitable) {
 	    if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
 		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
