@@ -16,7 +16,8 @@ public class TableJDBCDao {
 	Statement stmt;
 	try {
 	    stmt = conn.createStatement();
-	    String sql = "SELECT first 14 person_id,site_id FROM rldf004m where personal_mark='0'";
+//	    String sql = "SELECT first 14 person_id,site_id FROM rldf004m where personal_mark='0' and site_id ='65000120' ";
+	    String sql = "SELECT first 14 person_id,site_id FROM rldf004m where personal_mark='0'  ";
 	    ResultSet rs = stmt.executeQuery(sql);
 	    while (rs.next()) {
 		// Retrieve by column name
