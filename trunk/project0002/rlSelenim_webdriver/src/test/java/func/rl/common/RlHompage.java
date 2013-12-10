@@ -130,12 +130,13 @@ public class RlHompage {
 	    selenium.waitForPageToLoad("30000");
 	    selenium.click("//*[@id='navmenu-v']/li[3]/div/span");// 進入文件核發
 	    selenium.waitForPageToLoad("30000");
-	    selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl00004/rl00004.xhtml')]");
+	    
 	  //a[contains(@href, '/rl/faces/pages/func/rl00004/rl00004.xhtml')]
 	    if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
 		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	    }
-	    selenium.open("/rl/faces/pages/func/rl00004/rl00004.xhtml");
+	    selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl00004/rl00004.xhtml')]");
+//	    selenium.open("/rl/faces/pages/func/rl00004/rl00004.xhtml");
 	    
 	    if (StringUtils.contains(driver.getCurrentUrl(), "rl00004/rl00004.xhtml")) {
 		break;
