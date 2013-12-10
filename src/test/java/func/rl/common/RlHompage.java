@@ -122,4 +122,33 @@ public class RlHompage {
 	selenium.click("//td/button");// 點選按鈕,
 	selenium.waitForPageToLoad("30000");
     }
+    /**
+     * 進入文件核發
+     * ***/
+    public void enterRl00004() {
+	while (selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
+	    selenium.waitForPageToLoad("30000");
+	    selenium.click("//*[@id='navmenu-v']/li[3]/div/span");// 進入文件核發
+	    selenium.waitForPageToLoad("30000");
+
+	    selenium.open("/rl/faces/pages/func/rl00004/rl00004.xhtml");
+	    selenium.waitForPageToLoad("30000");
+
+	    if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	    }
+
+	    selenium.waitForPageToLoad("30000");
+	    String currentUrl = driver.getCurrentUrl();
+	    // http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
+
+	    logger.debug(currentUrl);
+	    if (StringUtils.contains(currentUrl, "rl00004/rl00004.xhtml")) {
+		break;
+	    }
+
+	    selenium.click("//td/button");// 點選按鈕,
+	    selenium.waitForPageToLoad("30000");
+	}
+    }
 }
