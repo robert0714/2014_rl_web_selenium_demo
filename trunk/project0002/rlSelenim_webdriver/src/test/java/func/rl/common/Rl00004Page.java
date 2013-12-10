@@ -19,7 +19,7 @@ public class Rl00004Page {
     public String getPersonId() {
    	if (StringUtils.isBlank(personId)) {
 //   	    personId = "F208368696";
-   	    personId = "C268351856";
+   	    personId = "C220748971";
    	}
    	return personId;
        }
@@ -74,7 +74,11 @@ public class Rl00004Page {
 	  //a[contains(text(),'結(離)婚證明書')]
 	    if (selenium.isElementPresent(searchBtnXpath) && selenium.isVisible(searchBtnXpath)
 		    && StringUtils.contains(driver.getCurrentUrl(), "rl00004/rl00004.xhtml")) {
+		if (selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
+			selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+		    }
 		boolean giveUpOperation = WebUtils.handleClickBtn(selenium, searchBtnXpath);
+		selenium.waitForPageToLoad("30000");
 		if (giveUpOperation) {
 		    if (selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
 			selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
