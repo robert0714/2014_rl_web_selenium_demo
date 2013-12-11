@@ -45,7 +45,7 @@ public class Rl02d00Page {
 	    
 	    
 	    boolean giveUpOperation=WebUtils.handleClickBtn(selenium, clickBtnXpath);
-	    selenium.click(clickBtnXpath);//選擇下一步
+	    //選擇下一步
 	    if(giveUpOperation){
 		//放棄操作
 	    }else{
@@ -56,13 +56,15 @@ public class Rl02d00Page {
 		if (selenium.isElementPresent(selectionPath)) {
 		    System.out.println("Yes");
 		}
+		//*[@id="SELECTION:j_id_cs:0:j_id_cu"]/div[2]
 		WebElement selectionPathElement = driver.findElement(By.xpath(selectionPath));
 		selectionPathElement.click();
 		selenium.waitForPageToLoad("300000");
 		//button[@id='SELECTION:j_id_e7']
 		selenium.click("//button[contains(@id,'SELECTION')]");//選擇第一張
 		selenium.waitForPageToLoad("300000");
-		selenium.click("//button[contains(@id,'CHT')]");
+		
+		selenium.click("//*[contains(@id,'verifyAppDataBtnId')]/span");
 		selenium.waitForPageToLoad("300000");
 		
 		final String parentWindowId = driver.getWindowHandle();
@@ -71,15 +73,17 @@ public class Rl02d00Page {
 		final String printBtnXpath = "//button[contains(@id,'printButtonId')]";
 
 		if (selenium.isElementPresent(printBtnXpath)) {
-		    final WebElement printBtn = driver.findElement(By.xpath(printBtnXpath));
-		    final String disabledAttribute = printBtn.getAttribute("disabled");
-		    logger.debug("-----------------disabledAttribute: " + disabledAttribute);
-		    if (StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())) {
-			printBtnXpathHit = false;
-		    } else if (disabledAttribute == null || StringUtils.equals(disabledAttribute, Boolean.FALSE.toString())) {
-			printBtnXpathHit = true;
-			giveUpOperation = WebUtils.handleClickBtn(selenium, printBtnXpath);
-		    }
+					final WebElement printBtn = driver.findElement(By.xpath(printBtnXpath));
+					final String disabledAttribute = printBtn.getAttribute("disabled");
+					logger.debug("-----------------disabledAttribute: " + disabledAttribute);
+					if (StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())) {
+						printBtnXpathHit = false;
+					} else if (disabledAttribute == null || StringUtils.equals(disabledAttribute, Boolean.FALSE.toString())) {
+						printBtnXpathHit = true;
+						giveUpOperation = WebUtils.handleClickBtn(selenium, printBtnXpath);
+						selenium.waitForPageToLoad("300000");
+					}
+					selenium.waitForPageToLoad("300000");
 		}
 		if (!giveUpOperation && printBtnXpathHit) {
 		    // 預覽申請書會彈跳出視窗
