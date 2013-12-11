@@ -40,8 +40,8 @@ public class RL02D00Test001 {
 //	final TableJDBCDao dao =new TableJDBCDao();
 //	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = WebUtils.linuxMachine();
-//	 driver = WebUtils.windowsMachine();
-	driver = new FirefoxDriver();
+	 driver = WebUtils.windowsMachine();
+//	driver = new FirefoxDriver();
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 //	final String baseUrl = "http://192.168.10.18:6180";
 	final String baseUrl = "http://192.168.10.18:6280/rl/";
@@ -166,6 +166,6 @@ public class RL02D00Test001 {
 
     @After
     public void tearDown() throws Exception {
-    	 selenium.stop();
+//    	 selenium.stop();
     }
 }
