@@ -59,9 +59,9 @@ public class Rl03100Page {
 	
 	if (!giveUpOperation && StringUtils.contains(driver.getCurrentUrl(), rl03100DetailPartialUlr)){
 	    WebUtils.scroolbarDown(selenium, driver);
-	    WebUtils.takeScreen(driver,  new File("/home/weblogic/Desktop/PIC/screenshot01.png"));
+	    WebUtils.takeScreen(driver,  new File("/home/weblogic/Desktop/PIC/"+personId+"_01.png"));
 	    WebUtils.scroolbarUp(selenium, driver);
-	    WebUtils.takeScreen(driver,  new File("/home/weblogic/Desktop/PIC/screenshot02.png"));
+	    WebUtils.takeScreen(driver,  new File("/home/weblogic/Desktop/PIC/"+personId+"_02.png"));
 	}
     }
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {

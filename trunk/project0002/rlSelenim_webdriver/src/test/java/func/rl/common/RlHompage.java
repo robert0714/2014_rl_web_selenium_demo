@@ -111,6 +111,7 @@ public class RlHompage {
      * 進入解鎖作業
      * ***/
     public void enterRl03100() {
+	selenium.waitForPageToLoad("30000");
 	while (selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
 	    selenium.waitForPageToLoad("30000");
 	    selenium.click("//*[@id='navmenu-v']/li[6]/div/span");// 進入戶籍查詢作業
