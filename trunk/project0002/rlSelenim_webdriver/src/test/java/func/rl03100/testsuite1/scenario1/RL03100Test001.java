@@ -38,8 +38,8 @@ public class RL03100Test001 {
     List<String[]> personIdSiteIdList;
     @Before
     public void setUp() throws Exception {
-//	final TableJDBCDao dao =new TableJDBCDao();
-//	personIdSiteIdList = dao.getPersonIdSiteIdList();
+	final TableJDBCDao dao =new TableJDBCDao();
+	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = WebUtils.linuxMachine();
 	 driver = WebUtils.windowsMachine();
 //	driver = new FirefoxDriver();
@@ -55,22 +55,20 @@ public class RL03100Test001 {
     @Test
     public void testRLLogin() throws Exception {
 	final RlHompage homepage = new RlHompage(selenium,driver);
-	selenium.waitForPageToLoad("30000");
 	if(CollectionUtils.isNotEmpty(personIdSiteIdList)){
 	    for(String[] stringArray: personIdSiteIdList){
-		
+		selenium.waitForPageToLoad("30000");
+		homepage.enterRl03100();
+		selenium.waitForPageToLoad("30000");
 		final String personId = stringArray[0];
 		if (StringUtils.contains(personId, "*")) {
 		    continue;
 		}
 		final String siteId = stringArray[1];
 
-		selenium.waitForPageToLoad("30000");
-		// //div[contains(@id,'orgNameWay')]
 		
-		homepage.enterRl00001();
 		try {
-		    process(homepage, personId, siteId);
+		    process4(personId,siteId);
 		} catch (Exception e) {
 		    e.printStackTrace();
 		    WebUtils.handleRLAlert(selenium);
@@ -78,6 +76,7 @@ public class RL03100Test001 {
 	    }
 	}else{
 	    homepage.enterRl03100();
+	    selenium.waitForPageToLoad("30000");
 	    process4("C100201902","65000120");
 //	    process(homepage,null, null);
 	}	
