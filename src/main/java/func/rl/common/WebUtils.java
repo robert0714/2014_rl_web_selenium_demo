@@ -14,6 +14,7 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -148,9 +149,15 @@ public class WebUtils {
 	   }
     public static void takeScreen(final  WebDriver driver,final File outputFile){
 	 try {
-	     WebDriver augmentedDriver = new Augmenter().augment(driver);
-	    File scrFile = ((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.FILE);
-	    FileUtils.copyFile(scrFile, outputFile);
+	     if(driver instanceof FirefoxDriver){
+		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(scrFile, outputFile);
+	     }else{
+		WebDriver augmentedDriver = new Augmenter().augment(driver);
+		File scrFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(scrFile, outputFile);
+	     }
+	     
 	     
 	  //Take screenshot and convert into byte[] 	    
 //	    byte[] decodedScreenshot = Base64.decodeBase64(((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.BASE64).getBytes());	
