@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +46,8 @@ public class App01 {
     public void startup()throws MalformedURLException, FileNotFoundException{
 	getContig();
 //	final String baseUrl = "http://192.168.10.18:6280/rl/";
-//	final WebDriver driver = new FirefoxDriver();
-	final WebDriver driver = WebUtils.windowsMachine();
+	final WebDriver driver = new FirefoxDriver();
+//	final WebDriver driver = WebUtils.windowsMachine();
 	
 	final Dimension targetSize = new Dimension(1500,860);
 	driver.manage().window().setSize(targetSize);
@@ -77,6 +76,7 @@ public class App01 {
     }
     public  List<String[]> getPerosnIdSiteId(){
 	final List<String[]> personIdSiteIdList =new ArrayList<String[]>();
+	logger.info("txnPersonFilePath: "+txnPersonFilePath);
 	File srcFile = new File(txnPersonFilePath);
 	if(srcFile.exists()){
 	    try {
@@ -110,6 +110,11 @@ public class App01 {
 	 baseUrl = properties.getProperty("baseUrl");
 	 picFolderPath = properties.getProperty("picFolderPath");
 	 txnPersonFilePath = properties.getProperty("txnPersonFilePath");
+	 logger.info("userName: "+userName);
+	 logger.info("userPasswd: "+userPasswd);
+	 logger.info("baseUrl: "+baseUrl);
+	 logger.info("picFolderPath: "+picFolderPath);
+	 logger.info("txnPersonFilePath: "+txnPersonFilePath);
     }
      
 }
