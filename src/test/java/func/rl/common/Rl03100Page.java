@@ -1,17 +1,22 @@
 package func.rl.common;
 
+import java.io.File;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchWindowException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.OutputType.*;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
@@ -53,7 +58,10 @@ public class Rl03100Page {
 	}
 	
 	if (!giveUpOperation && StringUtils.contains(driver.getCurrentUrl(), rl03100DetailPartialUlr)){
-	    System.out.println("..................");
+	    WebUtils.scroolbarDown(selenium, driver);
+	    WebUtils.takeScreen(driver,  new File("/home/weblogic/Desktop/PIC/screenshot01.png"));
+	    WebUtils.scroolbarUp(selenium, driver);
+	    WebUtils.takeScreen(driver,  new File("/home/weblogic/Desktop/PIC/screenshot02.png"));
 	}
     }
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {

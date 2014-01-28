@@ -1,11 +1,20 @@
 package func.rl.common;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -137,4 +146,23 @@ public class WebUtils {
 	       }
 	       return giveUpOperation;
 	   }
+    public static void takeScreen(final  WebDriver driver,final File outputFile){
+	 try {
+	     WebDriver augmentedDriver = new Augmenter().augment(driver);
+	    File scrFile = ((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.FILE);
+	    FileUtils.copyFile(scrFile, outputFile);
+	     
+	  //Take screenshot and convert into byte[] 	    
+//	    byte[] decodedScreenshot = Base64.decodeBase64(((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.BASE64).getBytes());	
+//	    //write the byte array into your local folder	
+//	    FileOutputStream fos = new FileOutputStream(outputFile); 
+//	    fos.write(decodedScreenshot); 
+//	    fos.close();
+
+	    
+	    
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
 }
