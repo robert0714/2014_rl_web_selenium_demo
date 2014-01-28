@@ -35,7 +35,7 @@ public class Rl03100Page {
 	this.selenium = selenium;
 	this.driver = driver;
     }
-    public void typeApplication(final String personId ,final String siteId) throws UnhandledAlertException, SeleniumException, InterruptedException {
+    public void typeApplication(final String personId ,final String siteId,final String outputFolderPath) throws UnhandledAlertException, SeleniumException, InterruptedException {
 	selenium.focus("//tr[2]/td/span/input");
 	selenium.type("//tr[2]/td/span/input", personId);//輸入統號
 	
@@ -59,9 +59,9 @@ public class Rl03100Page {
 	
 	if (!giveUpOperation && StringUtils.contains(driver.getCurrentUrl(), rl03100DetailPartialUlr)){
 	    WebUtils.scroolbarDown(selenium, driver);
-	    WebUtils.takeScreen(driver,  new File("/home/weblogic/Desktop/PIC/"+personId+"_01.png"));
+	    WebUtils.takeScreen(driver,  new File(outputFolderPath+personId+"_01.png"));
 	    WebUtils.scroolbarUp(selenium, driver);
-	    WebUtils.takeScreen(driver,  new File("/home/weblogic/Desktop/PIC/"+personId+"_02.png"));
+	    WebUtils.takeScreen(driver,  new File(outputFolderPath+personId+"_02.png"));
 	}
     }
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {

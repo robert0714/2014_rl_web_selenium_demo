@@ -78,92 +78,15 @@ public class RL03100Test001 {
 	    homepage.enterRl03100();
 	    selenium.waitForPageToLoad("30000");
 	    process4("C100201902","65000120");
-//	    process(homepage,null, null);
 	}	
     }
     private void process4(final String personId, final String siteId)throws  Exception {
 	Rl03100Page rl00004Page =new Rl03100Page(selenium,driver);
-	 rl00004Page.typeApplication(personId, siteId);
-    }
-    private void process(final RlHompage homepage  ,final String personId, final String siteId)throws  Exception {
-	final TypingApplication aTypingApplication = homepage.typingApplication();
-	selenium.waitForPageToLoad("30000");
-	aTypingApplication.setPersonId(personId);
-	aTypingApplication.setSiteId(siteId);
-	aTypingApplication.typingApplication();
-	
-	if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
-	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-	}
-	
-	
-	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
-	HouseholdMaintainPage householdMaintainPage = null;
-	
-	if(StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")){
-	    
-	    selenium.waitForPageToLoad("300000");
-	    householdMaintainPage = new HouseholdMaintainPage(  selenium,   driver);
-	    selenium.waitForPageToLoad("300000");
-	    while(!householdMaintainPage.switchTab()){
-		logger.debug("轉不過去");
-	    }
-	   //發現所需延遲時間需要更久
-	    selenium.waitForPageToLoad("300000");	   
-	    if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
-		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-	    }
-	    householdMaintainPage.clickRl1722B();	   
-
-	    
-	}
-	//http://192.168.10.18:6280/rl/faces/pages/func/rl00001/_rl0172b/rl0172b.xhtml?windowId=344
-	int count =0;
-	while(!StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")){
-	    Thread.sleep(6000l);
-	    if(count>5){
-		break;
-	    }
-	    count++;
-	}
-	if(StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")){
-	    selenium.waitForPageToLoad("300000");
-	    Rl0172bPage rl0172bPage = new Rl0172bPage(  selenium,   driver);
-	    rl0172bPage.switchTab();
-	    selenium.waitForPageToLoad("300000");
-	    
-	    while (StringUtils.contains(driver.getCurrentUrl(), "_rl0172b/rl0172b.xhtml")) {
-		logger.debug(driver.getCurrentUrl());
-		if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
-		    break;
-		}
-		Thread.sleep(5000);
-		selenium.refresh();
-	    }
-	}
-	 WebUtils.scroolbarDownUp(selenium, driver);
-	
-	if (householdMaintainPage != null && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
-	    householdMaintainPage.processPrintView();
-	    if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
-		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-		selenium.refresh();
-	    }
-	    selenium.waitForPageToLoad("3000");
-	    householdMaintainPage.processAppyCahange();
-	}
-	if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
-	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-	    selenium.refresh();
-	}
-	selenium.waitForPageToLoad("3000");
-	//進入2A10
-	Rl02a10Page rl02a10Page =new Rl02a10Page(selenium, driver);
-	rl02a10Page.switchTab();
+	rl00004Page.typeApplication(personId, siteId,"/home/weblogic/Desktop/PIC/");
     }
 
     @After
     public void tearDown() throws Exception {
-//    	 selenium.stop();
+    	 selenium.stop();
     }
 }
