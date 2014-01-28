@@ -107,7 +107,25 @@ public class RlHompage {
 	
 	
     }
-
+    /**
+     * 進入解鎖作業
+     * ***/
+    public void enterRl03100() {
+	while (selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
+	    selenium.waitForPageToLoad("30000");
+	    selenium.click("//*[@id='navmenu-v']/li[6]/div/span");// 進入戶籍查詢作業
+	    selenium.waitForPageToLoad("30000");
+	    
+	    if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+	    }
+	    selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]");
+	    
+	    if (StringUtils.contains(driver.getCurrentUrl(), "rl03100/rl03100.xhtml")) {
+		break;
+	    }
+	}
+    }
     /**
      * 進入解鎖作業
      * ***/
