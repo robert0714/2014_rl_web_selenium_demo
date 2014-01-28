@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.UnhandledAlertException;
@@ -41,6 +42,16 @@ public class Rl03100Page {
 	selectorElement.sendKeys(siteId);
 	
 	boolean giveUpOperation = WebUtils.handleClickBtn(selenium, "//td/button");
+	
+	try {
+	    final 	Alert alert = driver.switchTo().alert();
+	    final 	String textOnAlert = alert.getText();
+	    logger.info(textOnAlert);
+	    alert.accept();
+	} catch (Exception e) {
+	    logger.info(e.getMessage(),e);
+	}
+	
 	if (!giveUpOperation && StringUtils.contains(driver.getCurrentUrl(), rl03100DetailPartialUlr)){
 	    System.out.println("..................");
 	}
