@@ -21,8 +21,8 @@ public class Rl03100Page {
     private Selenium selenium;
 
     private final String rl0172bPartialUlr ="_rl0172b/rl0172b.xhtml";
-    private final String rl02d00PartialUlr ="_rl02d00/rl02d00.xhtml";
     private final String rl03100PartialUlr ="rl03100/rl03100.xhtml";
+    private final String rl03100DetailPartialUlr ="rl03100/rl03100_m_detail.xhtml";
     
     public Rl03100Page(final Selenium selenium, final WebDriver driver)throws  UnhandledAlertException,SeleniumException  {
 	super();
@@ -41,7 +41,9 @@ public class Rl03100Page {
 	selectorElement.sendKeys(siteId);
 	
 	boolean giveUpOperation = WebUtils.handleClickBtn(selenium, "//td/button");
-	
+	if (!giveUpOperation && StringUtils.contains(driver.getCurrentUrl(), rl03100DetailPartialUlr)){
+	    System.out.println("..................");
+	}
     }
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {
 	final String currentUrl = driver.getCurrentUrl();
