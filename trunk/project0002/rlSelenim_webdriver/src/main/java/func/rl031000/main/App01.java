@@ -16,6 +16,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 
 import func.rl.common.Rl03100Page;
@@ -45,8 +47,10 @@ public class App01 {
     }
     public void startup()throws MalformedURLException, FileNotFoundException{
 	getContig();
+	DesiredCapabilities capabilities = new DesiredCapabilities();
+	capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 //	final String baseUrl = "http://192.168.10.18:6280/rl/";
-	final WebDriver driver = new FirefoxDriver();
+	final WebDriver driver = new FirefoxDriver(capabilities);
 //	final WebDriver driver = WebUtils.windowsMachine();
 	
 	final Dimension targetSize = new Dimension(1500,860);
