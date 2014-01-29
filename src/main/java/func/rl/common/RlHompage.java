@@ -34,6 +34,8 @@ import com.thoughtworks.selenium.SeleniumException;
 public class RlHompage {
     private  WebDriver driver;
     private Selenium selenium;
+    private String user;
+    private String passwd;
     protected final  Logger logger = Logger.getLogger(getClass());
     public RlHompage(final WebDriver driver) throws  UnhandledAlertException,SeleniumException  {
 	super();
@@ -75,16 +77,18 @@ public class RlHompage {
 	selenium.open(sitLoginPage);//RF1203008 
 	  String currentUrl = driver.getCurrentUrl();
 	if (StringUtils.contains(currentUrl, sitLoginPage)) {
-		selenium.type("name=j_username", "RF1203008");
-		selenium.type("name=j_password", "RF1203008");
+		selenium.type("name=j_username", getUser() );
+		selenium.type("name=j_password", getPasswd() );
 		selenium.click("css=input[type=\"submit\"]");
 	}else{
+	    //此時會到https://idpfl.ris.gov.tw:8443/＃＄％＃＄︿＄奇怪網址,要想辦法到https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1進行登入....然後必須想辦法到target所指定網址
 		selenium.open("https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1");
 		System.out.println(driver.getCurrentUrl());
-		selenium.type("//input[@name='Ecom_User_ID']", "RF1203008");
-		selenium.type("//input[@name='Ecom_Password']", "RF1203008");
+		selenium.type("//input[@name='Ecom_User_ID']", getUser() );
+		selenium.type("//input[@name='Ecom_Password']", getPasswd() );
 		selenium.click("//input[@name='loginButton2']");
 		 //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
+		 // 然後必須想辦法到target所指定網址
 		selenium.open("http://rlfl.ris.gov.tw/rl/");
 
 	}
@@ -207,4 +211,27 @@ public class RlHompage {
 	    }
 	}
     }
+
+    public String getUser() {
+	if(StringUtils.isBlank(user)){
+	    user="RF1203008";
+	}
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPasswd() {
+	if(StringUtils.isBlank(passwd)){
+	    passwd="RF1203008";
+	}
+        return passwd;
+    }
+
+    public void setPasswd(String passwd) {
+        this.passwd = passwd;
+    }
+    
 }
