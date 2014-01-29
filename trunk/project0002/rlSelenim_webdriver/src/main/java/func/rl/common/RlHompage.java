@@ -1,6 +1,24 @@
 package func.rl.common;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EncodingUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.UnhandledAlertException;
@@ -34,18 +52,45 @@ public class RlHompage {
 	login();
     }
 
+    private Map<String,String> retrieve(String query ){
+    	Map<String,String>  result = new HashMap<String, String>();
+    	final 	String[] data = StringUtils.splitPreserveAllTokens(query,"&");
+    	for(String unit :data){
+    		final 	String[] unitData = StringUtils.splitPreserveAllTokens(unit,"=");
+    		result.put(unitData[0], unitData[1]);
+    	}
+    	
+    	return result;
+    }
+    private List<  BasicNameValuePair> retrieveParams(String query ){
+    	List<  BasicNameValuePair> result = new ArrayList<BasicNameValuePair>();
+    	Map<String, String> map = retrieve(query);
+    	for(String key : map.keySet()){
+    		result.add(new BasicNameValuePair(key, map.get(key)));
+    	}
+    	return result ;
+    }
     private void login()throws  UnhandledAlertException,SeleniumException  {
-	selenium.open("/rl/pages/common/login.jsp");//RF1203008
-//	selenium.type("name=j_username", "RF1200123");
-//	selenium.type("name=j_password", "RF1200123");
+    	String sitLoginPage ="/rl/pages/common/login.jsp";
+	selenium.open(sitLoginPage);//RF1203008 
+	  String currentUrl = driver.getCurrentUrl();
+	if (StringUtils.contains(currentUrl, sitLoginPage)) {
+		selenium.type("name=j_username", "RF1203008");
+		selenium.type("name=j_password", "RF1203008");
+		selenium.click("css=input[type=\"submit\"]");
+	}else{
+		selenium.open("https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1");
+		System.out.println(driver.getCurrentUrl());
+		selenium.type("//input[@name='Ecom_User_ID']", "RF1203008");
+		selenium.type("//input[@name='Ecom_Password']", "RF1203008");
+		selenium.click("//input[@name='loginButton2']");
+		 //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
+		selenium.open("http://rlfl.ris.gov.tw/rl/");
+
+	}
 	
-//	selenium.type("name=j_username", "RQ0700123");
-//	selenium.type("name=j_password", "RQ0700123");
 	
-	selenium.type("name=j_username", "RF1203008");
-	selenium.type("name=j_password", "RF1203008");
 	
-	selenium.click("css=input[type=\"submit\"]");
 	
     }
 

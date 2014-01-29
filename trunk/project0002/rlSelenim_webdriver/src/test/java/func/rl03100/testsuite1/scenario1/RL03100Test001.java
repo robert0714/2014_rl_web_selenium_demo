@@ -24,6 +24,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -39,16 +41,23 @@ public class RL03100Test001 {
     @Before
     public void setUp() throws Exception {
 	final TableJDBCDao dao =new TableJDBCDao();
-	personIdSiteIdList = dao.getPersonIdSiteIdList();
+	DesiredCapabilities capabilities = new DesiredCapabilities();
+	capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+//	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = WebUtils.linuxMachine();
-	 driver = WebUtils.windowsMachine();
-//	driver = new FirefoxDriver();
+//	 driver = WebUtils.windowsMachine();
+	driver = new FirefoxDriver(capabilities);
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 //	final String baseUrl = "http://192.168.10.18:6180";
-	final String baseUrl = "http://192.168.10.18:6280/rl/";
-	
+//	final String baseUrl = "http://192.168.10.18:6280/rl/";
+	final String baseUrl = "http://rlfl.ris.gov.tw/rl/";
+	//http://rlfl.ris.gov.tw/rl/
+	//http://rlfl.ris.gov.tw/rl/
 	final Dimension targetSize = new Dimension(1500,860);
 	driver.manage().window().setSize(targetSize);
+	
+	
+	
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
     }
     

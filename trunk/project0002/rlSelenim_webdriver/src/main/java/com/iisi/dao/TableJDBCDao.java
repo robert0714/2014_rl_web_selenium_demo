@@ -45,7 +45,9 @@ public class TableJDBCDao {
 	return result;
     }
     public static Connection getInstance (){
-	String url ="jdbc:informix-sqli://192.168.10.18:4526/twu10070:informixserver=aix2;DB_LOCALE=zh_tw.utf8;CLIENT_LOCALE=zh_tw.utf8;GL_USEGLU=1";
+    	String url ="jdbc:informix-sqli://140.92.86.162:4526/teun0020_uat:informixserver=aix2;DB_LOCALE=zh_tw.utf8;CLIENT_LOCALE=zh_tw.utf8;GL_USEGLU=1";
+//	String url ="jdbc:informix-sqli://192.168.10.18:4526/twu10070:informixserver=aix2;DB_LOCALE=zh_tw.utf8;CLIENT_LOCALE=zh_tw.utf8;GL_USEGLU=1";
+	//
 //	String url ="jdbc:informix-sqli://192.168.10.18:4526/teun0020:informixserver=aix2;DB_LOCALE=zh_tw.utf8;CLIENT_LOCALE=zh_tw.utf8;GL_USEGLU=1";
 	String username = "srismapp";
 	String password ="ris31123";
