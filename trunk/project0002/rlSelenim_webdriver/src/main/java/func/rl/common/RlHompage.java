@@ -3,10 +3,14 @@ package func.rl.common;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.DocFlavor.URL;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -37,15 +41,7 @@ public class RlHompage {
     private String user;
     private String passwd;
     protected final  Logger logger = Logger.getLogger(getClass());
-    public RlHompage(final WebDriver driver) throws  UnhandledAlertException,SeleniumException  {
-	super();
-	this.driver = driver;
-	//http://192.168.10.18:6180/rl/pages/common/login.jsp
-	//http://192.168.9.94:6280/rl/pages/common/login.jsp
-	final String baseUrl = "http://192.168.10.18:6180";
-	selenium = new WebDriverBackedSelenium(driver, baseUrl);
-	login();
-    }
+    
 
     public RlHompage(final Selenium selenium ,final WebDriver driver)throws  UnhandledAlertException,SeleniumException  {
 	super();
@@ -73,29 +69,42 @@ public class RlHompage {
     	return result ;
     }
     private void login()throws  UnhandledAlertException,SeleniumException  {
-    	String sitLoginPage ="/rl/pages/common/login.jsp";
+	final String sitLoginPage ="/rl/pages/common/login.jsp";
 	selenium.open(sitLoginPage);//RF1203008 
-	  String currentUrl = driver.getCurrentUrl();
+	String currentUrl = driver.getCurrentUrl();
 	if (StringUtils.contains(currentUrl, sitLoginPage)) {
 		selenium.type("name=j_username", getUser() );
 		selenium.type("name=j_password", getPasswd() );
 		selenium.click("css=input[type=\"submit\"]");
 	}else{
 	    //此時會到https://idpfl.ris.gov.tw:8443/＃＄％＃＄︿＄奇怪網址,要想辦法到https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1進行登入....然後必須想辦法到target所指定網址
-		selenium.open("https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1");
+	    	final String targetUrl = retriveTargetUrl(currentUrl);
+	    	final String mainUrl = getMainUrl(currentUrl);//得到https://idpfl.ris.gov.tw:8443
+	    	String openAuthorizationUrl= mainUrl+"/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";//https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
+	    	selenium.open(openAuthorizationUrl);
+		
 		System.out.println(driver.getCurrentUrl());
 		selenium.type("//input[@name='Ecom_User_ID']", getUser() );
 		selenium.type("//input[@name='Ecom_Password']", getPasswd() );
 		selenium.click("//input[@name='loginButton2']");
 		 //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
 		 // 然後必須想辦法到target所指定網址
-		selenium.open("http://rlfl.ris.gov.tw/rl/");
-
+		selenium.open(targetUrl);//http://rlfl.ris.gov.tw/rl/
+	}	
+    }
+    private String retriveTargetUrl(final String src){
+	String result =StringUtils.EMPTY;
+	final	String[] strArray = StringUtils.split(src,"?");
+	if(strArray.length>1){
+	    Map<String, String> mapData = retrieve (strArray[1]);
+	    result = mapData.get("target");
 	}
-	
-	
-	
-	
+	return result;
+    }
+    private String getMainUrl(final String src){
+	final String expr ="([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)";
+	Collection<String>  intData= WebUtils.extract(expr, src);
+	return (String) CollectionUtils.get(intData, 0);
     }
 
     public TypingApplication typingApplication()throws  UnhandledAlertException,SeleniumException   {

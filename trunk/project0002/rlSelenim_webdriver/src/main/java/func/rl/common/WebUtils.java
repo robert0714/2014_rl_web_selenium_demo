@@ -5,6 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
@@ -171,5 +175,16 @@ public class WebUtils {
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
+    }
+    public static Set<String> extract(final String expr,final String src){
+	final Set<String> result =new HashSet<String>();
+	final Pattern pattern = Pattern.compile(expr);
+	final Matcher matcher = pattern.matcher(src);
+	Set<String> set = new HashSet<String>();
+	while (matcher.find()) {
+	    String data = matcher.group();
+	    result.add(data);
+	}
+	return result;
     }
 }
