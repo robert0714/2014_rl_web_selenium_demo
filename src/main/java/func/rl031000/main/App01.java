@@ -26,6 +26,7 @@ import func.rl.common.WebUtils;
 
 public class App01 {
     protected static Logger logger = Logger.getLogger(App01.class); 
+    protected WebDriverBackedSelenium selenium;
     protected String userName;
     protected String userPasswd;
     protected String baseUrl;
@@ -43,19 +44,22 @@ public class App01 {
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    logger.error(e.getMessage(),e);
-	} 
+	} finally{
+	    if(app.selenium!= null   ){
+		app.selenium.stop();
+	    }
+	}
     }
     public void startup()throws MalformedURLException, FileNotFoundException{
 	getContig();
 	DesiredCapabilities capabilities = new DesiredCapabilities();
 	capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-//	final String baseUrl = "http://192.168.10.18:6280/rl/";
 	final WebDriver driver = new FirefoxDriver(capabilities);
 //	final WebDriver driver = WebUtils.windowsMachine();
 	
 	final Dimension targetSize = new Dimension(1500,860);
 	driver.manage().window().setSize(targetSize);
-	final WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, baseUrl);
+	selenium = new WebDriverBackedSelenium(driver, baseUrl);
 	final List<String[]> personIdSiteIdList = getPerosnIdSiteId();
 	final RlHompage homepage = new RlHompage(selenium,driver);
 	for(String[] stringArray :personIdSiteIdList){
