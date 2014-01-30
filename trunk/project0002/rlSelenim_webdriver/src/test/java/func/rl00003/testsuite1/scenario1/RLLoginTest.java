@@ -143,14 +143,14 @@ public class RLLoginTest {
 		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 		selenium.refresh();
 	    }
-	    
+	    selenium.waitForPageToLoad("3000");
 	    householdMaintainPage.processAppyCahange();
 	}
 	if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
 	    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	    selenium.refresh();
 	}
-	selenium.waitForPageToLoad("300000");
+	selenium.waitForPageToLoad("3000");
 	//進入2A10
 	Rl02a10Page rl02a10Page =new Rl02a10Page(selenium, driver);
 	rl02a10Page.switchTab();
