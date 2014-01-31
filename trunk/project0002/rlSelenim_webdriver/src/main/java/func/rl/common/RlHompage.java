@@ -77,8 +77,7 @@ public class RlHompage {
 		selenium.type("name=j_password", getPasswd() );
 		selenium.click("css=input[type=\"submit\"]");
 	}else{
-	    //此時會到https://idpfl.ris.gov.tw:8443/＃＄％＃＄︿＄奇怪網址,要想辦法到https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1進行登入....然後必須想辦法到target所指定網址
-	    	final String targetUrl = retriveTargetUrl(currentUrl);
+	    
 	    	final String mainUrl = getMainUrl(currentUrl);//得到https://idpfl.ris.gov.tw:8443
 	    	String openAuthorizationUrl= mainUrl+"/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";//https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
 	    	selenium.open(openAuthorizationUrl);
@@ -89,7 +88,7 @@ public class RlHompage {
 		selenium.click("//input[@name='loginButton2']");
 		 //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
 		 // 然後必須想辦法到target所指定網址
-		selenium.open(targetUrl);//http://rlfl.ris.gov.tw/rl/
+		selenium.open("/rl/");//http://rlfl.ris.gov.tw/rl/
 	}	
     }
     private String retriveTargetUrl(final String src){
