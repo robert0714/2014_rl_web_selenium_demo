@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -23,12 +21,6 @@ import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-
-
-
-
-
 
 
 import func.rl.common.Rl03100Page;
@@ -85,6 +77,7 @@ public class BatchApp01 {
 		    WebUtils.handleRLAlert(selenium);
 		}
 	    }
+	    selenium.stop();
 	} catch (Exception e) {
 	    e.printStackTrace();
 	    SimpleDateFormat sdf =new SimpleDateFormat("yyyy_mm_dd");
