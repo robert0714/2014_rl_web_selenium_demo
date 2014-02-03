@@ -145,6 +145,8 @@ public class BatchApp01 {
 		    }
 		}
 	    }
+	}else{
+	    logger.info("no configuration fle in "+dir.getAbsoluteFile());
 	}
 
 	return result;
