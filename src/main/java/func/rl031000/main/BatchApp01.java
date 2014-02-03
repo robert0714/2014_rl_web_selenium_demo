@@ -4,14 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -19,6 +23,11 @@ import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+
+
+
+
+
 
 
 
@@ -56,6 +65,8 @@ public class BatchApp01 {
 	try {
 	    final List<String[]> personIdSiteIdList = getPerosnIdSiteId(config);
 	    final RlHompage homepage = new RlHompage(selenium, driver);
+	    homepage.login(config.userName, config.userPasswd);
+	    
 	    for (String[] stringArray : personIdSiteIdList) {
 		selenium.waitForPageToLoad("30000");
 		homepage.enterRl03100();
@@ -76,6 +87,9 @@ public class BatchApp01 {
 	    }
 	} catch (Exception e) {
 	    e.printStackTrace();
+	    SimpleDateFormat sdf =new SimpleDateFormat("yyyy_mm_dd");
+	    WebUtils.takeScreen(driver,  new File(config.picFolderPath+File.separator+ sdf.format(new Date())+RandomStringUtils.randomNumeric(100)+".png"));
+	    
 		} finally{
 	    if(selenium!= null   ){
 		selenium.stop();
@@ -108,6 +122,7 @@ public class BatchApp01 {
     public List<Config> getBatchContig() {
 	final List<Config> result = new ArrayList<Config>();
 	final File dir = new File("conf");
+	logger.info("path: "+dir.getAbsolutePath());
 	final File[] listFiles = dir.listFiles();
 	if (ArrayUtils.isNotEmpty(listFiles)) {
 	    for (File file : listFiles) {
