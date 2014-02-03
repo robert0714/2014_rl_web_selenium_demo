@@ -136,6 +136,12 @@ public class BatchApp01 {
 			logger.info("userPasswd: " + newConfig.userPasswd);
 			logger.info("baseUrl: " + newConfig.baseUrl);
 			logger.info("picFolderPath: " + newConfig.picFolderPath);
+			if(StringUtils.isNotBlank( newConfig.picFolderPath)){
+				final File picdir = new File(newConfig.picFolderPath);
+				if(!picdir.isDirectory() && !picdir.exists() ){
+					picdir.mkdir();
+				}
+			}
 			logger.info("txnPersonFilePath: " + newConfig.txnPersonFilePath);
 			result.add(newConfig);
 		    } catch (IOException e) {
