@@ -92,7 +92,7 @@ public class BatchApp01 {
 	    
 		} finally{
 	    if(selenium!= null   ){
-		selenium.stop();
+//		selenium.stop();
 	    }
 	}
     }
