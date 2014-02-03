@@ -47,7 +47,6 @@ public class RlHompage {
 	super();
 	this.driver = driver;
 	this.selenium = selenium;
-	login();
     }
 
     private Map<String,String> retrieve(String query ){
@@ -68,13 +67,15 @@ public class RlHompage {
     	}
     	return result ;
     }
-    private void login()throws  UnhandledAlertException,SeleniumException  {
+    public void login(final String user,final String passwd)throws  UnhandledAlertException,SeleniumException  {
 	final String sitLoginPage ="/rl/pages/common/login.jsp";
 	selenium.open(sitLoginPage);//RF1203008 
 	String currentUrl = driver.getCurrentUrl();
 	if (StringUtils.contains(currentUrl, sitLoginPage)) {
-		selenium.type("name=j_username", getUser() );
-		selenium.type("name=j_password", getPasswd() );
+//		selenium.type("name=j_username", getUser() );
+//		selenium.type("name=j_password", getPasswd() );
+		selenium.type("name=j_username", user );
+		selenium.type("name=j_password", passwd );
 		selenium.click("css=input[type=\"submit\"]");
 	}else{
 	    
@@ -83,8 +84,10 @@ public class RlHompage {
 	    	selenium.open(openAuthorizationUrl);
 		
 		System.out.println(driver.getCurrentUrl());
-		selenium.type("//input[@name='Ecom_User_ID']", getUser() );
-		selenium.type("//input[@name='Ecom_Password']", getPasswd() );
+//		String user = getUser();
+//		String passwd =  getPasswd();
+		selenium.type("//input[@name='Ecom_User_ID']", user );
+		selenium.type("//input[@name='Ecom_Password']", passwd );
 		selenium.click("//input[@name='loginButton2']");
 		 //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
 		 // 然後必須想辦法到target所指定網址
