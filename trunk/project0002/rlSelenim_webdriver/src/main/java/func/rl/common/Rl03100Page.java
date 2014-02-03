@@ -59,7 +59,7 @@ public class Rl03100Page {
 	
 	if (!giveUpOperation && StringUtils.contains(driver.getCurrentUrl(), rl03100DetailPartialUlr)){
 	    WebUtils.scroolbarDown(selenium, driver);
-	    WebUtils.takeScreen(driver,  new File(outputFolderPath+personId+"_"+siteId+"_01.png"));
+//	    WebUtils.takeScreen(driver,  new File(outputFolderPath+personId+"_"+siteId+"_01.png"));
 	    WebUtils.scroolbarUp(selenium, driver);
 	    WebUtils.takeScreen(driver,  new File(outputFolderPath+personId+"_"+siteId+"_02.png"));
 	}
