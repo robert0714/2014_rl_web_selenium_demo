@@ -89,26 +89,47 @@ public class BatchApp01 {
 	    }
 	}
     }
-    public  List<String[]> getPerosnIdSiteId(final Config config){
-	final List<String[]> personIdSiteIdList =new ArrayList<String[]>();
-	logger.info("txnPersonFilePath: "+config.txnPersonFilePath);
+
+    public List<String[]> getPerosnIdSiteId(final Config config) {
+	final List<String[]> personIdSiteIdList = new ArrayList<String[]>();
+	logger.info("txnPersonFilePath: " + config.txnPersonFilePath);
 	File srcFile = new File(config.txnPersonFilePath);
-	if(srcFile.exists()){
+	if (srcFile.exists()) {
 	    try {
-		List<String >  tmpList = FileUtils.readLines(srcFile);
-		for(String line : tmpList){
-		    personIdSiteIdList.add(StringUtils.splitPreserveAllTokens(line,","));
+		List<String> tmpList = FileUtils.readLines(srcFile);
+		for (String line : tmpList) {
+		    personIdSiteIdList.add(StringUtils.splitPreserveAllTokens(line, ","));
 		}
 	    } catch (IOException e) {
 		e.printStackTrace();
-		 logger.error(e.getMessage(),e);
+		logger.error(e.getMessage(), e);
 	    }
-	    
-	}else{
-	    personIdSiteIdList.add(new String[]{"C100201902","65000120"});
+
+	} else {
+	    personIdSiteIdList.add(new String[] { "C100201902", "65000120" });
 	}
-	
-	
+	if (StringUtils.isNotEmpty(config.txnPersonFolderPath)) {
+	    File srcFolderFile = new File(config.txnPersonFolderPath);
+	    if (srcFolderFile.exists() && srcFolderFile.isDirectory()) {
+		final File[] listFiles = srcFolderFile.listFiles();
+		if (ArrayUtils.isNotEmpty(listFiles)) {
+		    for (File data : listFiles) {
+
+			try {
+			    List<String> tmpList = FileUtils.readLines(data);
+			    for (String line : tmpList) {
+				personIdSiteIdList.add(StringUtils.splitPreserveAllTokens(line, ","));
+			    }
+			} catch (IOException e) {
+			    e.printStackTrace();
+			    logger.error(e.getMessage(), e);
+			}
+
+		    }
+		}
+	    }
+	}
+
 	return personIdSiteIdList;
     }
      
@@ -132,6 +153,7 @@ public class BatchApp01 {
 			newConfig.baseUrl = properties.getProperty("baseUrl");
 			newConfig.picFolderPath = properties.getProperty("picFolderPath");
 			newConfig.txnPersonFilePath = properties.getProperty("txnPersonFilePath");
+			newConfig.txnPersonFolderPath = properties.getProperty("txnPersonFolderPath");
 			logger.info("userName: " + newConfig.userName);
 			logger.info("userPasswd: " + newConfig.userPasswd);
 			logger.info("baseUrl: " + newConfig.baseUrl);
