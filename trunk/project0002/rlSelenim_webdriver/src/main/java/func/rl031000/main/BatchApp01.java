@@ -172,5 +172,7 @@ public class BatchApp01 {
 	protected String baseUrl;
 	protected String picFolderPath;
 	protected String txnPersonFilePath;
+	protected String txnPersonFolderPath;
+	
     }
 }
