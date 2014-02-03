@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Dimension;
@@ -103,45 +105,48 @@ public class BatchApp01 {
 	return personIdSiteIdList;
     }
      
-    public  List<Config> getBatchContig()  {
-	final List<Config> result =new ArrayList<Config>();
-	final File dir = new File ("conf");
-	final	File[] listFiles = dir.listFiles();
-	for(File file:listFiles){
-	    if(file.isFile()){
-		 FileInputStream in =null;
-		try {
-		    in = new FileInputStream(file);
-		    Properties properties = new Properties();
-		
-		    properties.load(in);
-		    Config newConfig =new Config();
-		    newConfig.userName = properties.getProperty("userName");
-		    newConfig.userPasswd = properties.getProperty("userPasswd");
-		    newConfig.baseUrl = properties.getProperty("baseUrl");
-		    newConfig.picFolderPath = properties.getProperty("picFolderPath");
-		    newConfig.txnPersonFilePath = properties.getProperty("txnPersonFilePath");
-		    logger.info("userName: " +  newConfig.userName);
-		    logger.info("userPasswd: " +  newConfig.userPasswd);
-		    logger.info("baseUrl: " +  newConfig.baseUrl);
-		    logger.info("picFolderPath: " +  newConfig.picFolderPath);
-		    logger.info("txnPersonFilePath: " +  newConfig.txnPersonFilePath);
-		    result.add(newConfig);
-		} catch (IOException e) {
-		    e.printStackTrace();
-		    logger.error(e.getMessage(),e);
-		} finally {
+    public List<Config> getBatchContig() {
+	final List<Config> result = new ArrayList<Config>();
+	final File dir = new File("conf");
+	final File[] listFiles = dir.listFiles();
+	if (ArrayUtils.isNotEmpty(listFiles)) {
+	    for (File file : listFiles) {
+		if (file.isFile()) {
+		    FileInputStream in = null;
 		    try {
-			if (in != null) {
-			    in.close();
-			}
+			in = new FileInputStream(file);
+			Properties properties = new Properties();
+
+			properties.load(in);
+			Config newConfig = new Config();
+			newConfig.userName = properties.getProperty("userName");
+			newConfig.userPasswd = properties.getProperty("userPasswd");
+			newConfig.baseUrl = properties.getProperty("baseUrl");
+			newConfig.picFolderPath = properties.getProperty("picFolderPath");
+			newConfig.txnPersonFilePath = properties.getProperty("txnPersonFilePath");
+			logger.info("userName: " + newConfig.userName);
+			logger.info("userPasswd: " + newConfig.userPasswd);
+			logger.info("baseUrl: " + newConfig.baseUrl);
+			logger.info("picFolderPath: " + newConfig.picFolderPath);
+			logger.info("txnPersonFilePath: " + newConfig.txnPersonFilePath);
+			result.add(newConfig);
 		    } catch (IOException e) {
 			e.printStackTrace();
 			logger.error(e.getMessage(), e);
+		    } finally {
+			try {
+			    if (in != null) {
+				in.close();
+			    }
+			} catch (IOException e) {
+			    e.printStackTrace();
+			    logger.error(e.getMessage(), e);
+			}
 		    }
 		}
 	    }
 	}
+
 	return result;
     }
 
