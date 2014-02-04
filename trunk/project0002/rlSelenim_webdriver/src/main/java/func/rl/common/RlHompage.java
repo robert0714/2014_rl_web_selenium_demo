@@ -174,6 +174,8 @@ public class RlHompage {
 	selenium.waitForPageToLoad("30000");
 	while (selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
 	    selenium.waitForPageToLoad("30000");
+	    selenium.focus("//*[@id='navmenu-v']/li[6]/div/span");
+	    
 	    selenium.click("//*[@id='navmenu-v']/li[6]/div/span");// 進入戶籍查詢作業
 	    selenium.waitForPageToLoad("30000");
 	    
@@ -181,7 +183,7 @@ public class RlHompage {
 		selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 	    }
 	    selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]");
-	    
+	    selenium.waitForPageToLoad("30000");
 	    if (StringUtils.contains(driver.getCurrentUrl(), "rl03100/rl03100.xhtml")) {
 		break;
 	    }

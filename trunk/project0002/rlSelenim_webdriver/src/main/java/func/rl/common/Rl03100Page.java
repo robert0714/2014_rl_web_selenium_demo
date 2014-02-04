@@ -45,26 +45,29 @@ public class Rl03100Page {
 	selenium.waitForPageToLoad("30000");
 	selectorElement.clear();
 	selectorElement.sendKeys(siteId);
-	
+	selenium.waitForPageToLoad("300000");
 	boolean giveUpOperation = WebUtils.handleClickBtn(selenium, "//td/button");
+	selenium.waitForPageToLoad("300000");
 	if(giveUpOperation){
 		 WebUtils.takeScreen(driver,  new File(outputFolderPath+personId+"_"+siteId+"_error.png"));
 	}
+	 selenium.waitForPageToLoad("300000");
 	try {
 	    final 	Alert alert = driver.switchTo().alert();
 	    final 	String textOnAlert = alert.getText();
 	    logger.info(textOnAlert);
 	    alert.accept();
 	} catch (Exception e) {
-	    logger.info(e.getMessage(),e);
+//	    logger.info(e.getMessage(),e);
 	}
-	
+	 selenium.waitForPageToLoad("300000");
 	if (!giveUpOperation && StringUtils.contains(driver.getCurrentUrl(), rl03100DetailPartialUlr)){
 	    WebUtils.scroolbarDown(selenium, driver);
 //	    WebUtils.takeScreen(driver,  new File(outputFolderPath+personId+"_"+siteId+"_01.png"));
 	    WebUtils.scroolbarUp(selenium, driver);
 	    WebUtils.takeScreen(driver,  new File(outputFolderPath+personId+"_"+siteId+"_02.png"));
 	}
+	 selenium.waitForPageToLoad("300000");
     }
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {
 	final String currentUrl = driver.getCurrentUrl();
