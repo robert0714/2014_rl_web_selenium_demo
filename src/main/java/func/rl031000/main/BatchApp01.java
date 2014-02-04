@@ -111,8 +111,12 @@ public class BatchApp01 {
 	    personIdSiteIdList.add(new String[] { "C100201902", "65000120" });
 	}
 	if (StringUtils.isNotEmpty(config.txnPersonFolderPath)) {
+		
 	    File srcFolderFile = new File(config.txnPersonFolderPath);
-	    if (srcFolderFile.exists() && srcFolderFile.isDirectory()) {
+	    logger.info(srcFolderFile.getAbsolutePath());
+	    
+	    /******D:/userDatas/robert/Desktop/rl03100/txnPersonFolder*/
+	    if (srcFolderFile !=null ) {
 		final File[] listFiles = srcFolderFile.listFiles();
 		if (ArrayUtils.isNotEmpty(listFiles)) {
 		    for (File data : listFiles) {
