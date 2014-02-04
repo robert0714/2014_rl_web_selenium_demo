@@ -47,7 +47,9 @@ public class Rl03100Page {
 	selectorElement.sendKeys(siteId);
 	
 	boolean giveUpOperation = WebUtils.handleClickBtn(selenium, "//td/button");
-	
+	if(giveUpOperation){
+		 WebUtils.takeScreen(driver,  new File(outputFolderPath+personId+"_"+siteId+"_error.png"));
+	}
 	try {
 	    final 	Alert alert = driver.switchTo().alert();
 	    final 	String textOnAlert = alert.getText();
