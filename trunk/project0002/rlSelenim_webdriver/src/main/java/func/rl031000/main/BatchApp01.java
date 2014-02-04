@@ -25,8 +25,7 @@ import func.rl.common.WebUtils;
 
 public class BatchApp01 {
     protected static Logger logger = Logger.getLogger(BatchApp01.class);
-    private WebDriverBackedSelenium formerSelenium ;
-    private WebDriver formerWebDriver ;
+   
     /**
      * @param args
      * @throws MalformedURLException 
@@ -77,27 +76,18 @@ public class BatchApp01 {
 
 		    WebUtils.handleRLAlert(selenium);
 		    WebUtils.takeScreen(driver, new File(config.picFolderPath + File.separator + sdf.format(new Date()) + ".png"));
-		    selenium.stop();
+		     
 		}
-	    }
-	    selenium.stop();
+	    } 
 	} catch (Exception e) {
 	    e.printStackTrace();
 
 	    WebUtils.takeScreen(driver, new File(config.picFolderPath + File.separator + sdf.format(new Date()) + ".png"));
 
 	} finally {
-	    if(formerSelenium!=null){
-		formerSelenium.stop();
-	    }
-	    if(formerWebDriver!=null){
-		formerWebDriver.close();
-	    }
+	    
 	    if (selenium != null) {
-		formerSelenium=selenium;
-	    }
-	    if (driver != null) {
-		formerWebDriver =driver;
+		selenium.stop();
 	    }
 	}
     }
