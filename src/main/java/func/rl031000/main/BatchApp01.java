@@ -9,28 +9,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 import func.rl.common.Rl03100Page;
 import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
 
 public class BatchApp01 {
-    protected static Logger logger = Logger.getLogger(BatchApp01.class); 
-
+    protected static Logger logger = Logger.getLogger(BatchApp01.class);
+    private WebDriverBackedSelenium formerSelenium ;
+    private WebDriver formerWebDriver ;
     /**
      * @param args
      * @throws MalformedURLException 
@@ -44,22 +40,24 @@ public class BatchApp01 {
 	    app.startup(config);
 	}
     }
-    public void startup(final Config config) { 
-	DesiredCapabilities capabilities = new DesiredCapabilities();
-	capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);	
-	
-	final WebDriver driver = new FirefoxDriver(capabilities);
-//	final WebDriver driver = WebUtils.windowsMachine();
-	
-	final Dimension targetSize = new Dimension(1500,860);
+
+    public void startup(final Config config) {
+	// DesiredCapabilities capabilities = new DesiredCapabilities();
+	// capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+
+	// final WebDriver driver = new FirefoxDriver(capabilities);
+	// final WebDriver driver = WebUtils.windowsMachine();
+	final WebDriver driver = new FirefoxDriver();
+
+	final Dimension targetSize = new Dimension(1500, 860);
 	driver.manage().window().setSize(targetSize);
-	WebDriverBackedSelenium  selenium = new WebDriverBackedSelenium(driver, config.baseUrl);
-	 SimpleDateFormat sdf =new SimpleDateFormat("yyyy_mm_dd_MM_ss");
+	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, config.baseUrl);
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy_mm_dd_MM_ss");
 	try {
 	    final List<String[]> personIdSiteIdList = getPerosnIdSiteId(config);
 	    final RlHompage homepage = new RlHompage(selenium, driver);
 	    homepage.login(config.userName, config.userPasswd);
-	    
+
 	    for (String[] stringArray : personIdSiteIdList) {
 		selenium.waitForPageToLoad("30000");
 		homepage.enterRl03100();
@@ -75,22 +73,31 @@ public class BatchApp01 {
 		    rl00004Page.typeApplication(personId, siteId, config.picFolderPath);
 		} catch (Exception e) {
 		    e.printStackTrace();
-		    WebUtils.takeScreen(driver,  new File(config.picFolderPath+File.separator+ sdf.format(new Date()) +".png"));
-			   
+		    WebUtils.takeScreen(driver, new File(config.picFolderPath + File.separator + sdf.format(new Date()) + ".png"));
+
 		    WebUtils.handleRLAlert(selenium);
-		    WebUtils.takeScreen(driver,  new File(config.picFolderPath+File.separator+ sdf.format(new Date()) +".png"));
+		    WebUtils.takeScreen(driver, new File(config.picFolderPath + File.separator + sdf.format(new Date()) + ".png"));
 		    selenium.stop();
 		}
 	    }
 	    selenium.stop();
 	} catch (Exception e) {
 	    e.printStackTrace();
-	   
-	    WebUtils.takeScreen(driver,  new File(config.picFolderPath+File.separator+ sdf.format(new Date())+".png"));
-	    
-		} finally{
-	    if(selenium!= null   ){
-//		selenium.stop();
+
+	    WebUtils.takeScreen(driver, new File(config.picFolderPath + File.separator + sdf.format(new Date()) + ".png"));
+
+	} finally {
+	    if(formerSelenium!=null){
+		formerSelenium.stop();
+	    }
+	    if(formerWebDriver!=null){
+		formerWebDriver.close();
+	    }
+	    if (selenium != null) {
+		formerSelenium=selenium;
+	    }
+	    if (driver != null) {
+		formerWebDriver =driver;
 	    }
 	}
     }
