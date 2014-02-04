@@ -9,11 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -21,7 +23,6 @@ import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
 
 import func.rl.common.Rl03100Page;
 import func.rl.common.RlHompage;
@@ -53,7 +54,7 @@ public class BatchApp01 {
 	final Dimension targetSize = new Dimension(1500,860);
 	driver.manage().window().setSize(targetSize);
 	WebDriverBackedSelenium  selenium = new WebDriverBackedSelenium(driver, config.baseUrl);
-	
+	 SimpleDateFormat sdf =new SimpleDateFormat("yyyy_mm_dd_MM_ss");
 	try {
 	    final List<String[]> personIdSiteIdList = getPerosnIdSiteId(config);
 	    final RlHompage homepage = new RlHompage(selenium, driver);
@@ -74,14 +75,18 @@ public class BatchApp01 {
 		    rl00004Page.typeApplication(personId, siteId, config.picFolderPath);
 		} catch (Exception e) {
 		    e.printStackTrace();
+		    WebUtils.takeScreen(driver,  new File(config.picFolderPath+File.separator+ sdf.format(new Date()) +".png"));
+			   
 		    WebUtils.handleRLAlert(selenium);
+		    WebUtils.takeScreen(driver,  new File(config.picFolderPath+File.separator+ sdf.format(new Date()) +".png"));
+		    selenium.stop();
 		}
 	    }
 	    selenium.stop();
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    SimpleDateFormat sdf =new SimpleDateFormat("yyyy_mm_dd");
-	    WebUtils.takeScreen(driver,  new File(config.picFolderPath+File.separator+ sdf.format(new Date())+RandomStringUtils.randomNumeric(100)+".png"));
+	   
+	    WebUtils.takeScreen(driver,  new File(config.picFolderPath+File.separator+ sdf.format(new Date())+".png"));
 	    
 		} finally{
 	    if(selenium!= null   ){
