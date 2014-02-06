@@ -84,7 +84,7 @@ public class TypingApplication {
 			selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
 		    }
 		    selenium.refresh();
-		    throw new  InterruptedException();
+//		    throw new  InterruptedException();
 		}
 //		selenium.click(searchBtnXpath);
 		int count =0;
