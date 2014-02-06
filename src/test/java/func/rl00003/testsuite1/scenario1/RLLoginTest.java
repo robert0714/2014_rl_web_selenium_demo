@@ -52,6 +52,7 @@ public class RLLoginTest {
     @Test
     public void testRLLogin() throws Exception {
 	final RlHompage homepage = new RlHompage(selenium,driver);
+	homepage.login("RF1200123","RF1200123");
 	selenium.waitForPageToLoad("30000");
 	if(CollectionUtils.isNotEmpty(personIdSiteIdList)){
 	    for(String[] stringArray: personIdSiteIdList){
