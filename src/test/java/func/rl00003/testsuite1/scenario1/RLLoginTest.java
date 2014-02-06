@@ -41,8 +41,8 @@ public class RLLoginTest {
 	 driver = WebUtils.windowsMachine();
 //	driver = new FirefoxDriver();
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
-//	final String baseUrl = "http://192.168.10.18:6180";
-	final String baseUrl = "http://192.168.10.18:6280/rl/";
+	final String baseUrl = "http://192.168.10.18:6180/rl/";
+//	final String baseUrl = "http://192.168.10.18:6280/rl/";
 	
 	final Dimension targetSize = new Dimension(1500,860);
 	driver.manage().window().setSize(targetSize);
@@ -52,8 +52,11 @@ public class RLLoginTest {
     @Test
     public void testRLLogin() throws Exception {
 	final RlHompage homepage = new RlHompage(selenium,driver);
-	homepage.login("RF1200123","RF1200123");
+//	homepage.login("RF1200123","RF1200123");
+	//
+	homepage.login("RQ0100123","RQ0100123");
 	selenium.waitForPageToLoad("30000");
+//	homepage.enterRl00001();
 	if(CollectionUtils.isNotEmpty(personIdSiteIdList)){
 	    for(String[] stringArray: personIdSiteIdList){
 		
