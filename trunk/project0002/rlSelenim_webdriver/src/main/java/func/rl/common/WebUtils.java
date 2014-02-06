@@ -108,7 +108,7 @@ public class WebUtils {
 	}
    }
     public static RemoteWebDriver windowsMachine() throws MalformedURLException {
-	URL remoteAddress = new URL("http://192.168.9.23:4444/wd/hub");
+	URL remoteAddress = new URL("http://192.168.9.86:4444/wd/hub");
 	// have tried using the below commented out lines as well, but in all
 	// cases I face errors.
 	// URL remoteAddress = new URL("http://mymachine:4444/grid/register");
