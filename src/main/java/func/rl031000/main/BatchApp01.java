@@ -16,8 +16,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 import func.rl.common.Rl03100Page;
 import func.rl.common.RlHompage;

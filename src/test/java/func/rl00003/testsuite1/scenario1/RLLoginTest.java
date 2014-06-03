@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 import func.rl.common.HouseholdMaintainPage;
 import func.rl.common.PagePartialURL;
@@ -17,8 +18,7 @@ import func.rl.common.WebUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchWindowException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverBackedSelenium;
+import org.openqa.selenium.WebDriver; 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.apache.commons.collections.CollectionUtils;
@@ -38,8 +38,8 @@ public class RLLoginTest {
 	final TableJDBCDao dao =new TableJDBCDao();
 	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = WebUtils.linuxMachine();
-	 driver = WebUtils.windowsMachine();
-//	driver = new FirefoxDriver();
+//	 driver = WebUtils.windowsMachine();
+	driver = new FirefoxDriver();
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 	final String baseUrl = "http://192.168.10.18:6180/rl/";
 //	final String baseUrl = "http://192.168.10.18:6280/rl/";
