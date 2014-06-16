@@ -47,6 +47,7 @@ public class RLLoginTest {
 	final Dimension targetSize = new Dimension(1500,860);
 	driver.manage().window().setSize(targetSize);
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
+	selenium.open(baseUrl);
     }
     
     @Test

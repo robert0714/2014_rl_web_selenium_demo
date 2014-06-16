@@ -40,8 +40,8 @@ public class RL02D00Test001 {
 //	final TableJDBCDao dao =new TableJDBCDao();
 //	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = WebUtils.linuxMachine();
-	 driver = WebUtils.windowsMachine();
-//	driver = new FirefoxDriver();
+//	 driver = WebUtils.windowsMachine();
+	driver = new FirefoxDriver();
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 //	final String baseUrl = "http://192.168.10.18:6180";
 	final String baseUrl = "http://192.168.10.18:6280/rl/";
@@ -49,12 +49,14 @@ public class RL02D00Test001 {
 	final Dimension targetSize = new Dimension(1500,860);
 	driver.manage().window().setSize(targetSize);
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
+	selenium.open(baseUrl);
     }
     
     @Test
     public void testRLLogin() throws Exception {
 	final RlHompage homepage = new RlHompage(selenium,driver);
 	selenium.waitForPageToLoad("30000");
+	homepage.login("RF1200123", "RF1200123");
 	if(CollectionUtils.isNotEmpty(personIdSiteIdList)){
 	    for(String[] stringArray: personIdSiteIdList){
 		
