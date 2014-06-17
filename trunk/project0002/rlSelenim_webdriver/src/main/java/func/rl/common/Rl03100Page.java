@@ -36,8 +36,8 @@ public class Rl03100Page {
 	this.driver = driver;
     }
     public void typeApplication(final String personId ,final String siteId,final String outputFolderPath) throws UnhandledAlertException, SeleniumException, InterruptedException {
-	selenium.focus("//tr[2]/td/span/input");
-	selenium.type("//tr[2]/td/span/input", personId);//輸入統號
+	selenium.focus("//div/table/tbody/tr/td/span/input");
+	selenium.type("//div/table/tbody/tr/td/span/input", personId);//輸入統號
 	
 	//span[2]/input//輸入作業點
 	WebElement selectorElement = driver.findElement(By.xpath("//span[2]/input"));
