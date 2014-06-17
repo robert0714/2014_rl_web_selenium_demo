@@ -60,8 +60,11 @@ public class App01 {
 	final Dimension targetSize = new Dimension(1500,860);
 	driver.manage().window().setSize(targetSize);
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
+	selenium.open(baseUrl);
 	final List<String[]> personIdSiteIdList = getPerosnIdSiteId();
 	final RlHompage homepage = new RlHompage(selenium,driver);
+	homepage.login(userName, userPasswd);
+	
 	for(String[] stringArray :personIdSiteIdList){
 	    selenium.waitForPageToLoad("30000");
 		homepage.enterRl03100();

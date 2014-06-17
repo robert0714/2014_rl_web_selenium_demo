@@ -52,6 +52,8 @@ public class BatchApp01 {
 	final Dimension targetSize = new Dimension(1500, 860);
 	driver.manage().window().setSize(targetSize);
 	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, config.baseUrl);
+	selenium.open(config.baseUrl);
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy_mm_dd_MM_ss");
 	try {
 	    final List<String[]> personIdSiteIdList = getPerosnIdSiteId(config);
