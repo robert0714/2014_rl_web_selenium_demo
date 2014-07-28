@@ -124,7 +124,10 @@ public class WebUtils {
 	// URL remoteAddress = new URL("http://mymachine:4444/grid/register");
 	// URL remoteAddress = new URL("http://mymachine:4444/wd/hub");
 	DesiredCapabilities dc = DesiredCapabilities.firefox();
-	
+	dc.setCapability("screenrecorder", true); 
+	dc.setCapability("screenshot", true);
+	//交代指明要遙控哪一台機器
+	dc.setCapability("id", "http://192.168.9.47:5555");
 	dc.setBrowserName("firefox");
 	dc.setPlatform(Platform.WINDOWS);	
 	RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
