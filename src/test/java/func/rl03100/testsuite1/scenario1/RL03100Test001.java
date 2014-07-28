@@ -1,5 +1,6 @@
 package func.rl03100.testsuite1.scenario1;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -43,50 +44,56 @@ public class RL03100Test001 {
 	final TableJDBCDao dao =new TableJDBCDao();
 	DesiredCapabilities capabilities = new DesiredCapabilities();
 	capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-//	personIdSiteIdList = dao.getPersonIdSiteIdList();
+	personIdSiteIdList = dao.getPersonIdSiteIdList();
 //	 driver = WebUtils.linuxMachine();
-//	 driver = WebUtils.windowsMachine();
-	driver = new FirefoxDriver(capabilities);
+	 driver = WebUtils.windowsMachine();
+//	driver = new FirefoxDriver(capabilities);
 	//http://192.168.9.94:6280/rl/pages/common/login.jsp
 //	final String baseUrl = "http://192.168.10.18:6180";
-	final String baseUrl = "http://192.168.10.18:6280/rl/";
-//	final String baseUrl = "http://rlfl.ris.gov.tw/rl/";
+//	final String baseUrl = "http://192.168.10.18:6280/rl/";
+	final String baseUrl = "http://rlfl.ris.gov.tw/rl/";
 	//http://rlfl.ris.gov.tw/rl/
 	//http://rlfl.ris.gov.tw/rl/
 	final Dimension targetSize = new Dimension(1500,860);
 	driver.manage().window().setSize(targetSize);	
 	selenium = new WebDriverBackedSelenium(driver, baseUrl);
 	selenium.open(baseUrl);
+	//http://192.168.10.20:4444/grid/api/proxy?id=http://140.92.86.42:5555
     }
     
     @Test
     public void testRLLogin() throws Exception {
 	final RlHompage homepage = new RlHompage(selenium,driver);
-	homepage.login("RF1200123","RF1200123");
-	if(CollectionUtils.isNotEmpty(personIdSiteIdList)){
-	    for(String[] stringArray: personIdSiteIdList){
-		selenium.waitForPageToLoad("30000");
-		homepage.enterRl03100();
-		selenium.waitForPageToLoad("30000");
-		final String personId = stringArray[0];
-		if (StringUtils.contains(personId, "*")) {
-		    continue;
-		}
-		final String siteId = stringArray[1];
+	try {
+	    homepage.login("RF1200123","RF1200123");
+	    if(CollectionUtils.isNotEmpty(personIdSiteIdList)){
+	        for(String[] stringArray: personIdSiteIdList){
+	    	selenium.waitForPageToLoad("30000");
+	    	homepage.enterRl03100();
+	    	selenium.waitForPageToLoad("30000");
+	    	final String personId = stringArray[0];
+	    	if (StringUtils.contains(personId, "*")) {
+	    	    continue;
+	    	}
+	    	final String siteId = stringArray[1];
 
-		
-		try {
-		    process4(personId,siteId);
-		} catch (Exception e) {
-		    e.printStackTrace();
-		    WebUtils.handleRLAlert(selenium);
-		}
+	    	
+	    	try {
+	    	    process4(personId,siteId);
+	    	} catch (Exception e) {
+	    	    e.printStackTrace();
+	    	    WebUtils.handleRLAlert(selenium);
+	    	}
+	        }
+	    }else{
+	        homepage.enterRl03100();
+	        selenium.waitForPageToLoad("30000");
+	        process4("C100201902","65000120");
+//	    process4(null,null);
 	    }
-	}else{
-	    homepage.enterRl03100();
-	    selenium.waitForPageToLoad("30000");
-//	    process4("C100201902","65000120");
-	    process4(null,null);
+	} catch (Exception e) {
+	   WebUtils. takeScreen(driver, new File("/home/weblogic/Desktop/error.png"));
+	   e.printStackTrace();
 	}	
     }
     private void process4(final String personId, final String siteId)throws  Exception {
