@@ -1,6 +1,7 @@
 package func.rl03100.testsuite1.scenario1;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -42,12 +43,14 @@ public class RL03100Test001 {
 
     @Before
     public void setUp() throws Exception {
+        
         final TableJDBCDao dao = new TableJDBCDao();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-        personIdSiteIdList = dao.getPersonIdSiteIdList();
+//        personIdSiteIdList = dao.getPersonIdSiteIdList();
+        this.personIdSiteIdList = getPsedoData();
         //	 driver = WebUtils.linuxMachine();
-        driver = WebUtils.windowsMachine();
+        this.driver = WebUtils.windowsMachine();
         //	driver = new FirefoxDriver(capabilities);
         //http://192.168.9.94:6280/rl/pages/common/login.jsp
         //	final String baseUrl = "http://192.168.10.18:6180";
@@ -56,22 +59,23 @@ public class RL03100Test001 {
         //http://rlfl.ris.gov.tw/rl/
         //http://rlfl.ris.gov.tw/rl/
         final Dimension targetSize = new Dimension(1500, 860);
-        driver.manage().window().setSize(targetSize);
-        selenium = new WebDriverBackedSelenium(driver, baseUrl);
-        selenium.open(baseUrl);
+        this.driver.manage().window().setSize(targetSize);
+        this.selenium = new WebDriverBackedSelenium(driver, baseUrl);
+        this. selenium.open(baseUrl);
         //http://192.168.10.20:4444/grid/api/proxy?id=http://140.92.86.42:5555
     }
 
     @Test
     public void testRLLogin() throws Exception {
+        
         final RlHompage homepage = new RlHompage(selenium, driver);
         try {
             homepage.login("RF1200123", "RF1200123");
-            if (CollectionUtils.isNotEmpty(personIdSiteIdList)) {
-                for (String[] stringArray : personIdSiteIdList) {
-                    selenium.waitForPageToLoad("30000");
+            if (CollectionUtils.isNotEmpty( this.personIdSiteIdList)) {
+                for (String[] stringArray :  this.personIdSiteIdList) {
+                    this. selenium.waitForPageToLoad("30000");
                     homepage.enterRl03100();
-                    selenium.waitForPageToLoad("30000");
+                    this. selenium.waitForPageToLoad("30000");
                     final String personId = stringArray[0];
                     if (StringUtils.contains(personId, "*")) {
                         continue;
@@ -87,7 +91,7 @@ public class RL03100Test001 {
                 }
             } else {
                 homepage.enterRl03100();
-                selenium.waitForPageToLoad("30000");
+                this. selenium.waitForPageToLoad("30000");
                 process4("C100201902", "65000120");
                 //	    process4(null,null);
             }
@@ -104,6 +108,40 @@ public class RL03100Test001 {
 
     @After
     public void tearDown() throws Exception {
-        selenium.stop();
+        this.selenium.stop();
+    }
+    private List<String[]> getPsedoData(){
+        final List<String[]>  result = new ArrayList<String[]>();
+        result.add(new String[]{"C100201902","65000120"});
+        result.add(new String[]{"C100202427","65000120"});
+        result.add(new String[]{"C100202632","65000120"});
+        result.add(new String[]{"C100203166","65000120"});
+        
+        result.add(new String[]{"C100204092","65000120"});
+        result.add(new String[]{"C100204985","65000120"});
+        result.add(new String[]{"C100205802","65000120"});
+        
+        result.add(new String[]{"C100205973","65000120"});
+        result.add(new String[]{"C100206783","65000120"});
+        result.add(new String[]{"C100208634","65000120"});
+        
+        result.add(new String[]{"C100209060","65000120"});
+        result.add(new String[]{"C100210661","65000120"});
+        
+        result.add(new String[]{"C100213359","65000120"});
+        result.add(new String[]{"C100217366","65000120"});
+        
+        result.add(new String[]{"A129677773","10010070"});
+        result.add(new String[]{"B120138605","10010070"});
+        result.add(new String[]{"B120702178","10010070"});
+        result.add(new String[]{"C120600821","10010070"});
+        result.add(new String[]{"C124277999","10010070"});
+        result.add(new String[]{"E120499839","10010070"});
+        result.add(new String[]{"E121473795","10010070"});
+        result.add(new String[]{"E122760528","10010070"});
+        result.add(new String[]{"F108308572","10010070"});
+        result.add(new String[]{"G129180762","10010070"});
+        
+        return  result;
     }
 }

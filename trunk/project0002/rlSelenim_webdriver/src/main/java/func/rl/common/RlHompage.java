@@ -175,20 +175,20 @@ public class RlHompage {
      * 進入解鎖作業
      * ***/
     public void enterRl03100() {
-        selenium.waitForPageToLoad("30000");
+        this.selenium.waitForPageToLoad("30000");
         while (selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
-            selenium.waitForPageToLoad("30000");
-            selenium.focus("//*[@id='navmenu-v']/li[6]/div/span");
+            this.selenium.waitForPageToLoad("30000");
+            this.selenium.focus("//*[@id='navmenu-v']/li[6]/div/span");
 
-            selenium.click("//*[@id='navmenu-v']/li[6]/div/span");// 進入戶籍查詢作業
-            selenium.waitForPageToLoad("30000");
+            this.selenium.click("//*[@id='navmenu-v']/li[6]/div/span");// 進入戶籍查詢作業
+            this.selenium.waitForPageToLoad("30000");
 
-            if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
-                selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+            if (this.selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+                this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
             }
-            selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]");
-            selenium.waitForPageToLoad("30000");
-            if (StringUtils.contains(driver.getCurrentUrl(), "rl03100/rl03100.xhtml")) {
+            this.selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]");
+            this.selenium.waitForPageToLoad("30000");
+            if (StringUtils.contains( this.selenium.getLocation(), "rl03100/rl03100.xhtml")) {
                 break;
             }
         }
