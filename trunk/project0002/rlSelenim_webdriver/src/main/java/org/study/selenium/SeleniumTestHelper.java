@@ -6,6 +6,8 @@ import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
+import func.rl.common.WebUtils;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
@@ -34,7 +36,7 @@ public class SeleniumTestHelper {
 
     private static final Logger logger = Logger.getLogger(SeleniumTestHelper.class);
     private static final String appUrl = "http://" + SeleniumConfig.getApplicationServerHostName() + ":"
-            + SeleniumConfig.getApplicationServerPort() + "/";
+            + SeleniumConfig.getApplicationServerPort() + "/rl/";
     private static final String seleniumServerUrl = "http://" + SeleniumConfig.getSeleniumServerHostName() + ":"
             + SeleniumConfig.getSeleniumServerPort() + "/";
     
@@ -61,8 +63,8 @@ public class SeleniumTestHelper {
         
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         final Selenium selenium = new WebDriverBackedSelenium(driver, appUrl);
-
-        selenium.start();      
+//        new WebDriverBackedSelenium
+//        selenium.start();      
         return selenium;
     }
 
@@ -71,26 +73,8 @@ public class SeleniumTestHelper {
         selenium.stop();
     }
 
-    public static RemoteWebDriver getWindowsMachine(final String spcificIp) throws MalformedURLException {
-        URL remoteAddress = new URL(seleniumServerUrl+"wd/hub");
-        // have tried using the below commented out lines as well, but in all
-        // cases I face errors.
-        // URL remoteAddress = new URL("http://mymachine:4444/grid/register");
-        // URL remoteAddress = new URL("http://mymachine:4444/wd/hub");
-        DesiredCapabilities dc = DesiredCapabilities.firefox();
-//        dc.setCapability("screenrecorder", true);
-//        dc.setCapability("screenshot", true);
-       
-        if(StringUtils.isNotBlank(spcificIp)){
-            //交代指明要遙控哪一台機器
-            final String spificUrl = "http://"+spcificIp+":5555";
-            //ex: http://192.168.9.47:5555
-            dc.setCapability("id", spificUrl);
-        }
-        
-        dc.setBrowserName("firefox");
-        dc.setPlatform(Platform.WINDOWS);
-        RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
+    public static RemoteWebDriver getWindowsMachine(final String spcificIp) throws MalformedURLException {        
+        final RemoteWebDriver driver = WebUtils.getWindowsMachine(spcificIp, SeleniumConfig.getApplicationServerHostName() ,SeleniumConfig.getSeleniumServerPort());
         System.out.println(getIPOfNode(driver));
         return driver;
     }

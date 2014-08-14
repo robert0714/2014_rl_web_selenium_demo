@@ -26,7 +26,7 @@ public abstract class AbstractSeleniumTestCase {
 
     protected static Selenium selenium;
     protected static WebDriver driver;
-
+    
     @BeforeClass
     public static void beforeClass() throws Exception {
 //        selenium = SeleniumTestHelper.init();

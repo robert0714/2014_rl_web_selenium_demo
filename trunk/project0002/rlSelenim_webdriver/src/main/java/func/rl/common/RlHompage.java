@@ -69,29 +69,29 @@ public class RlHompage {
 
     public void login(final String user, final String passwd) throws UnhandledAlertException, SeleniumException {
         final String sitLoginPage = "/rl/pages/common/login.jsp";
-        selenium.open(sitLoginPage);//RF1203008 
+        this.selenium.open(sitLoginPage);//RF1203008 
         String currentUrl = driver.getCurrentUrl();
         if (StringUtils.contains(currentUrl, sitLoginPage)) {
             //		selenium.type("name=j_username", getUser() );
             //		selenium.type("name=j_password", getPasswd() );
-            selenium.type("name=j_username", user);
-            selenium.type("name=j_password", passwd);
-            selenium.click("css=input[type=\"submit\"]");
+            this.selenium.type("name=j_username", user);
+            this.selenium.type("name=j_password", passwd);
+            this.selenium.click("css=input[type=\"submit\"]");
         } else {
 
             final String mainUrl = getMainUrl(currentUrl);//得到https://idpfl.ris.gov.tw:8443
             String openAuthorizationUrl = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";//https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
-            selenium.open(openAuthorizationUrl);
+            this.selenium.open(openAuthorizationUrl);
 
             System.out.println(driver.getCurrentUrl());
             //		String user = getUser();
             //		String passwd =  getPasswd();
-            selenium.type("//input[@name='Ecom_User_ID']", user);
-            selenium.type("//input[@name='Ecom_Password']", passwd);
-            selenium.click("//input[@name='loginButton2']");
+            this.selenium.type("//input[@name='Ecom_User_ID']", user);
+            this.selenium.type("//input[@name='Ecom_Password']", passwd);
+            this.selenium.click("//input[@name='loginButton2']");
             //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
             // 然後必須想辦法到target所指定網址
-            selenium.open("/rl/");//http://rlfl.ris.gov.tw/rl/
+            this.selenium.open("/rl/");//http://rlfl.ris.gov.tw/rl/
         }
     }
 
@@ -112,22 +112,22 @@ public class RlHompage {
     }
 
     public TypingApplication typingApplication() throws UnhandledAlertException, SeleniumException {
-        return new TypingApplication(selenium, driver);
+        return new TypingApplication(this.selenium, this.driver);
     }
 
     protected void replacePageTest() {
         enterRl00001();
-        selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
         enterRl00001();
-        selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
         enterRl00001();
-        selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
         enterRl00001();
-        selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
         enterRl00001();
-        selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
         enterRl00001();
-        selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
         enterRl00001();
     }
 
@@ -136,11 +136,11 @@ public class RlHompage {
      * ***/
     public void enterRl00001() {
 
-        while (selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
+        while (this.selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
 
-            selenium.waitForPageToLoad("30000");
-            selenium.click("//*[@id='navmenu-v']/li");// 進入登記作業,
-            selenium.waitForPageToLoad("30000");
+            this.selenium.waitForPageToLoad("30000");
+            this.selenium.click("//*[@id='navmenu-v']/li");// 進入登記作業,
+            this.selenium.waitForPageToLoad("30000");
 
             final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
 
@@ -149,7 +149,7 @@ public class RlHompage {
 
             wait.until(ExpectedConditions.visibilityOf(rl00001Element));
 
-            if (selenium.isVisible(rl00001Xpath) && selenium.isElementPresent(rl00001Xpath)) {
+            if (this.selenium.isVisible(rl00001Xpath) && selenium.isElementPresent(rl00001Xpath)) {
 
                 if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
                     selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
@@ -158,11 +158,11 @@ public class RlHompage {
                 selenium.click(rl00001Xpath);// 進入現戶簿頁
                 // selenium.open("/rl/faces/pages/func/rl00001/rl00001.xhtml");
 
-                selenium.waitForPageToLoad("30000");
+                this.selenium.waitForPageToLoad("30000");
                 String currentUrl = driver.getCurrentUrl();
                 // http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
 
-                logger.debug(currentUrl);
+                this.logger.debug(currentUrl);
                 if (StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {
                     break;
                 }
@@ -176,18 +176,24 @@ public class RlHompage {
      * ***/
     public void enterRl03100() {
         this.selenium.waitForPageToLoad("30000");
-        while (selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
+        while (this.selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
             this.selenium.waitForPageToLoad("30000");
-            this.selenium.focus("//*[@id='navmenu-v']/li[6]/div/span");
+            
+         // 進入戶籍查詢作業
+            if (this.selenium.isElementPresent("//*[@id='navmenu-v']/li[6]/div/span")) {
+                this.selenium.focus("//*[@id='navmenu-v']/li[6]/div/span");
+                this.selenium.click("//*[@id='navmenu-v']/li[6]/div/span");
+                this.selenium.waitForPageToLoad("30000");
+                if (this.selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+                    this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                }
+                if (this.selenium
+                        .isElementPresent("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]")) {
+                    this.selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]");
+                    this.selenium.waitForPageToLoad("30000");
+                }
 
-            this.selenium.click("//*[@id='navmenu-v']/li[6]/div/span");// 進入戶籍查詢作業
-            this.selenium.waitForPageToLoad("30000");
-
-            if (this.selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
-                this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
             }
-            this.selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]");
-            this.selenium.waitForPageToLoad("30000");
             if (StringUtils.contains( this.selenium.getLocation(), "rl03100/rl03100.xhtml")) {
                 break;
             }
@@ -198,29 +204,29 @@ public class RlHompage {
      * 進入解鎖作業
      * ***/
     protected void enterRl00003() {
-        selenium.waitForPageToLoad("30000");
+        this.selenium.waitForPageToLoad("30000");
         // selenium.click("//ul[@id='navmenu-v']/li[12]/ul/li[7]/a");
-        selenium.click("//ul[@id='navmenu-v']/li[12]");// 進入解鎖作業,
-        selenium.waitForPageToLoad("30000");
-        selenium.open("/rl/faces/pages/func/rl00003/rl00003.xhtml");
-        selenium.waitForPageToLoad("30000");
+        this.selenium.click("//ul[@id='navmenu-v']/li[12]");// 進入解鎖作業,
+        this.selenium.waitForPageToLoad("30000");
+        this.selenium.open("/rl/faces/pages/func/rl00003/rl00003.xhtml");
+        this.selenium.waitForPageToLoad("30000");
         ////td/button
-        selenium.click("//td/button");// 點選按鈕,
-        selenium.waitForPageToLoad("30000");
+        this.selenium.click("//td/button");// 點選按鈕,
+        this.selenium.waitForPageToLoad("30000");
     }
 
     /**
      * 進入文件核發
      * ***/
     public void enterRl00004() {
-        while (selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
-            selenium.waitForPageToLoad("30000");
-            selenium.click("//*[@id='navmenu-v']/li[3]/div/span");// 進入文件核發
-            selenium.waitForPageToLoad("30000");
+        while (this.selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
+            this.selenium.waitForPageToLoad("30000");
+            this.selenium.click("//*[@id='navmenu-v']/li[3]/div/span");// 進入文件核發
+            this.selenium.waitForPageToLoad("30000");
 
             //a[contains(@href, '/rl/faces/pages/func/rl00004/rl00004.xhtml')]
-            if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
-                selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+            if (this.selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+                this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
             }
             selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl00004/rl00004.xhtml')]");
             //	    selenium.open("/rl/faces/pages/func/rl00004/rl00004.xhtml");
@@ -233,7 +239,7 @@ public class RlHompage {
 
     public String getUser() {
         if (StringUtils.isBlank(user)) {
-            user = "RF1203008";
+            this.user = "RF1203008";
         }
         return user;
     }
@@ -244,9 +250,9 @@ public class RlHompage {
 
     public String getPasswd() {
         if (StringUtils.isBlank(passwd)) {
-            passwd = "RF1203008";
+            this.passwd = "RF1203008";
         }
-        return passwd;
+        return this.passwd;
     }
 
     public void setPasswd(String passwd) {

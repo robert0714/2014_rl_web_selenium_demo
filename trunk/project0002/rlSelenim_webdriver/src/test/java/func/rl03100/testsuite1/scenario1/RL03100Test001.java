@@ -28,6 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.study.selenium.SeleniumTestHelper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -60,7 +61,10 @@ public class RL03100Test001 {
         //http://rlfl.ris.gov.tw/rl/
         final Dimension targetSize = new Dimension(1500, 860);
         this.driver.manage().window().setSize(targetSize);
-        this.selenium = new WebDriverBackedSelenium(driver, baseUrl);
+        
+//        this.selenium = SeleniumTestHelper.init();
+        this.selenium = new WebDriverBackedSelenium( this.driver, baseUrl);
+        
         this. selenium.open(baseUrl);
         //http://192.168.10.20:4444/grid/api/proxy?id=http://140.92.86.42:5555
     }
@@ -68,7 +72,7 @@ public class RL03100Test001 {
     @Test
     public void testRLLogin() throws Exception {
         
-        final RlHompage homepage = new RlHompage(selenium, driver);
+        final RlHompage homepage = new RlHompage( this.selenium,  this.driver);
         try {
             homepage.login("RF1200123", "RF1200123");
             if (CollectionUtils.isNotEmpty( this.personIdSiteIdList)) {
