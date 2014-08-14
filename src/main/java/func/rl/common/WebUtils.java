@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -29,6 +30,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Augmenter;
+import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -117,22 +119,34 @@ public class WebUtils {
 	    selenium.waitForPageToLoad("1000");
 	}
    }
-    public static RemoteWebDriver windowsMachine() throws MalformedURLException {
-	URL remoteAddress = new URL("http://192.168.10.20:4444/wd/hub");
-	// have tried using the below commented out lines as well, but in all
-	// cases I face errors.
-	// URL remoteAddress = new URL("http://mymachine:4444/grid/register");
-	// URL remoteAddress = new URL("http://mymachine:4444/wd/hub");
-	DesiredCapabilities dc = DesiredCapabilities.firefox();
-	dc.setCapability("screenrecorder", true); 
-	dc.setCapability("screenshot", true);
-	//交代指明要遙控哪一台機器
-	dc.setCapability("id", "http://192.168.9.47:5555");
-	dc.setBrowserName("firefox");
-	dc.setPlatform(Platform.WINDOWS);	
-	RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
-	System.out.println(getIPOfNode(driver));
-	return driver;
+
+    public static RemoteWebDriver windowsMachine() throws MalformedURLException {        
+        final RemoteWebDriver driver = getWindowsMachine("192.168.9.47", "192.168.10.20",4444);;
+        System.out.println(getIPOfNode(driver));
+        return driver;
+    }
+    public static RemoteWebDriver getWindowsMachine(final String spcificIp,final String seleniumServerUrl ,final int seleniumServerPort) throws MalformedURLException {
+        URL remoteAddress = new URL("http://"+seleniumServerUrl+":"+seleniumServerPort+"/wd/hub");
+        // have tried using the below commented out lines as well, but in all
+        // cases I face errors.
+        // URL remoteAddress = new URL("http://mymachine:4444/grid/register");
+        // URL remoteAddress = new URL("http://mymachine:4444/wd/hub");
+        DesiredCapabilities dc = DesiredCapabilities.firefox();
+        dc.setCapability("screenrecorder", true);
+        dc.setCapability("screenshot", true);
+       
+        if(StringUtils.isNotBlank(spcificIp)){
+            //交代指明要遙控哪一台機器
+            final String spificUrl = "http://"+spcificIp+":5555";
+            //ex: http://192.168.9.47:5555
+            dc.setCapability("id", spificUrl);
+        }
+        
+        dc.setBrowserName(BrowserType.FIREFOX);
+        dc.setPlatform(Platform.WINDOWS);
+        RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
+        System.out.println(getIPOfNode(driver));
+        return driver;
     }
 
     /***

@@ -70,9 +70,9 @@ public class RL03100Test002 extends AbstractSeleniumTestCase {
     }
     @Test
     public void testOpenRl03100() throws Exception {
-        final RlHompage homepage = new RlHompage(this.selenium, this.driver);
+        final RlHompage homepage = new RlHompage(this.selenium, null);
         homepage.enterRl03100();
-        Rl03100Page rl31000Page = new Rl03100Page(this.selenium, this.driver);
+        Rl03100Page rl31000Page = new Rl03100Page(this.selenium,  null);
     }
     
 }
