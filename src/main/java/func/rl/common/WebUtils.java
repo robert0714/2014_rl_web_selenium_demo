@@ -189,7 +189,8 @@ public class WebUtils {
     }
     /**
      * Gets the machine.
-     *
+     * 
+     * http://127.0.0.1:5555/wd/hub/static/resource/hub.html
      * @param platmform the platmform
      * @param spcificIp the spcific ip
      * @param seleniumServerUrl the selenium server url
@@ -229,7 +230,7 @@ public class WebUtils {
      * @param remoteDriver the remote driver
      * @return the IP of node
      */
-    private static String getIPOfNode(RemoteWebDriver remoteDriver) {
+    public static String getIPOfNode(RemoteWebDriver remoteDriver) {
         String hostFound = null;
         try {
             HttpCommandExecutor ce = (HttpCommandExecutor) remoteDriver.getCommandExecutor();
