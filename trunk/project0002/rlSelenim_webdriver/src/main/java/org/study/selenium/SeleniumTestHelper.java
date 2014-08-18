@@ -75,34 +75,11 @@ public class SeleniumTestHelper {
 
     public static RemoteWebDriver getWindowsMachine(final String spcificIp) throws MalformedURLException {        
         final RemoteWebDriver driver = WebUtils.getWindowsMachine(spcificIp, SeleniumConfig.getApplicationServerHostName() ,SeleniumConfig.getSeleniumServerPort());
-        System.out.println(getIPOfNode(driver));
+        System.out.println(WebUtils.getIPOfNode(driver));
         return driver;
     }
-    /***
-     * 可以得到是遙控哪一個node的ip
-     * */
-    private static String getIPOfNode(RemoteWebDriver remoteDriver) {
-        String hostFound = null;
-        try {
-            HttpCommandExecutor ce = (HttpCommandExecutor) remoteDriver.getCommandExecutor();
-            String hostName = ce.getAddressOfRemoteServer().getHost();
-            int port = ce.getAddressOfRemoteServer().getPort();
-            HttpHost host = new HttpHost(hostName, port);
-            DefaultHttpClient client = new DefaultHttpClient();
-            URL sessionURL = new URL("http://" + hostName + ":" + port + "/grid/api/testsession?session="
-                    + remoteDriver.getSessionId());
-            BasicHttpEntityEnclosingRequest r = new BasicHttpEntityEnclosingRequest("POST", sessionURL.toExternalForm());
-            HttpResponse response = client.execute(host, r);
-            JSONObject object = extractObject(response);
-            URL myURL = new URL(object.getString("proxyId"));
-            if ((myURL.getHost() != null) && (myURL.getPort() != -1)) {
-                hostFound = myURL.getHost();
-            }
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        return hostFound;
-    }
+   
+    
 
     private static JSONObject extractObject(HttpResponse resp) throws IOException, JSONException {
         InputStream contents = resp.getEntity().getContent();
