@@ -28,6 +28,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.study.selenium.SeleniumTestHelper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -51,11 +52,11 @@ public class RL03100Test001 {
 //        personIdSiteIdList = dao.getPersonIdSiteIdList();
         this.personIdSiteIdList = getPsedoData();
         //	 driver = WebUtils.linuxMachine();
-        this.driver = WebUtils.windowsMachine();
+        final   RemoteWebDriver remoteDriver = WebUtils.windowsMachine();
+        this.driver = remoteDriver;
         //	driver = new FirefoxDriver(capabilities);
         //http://192.168.9.94:6280/rl/pages/common/login.jsp
-        //	final String baseUrl = "http://192.168.10.18:6180";
-        	final String baseUrl = "http://192.168.10.18:6280/rl/";
+        String baseUrl = "http://192.168.10.18:6280/rl/";
 //        final String baseUrl = "http://rlfl.ris.gov.tw/rl/";
         //http://rlfl.ris.gov.tw/rl/
         //http://rlfl.ris.gov.tw/rl/
@@ -63,6 +64,13 @@ public class RL03100Test001 {
         this.driver.manage().window().setSize(targetSize);
         
 //        this.selenium = SeleniumTestHelper.init();
+        final String remoteNodIp = WebUtils.getIPOfNode(remoteDriver);        
+        System.out.println(remoteNodIp);
+        if(StringUtils.contains(remoteNodIp, "140")){
+            baseUrl = "http://rlfl.ris.gov.tw/rl/";
+        }else{
+            baseUrl = "http://192.168.10.18:6280/rl/";
+        }
         this.selenium = new WebDriverBackedSelenium( this.driver, baseUrl);
         
         this. selenium.open(baseUrl);
