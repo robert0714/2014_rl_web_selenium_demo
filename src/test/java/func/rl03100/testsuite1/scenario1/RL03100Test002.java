@@ -27,12 +27,10 @@ import static org.junit.Assert.assertTrue;
 /**
  *
  */
-public class RL03100Test002 
-extends AbstractSeleniumTestCase 
-{
-    private static final Logger logger = Logger.getLogger(AbstractSeleniumTestCase.class);
-    private String user =null;
-    private String passwd =null;
+public class RL03100Test002 extends AbstractSeleniumTestCase {
+    private static final Logger logger = Logger.getLogger(RL03100Test002.class);
+    private String user = null;
+    private String passwd = null;
     List<String[]> personIdSiteIdList;
     
     @Before
