@@ -20,9 +20,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
-import func.rl.common.Rl03100Page;
 import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
+import func.rl03100.Rl03100Page;
 
 public class App01 {
     protected static Logger logger = Logger.getLogger(App01.class); 

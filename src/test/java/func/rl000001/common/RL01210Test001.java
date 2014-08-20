@@ -11,10 +11,10 @@ package func.rl000001.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import func.rl.common.Rl00001Page;
-import func.rl.common.Rl03100Page;
 import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
+import func.rl00001.Rl00001Page;
+import func.rl03100.Rl03100Page;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -94,6 +94,16 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
     
     private List<String[]> getPsedoData(){
         final List<String[]>  result = new ArrayList<String[]>();
+        result.add(new String[]{"A129677773","10010070"});
+        result.add(new String[]{"B120138605","10010070"});
+        result.add(new String[]{"B120702178","10010070"});
+        result.add(new String[]{"C120600821","10010070"});
+        result.add(new String[]{"C124277999","10010070"});
+        result.add(new String[]{"E120499839","10010070"});
+        result.add(new String[]{"E121473795","10010070"});
+        result.add(new String[]{"E122760528","10010070"});
+        result.add(new String[]{"F108308572","10010070"});
+        result.add(new String[]{"G129180762","10010070"});
         result.add(new String[]{"C100201902","65000120"});
         result.add(new String[]{"C100202427","65000120"});
         result.add(new String[]{"C100202632","65000120"});
@@ -113,16 +123,7 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
         result.add(new String[]{"C100213359","65000120"});
         result.add(new String[]{"C100217366","65000120"});
         
-        result.add(new String[]{"A129677773","10010070"});
-        result.add(new String[]{"B120138605","10010070"});
-        result.add(new String[]{"B120702178","10010070"});
-        result.add(new String[]{"C120600821","10010070"});
-        result.add(new String[]{"C124277999","10010070"});
-        result.add(new String[]{"E120499839","10010070"});
-        result.add(new String[]{"E121473795","10010070"});
-        result.add(new String[]{"E122760528","10010070"});
-        result.add(new String[]{"F108308572","10010070"});
-        result.add(new String[]{"G129180762","10010070"});
+        
         
         return  result;
     }

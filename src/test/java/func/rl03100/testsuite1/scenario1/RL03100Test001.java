@@ -10,9 +10,9 @@ import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
-import func.rl.common.Rl03100Page;
 import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
+import func.rl03100.Rl03100Page;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;

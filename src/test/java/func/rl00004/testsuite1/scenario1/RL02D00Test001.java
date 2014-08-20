@@ -5,15 +5,15 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import func.rl.common.HouseholdMaintainPage;
 import func.rl.common.PagePartialURL;
-import func.rl.common.Rl00004Page;
 import func.rl.common.Rl0172bPage;
 import func.rl.common.Rl02a10Page;
 import func.rl.common.Rl02d00Page;
 import func.rl.common.RlHompage;
-import func.rl.common.Rl00001Page;
 import func.rl.common.WebUtils;
+import func.rl00001.HouseholdMaintainPage;
+import func.rl00001.Rl00001Page;
+import func.rl00004.Rl00004Page;
 
 import org.study.selenium.AbstractSeleniumTestCase;
 import org.apache.commons.collections.CollectionUtils;

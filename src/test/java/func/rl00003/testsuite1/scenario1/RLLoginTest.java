@@ -7,13 +7,13 @@ import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
-import func.rl.common.HouseholdMaintainPage;
 import func.rl.common.PagePartialURL;
 import func.rl.common.Rl0172bPage;
 import func.rl.common.Rl02a10Page;
 import func.rl.common.RlHompage;
-import func.rl.common.Rl00001Page;
 import func.rl.common.WebUtils;
+import func.rl00001.HouseholdMaintainPage;
+import func.rl00001.Rl00001Page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
