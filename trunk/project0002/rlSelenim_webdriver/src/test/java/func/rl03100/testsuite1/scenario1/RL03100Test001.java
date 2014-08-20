@@ -4,35 +4,21 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
-import func.rl.common.HouseholdMaintainPage;
-import func.rl.common.PagePartialURL;
-import func.rl.common.Rl00004Page;
-import func.rl.common.Rl0172bPage;
-import func.rl.common.Rl02a10Page;
-import func.rl.common.Rl02d00Page;
 import func.rl.common.Rl03100Page;
 import func.rl.common.RlHompage;
-import func.rl.common.TypingApplication;
 import func.rl.common.WebUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.study.selenium.SeleniumTestHelper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -83,18 +69,6 @@ public class RL03100Test001 {
         //http://192.168.10.20:4444/grid/api/proxy?id=http://140.92.86.42:5555
     }
 
-//    @Test
-    public void testRLLogin() throws Exception {
-        
-        final RlHompage homepage = new RlHompage( this.selenium,  this.driver);
-        try {
-            homepage.login("RF1200123", "RF1200123");
-            
-        } catch (Exception e) {
-            WebUtils.takeScreen(driver, new File("/home/weblogic/Desktop/error.png"));
-            e.printStackTrace();
-        }
-    }
 
     private void process4(final String personId, final String siteId) throws Exception {
         Rl03100Page rl00004Page = new Rl03100Page(selenium, driver);
