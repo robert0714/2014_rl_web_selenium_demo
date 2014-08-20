@@ -36,7 +36,7 @@ public class SeleniumTestHelper {
         logger.info("*** Starting selenium WebDriver ...");
         final Dimension targetSize = new Dimension(1500, 860);
         driver.manage().window().setSize(targetSize);         
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+//        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         
         final String remoteNodIp = WebUtils.getIPOfNode(driver);
         
