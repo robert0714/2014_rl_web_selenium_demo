@@ -14,29 +14,17 @@ public class SeleniumConfig {
 
     private static String waitForPageToLoad = "30000";
 
-    public SeleniumConfig(String seleniumServerHostName, int seleniumServerPort, String applicationServerHostName,
-            int applicationServerPort, String targetBrowser) {
+    public SeleniumConfig(String seleniumServerHostName, int seleniumServerPort, final String targetBrowser) {
         this.seleniumServerHostName = seleniumServerHostName;
         this.seleniumServerPort = seleniumServerPort;
-        this.applicationServerHostName = applicationServerHostName;
-        this.applicationServerPort = applicationServerPort;
         this.targetBrowser = targetBrowser;
     }
-
     public static String getSeleniumServerHostName() {
         return seleniumServerHostName;
     }
 
     public static int getSeleniumServerPort() {
         return seleniumServerPort;
-    }
-
-    public static String getApplicationServerHostName() {
-        return applicationServerHostName;
-    }
-
-    public static int getApplicationServerPort() {
-        return applicationServerPort;
     }
 
     public static String getTargetBrowser() {
@@ -50,4 +38,5 @@ public class SeleniumConfig {
     public static void setWaitForPageToLoad(String waitForPageToLoad) {
         SeleniumConfig.waitForPageToLoad = waitForPageToLoad;
     }
+
 }

@@ -154,7 +154,7 @@ public class WebUtils {
      * @throws MalformedURLException the malformed url exception
      */
     public static RemoteWebDriver windowsMachine() throws MalformedURLException {
-        final RemoteWebDriver driver = getWindowsMachine("192.168.9.47", "192.168.10.20", 4444);
+        final RemoteWebDriver driver = getWindowsMachine("192.168.9.70", "192.168.10.20", 4444);
         return driver;
     }
 

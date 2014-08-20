@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
  *
@@ -25,12 +26,11 @@ public abstract class AbstractSeleniumTestCase {
     private static final Logger logger = Logger.getLogger(AbstractSeleniumTestCase.class);
 
     protected static Selenium selenium;
-    protected static WebDriver driver;
+    public static RemoteWebDriver driver;
     
     @BeforeClass
     public static void beforeClass() throws Exception {
-//        selenium = SeleniumTestHelper.init();
-        driver =SeleniumTestHelper.getWindowsMachine("192.168.9.47");
+        driver  = WebUtils.windowsMachine();
         selenium = SeleniumTestHelper.initWebDriver(driver);
     }
 
