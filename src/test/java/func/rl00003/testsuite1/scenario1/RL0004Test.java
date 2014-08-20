@@ -12,7 +12,7 @@ import func.rl.common.PagePartialURL;
 import func.rl.common.Rl0172bPage;
 import func.rl.common.Rl02a10Page;
 import func.rl.common.RlHompage;
-import func.rl.common.TypingApplication;
+import func.rl.common.Rl00001Page;
 import func.rl.common.WebUtils;
 
 import org.openqa.selenium.By;
