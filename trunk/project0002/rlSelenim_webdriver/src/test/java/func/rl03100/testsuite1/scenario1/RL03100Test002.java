@@ -11,9 +11,9 @@ package func.rl03100.testsuite1.scenario1;
 import java.util.ArrayList;
 import java.util.List;
 
-import func.rl.common.Rl03100Page;
 import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
+import func.rl03100.Rl03100Page;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

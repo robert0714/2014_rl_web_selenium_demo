@@ -1,4 +1,4 @@
-package func.rl.common;
+package func.rl00004;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
+
+import func.rl.common.WebUtils;
 
 public class Rl00004Page {
     protected final static  Logger logger = Logger.getLogger(Rl00004Page.class);

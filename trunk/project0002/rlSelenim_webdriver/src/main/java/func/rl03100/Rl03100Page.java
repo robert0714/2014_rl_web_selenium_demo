@@ -1,4 +1,4 @@
-package func.rl.common;
+package func.rl03100;
 
 import java.io.File;
 import java.util.Set;
@@ -20,6 +20,8 @@ import org.openqa.selenium.OutputType.*;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
+
+import func.rl.common.WebUtils;
 
 public class Rl03100Page {
     protected final static Logger logger = Logger.getLogger(Rl03100Page.class);

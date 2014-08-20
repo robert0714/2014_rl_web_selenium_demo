@@ -34,6 +34,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
 
+import func.rl00001.Rl00001Page;
+
 public class RlHompage {
     private WebDriver driver;
     private Selenium selenium;
