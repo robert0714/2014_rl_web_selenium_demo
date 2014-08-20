@@ -29,47 +29,58 @@ public class Rl00001Page {
         super();
         this.selenium = selenium;
         this.driver = driver;
-    } 
+    }
 
     public void typingApplication() throws UnhandledAlertException, SeleniumException, InterruptedException {
         //	String siteLocation = String.format("label=%s：%s", getSiteId(), siteIdMap.get(getSiteId()));
 
         outer: while (StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-          //*[@id="txnPersonId"]
+            //*[@id="txnPersonId"]
+            //輸入統號
+            this.selenium.type("//input[contains(@id,'txnPersonId')]", getPersonId());
+            
+            if (!StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+                break outer;
+            }
+//            selenium.type("//td[@id='currentPersonIdTD']/span/input", getPersonId());
+          //*[@id="j_id_48:j_id_4a"]
+          //*[@id="currentPersonSiteIdTD"]
+            
+            this.selenium.focus("//td[@id='currentPersonSiteIdTD']");
+           
+            this.selenium.type("//td[@id='currentPersonSiteIdTD']/span/input", "");
+            this.selenium.click("//td[@id='currentPersonSiteIdTD']/span/input");
+            this.selenium.click("//td[contains(@id,'currentPersonSiteIdTD')]/span/input");
+            this.selenium.click("//span/div/ul/li");
          
-            selenium.type("//input[contains(@id,'txnPersonId')]", getPersonId());
-            if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-                break outer;
-            }
-
-            WebElement selectorElement = driver.findElement(By.xpath("//input[contains(@id,'inputValue')]"));
-            selenium.focus("//input[contains(@id,'inputValue')]");
             // builder.keyDown(Keys.CONTROL).click(selectorElement).keyUp(Keys.CONTROL);
-            selenium.waitForPageToLoad("30000");
-            if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+            this.selenium.waitForPageToLoad("30000");
+            if (!StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
                 break outer;
             }
+            this.selenium.click("//td[@id='currentPersonSiteIdTD']");
+            final WebElement selectorElement = this.driver.findElement(By.xpath("//td[@id='currentPersonSiteIdTD']"));
             selectorElement.clear();
             selectorElement.sendKeys(getSiteId());
-            selenium.waitForPageToLoad("360000");
-            if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+            this.selenium.waitForPageToLoad("360000");
+            if (!StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
                 break outer;
             }
-            selenium.click("//input[@id='applicantSameTxnPerson']");
-            selenium.waitForPageToLoad("30000");
+            this.selenium.click("//input[@id='applicantSameTxnPerson']");
+            this.selenium.waitForPageToLoad("30000");
 
             //	    selenium.type("//td[@id='applicant1PersonIdTD']/span/input", getPersonId());
-            selenium.waitForPageToLoad("30000");
+            this.selenium.waitForPageToLoad("30000");
             final String searchBtnXpath = "//div/div/button";
 
-            if (selenium.isElementPresent(searchBtnXpath) && selenium.isVisible(searchBtnXpath)
-                    && StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-                boolean giveUpOperation = WebUtils.handleClickBtn(selenium, searchBtnXpath);
+            if (selenium.isElementPresent(searchBtnXpath) && this.selenium.isVisible(searchBtnXpath)
+                    && StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+                boolean giveUpOperation = WebUtils.handleClickBtn(this.selenium, searchBtnXpath);
                 if (giveUpOperation) {
-                    if (selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
-                        selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                    if (this.selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
+                        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
                     }
-                    selenium.refresh();
+                    this.selenium.refresh();
                     //		    throw new  InterruptedException();
                 }
                 //		selenium.click(searchBtnXpath);
@@ -77,7 +88,7 @@ public class Rl00001Page {
                 //由於點擊等待回應真的很花時間
                 inner: while (StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
                     Thread.sleep(5000);//等待5秒
-                    logger.debug(driver.getCurrentUrl());
+                    this.logger.debug(this.driver.getCurrentUrl());
                     if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
                         break outer;
                     }
