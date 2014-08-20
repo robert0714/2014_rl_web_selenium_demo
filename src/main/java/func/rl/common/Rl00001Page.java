@@ -35,8 +35,9 @@ public class Rl00001Page {
         //	String siteLocation = String.format("label=%s：%s", getSiteId(), siteIdMap.get(getSiteId()));
 
         outer: while (StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
-
-            selenium.type("//td[@id='currentPersonIdTD']/span/input", getPersonId());
+          //*[@id="txnPersonId"]
+         
+            selenium.type("//input[contains(@id,'txnPersonId')]", getPersonId());
             if (!StringUtils.contains(driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
                 break outer;
             }

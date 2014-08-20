@@ -153,10 +153,10 @@ public class RlHompage {
 
             final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
 
-            WebElement rl00001Element = this.driver.findElement(By.xpath(rl00001Xpath));
-            WebDriverWait wait = new WebDriverWait(this.driver, 10);
-
-            wait.until(ExpectedConditions.visibilityOf(rl00001Element));
+//            WebElement rl00001Element = this.driver.findElement(By.xpath(rl00001Xpath));
+//            WebDriverWait wait = new WebDriverWait(this.driver, 10);
+//
+//            wait.until(ExpectedConditions.visibilityOf(rl00001Element));
 
             if (this.selenium.isVisible(rl00001Xpath) && this.selenium.isElementPresent(rl00001Xpath)) {
 
