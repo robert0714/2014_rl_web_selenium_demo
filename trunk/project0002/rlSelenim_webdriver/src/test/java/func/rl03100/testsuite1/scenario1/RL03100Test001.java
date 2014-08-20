@@ -1,7 +1,10 @@
 package func.rl03100.testsuite1.scenario1;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -41,11 +44,14 @@ public class RL03100Test001 {
     protected static Logger logger = Logger.getLogger(RL03100Test001.class);
     private Selenium selenium;
     private WebDriver driver;
+    private String user =null;
+    private String passwd =null;
     List<String[]> personIdSiteIdList;
 
     @Before
     public void setUp() throws Exception {
-        
+        user ="RF1203008";
+        passwd ="RF1203008";
         final TableJDBCDao dao = new TableJDBCDao();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
@@ -77,36 +83,13 @@ public class RL03100Test001 {
         //http://192.168.10.20:4444/grid/api/proxy?id=http://140.92.86.42:5555
     }
 
-    @Test
+//    @Test
     public void testRLLogin() throws Exception {
         
         final RlHompage homepage = new RlHompage( this.selenium,  this.driver);
         try {
             homepage.login("RF1200123", "RF1200123");
-            if (CollectionUtils.isNotEmpty( this.personIdSiteIdList)) {
-                for (String[] stringArray :  this.personIdSiteIdList) {
-                    this. selenium.waitForPageToLoad("30000");
-                    homepage.enterRl03100();
-                    this. selenium.waitForPageToLoad("30000");
-                    final String personId = stringArray[0];
-                    if (StringUtils.contains(personId, "*")) {
-                        continue;
-                    }
-                    final String siteId = stringArray[1];
-
-                    try {
-                        process4(personId, siteId);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        WebUtils.handleRLAlert(selenium);
-                    }
-                }
-            } else {
-                homepage.enterRl03100();
-                this. selenium.waitForPageToLoad("30000");
-                process4("C100201902", "65000120");
-                //	    process4(null,null);
-            }
+            
         } catch (Exception e) {
             WebUtils.takeScreen(driver, new File("/home/weblogic/Desktop/error.png"));
             e.printStackTrace();
@@ -155,5 +138,50 @@ public class RL03100Test001 {
         result.add(new String[]{"G129180762","10010070"});
         
         return  result;
+    }
+    @Test
+    public void testLogin() throws InterruptedException  {
+        final RlHompage homepage = new RlHompage(this.selenium, this.driver);
+        homepage.login(this.selenium,this.user, this.passwd);
+        this. selenium.waitForPageToLoad("30000");
+        // Sleep the thread if you want to view the rendered page while testing.
+        assertTrue(true);
+    }
+    @Test
+    public void testOpenRl03100() throws Exception {
+        final RlHompage homepage = new RlHompage(this.selenium, this.driver);
+        homepage.login(this.selenium,this.user, this.passwd);
+        homepage.enterRl03100();
+        Rl03100Page rl31000Page = new Rl03100Page(this.selenium,  null);
+        
+        if (CollectionUtils.isNotEmpty( this.personIdSiteIdList)) {
+            for (String[] stringArray :  this.personIdSiteIdList) {
+                this. selenium.waitForPageToLoad("30000");
+                homepage.enterRl03100();
+                this. selenium.waitForPageToLoad("30000");
+                final String personId = stringArray[0];
+                if (StringUtils.contains(personId, "*")) {
+                    continue;
+                }
+                final String siteId = stringArray[1];
+
+                try {
+                    process4(personId, siteId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    WebUtils.handleRLAlert(selenium);
+                }
+            }
+        } else {
+            homepage.enterRl03100();
+            this. selenium.waitForPageToLoad("30000");
+            process4("C100201902", "65000120");
+            //      process4(null,null);
+        }
+        
+        
+        this. selenium.waitForPageToLoad("30000");        
+        // Sleep the thread if you want to view the rendered page while testing.
+        assertTrue(true);
     }
 }
