@@ -120,8 +120,8 @@ public class RlHompage {
         return (String) CollectionUtils.get(intData, 0);
     }
 
-    public TypingApplication typingApplication() throws UnhandledAlertException, SeleniumException {
-        return new TypingApplication(this.selenium, this.driver);
+    public Rl00001Page typingApplication() throws UnhandledAlertException, SeleniumException {
+        return new Rl00001Page(this.selenium, this.driver);
     }
 
     protected void replacePageTest() {
@@ -153,18 +153,19 @@ public class RlHompage {
 
             final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
 
-            WebElement rl00001Element = driver.findElement(By.xpath(rl00001Xpath));
-            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebElement rl00001Element = this.driver.findElement(By.xpath(rl00001Xpath));
+            WebDriverWait wait = new WebDriverWait(this.driver, 10);
 
             wait.until(ExpectedConditions.visibilityOf(rl00001Element));
 
-            if (this.selenium.isVisible(rl00001Xpath) && selenium.isElementPresent(rl00001Xpath)) {
+            if (this.selenium.isVisible(rl00001Xpath) && this.selenium.isElementPresent(rl00001Xpath)) {
 
-                if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
-                    selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                if (this.selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+                    this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
                 }
 
-                selenium.click(rl00001Xpath);// 進入現戶簿頁
+                this. selenium.click(rl00001Xpath);
+                // 進入現戶簿頁
                 // selenium.open("/rl/faces/pages/func/rl00001/rl00001.xhtml");
 
                 this.selenium.waitForPageToLoad("30000");
@@ -196,10 +197,17 @@ public class RlHompage {
                 if (this.selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
                     this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
                 }
-                if (this.selenium
-                        .isElementPresent("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]")) {
-                    this.selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]");
-                    this.selenium.waitForPageToLoad("30000");
+                try {
+                    if (this.selenium
+                            .isElementPresent("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]")) {
+                        this.selenium.click("//a[contains(@href, '/rl/faces/pages/func/rl03100/rl03100.xhtml')]");
+                        this.selenium.waitForPageToLoad("30000");
+                    }
+                } catch (SeleniumException e) {
+                    // TODO Auto-generated catch block
+                    //如果點選左邊Menu失敗...改以url方式處理
+//                    this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                    this.selenium.open("/rl/faces/pages/func/rl03100/rl03100.xhtml");
                 }
 
             }
