@@ -67,34 +67,43 @@ public class RlHompage {
         return result;
     }
 
-    public void login(final String user, final String passwd) throws UnhandledAlertException, SeleniumException {
+    public void login(final Selenium selenium , final String user, final String passwd) throws UnhandledAlertException, SeleniumException {
         final String sitLoginPage = "/rl/pages/common/login.jsp";
-        this.selenium.open(sitLoginPage);//RF1203008 
+        final String homapage ="/rl/faces/pages/index.xhtml";
+        final String partialPage ="/rl/faces/pages";
+        selenium.open(homapage);
+//        selenium.open(sitLoginPage);
         String currentUrl = driver.getCurrentUrl();
-        if (StringUtils.contains(currentUrl, sitLoginPage)) {
+        System.out.println("辨識基準頁面網址: "+currentUrl);
+        if (StringUtils.contains(currentUrl, partialPage)) {
+            selenium.open("/rl/");
+            //http://rlfl.ris.gov.tw/rl/
+        } else if (StringUtils.contains(currentUrl, sitLoginPage)) {
             //		selenium.type("name=j_username", getUser() );
             //		selenium.type("name=j_password", getPasswd() );
-            this.selenium.type("name=j_username", user);
-            this.selenium.type("name=j_password", passwd);
-            this.selenium.click("css=input[type=\"submit\"]");
+            selenium.type("name=j_username", user);
+            selenium.type("name=j_password", passwd);
+            selenium.click("css=input[type=\"submit\"]");
         } else {
-
-            final String mainUrl = getMainUrl(currentUrl);//得到https://idpfl.ris.gov.tw:8443
+            final String mainUrl = getMainUrl(currentUrl);
+            //得到https://idpfl.ris.gov.tw:8443
             String openAuthorizationUrl = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";//https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
-            this.selenium.open(openAuthorizationUrl);
+            selenium.open(openAuthorizationUrl);
 
             System.out.println(driver.getCurrentUrl());
             //		String user = getUser();
             //		String passwd =  getPasswd();
-            this.selenium.type("//input[@name='Ecom_User_ID']", user);
-            this.selenium.type("//input[@name='Ecom_Password']", passwd);
-            this.selenium.click("//input[@name='loginButton2']");
+            selenium.type("//input[@name='Ecom_User_ID']", user);
+            selenium.type("//input[@name='Ecom_Password']", passwd);
+            selenium.click("//input[@name='loginButton2']");
             //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
             // 然後必須想辦法到target所指定網址
-            this.selenium.open("/rl/");//http://rlfl.ris.gov.tw/rl/
+            selenium.open("/rl/");//http://rlfl.ris.gov.tw/rl/
         }
     }
-
+    public void login(final String user, final String passwd) throws UnhandledAlertException, SeleniumException {
+        login(this.selenium ,user, passwd);
+    }
     private String retriveTargetUrl(final String src) {
         String result = StringUtils.EMPTY;
         final String[] strArray = StringUtils.split(src, "?");
