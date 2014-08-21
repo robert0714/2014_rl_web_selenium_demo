@@ -12,7 +12,7 @@ public class SeleniumConfig {
     private static String targetBrowser = "firefox";
     //For linux: private static String targetBrowser = "firefox /usr/lib/firefox-3.5.4/firefox";
 
-    private static String waitForPageToLoad = "30000";
+    public static String waitForPageToLoad = "30000";
 
     public SeleniumConfig(String seleniumServerHostName, int seleniumServerPort, final String targetBrowser) {
         this.seleniumServerHostName = seleniumServerHostName;

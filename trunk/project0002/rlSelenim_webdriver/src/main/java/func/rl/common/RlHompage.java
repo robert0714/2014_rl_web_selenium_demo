@@ -126,21 +126,7 @@ public class RlHompage {
         return new Rl00001Page(this.selenium, this.driver);
     }
 
-    protected void replacePageTest() {
-        enterRl00001();
-        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-        enterRl00001();
-        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-        enterRl00001();
-        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-        enterRl00001();
-        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-        enterRl00001();
-        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-        enterRl00001();
-        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
-        enterRl00001();
-    }
+     
 
     /**
      * 進入現戶簿頁
@@ -166,12 +152,20 @@ public class RlHompage {
                     this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
                 }
 
-                this. selenium.click(rl00001Xpath);
+                this.selenium.click(rl00001Xpath);
+                this.selenium.waitForPageToLoad("7000");
+                try {
+                    Thread.sleep(30000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    // LOGGER.error("", e);
+                }
+                this.selenium.refresh();
                 // 進入現戶簿頁
                 // selenium.open("/rl/faces/pages/func/rl00001/rl00001.xhtml");
 
                 this.selenium.waitForPageToLoad("30000");
-                String currentUrl = driver.getCurrentUrl();
+                final String currentUrl = this.driver.getCurrentUrl();
                 // http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
 
                 this.logger.debug(currentUrl);

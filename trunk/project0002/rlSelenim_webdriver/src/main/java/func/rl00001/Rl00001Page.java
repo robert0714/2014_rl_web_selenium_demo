@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.study.selenium.SRISWebUtils;
+import org.study.selenium.SeleniumConfig;
 
 import sun.net.util.URLUtil;
 
@@ -26,29 +27,58 @@ public class Rl00001Page {
         this.selenium = selenium;
         this.driver = driver;
     }
-
+    public void typeTxnPerson(final String personId,final String siteId){
+        //輸入當事人統號
+        this.selenium.type("//input[contains(@id,'txnPersonId')]", personId);
+        
+        //輸入當事人作業點
+        SRISWebUtils.typeAutoComplete(this.selenium, "//td[contains(@id,'currentPersonSiteIdTD')]", siteId);
+        this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+    }
+    public void typeApplicat1(final String personId,final String siteId){
+        //輸入申請人1統號
+        this.selenium.type("//input[contains(@id,'applicant1PersonId')]", personId);
+        //輸入申請人1作業點
+        SRISWebUtils.typeAutoComplete(this.selenium, "//td[contains(@id,'applicant1SiteIdTD')]", siteId);
+        this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+    }
+    public void typeApplicat2(final String personId,final String siteId){
+        //輸入申請人2統號
+        this.selenium.type("//input[contains(@id,'applicant2PersonId')]", personId);
+        //輸入申請人2作業點
+        SRISWebUtils.typeAutoComplete(this.selenium, "//td[contains(@id,'applicant2SiteIdTD')]", siteId);
+        this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+    }
+    public void redirectPage(){
+        if (this.selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
+            this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+        }
+        this.selenium.refresh();
+    }
     public void typingApplication() throws UnhandledAlertException, SeleniumException, InterruptedException {
 
         outer: while (StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
             //*[@id="txnPersonId"]
-            //輸入統號
+            //輸入當事人統號
             this.selenium.type("//input[contains(@id,'txnPersonId')]", getPersonId());
 
             if (!StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
                 break outer;
             }
-
+            //輸入當事人
             SRISWebUtils.typeAutoComplete(this.selenium, "//td[contains(@id,'currentPersonSiteIdTD')]", getSiteId());
 
-            this.selenium.waitForPageToLoad("30000");
+            this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             if (!StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
                 break outer;
             }
 
+            //點選當事人同申請人
             this.selenium.click("//input[@id='applicantSameTxnPerson']");
-            this.selenium.waitForPageToLoad("30000");
-            this.selenium.waitForPageToLoad("30000");
+            this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 
+            
+            //點選查詢按鈕
             final String searchBtnXpath = "//div/div/button";
 
             if (this.selenium.isElementPresent(searchBtnXpath) && this.selenium.isVisible(searchBtnXpath)
