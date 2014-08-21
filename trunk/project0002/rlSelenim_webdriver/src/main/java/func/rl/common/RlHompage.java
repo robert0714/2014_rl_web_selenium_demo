@@ -166,6 +166,9 @@ public class RlHompage {
 
                 this.logger.debug(currentUrl);
                 if (StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {
+                    if (this.selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+                        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                    }
                     this.selenium.refresh();
                     break;
                 }

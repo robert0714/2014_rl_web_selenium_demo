@@ -14,6 +14,7 @@ import java.util.List;
 import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
 import func.rl00001.Rl00001Page;
+import func.rl00001._rl01210.Rl01210Page;
 import func.rl03100.Rl03100Page;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -74,6 +75,9 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
 
                     this. selenium.waitForPageToLoad("30000");
                     rl00001Page.clickRl1210();
+                    WebUtils.handleRLAlert(this.selenium);
+                    Rl01210Page rl01210Page = new Rl01210Page(this. selenium, this. driver);
+                    rl01210Page.switchTab();
                 } catch (Exception e) {
                     e.printStackTrace();
                     WebUtils.handleRLAlert(selenium);
