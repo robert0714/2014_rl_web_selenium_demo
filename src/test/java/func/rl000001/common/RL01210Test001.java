@@ -67,11 +67,10 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
                     continue;
                 }
                 final String siteId = stringArray[1];
-                rl00001Page.setPersonId(personId);
-                rl00001Page.setSiteId(siteId);
+               
                 
                 try {
-                    rl00001Page.typingApplication();
+                    rl00001Page.typeApplicat1(personId, siteId);
                 } catch (Exception e) {
                     e.printStackTrace();
                     WebUtils.handleRLAlert(selenium);
@@ -85,7 +84,7 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
             
         }
         
-        
+        rl00001Page.redirectPage();
         this. selenium.waitForPageToLoad("30000");        
         // Sleep the thread if you want to view the rendered page while testing.
         assertTrue(true);
