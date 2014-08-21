@@ -35,25 +35,84 @@ public class Rl00001Page {
         SRISWebUtils.typeAutoComplete(this.selenium, "//td[contains(@id,'currentPersonSiteIdTD')]", siteId);
         this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
-    public void typeApplicat1(final String personId,final String siteId){
+    public void typeApplicat1(final String personId,final String siteId,final String relationship){
+        //applicant1ApplyRelationshipTD
         //輸入申請人1統號
         this.selenium.type("//input[contains(@id,'applicant1PersonId')]", personId);
         //輸入申請人1作業點
         SRISWebUtils.typeAutoComplete(this.selenium, "//td[contains(@id,'applicant1SiteIdTD')]", siteId);
         this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        this.selenium.type("//td[contains(@id,'applicant1ApplyRelationshipTD')]/span/input", relationship);
     }
-    public void typeApplicat2(final String personId,final String siteId){
+    public void typeApplicat2(final String personId,final String siteId,final String relationship){
         //輸入申請人2統號
         this.selenium.type("//input[contains(@id,'applicant2PersonId')]", personId);
         //輸入申請人2作業點
         SRISWebUtils.typeAutoComplete(this.selenium, "//td[contains(@id,'applicant2SiteIdTD')]", siteId);
         this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        this.selenium.type("//td[contains(@id,'applicant2ApplyRelationshipTD')]/span/input", relationship);
     }
+    public void typeDelegatedPerson(final String personId,final String siteId ){
+        //輸入委託人統號
+        this.selenium.type("//input[contains(@id,'delegatedPersonId')]", personId);
+        //輸入委託人作業點
+        SRISWebUtils.typeAutoComplete(this.selenium, "//td[contains(@id,'delegatedSiteTd')]", siteId);
+        this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad); 
+    }
+    
     public void redirectPage(){
         if (this.selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
             this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
         }
         this.selenium.refresh();
+    }
+    public void clickRl1210()throws InterruptedException{
+        
+         
+        final String rl01210Xpath = "//a[contains(text(),'出生登記')]";
+        this.logger.debug("rl172Bclick.isVisible()<HouseholdMaintainPage>: "+this.selenium.isVisible(rl01210Xpath));
+         
+        if (this.selenium.isElementPresent(rl01210Xpath)) { 
+
+            this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+            this.selenium.click(rl01210Xpath);
+            this.selenium.waitForPageToLoad("300000");
+        }
+     
+     }
+    public void clickSearchButton(final String inputCode) throws UnhandledAlertException, SeleniumException, InterruptedException {
+        outer: while (StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+          //*[@id="j_id_8l:j_id_8o"]
+            final String searchBtnXpath = "//div/div/button";
+
+            if (this.selenium.isElementPresent(searchBtnXpath) && this.selenium.isVisible(searchBtnXpath)
+                    && StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+                boolean giveUpOperation = WebUtils.handleClickBtn(this.selenium, searchBtnXpath);
+                if (giveUpOperation) {
+                    if (this.selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
+                        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                    }
+                    this.selenium.refresh();
+                }
+
+                int count = 0;
+                //由於點擊等待回應真的很花時間
+                inner: while (StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+                    Thread.sleep(5000);//等待5秒
+                    this.logger.debug(this.driver.getCurrentUrl());
+                    if (StringUtils.contains(this.driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
+                        break outer;
+                    }
+                    count++;
+                    if (count > 2) {
+                        break inner;
+                    }
+                }
+
+            } else if (!StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+                break outer;
+            }
+        }
     }
     public void typingApplication() throws UnhandledAlertException, SeleniumException, InterruptedException {
 

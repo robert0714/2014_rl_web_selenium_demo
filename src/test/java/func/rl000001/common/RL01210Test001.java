@@ -70,7 +70,8 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
                
                 
                 try {
-                    rl00001Page.typeApplicat1(personId, siteId);
+                    rl00001Page.typeApplicat1(personId, siteId,"爸嗎");
+                    rl00001Page.clickRl1210();
                 } catch (Exception e) {
                     e.printStackTrace();
                     WebUtils.handleRLAlert(selenium);
