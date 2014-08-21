@@ -20,7 +20,7 @@ public class Rl00001Page {
     private String personId;
     private String siteId;
     private Selenium selenium;
-
+    private final String patialUrl ="/rl/faces/pages/func/rl00001/rl00001.xhtml";
     public Rl00001Page(final Selenium selenium, final WebDriver driver) throws UnhandledAlertException,
             SeleniumException {
         super();

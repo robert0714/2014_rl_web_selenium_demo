@@ -41,6 +41,7 @@ public class RlHompage {
     private Selenium selenium;
     private String user;
     private String passwd;
+    private final String patialUrl ="/rl/faces/pages/index.xhtml";
     protected final Logger logger = Logger.getLogger(getClass());
 
     public RlHompage(final Selenium selenium, final WebDriver driver) throws UnhandledAlertException, SeleniumException {
@@ -134,7 +135,7 @@ public class RlHompage {
     public void enterRl00001() {
 
         while (this.selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
-
+            this.selenium.refresh();
             this.selenium.waitForPageToLoad("30000");
             this.selenium.click("//*[@id='navmenu-v']/li");// 進入登記作業,
             this.selenium.waitForPageToLoad("30000");
@@ -154,12 +155,7 @@ public class RlHompage {
 
                 this.selenium.click(rl00001Xpath);
                 this.selenium.waitForPageToLoad("7000");
-                try {
-                    Thread.sleep(30000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    // LOGGER.error("", e);
-                }
+               
                 this.selenium.refresh();
                 // 進入現戶簿頁
                 // selenium.open("/rl/faces/pages/func/rl00001/rl00001.xhtml");
@@ -170,6 +166,7 @@ public class RlHompage {
 
                 this.logger.debug(currentUrl);
                 if (StringUtils.contains(currentUrl, "rl00001/rl00001.xhtml")) {
+                    this.selenium.refresh();
                     break;
                 }
             }

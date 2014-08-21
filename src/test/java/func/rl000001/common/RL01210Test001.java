@@ -61,7 +61,6 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
             for (String[] stringArray :  this.personIdSiteIdList) {
                 this. selenium.waitForPageToLoad("30000");
                
-                this. selenium.waitForPageToLoad("30000");
                 final String personId = stringArray[0];
                 if (StringUtils.contains(personId, "*")) {
                     continue;
@@ -70,7 +69,10 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
                
                 
                 try {
+                    
                     rl00001Page.typeApplicat1(personId, siteId,"爸嗎");
+
+                    this. selenium.waitForPageToLoad("30000");
                     rl00001Page.clickRl1210();
                 } catch (Exception e) {
                     e.printStackTrace();
