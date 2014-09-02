@@ -75,7 +75,11 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
 
                     this. selenium.waitForPageToLoad("30000");
                     rl00001Page.clickRl1210();
-                    WebUtils.handleRLAlert(this.selenium);
+                    boolean giveUpOperation =  WebUtils.handleRLAlert(this.selenium);
+                    if(giveUpOperation){ 
+                        continue;
+                    }
+                    this. selenium.waitForPageToLoad("30000");
                     Rl01210Page rl01210Page = new Rl01210Page(this. selenium, this. driver);
                     rl01210Page.switchTab();
                 } catch (Exception e) {
@@ -99,17 +103,16 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
     
     
     private List<String[]> getPsedoData(){
-        final List<String[]>  result = new ArrayList<String[]>();
-        result.add(new String[]{"A129677773","10010070"});
-        result.add(new String[]{"B120138605","10010070"});
-        result.add(new String[]{"B120702178","10010070"});
-        result.add(new String[]{"C120600821","10010070"});
-        result.add(new String[]{"C124277999","10010070"});
-        result.add(new String[]{"E120499839","10010070"});
-        result.add(new String[]{"E121473795","10010070"});
-        result.add(new String[]{"E122760528","10010070"});
-        result.add(new String[]{"F108308572","10010070"});
-        result.add(new String[]{"G129180762","10010070"});
+        final List<String[]>  result = new ArrayList<String[]>();        
+//        result.add(new String[]{"B120138605","10010070"});
+//        result.add(new String[]{"B120702178","10010070"});
+//        result.add(new String[]{"C120600821","10010070"});
+//        result.add(new String[]{"C124277999","10010070"});
+//        result.add(new String[]{"E120499839","10010070"});
+//        result.add(new String[]{"E121473795","10010070"});
+//        result.add(new String[]{"E122760528","10010070"});
+//        result.add(new String[]{"F108308572","10010070"});
+//        result.add(new String[]{"G129180762","10010070"});
         result.add(new String[]{"C100201902","65000120"});
         result.add(new String[]{"C100202427","65000120"});
         result.add(new String[]{"C100202632","65000120"});
