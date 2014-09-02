@@ -38,8 +38,8 @@ public class Rl01210Page {
             this. selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
             this.selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
             this. selenium.waitForPageToLoad("300000");
-            this.  selenium.focus("//a[contains(text(),'全戶基本資料");
-            this. selenium.click("//a[contains(text(),'全戶基本資料");
+            this.  selenium.focus("//a[contains(text(),'全戶基本資料')]");
+            this. selenium.click("//a[contains(text(),'全戶基本資料')]");
             inputData01();
 //            inputData02();
            
