@@ -10,6 +10,7 @@ import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
+import func.pseudo.PsedoRedFile;
 import func.pseudo.RlAccount;
 import func.pseudo.RlAccount.Account;
 import func.rl.common.RlHompage;
@@ -114,7 +115,7 @@ public class RL03100Test001 {
         result.add(new String[]{"E122760528","10010070"});
         result.add(new String[]{"F108308572","10010070"});
         result.add(new String[]{"G129180762","10010070"});
-        
+        result.addAll(PsedoRedFile.readFiles())       ;
         return  result;
     }
     @Test
