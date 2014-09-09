@@ -15,15 +15,16 @@ import func.rl00001.HouseholdMaintainPage;
 import func.rl00001.Rl00001Page;
 import func.rl00004.Rl00004Page;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumTestCase;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
 public class RL02D00Test001 extends AbstractSeleniumTestCase {
-    protected static Logger logger = Logger.getLogger(RL02D00Test001.class);
+	private  final Logger logger = LoggerFactory.getLogger(RL02D00Test001.class);
     private String user = null;
     private String passwd = null;
     List<String[]> personIdSiteIdList;

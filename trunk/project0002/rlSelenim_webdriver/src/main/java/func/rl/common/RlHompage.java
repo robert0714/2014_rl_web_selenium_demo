@@ -23,13 +23,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EncodingUtils;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
@@ -42,7 +43,7 @@ public class RlHompage {
     private String user;
     private String passwd;
     private final String patialUrl ="/rl/faces/pages/index.xhtml";
-    protected final Logger logger = Logger.getLogger(getClass());
+    private  final Logger logger = LoggerFactory.getLogger(getClass());
 
     public RlHompage(final Selenium selenium, final WebDriver driver) throws UnhandledAlertException, SeleniumException {
         super();

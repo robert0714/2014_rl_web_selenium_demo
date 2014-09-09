@@ -2,21 +2,16 @@ package func.rl03100;
 
 import java.io.File;
 import java.util.Set;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+ 
+import org.apache.commons.lang3.StringUtils; 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchWindowException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.NoSuchWindowException; 
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.OutputType.*;
+import org.openqa.selenium.WebElement; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
@@ -24,7 +19,7 @@ import com.thoughtworks.selenium.SeleniumException;
 import func.rl.common.WebUtils;
 
 public class Rl03100Page {
-    protected final static Logger logger = Logger.getLogger(Rl03100Page.class);
+	private static final Logger logger = LoggerFactory.getLogger(Rl03100Page.class);
     private WebDriver driver;
     private Selenium selenium;
 

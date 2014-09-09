@@ -8,22 +8,22 @@ package org.study.selenium;
 
 import com.thoughtworks.selenium.Selenium;
 
-import func.rl.common.WebUtils;
+import func.rl.common.WebUtils; 
 
 import java.util.Collection;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.collections.CollectionUtils; 
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.openqa.selenium.WebDriver;
+import org.junit.BeforeClass; 
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  */
 public abstract class AbstractSeleniumTestCase {
-    private static final Logger logger = Logger.getLogger(AbstractSeleniumTestCase.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractSeleniumTestCase.class);
 
     protected static Selenium selenium;
     public static RemoteWebDriver driver;
