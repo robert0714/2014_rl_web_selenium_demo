@@ -12,11 +12,12 @@ import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils; 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
@@ -25,7 +26,7 @@ import func.rl.common.WebUtils;
 import func.rl03100.Rl03100Page;
 
 public class BatchApp01 {
-    protected static Logger logger = Logger.getLogger(BatchApp01.class);
+	private static final Logger logger = LoggerFactory.getLogger(BatchApp01.class);
    
     /**
      * @param args

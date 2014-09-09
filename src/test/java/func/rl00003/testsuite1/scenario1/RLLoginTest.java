@@ -1,7 +1,6 @@
 package func.rl00003.testsuite1.scenario1;
 
 import java.util.List;
-import java.util.Set;
 
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
@@ -15,21 +14,19 @@ import func.rl.common.WebUtils;
 import func.rl00001.HouseholdMaintainPage;
 import func.rl00001.Rl00001Page;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class RLLoginTest {
-    protected static Logger logger = Logger.getLogger(RLLoginTest.class);
+	private  final Logger logger = LoggerFactory.getLogger(RLLoginTest.class);
     private Selenium selenium;
     private WebDriver driver;
     List<String[]> personIdSiteIdList;

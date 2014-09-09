@@ -10,25 +10,27 @@ import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
+import func.pseudo.RlAccount;
+import func.pseudo.RlAccount.Account;
 import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
 import func.rl03100.Rl03100Page;
 
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.Dimension; 
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.study.selenium.SeleniumTestHelper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class RL03100Test001 {
-    protected static Logger logger = Logger.getLogger(RL03100Test001.class);
+	private static final Logger logger = LoggerFactory.getLogger(RL03100Test001.class);
     private Selenium selenium;
     private RemoteWebDriver driver;
     private String user =null;
@@ -37,8 +39,11 @@ public class RL03100Test001 {
 
     @Before
     public void setUp() throws Exception {
-        user ="RF1203008";
-        passwd ="RF1203008";
+    	final Account userAcc = RlAccount.getRandomAccount();
+//        user ="RF1203008";
+//        passwd ="RF1203008";
+    	user =userAcc.getUser();
+    	passwd =userAcc.getPasswd();
         final TableJDBCDao dao = new TableJDBCDao();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);

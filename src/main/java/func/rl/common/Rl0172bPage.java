@@ -1,19 +1,18 @@
 package func.rl.common;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
 
 public class Rl0172bPage {
-    protected final static  Logger logger = Logger.getLogger(Rl0172bPage.class);
+	private static final Logger logger = LoggerFactory.getLogger(Rl0172bPage.class);
     private WebDriver driver;
     private Selenium selenium;
 

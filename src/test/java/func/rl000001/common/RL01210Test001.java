@@ -15,13 +15,13 @@ import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
 import func.rl00001.Rl00001Page;
 import func.rl00001._rl01210.Rl01210Page;
-import func.rl03100.Rl03100Page;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumTestCase;
 
 import static org.junit.Assert.assertTrue;
@@ -30,7 +30,7 @@ import static org.junit.Assert.assertTrue;
  *
  */
 public class RL01210Test001 extends AbstractSeleniumTestCase {
-    private static final Logger logger = Logger.getLogger(RL01210Test001.class);
+	private  final Logger logger = LoggerFactory.getLogger(RL01210Test001.class);
     private String user = null;
     private String passwd = null;
     List<String[]> personIdSiteIdList;

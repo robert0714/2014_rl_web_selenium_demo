@@ -1,16 +1,17 @@
 package func.rl.common;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
 
 public class Rl02a10Page {
 
-    protected final static  Logger logger = Logger.getLogger(Rl02a10Page.class);
+	private  final Logger logger = LoggerFactory.getLogger(Rl02a10Page.class);
     private WebDriver driver;
     private Selenium selenium;
 

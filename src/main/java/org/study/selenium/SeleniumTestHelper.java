@@ -9,22 +9,22 @@ import func.rl.common.WebUtils;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpResponse;
-import org.apache.log4j.Logger;
+import org.apache.http.HttpResponse; 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.study.selenium.internal.AppInfo;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.util.concurrent.TimeUnit;
+import java.io.StringWriter; 
 
 public class SeleniumTestHelper {
 
-    private static final Logger logger = Logger.getLogger(SeleniumTestHelper.class);
+	private static final Logger logger = LoggerFactory.getLogger(SeleniumTestHelper.class);
     private static final String seleniumServerUrl = "http://" + SeleniumConfig.getSeleniumServerHostName() + ":"
             + SeleniumConfig.getSeleniumServerPort() + "/";
     

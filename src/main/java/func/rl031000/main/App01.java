@@ -10,13 +10,14 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils; 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
@@ -25,7 +26,7 @@ import func.rl.common.WebUtils;
 import func.rl03100.Rl03100Page;
 
 public class App01 {
-    protected static Logger logger = Logger.getLogger(App01.class); 
+	private static final Logger logger = LoggerFactory.getLogger(App01.class); 
     protected WebDriverBackedSelenium selenium;
     protected String userName;
     protected String userPasswd;

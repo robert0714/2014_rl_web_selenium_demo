@@ -1,35 +1,26 @@
 package func.rl00003.testsuite1.scenario1;
 
 import java.util.List;
-import java.util.Set;
 
 import com.iisi.dao.TableJDBCDao;
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
-import func.rl.common.PagePartialURL;
-import func.rl.common.Rl0172bPage;
-import func.rl.common.Rl02a10Page;
 import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
-import func.rl00001.HouseholdMaintainPage;
-import func.rl00001.Rl00001Page;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class RL0004Test {
-    protected static Logger logger = Logger.getLogger(RL0004Test.class);
+	private  final Logger logger = LoggerFactory.getLogger(RL0004Test.class);
     private Selenium selenium;
     private  WebDriver driver ;
     List<String[]> personIdSiteIdList;

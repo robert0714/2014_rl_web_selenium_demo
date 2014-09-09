@@ -11,15 +11,18 @@ package func.rl03100.testsuite1.scenario1;
 import java.util.ArrayList;
 import java.util.List;
 
+import func.pseudo.RlAccount;
+import func.pseudo.RlAccount.Account;
 import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
 import func.rl03100.Rl03100Page;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumTestCase;
 
 import static org.junit.Assert.assertTrue;
@@ -28,17 +31,20 @@ import static org.junit.Assert.assertTrue;
  *
  */
 public class RL03100Test002 extends AbstractSeleniumTestCase {
-    private static final Logger logger = Logger.getLogger(RL03100Test002.class);
+	private static final Logger logger = LoggerFactory.getLogger(RL03100Test002.class);
     private String user = null;
     private String passwd = null;
     List<String[]> personIdSiteIdList;
     
     @Before
-    public void beforeTest() throws Exception {
-        user ="RF1203008";
-        passwd ="RF1203008";
-        this.personIdSiteIdList = getPsedoData();
-    }
+	public void beforeTest() throws Exception {
+		final Account userAcc = RlAccount.getRandomAccount();
+		// user ="RF1203008";
+		// passwd ="RF1203008";
+		user = userAcc.getUser();
+		passwd = userAcc.getPasswd();
+		this.personIdSiteIdList = getPsedoData();
+	}
     @Test
     public void testLogin() throws InterruptedException  {
         final RlHompage homepage = new RlHompage(this.selenium, this.driver);

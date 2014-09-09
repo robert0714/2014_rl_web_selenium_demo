@@ -1,11 +1,12 @@
 package func.rl00004;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils; 
 import org.openqa.selenium.By;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
@@ -13,7 +14,7 @@ import com.thoughtworks.selenium.SeleniumException;
 import func.rl.common.WebUtils;
 
 public class Rl00004Page {
-    protected final static  Logger logger = Logger.getLogger(Rl00004Page.class);
+	private static final Logger logger = LoggerFactory.getLogger(Rl00004Page.class);
     private WebDriver driver;
     private Selenium selenium;
     private String personId;

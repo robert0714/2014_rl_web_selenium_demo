@@ -18,7 +18,6 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHttpEntityEnclosingRequest;
-import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.OutputType;
@@ -31,17 +30,18 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.Selenium;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class WebUtils.
  */
 public class WebUtils {
     
     /** The Constant logger. */
-    protected static final Logger logger = Logger.getLogger(WebUtils.class);
+	private  static final Logger logger = LoggerFactory.getLogger(WebUtils.class);
 
     /**
      * **
