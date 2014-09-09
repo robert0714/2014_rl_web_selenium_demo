@@ -76,9 +76,10 @@ public class RlHompage {
         final String homapage ="/rl/faces/pages/index.xhtml";
         final String partialPage ="/rl/faces/pages";
         selenium.open(homapage);
-//        selenium.open(sitLoginPage);
         String currentUrl = driver.getCurrentUrl();
         System.out.println("辨識基準頁面網址: "+currentUrl);
+        
+        
         if (StringUtils.contains(currentUrl, partialPage)) {
             selenium.open("/rl/");
             //http://rlfl.ris.gov.tw/rl/

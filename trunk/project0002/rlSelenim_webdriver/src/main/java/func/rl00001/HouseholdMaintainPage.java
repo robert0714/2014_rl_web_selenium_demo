@@ -3,21 +3,22 @@ package func.rl00001;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.lang3.StringUtils; 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.Selenium;
 
 import func.rl.common.WebUtils;
 
 public class HouseholdMaintainPage {
-    protected final  Logger logger = Logger.getLogger(getClass());
+	private  final Logger logger = LoggerFactory.getLogger(getClass());
     private WebDriver driver;
     private Selenium selenium;
 
