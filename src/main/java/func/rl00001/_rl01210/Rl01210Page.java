@@ -7,18 +7,17 @@ import com.thoughtworks.selenium.SeleniumException;
 import func.rl.common.WebUtils;
 
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
+import org.apache.commons.lang3.StringUtils;  
 import org.openqa.selenium.UnhandledAlertException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  */
 public class Rl01210Page {
-    protected final static Logger logger = Logger.getLogger(Rl01210Page.class);
+	private static final Logger logger = LoggerFactory.getLogger(Rl01210Page.class);
     private WebDriver driver;
     private Selenium selenium;
 
