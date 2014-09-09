@@ -11,6 +11,7 @@ package func.rl03100.testsuite1.scenario1;
 import java.util.ArrayList;
 import java.util.List;
 
+import func.pseudo.PsedoRedFile;
 import func.pseudo.RlAccount;
 import func.pseudo.RlAccount.Account;
 import func.rl.common.RlHompage;
@@ -127,6 +128,7 @@ public class RL03100Test002 extends AbstractSeleniumTestCase {
         result.add(new String[]{"F108308572","10010070"});
         result.add(new String[]{"G129180762","10010070"});
         
+        result.addAll(PsedoRedFile.readFiles())       ;
         return  result;
     }
 }
