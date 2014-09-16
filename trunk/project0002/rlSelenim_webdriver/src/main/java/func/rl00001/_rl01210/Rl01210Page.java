@@ -69,9 +69,20 @@ public class Rl01210Page {
         this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
         getRLDF001MByClickBtn();
         this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-        WebUtils.scroolbarDownUp(this.selenium,this. driver);
+        WebUtils.scroolbarDown(this.selenium,this. driver);
+        typeLastName("無姓");
+        typeFirstName("無名");
     }
-    
+    //輸入出生者資料的姓
+    public void typeLastName(final String lastName){
+        ////span[@id='j_id_2k:lastName']/span/input
+        this.selenium.type("//span[contains(@id,'lastName')]/span/input", lastName);
+    }
+    //輸入出生者資料的名
+    public void typeFirstName(final String firstName){
+        ////span[@id='j_id_2k:firstName']/span/input
+        this.selenium.type("//span[contains(@id,'firstName')]/span/input", firstName);
+    }
     //取得全戶基本資料
     public void getRLDF001MByClickBtn(){
       //span[@id='j_id_2k:household']/table/tbody/tr/td/button
