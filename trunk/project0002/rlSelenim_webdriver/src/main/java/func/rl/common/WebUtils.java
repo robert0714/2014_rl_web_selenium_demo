@@ -20,6 +20,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHttpEntityEnclosingRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
@@ -27,6 +28,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -34,7 +36,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class WebUtils.
  */
@@ -159,6 +163,18 @@ public class WebUtils {
     }
 
     /**
+     * Local machine.
+     *
+     * @return the web driver
+     */
+    public static WebDriver localMachine(){
+        final DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+        final WebDriver driver = new FirefoxDriver(capabilities);
+        return driver ;
+    }
+    
+    /**
      * Gets the windows machine.
      *
      * @param spcificIp the spcific ip
@@ -182,6 +198,16 @@ public class WebUtils {
         final RemoteWebDriver driver = getLinucMachine("192.168.9.47", "192.168.10.20", 4444);
         return driver;
     }
+    
+    /**
+     * Gets the linuc machine.
+     *
+     * @param spcificIp the spcific ip
+     * @param seleniumServerUrl the selenium server url
+     * @param seleniumServerPort the selenium server port
+     * @return the linuc machine
+     * @throws MalformedURLException the malformed url exception
+     */
     public static RemoteWebDriver getLinucMachine(final String spcificIp, final String seleniumServerUrl,
             final int seleniumServerPort) throws MalformedURLException {
         final RemoteWebDriver driver = getMachine(Platform.LINUX, spcificIp, seleniumServerUrl, seleniumServerPort);
