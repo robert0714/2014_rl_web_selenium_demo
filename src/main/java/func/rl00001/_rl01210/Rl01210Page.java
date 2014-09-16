@@ -12,6 +12,7 @@ import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver; 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.study.selenium.SRISWebUtils;
 import org.study.selenium.SeleniumConfig;
 
 /**
@@ -41,9 +42,14 @@ public class Rl01210Page {
             this.  selenium.focus("//a[contains(text(),'全戶基本資料')]");
             this. selenium.click("//a[contains(text(),'全戶基本資料')]");
             inputData01();
-//            inputData02();
+            inputData02();
            
         }
+    }
+    public void inputData02() throws UnhandledAlertException, SeleniumException, InterruptedException {
+        this.selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+        this. selenium.waitForPageToLoad("300000");
+        this.selenium.click("document.poopupForm.elements[141]" );
     }
     public void inputData01() throws UnhandledAlertException, SeleniumException, InterruptedException {
         this. selenium.click("//a[contains(text(),'全戶基本資料/出生者、父母資料')]");
@@ -75,8 +81,22 @@ public class Rl01210Page {
         typeBirthYyymmdd("1010203");
         this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
         typeBirthOrderSexSelectOneMenu();
+        typeRelationShip("稱謂");
+        typeBirthPlaceAC("63000");
     }
- 
+    
+    //輸入出生地
+    public void typeBirthPlaceAC(final String birthPlaceAC){
+//        this.selenium.doubleClick("//input[contains(@id,'birthPlaceAC:inputValue'')]"); 
+//        this.selenium.click("//div[contains(@id,'birthPlaceAC:items')]/ul/li[4]"); 
+        SRISWebUtils.typeAutoCompleteBySpanXpath(this.selenium, "//span[contains(@id,'birthPlaceAC')]", birthPlaceAC);
+        this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+    }
+    //輸入稱謂
+    public void typeRelationShip(final String relationship){
+      //span[@id='j_id_2k:relationship']/span/input
+        this.selenium.type("//span[contains(@id,'relationship')]/span/input", relationship);
+    }
     //輸入出生別
     public void typeBirthOrderSexSelectOneMenu(){
         this. selenium.click("//label[contains(@id,'birthOrderSexSelectOneMenu')]"); 
