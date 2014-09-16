@@ -317,6 +317,7 @@ public class WebUtils {
                     giveUpOperation = true;
                     break;
                 }
+                selenium.waitForPageToLoad("6000");
                 count++;
             }
         }
