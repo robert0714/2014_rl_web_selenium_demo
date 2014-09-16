@@ -102,7 +102,7 @@ public class HouseholdMaintainPage {
 	final String parentWindowId = driver.getWindowHandle();
 	logger.debug("parentWindowId: " + parentWindowId);
 	boolean printBtnXpathHit = false;
-	final String printBtnXpath = "//div[contains(@id,'sx_content')]/button";
+	final String printBtnXpath = "//div[contains(@id,'householdbtns_content')]/button";
 
 	if (selenium.isElementPresent(printBtnXpath)) {
 	    final WebElement printBtn = driver.findElement(By.xpath(printBtnXpath));
