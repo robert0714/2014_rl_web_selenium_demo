@@ -11,8 +11,10 @@ package func.rl000001.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import func.rl.common.PagePartialURL;
 import func.rl.common.RlHompage;
 import func.rl.common.WebUtils;
+import func.rl00001.HouseholdMaintainPage;
 import func.rl00001.Rl00001Page;
 import func.rl00001._rl01210.Rl01210Page;
 
@@ -86,6 +88,35 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                     rl01210Page.switchTab();
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+                    Thread.sleep(1000l);
+                    HouseholdMaintainPage householdMaintainPage = null;
+
+                    if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
+
+                        this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+                        householdMaintainPage = new HouseholdMaintainPage(selenium, driver);
+                        this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+                        while (!householdMaintainPage.switchTab()) {
+                            logger.debug("轉不過去");
+                        }
+                        //發現所需延遲時間需要更久
+                        selenium.waitForPageToLoad("300000");
+                        if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+                            selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                        }
+                        householdMaintainPage.clickRl1722B();
+
+                    }
+                    if (householdMaintainPage != null
+                            && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
+                        householdMaintainPage.processPrintView();
+                        if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+                            selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                            selenium.refresh();
+                        }
+                        selenium.waitForPageToLoad("3000");
+                        householdMaintainPage.processAppyCahange();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     WebUtils.handleRLAlert(selenium);
