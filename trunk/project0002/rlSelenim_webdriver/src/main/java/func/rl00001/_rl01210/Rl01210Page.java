@@ -72,6 +72,25 @@ public class Rl01210Page {
         WebUtils.scroolbarDown(this.selenium,this. driver);
         typeLastName("無姓");
         typeFirstName("無名");
+        typeBirthYyymmdd("1010203");
+        this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        typeBirthOrderSexSelectOneMenu();
+    }
+ 
+    //輸入出生別
+    public void typeBirthOrderSexSelectOneMenu(){
+        this. selenium.click("//label[contains(@id,'birthOrderSexSelectOneMenu')]"); 
+        this. selenium.click("//div[contains(@id,'birthOrderSexSelectOneMenu')]/div/ul/li[2]");
+    }
+    //輸入出生日期
+    public void typeBirthYyymmdd(final String birthYyymmdd){
+        //input[@id='j_id_2k:birthYyymmdd:j_id_uj']
+        final String yyy =  org.apache.commons.lang.StringUtils.substring(birthYyymmdd,0, 3);
+        final String mm =  org.apache.commons.lang.StringUtils.substring(birthYyymmdd,3, 5);
+        final String dd =  org.apache.commons.lang.StringUtils.substring(birthYyymmdd,5, 7);
+        this.selenium.type("//span[@id='birthYyymmdd__calendar']/input", yyy);
+        this.selenium.type("//span[@id='birthYyymmdd__calendar']/input[2]", mm);
+        this.selenium.type("//span[@id='birthYyymmdd__calendar']/input[3]", dd);
     }
     //輸入出生者資料的姓
     public void typeLastName(final String lastName){
