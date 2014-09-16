@@ -57,12 +57,13 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
     public void testOpenRl01210() throws Exception {
         final RlHompage homepage = new RlHompage(this.selenium, this.driver);
         homepage.login(this.selenium,this.user, this.passwd);
-        homepage.enterRl00001();
         Rl00001Page rl00001Page = new Rl00001Page(selenium, driver);
         
         
         if (CollectionUtils.isNotEmpty( this.personIdSiteIdList)) {
             for (String[] stringArray :  this.personIdSiteIdList) {
+                homepage.enterRl00001();
+                
                 this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                
                 final String personId = stringArray[0];
@@ -104,8 +105,6 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
                         if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
                             selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
                         }
-                        householdMaintainPage.clickRl1722B();
-
                     }
                     if (householdMaintainPage != null
                             && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
