@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumTestCase;
+import org.study.selenium.SeleniumConfig;
 
 import static org.junit.Assert.assertTrue;
 
@@ -60,28 +61,31 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
         
         if (CollectionUtils.isNotEmpty( this.personIdSiteIdList)) {
             for (String[] stringArray :  this.personIdSiteIdList) {
-                this. selenium.waitForPageToLoad("30000");
+                this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                
                 final String personId = stringArray[0];
                 if (StringUtils.contains(personId, "*")) {
                     continue;
                 }
                 final String siteId = stringArray[1];
-               
+                this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                 
                 try {
-                    
+                    this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+                    Thread.sleep(1000l);
                     rl00001Page.typeApplicat1(personId, siteId,"爸嗎");
-
-                    this. selenium.waitForPageToLoad("30000");
+                    this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                     rl00001Page.clickRl1210();
-                    boolean giveUpOperation =  WebUtils.handleRLAlert(this.selenium);
-                    if(giveUpOperation){ 
-                        continue;
-                    }
-                    this. selenium.waitForPageToLoad("30000");
+//                    boolean giveUpOperation =  WebUtils.handleRLAlert(this.selenium);
+//                    if(giveUpOperation){ 
+//                        continue;
+//                    }
+                    Thread.sleep(1000l);
+                    this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                     Rl01210Page rl01210Page = new Rl01210Page(this. selenium, this. driver);
+                    this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                     rl01210Page.switchTab();
+                    this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                 } catch (Exception e) {
                     e.printStackTrace();
                     WebUtils.handleRLAlert(selenium);

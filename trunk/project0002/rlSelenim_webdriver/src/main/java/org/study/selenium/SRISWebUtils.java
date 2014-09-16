@@ -8,10 +8,14 @@ package org.study.selenium;
 
 import com.thoughtworks.selenium.Selenium;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  */
 public class SRISWebUtils {
+    private  final static Logger LOGGER = LoggerFactory.getLogger(SRISWebUtils.class);
     public static void typeAutoCompleteBySpanXpath(final Selenium selenium ,final String spanXpath ,final String value){
         /***
          * ex: //td[contains(@id,'currentPersonSiteIdTD')]/span/input
@@ -25,9 +29,12 @@ public class SRISWebUtils {
         
         for (int i = 0; i < 2; ++i) {
             selenium.doubleClick(typeXpath);
-            selenium.type(typeXpath,  value);
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+            selenium.type(typeXpath,  value);            
         }
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
         selenium.click(closeXpath);
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
     public static void typeAutoComplete(final Selenium selenium ,final String xpath ,final String value){
         /***
@@ -41,10 +48,14 @@ public class SRISWebUtils {
         final String closeXpath =  xpath +"/span/span/img";
         
         for (int i = 0; i < 2; ++i) {
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             selenium.doubleClick(typeXpath);
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             selenium.type(typeXpath,  value);
         }
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
         selenium.click(closeXpath);
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
     //================================================
     //== [Enumeration types] Block Start
