@@ -36,12 +36,17 @@ public class Rl01210Page {
         final String currentUrl = this.driver.getCurrentUrl();
         if (StringUtils.contains(currentUrl,this. rl01210PartialUlr)) {
             this.selenium.refresh();
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             this. selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             this.selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
-            this. selenium.waitForPageToLoad("300000");
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             this.  selenium.focus("//a[contains(text(),'全戶基本資料')]");
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             this. selenium.click("//a[contains(text(),'全戶基本資料')]");
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             inputData01();
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             inputData02();
            
         }
@@ -49,7 +54,18 @@ public class Rl01210Page {
     public void inputData02() throws UnhandledAlertException, SeleniumException, InterruptedException {
         this.selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
         this. selenium.waitForPageToLoad("300000");
-        this.selenium.click("document.poopupForm.elements[141]" );
+      //資料驗證
+        this.selenium.click("//span[contains(@id,'button')]/button" );
+        this. selenium.waitForPageToLoad("300000");
+        
+      //資料驗證
+        this.selenium.click("//span[contains(@id,'button')]/button" );
+      //span[@id='j_id_2k:button']/button[3]
+        this. selenium.waitForPageToLoad("300000");
+        Thread.sleep(1000l);
+        //暫存
+        this.selenium.click("//span[contains(@id,'button')]/button[3]" );
+        this. selenium.waitForPageToLoad("300000");
     }
     public void inputData01() throws UnhandledAlertException, SeleniumException, InterruptedException {
         this. selenium.click("//a[contains(text(),'全戶基本資料/出生者、父母資料')]");
@@ -83,6 +99,8 @@ public class Rl01210Page {
         typeBirthOrderSexSelectOneMenu();
         typeRelationShip("稱謂");
         typeBirthPlaceAC("63000");
+        this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+      
     }
     
     //輸入出生地
@@ -91,16 +109,25 @@ public class Rl01210Page {
 //        this.selenium.click("//div[contains(@id,'birthPlaceAC:items')]/ul/li[4]"); 
         SRISWebUtils.typeAutoCompleteBySpanXpath(this.selenium, "//span[contains(@id,'birthPlaceAC')]", birthPlaceAC);
         this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        try {
+            Thread.sleep(3000l);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            logger.error(e.getMessage(), e);
+        }
     }
     //輸入稱謂
     public void typeRelationShip(final String relationship){
       //span[@id='j_id_2k:relationship']/span/input
         this.selenium.type("//span[contains(@id,'relationship')]/span/input", relationship);
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
     //輸入出生別
     public void typeBirthOrderSexSelectOneMenu(){
         this. selenium.click("//label[contains(@id,'birthOrderSexSelectOneMenu')]"); 
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
         this. selenium.click("//div[contains(@id,'birthOrderSexSelectOneMenu')]/div/ul/li[2]");
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
     //輸入出生日期
     public void typeBirthYyymmdd(final String birthYyymmdd){
@@ -109,8 +136,19 @@ public class Rl01210Page {
         final String mm =  org.apache.commons.lang.StringUtils.substring(birthYyymmdd,3, 5);
         final String dd =  org.apache.commons.lang.StringUtils.substring(birthYyymmdd,5, 7);
         this.selenium.type("//span[@id='birthYyymmdd__calendar']/input", yyy);
+        this.selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input", "blur");
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
         this.selenium.type("//span[@id='birthYyymmdd__calendar']/input[2]", mm);
+        this.selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input[2]", "blur");
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
         this.selenium.type("//span[@id='birthYyymmdd__calendar']/input[3]", dd);
+        this.selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input[3]", "blur");
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        this.selenium.click("//span[@id='birthYyymmdd__calendar']/img");
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        this.selenium.click("//a[contains(text(),'關閉')]");
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        
     }
     //輸入出生者資料的姓
     public void typeLastName(final String lastName){
