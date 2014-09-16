@@ -13,7 +13,7 @@ public class PsedoRedFile {
 	private final static Logger LOGGER = LoggerFactory
 			.getLogger(PsedoRedFile.class);
 
-	public List<String[]> readFiles() {
+	public static List<String[]> readFiles() {
 		final List<String[]> result = new ArrayList<String[]>();
 
 		try {
