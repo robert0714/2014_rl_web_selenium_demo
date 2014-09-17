@@ -20,7 +20,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHttpEntityEnclosingRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
@@ -36,7 +35,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.selenium.Selenium;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+
+
+import func.rl.common.internal.GrowlMsg;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -45,7 +46,7 @@ import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 public class WebUtils {
     
     /** The Constant logger. */
-	private  static final Logger logger = LoggerFactory.getLogger(WebUtils.class);
+	private  static final Logger LOGGER = LoggerFactory.getLogger(WebUtils.class);
 
     /**
      * **
@@ -58,27 +59,47 @@ public class WebUtils {
      * @return true, if successful
      */
     public static boolean handleClickBtn(final Selenium selenium, final String clickBtnXpath) {
+	final GrowlMsg initData = clickBtn(selenium, clickBtnXpath);
+        boolean giveUpOperation = initData.isGiveUpOperation();        
+        return giveUpOperation;
+    }
+    
+    /**
+     * **
+     * 按鈕Xpath為clickBtnXpath點選後
+     * 針對訊息作處理
+     * 有錯誤訊息回傳 true,無錯誤訊息回傳false .
+     *
+     * @param selenium the selenium
+     * @param clickBtnXpath the click btn xpath
+     * @return true, if successful
+     */
+    public static GrowlMsg clickBtn(final Selenium selenium, final String clickBtnXpath) {
+	final GrowlMsg result = new GrowlMsg();
         boolean giveUpOperation = false;
         selenium.click(clickBtnXpath);//據說是資料驗證
         selenium.waitForPageToLoad("60000");//等待6秒...不見得msg出來,改成60秒
         if (selenium.isElementPresent("//*[@id='growl2_container']/div/div")) {
             int count = 0;
             while (true) {
-                String errorMessage = selenium.getText("//*[@id='growl2_container']/div/div/div[2]/span");
-                String errorExtMessage = selenium.getText("//*[@id='growl2_container']/div/div/div[2]/p");
-                logger.info(errorMessage);
-                logger.info(errorExtMessage);
+                final String errorMessage = selenium.getText("//*[@id='growl2_container']/div/div/div[2]/span");
+                final String errorExtMessage = selenium.getText("//*[@id='growl2_container']/div/div/div[2]/p");
+                LOGGER.info(errorMessage);
+                LOGGER.info(errorExtMessage);
+                result.setErrorMessage(errorMessage);
+                result.setErrorExtMessage(errorExtMessage);
+                result.setGiveUpOperation(giveUpOperation);
                 selenium.click(clickBtnXpath);
                 if (count > 3) {
                     giveUpOperation = true;
+                    result.setGiveUpOperation(giveUpOperation);
                     break;
                 }
                 count++;
             }
         }
-        return giveUpOperation;
+        return result;
     }
-
     /**
      * *
      * 讓捲軸上下跑
@@ -259,23 +280,23 @@ public class WebUtils {
     public static String getIPOfNode(RemoteWebDriver remoteDriver) {
         String hostFound = null;
         try {
-            HttpCommandExecutor ce = (HttpCommandExecutor) remoteDriver.getCommandExecutor();
-            String hostName = ce.getAddressOfRemoteServer().getHost();
-            int port = ce.getAddressOfRemoteServer().getPort();
-            HttpHost host = new HttpHost(hostName, port);
-            DefaultHttpClient client = new DefaultHttpClient();
-            URL sessionURL = new URL("http://" + hostName + ":" + port + "/grid/api/testsession?session="
+            final HttpCommandExecutor ce = (HttpCommandExecutor) remoteDriver.getCommandExecutor();
+            final  String hostName = ce.getAddressOfRemoteServer().getHost();
+            final  int port = ce.getAddressOfRemoteServer().getPort();
+            final  HttpHost host = new HttpHost(hostName, port);
+            final DefaultHttpClient client = new DefaultHttpClient();
+            final URL sessionURL = new URL("http://" + hostName + ":" + port + "/grid/api/testsession?session="
                     + remoteDriver.getSessionId());
-            BasicHttpEntityEnclosingRequest r = new BasicHttpEntityEnclosingRequest("POST", sessionURL.toExternalForm());
-            HttpResponse response = client.execute(host, r);
-            JSONObject object = extractObject(response);
-            URL myURL = new URL(object.getString("proxyId"));
+            final  BasicHttpEntityEnclosingRequest r = new BasicHttpEntityEnclosingRequest("POST", sessionURL.toExternalForm());
+            final HttpResponse response = client.execute(host, r);
+            final JSONObject object = extractObject(response);
+            final URL myURL = new URL(object.getString("proxyId"));
             if ((myURL.getHost() != null) && (myURL.getPort() != -1)) {
                 hostFound = myURL.getHost();
             }
-        } catch (Exception e) {
-            System.err.println(e);
-        }
+	} catch (Exception e) {
+	    LOGGER.error(e.getMessage(), e);
+	}
         return hostFound;
     }
 
@@ -311,8 +332,8 @@ public class WebUtils {
             while (true) {
                 String errorMessage = selenium.getText("//*[@id='growl2_container']/div/div/div[2]/span");
                 String errorExtMessage = selenium.getText("//*[@id='growl2_container']/div/div/div[2]/p");
-                logger.info(errorMessage);
-                logger.info(errorExtMessage);
+                LOGGER.info(errorMessage);
+                LOGGER.info(errorExtMessage);
                 if (count > 3) {
                     giveUpOperation = true;
                     break;
@@ -349,7 +370,7 @@ public class WebUtils {
             //	    fos.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
