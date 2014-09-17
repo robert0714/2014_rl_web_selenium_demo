@@ -137,6 +137,7 @@ public class HouseholdMaintainPage {
 				// 戶役資訊服務網
 				String title = driver.getTitle();
 				logger.debug("title: " + title);
+				Thread.sleep(5000);// 建議5秒畢竟cognos實在太慢了
 				WebUtils.scroolbarDownUp(selenium, driver);
 				// *[@id="j_id4_j_id_9:j_id_y"]/span
 				// *[@id="j_id4_j_id_9:j_id_y"]
@@ -149,7 +150,7 @@ public class HouseholdMaintainPage {
 			}
 		    }
 		} catch (NoSuchWindowException e) {
-		    e.printStackTrace();
+		    logger.debug(e.getMessage() ,e );
 		}
 
 		if (printViewPresent) {
