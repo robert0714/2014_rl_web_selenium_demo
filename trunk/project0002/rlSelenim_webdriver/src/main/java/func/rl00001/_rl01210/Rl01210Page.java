@@ -55,11 +55,13 @@ public class Rl01210Page {
         this.selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
         this. selenium.waitForPageToLoad("300000");
       //資料驗證
-        this.selenium.click("//span[contains(@id,'button')]/button" );
+        final   String verifyBtnXpath = "//span[contains(@id,'button')]/button";
+        boolean giveUpOperation = WebUtils.handleClickBtn(selenium, verifyBtnXpath);
+//        this.selenium.click(verifyBtnXpath );
         this. selenium.waitForPageToLoad("300000");
         
       //資料驗證
-        this.selenium.click("//span[contains(@id,'button')]/button" );
+       giveUpOperation = WebUtils.handleClickBtn(selenium, verifyBtnXpath);
       //span[@id='j_id_2k:button']/button[3]
         this. selenium.waitForPageToLoad("300000");
         Thread.sleep(1000l);

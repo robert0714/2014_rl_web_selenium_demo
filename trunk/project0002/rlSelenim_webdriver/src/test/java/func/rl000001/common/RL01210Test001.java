@@ -48,7 +48,9 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
     public void testLogin() throws InterruptedException  {
         final RlHompage homepage = new RlHompage(this.selenium, this.driver);
         homepage.login(this.selenium,this.user, this.passwd);
-        this. selenium.waitForPageToLoad("30000");
+        this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        
+        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
         
         // Sleep the thread if you want to view the rendered page while testing.
         assertTrue(true);
@@ -109,11 +111,12 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
                     if (householdMaintainPage != null
                             && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
                         householdMaintainPage.processPrintView();
+                        this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                         if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
                             selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
                             selenium.refresh();
                         }
-                        selenium.waitForPageToLoad("3000");
+                        this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                         householdMaintainPage.processAppyCahange();
                     }
                 } catch (Exception e) {

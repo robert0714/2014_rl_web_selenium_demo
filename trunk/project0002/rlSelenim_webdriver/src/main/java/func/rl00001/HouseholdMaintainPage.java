@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.study.selenium.SeleniumConfig;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -106,6 +107,7 @@ public class HouseholdMaintainPage {
 
 	if (selenium.isElementPresent(printBtnXpath)) {
 	    final WebElement printBtn = driver.findElement(By.xpath(printBtnXpath));
+	    this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 	    final String disabledAttribute = printBtn.getAttribute("disabled");
 	    logger.debug("-----------------disabledAttribute: " + disabledAttribute);
 	    if (StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())) {
