@@ -137,7 +137,7 @@ public class HouseholdMaintainPage {
 				WebUtils.scroolbarDownUp(selenium, driver);
 				// *[@id="j_id4_j_id_9:j_id_y"]/span
 				// *[@id="j_id4_j_id_9:j_id_y"]
-				selenium.click("//form/div/div/div/div[2]/button");// 端未列印
+				selenium.click("//span[contains(@id,'pdfbanner')]/span[2]/button[2]");// 端未列印
 				// form/div/div/div/div[2]/button[2]
 				// selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
 				printViewPresent = true;
