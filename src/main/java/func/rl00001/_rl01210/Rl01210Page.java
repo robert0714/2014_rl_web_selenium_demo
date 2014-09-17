@@ -19,7 +19,7 @@ import org.study.selenium.SeleniumConfig;
  *
  */
 public class Rl01210Page {
-	private static final Logger logger = LoggerFactory.getLogger(Rl01210Page.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Rl01210Page.class);
     private WebDriver driver;
     private Selenium selenium;
 
@@ -63,6 +63,11 @@ public class Rl01210Page {
       //span[@id='j_id_2k:button']/button[3]
         this. selenium.waitForPageToLoad("300000");
         Thread.sleep(1000l);
+        if(this. selenium.isElementPresent("//div[contains(@id,'growl2']/div/div/div")){
+            final String growl2Content = this. selenium.getText("//div[contains(@id,'growl2']");
+            LOGGER.info(growl2Content);
+        }
+        
         //暫存
         this.selenium.click("//span[contains(@id,'button')]/button[3]" );
         this. selenium.waitForPageToLoad("300000");
@@ -113,7 +118,7 @@ public class Rl01210Page {
             Thread.sleep(3000l);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
     }
     //輸入稱謂
