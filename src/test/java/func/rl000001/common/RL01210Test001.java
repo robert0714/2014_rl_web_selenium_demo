@@ -49,9 +49,7 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
         final RlHompage homepage = new RlHompage(this.selenium, this.driver);
         homepage.login(this.selenium,this.user, this.passwd);
         this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-        
-        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
-        
+                
         // Sleep the thread if you want to view the rendered page while testing.
         assertTrue(true);
     }
