@@ -116,6 +116,7 @@ public class HouseholdMaintainPage {
 		printBtnXpathHit = true;
 		giveUpOperation = WebUtils.handleClickBtn(selenium, printBtnXpath);
 	    }
+	    this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 	}
 
 	if (!giveUpOperation && printBtnXpathHit) {

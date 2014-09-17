@@ -5,6 +5,7 @@ import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
 
 import func.rl.common.WebUtils;
+import func.rl.common.internal.GrowlMsg;
 
 
 import org.apache.commons.lang3.StringUtils;  
@@ -56,12 +57,15 @@ public class Rl01210Page {
         this. selenium.waitForPageToLoad("300000");
       //資料驗證
         final   String verifyBtnXpath = "//span[contains(@id,'button')]/button";
-        boolean giveUpOperation = WebUtils.handleClickBtn(selenium, verifyBtnXpath);
-//        this.selenium.click(verifyBtnXpath );
-        this. selenium.waitForPageToLoad("300000");
-        
+//     this.selenium.click(verifyBtnXpath );        
       //資料驗證
-       giveUpOperation = WebUtils.handleClickBtn(selenium, verifyBtnXpath);
+        final GrowlMsg verify =   WebUtils.clickBtn(selenium, verifyBtnXpath);
+        final String errorExtMessage = verify.getErrorExtMessage();        
+        final String errorMessage = verify.getErrorMessage();
+        if(org.apache.commons.lang.StringUtils.isNotBlank(errorMessage) || 
+        	org.apache.commons.lang.StringUtils.isNotBlank(errorExtMessage) ){
+            System.out.println(".....");
+        }
       //span[@id='j_id_2k:button']/button[3]
         this. selenium.waitForPageToLoad("300000");
         Thread.sleep(1000l);

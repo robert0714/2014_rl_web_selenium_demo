@@ -33,6 +33,7 @@ import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.study.selenium.SeleniumConfig;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -90,6 +91,12 @@ public class WebUtils {
                 result.setErrorExtMessage(errorExtMessage);
                 result.setGiveUpOperation(giveUpOperation);
                 selenium.click(clickBtnXpath);
+		try {
+		    Thread.sleep(500l);
+		} catch (InterruptedException e) {
+		    LOGGER.error(e.getMessage(), e);
+		}
+                selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                 if (count > 3) {
                     giveUpOperation = true;
                     result.setGiveUpOperation(giveUpOperation);
