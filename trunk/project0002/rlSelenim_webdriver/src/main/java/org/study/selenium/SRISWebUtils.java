@@ -30,10 +30,11 @@ public class SRISWebUtils {
         for (int i = 0; i < 2; ++i) {
             selenium.doubleClick(typeXpath);
             selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-            selenium.type(typeXpath,  value);            
+            selenium.type(typeXpath,  value); 
         }
         selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
         selenium.click(closeXpath);
+        
         selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
     public static void typeAutoComplete(final Selenium selenium ,final String xpath ,final String value){
