@@ -7,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class AppletTestingWebdriver {
 
     /**
+     * https://seleniumonlinetrainingexpert.wordpress.com/category/course-content/selenium-java-applet-automation/
      * @param args
      */
     public static void main(String[] args) {
