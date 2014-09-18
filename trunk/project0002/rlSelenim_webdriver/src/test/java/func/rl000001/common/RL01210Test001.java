@@ -75,7 +75,7 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
                 
                 try {
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-                    Thread.sleep(1000l);
+//                    Thread.sleep(1000l);
                     rl00001Page.typeApplicat1(personId, siteId,"爸嗎");
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                     rl00001Page.clickRl1210();
@@ -83,13 +83,13 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
 //                    if(giveUpOperation){ 
 //                        continue;
 //                    }
-                    Thread.sleep(1000l);
+//                    Thread.sleep(1000l);
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                     Rl01210Page rl01210Page = new Rl01210Page(this. selenium, this. driver);
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                     rl01210Page.switchTab();
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-                    Thread.sleep(1000l);
+//                    Thread.sleep(1000l);
                     HouseholdMaintainPage householdMaintainPage = null;
 
                     if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
