@@ -67,7 +67,7 @@ public class Rl01210Page {
             System.out.println(".....");
             while(true){
                 if(StringUtils.equalsIgnoreCase("請輸入發現地點", errorExtMessage)){
-                    Thread.sleep(1000l);
+//                    Thread.sleep(1000l);
                     this. selenium.click("//a[contains(text(),'全戶基本資料')]");
                     selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                     typeBirthPlaceAC("63000");
@@ -85,7 +85,7 @@ public class Rl01210Page {
         }
       //span[@id='j_id_2k:button']/button[3]
         this. selenium.waitForPageToLoad("300000");
-        Thread.sleep(1000l);
+//        Thread.sleep(1000l);
         if(this. selenium.isElementPresent("//div[contains(@id,'growl2']/div/div/div")){
             final String growl2Content = this. selenium.getText("//div[contains(@id,'growl2']");
             LOGGER.info(growl2Content);
@@ -137,12 +137,12 @@ public class Rl01210Page {
 //        this.selenium.click("//div[contains(@id,'birthPlaceAC:items')]/ul/li[4]"); 
         SRISWebUtils.typeAutoCompleteBySpanXpath(this.selenium, "//span[contains(@id,'birthPlaceAC')]", birthPlaceAC);
         this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-        try {
-            Thread.sleep(3000l);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            LOGGER.error(e.getMessage(), e);
-        }
+//        try {
+//            Thread.sleep(3000l);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            LOGGER.error(e.getMessage(), e);
+//        }
     }
     //輸入稱謂
     public void typeRelationShip(final String relationship){

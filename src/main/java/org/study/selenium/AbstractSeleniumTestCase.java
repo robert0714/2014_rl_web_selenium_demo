@@ -30,8 +30,8 @@ public abstract class AbstractSeleniumTestCase {
     
     @BeforeClass
     public static void beforeClass() throws Exception {
-//        driver  = WebUtils.windowsMachine();
-        driver  = WebUtils.localMachine();
+        driver  = WebUtils.windowsMachine();
+//        driver  = WebUtils.localMachine();
         selenium = SeleniumTestHelper.initWebDriver(driver);
     }
 
