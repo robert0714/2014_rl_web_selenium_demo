@@ -48,7 +48,7 @@ public class RLLoginTest {
         selenium.open(baseUrl);
     }
 
-    @Test
+//    @Test
     public void testRLLogin() throws Exception {
         final RlHompage homepage = new RlHompage(selenium, driver);
         //	homepage.login("RF1200123","RF1200123");
