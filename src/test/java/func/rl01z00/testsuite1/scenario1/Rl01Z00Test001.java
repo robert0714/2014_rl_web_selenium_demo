@@ -7,19 +7,11 @@
 package func.rl01z00.testsuite1.scenario1;
  
 
-
-import java.util.ArrayList;
+ 
 import java.util.List;
-
-import func.rl.common.PagePartialURL;
-import func.rl.common.RlHompage;
-import func.rl.common.WebUtils;
-import func.rl00001.HouseholdMaintainPage;
-import func.rl00001.Rl00001Page;
-import func.rl00001._rl01210.Rl01210Page;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
+ 
+import func.rl.common.RlHompage; 
+import func.rl01z00.Rl01Z00Page; 
 import org.junit.Before;
 import org.junit.Test; 
 import org.slf4j.Logger;
@@ -58,7 +50,14 @@ public class Rl01Z00Test001 extends AbstractSeleniumTestCase {
         homepage.login(this.selenium,this.user, this.passwd);
         Rl01Z00Page rl01Z00Page =new Rl01Z00Page(this.selenium, this.driver);
         homepage.enterRl01Z00();
-        rl01Z00Page.processPrintView();
+        int size = rl01Z00Page.countApplicationNum();
+        for(int i =1 ; i<size ;++i){
+            rl01Z00Page.selectApplication(i);
+            rl01Z00Page.processPrintView();
+            this. selenium.waitForPageToLoad("30000");    
+        }
+        
+        
         this. selenium.waitForPageToLoad("30000");        
         // Sleep the thread if you want to view the rendered page while testing.
 //        assertTrue(true);
