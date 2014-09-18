@@ -10,7 +10,7 @@ public class RlAccount {
 		return new RlAccount().getPseduAccounts().get(RandomUtils.nextInt(20));
 	}
 	private List<Account>   getPseduAccounts(){
-		final List<Account> result =new ArrayList<>();
+		final List<Account> result =new ArrayList<Account>();
 		for (int i = 1; i <= 20; ++i) {
 			String data = String.format("RF12030%02d%n", i);
 			result.add(new Account(data,data) );
