@@ -150,8 +150,9 @@ public class Rl01Z00Page {
     private boolean ready(){
         boolean result =false ;
         final JavascriptExecutor js = (JavascriptExecutor)  driver;
-        Object aaa = js.executeScript("var aaa= risPdfPrinterApplet.getConvertStatus();console.log('robert test: '+aaa);");
-        Object jsValue = js.executeScript("return  risPdfPrinterApplet.getConvertStatus();");
+        final Object isActive = js.executeScript("return  risPdfPrinterApplet.isActive();");
+//        Object aaa = js.executeScript("var aaa= risPdfPrinterApplet.getConvertStatus();console.log('robert test: '+aaa);");
+        final Object jsValue = js.executeScript("return  risPdfPrinterApplet.getConvertStatus();");
         if(jsValue != null){
             if(jsValue instanceof String){
                 result =  Boolean.valueOf((String)jsValue);
