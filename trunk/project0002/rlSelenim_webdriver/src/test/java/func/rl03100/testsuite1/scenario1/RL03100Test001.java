@@ -30,6 +30,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+
 public class RL03100Test001 {
 	private static final Logger logger = LoggerFactory.getLogger(RL03100Test001.class);
     private Selenium selenium;
