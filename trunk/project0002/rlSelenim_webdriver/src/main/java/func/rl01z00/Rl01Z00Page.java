@@ -1,7 +1,9 @@
 package func.rl01z00;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
@@ -109,15 +111,18 @@ public class Rl01Z00Page {
                                 // 戶役資訊服務網
                                 String title = driver.getTitle();
                                 logger.debug("title: " + title);
-                                Thread.sleep(5000);// 建議5秒畢竟cognos實在太慢了
-                                WebUtils.scroolbarDownUp(selenium, driver);
-                                // *[@id="j_id4_j_id_9:j_id_y"]/span
-                                // *[@id="j_id4_j_id_9:j_id_y"]
-                                selenium.click("//span[contains(@id,'pdfbanner')]/span[2]/button[2]");// 端未列印
-                                // form/div/div/div/div[2]/button[2]
-                                // selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
-                                printViewPresent = true;
-                                break browerWindowLoop;
+                                while(!ready()){
+                                  //applet的id為risPdfPrinterApplet方法為getConvertState
+                                    Thread.sleep(5000);// 建議5秒畢竟cognos實在太慢了
+                                    WebUtils.scroolbarDownUp(selenium, driver);
+                                    // *[@id="j_id4_j_id_9:j_id_y"]/span
+                                    // *[@id="j_id4_j_id_9:j_id_y"]
+                                    selenium.click("//span[contains(@id,'pdfbanner')]/span[2]/button[2]");// 端未列印
+                                    // form/div/div/div/div[2]/button[2]
+                                    // selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
+                                    printViewPresent = true;
+                                    break browerWindowLoop;
+                                };
                             }
                         }
                     }
@@ -141,5 +146,15 @@ public class Rl01Z00Page {
         }
         // div[@id='j_id39_j_id_sx_content']/button
     }
-
+    private boolean ready(){
+        boolean result =false ;
+        final JavascriptExecutor js = (JavascriptExecutor)  driver;
+        Object aaa = js.executeScript("var aaa= risPdfPrinterApplet.getConvertStatus();console.log('robert test: '+aaa);");
+        Object jsValue = js.executeScript("return  risPdfPrinterApplet.getConvertStatus();");
+        if(jsValue != null){
+            result =  Boolean.valueOf((String)jsValue);
+        }
+       
+        return result;
+    }
 }
