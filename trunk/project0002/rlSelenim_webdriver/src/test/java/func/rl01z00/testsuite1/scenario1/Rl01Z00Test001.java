@@ -54,7 +54,8 @@ public class Rl01Z00Test001 extends AbstractSeleniumTestCase {
         for(int i =1 ; i<size ;++i){
             rl01Z00Page.selectApplication(i);
             rl01Z00Page.processPrintView();
-            this. selenium.waitForPageToLoad("30000");    
+            this. selenium.waitForPageToLoad("30000");
+            Thread.sleep(1000l);
         }
         
         
