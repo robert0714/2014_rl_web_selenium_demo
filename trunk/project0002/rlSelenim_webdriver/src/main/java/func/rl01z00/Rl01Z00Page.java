@@ -114,15 +114,16 @@ public class Rl01Z00Page {
                                 while(!ready()){
                                   //applet的id為risPdfPrinterApplet方法為getConvertState
                                     Thread.sleep(5000);// 建議5秒畢竟cognos實在太慢了
-                                    WebUtils.scroolbarDownUp(selenium, driver);
-                                    // *[@id="j_id4_j_id_9:j_id_y"]/span
-                                    // *[@id="j_id4_j_id_9:j_id_y"]
-                                    selenium.click("//span[contains(@id,'pdfbanner')]/span[2]/button[2]");// 端未列印
-                                    // form/div/div/div/div[2]/button[2]
-                                    // selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
-                                    printViewPresent = true;
-                                    break browerWindowLoop;
+                                    
                                 };
+                                WebUtils.scroolbarDownUp(selenium, driver);
+                                // *[@id="j_id4_j_id_9:j_id_y"]/span
+                                // *[@id="j_id4_j_id_9:j_id_y"]
+                                selenium.click("//span[contains(@id,'pdfbanner')]/span[2]/button[2]");// 端未列印
+                                // form/div/div/div/div[2]/button[2]
+                                // selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
+                                printViewPresent = true;
+                                break browerWindowLoop;
                             }
                         }
                     }
@@ -152,7 +153,12 @@ public class Rl01Z00Page {
         Object aaa = js.executeScript("var aaa= risPdfPrinterApplet.getConvertStatus();console.log('robert test: '+aaa);");
         Object jsValue = js.executeScript("return  risPdfPrinterApplet.getConvertStatus();");
         if(jsValue != null){
-            result =  Boolean.valueOf((String)jsValue);
+            if(jsValue instanceof String){
+                result =  Boolean.valueOf((String)jsValue);
+            }else if(jsValue instanceof Boolean ){
+                result = (Boolean)jsValue;
+            }
+            
         }
        
         return result;
