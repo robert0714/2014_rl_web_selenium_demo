@@ -34,9 +34,9 @@ public class SRISWebUtils {
         }
         selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
         selenium.fireEvent(typeXpath, "blur");
-        if(selenium.isElementPresent(closeXpath)){
-            selenium.click(closeXpath);
-        }        
+//        if(selenium.isElementPresent(closeXpath)){
+//            selenium.click(closeXpath);
+//        }        
         selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
     public static void typeAutoComplete(final Selenium selenium ,final String xpath ,final String value){
@@ -57,7 +57,8 @@ public class SRISWebUtils {
             selenium.type(typeXpath,  value);
         }
         selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-        selenium.click(closeXpath);
+        selenium.fireEvent(typeXpath, "blur");
+//        selenium.click(closeXpath);
         selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
     //================================================
