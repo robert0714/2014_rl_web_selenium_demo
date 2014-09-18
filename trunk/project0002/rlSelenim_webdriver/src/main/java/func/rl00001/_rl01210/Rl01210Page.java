@@ -59,12 +59,29 @@ public class Rl01210Page {
         final   String verifyBtnXpath = "//span[contains(@id,'button')]/button";
 //     this.selenium.click(verifyBtnXpath );        
       //資料驗證
-        final GrowlMsg verify =   WebUtils.clickBtn(selenium, verifyBtnXpath);
+        GrowlMsg verify =   WebUtils.clickBtn(selenium, verifyBtnXpath);
         final String errorExtMessage = verify.getErrorExtMessage();        
         final String errorMessage = verify.getErrorMessage();
         if(org.apache.commons.lang.StringUtils.isNotBlank(errorMessage) || 
         	org.apache.commons.lang.StringUtils.isNotBlank(errorExtMessage) ){
             System.out.println(".....");
+            while(true){
+                if(StringUtils.equalsIgnoreCase("請輸入發現地點", errorExtMessage)){
+                    Thread.sleep(1000l);
+                    this. selenium.click("//a[contains(text(),'全戶基本資料')]");
+                    selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+                    typeBirthPlaceAC("63000");
+                    this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+                    this.selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+                    this. selenium.waitForPageToLoad("300000");
+                    
+                    verify =   WebUtils.clickBtn(selenium, verifyBtnXpath);
+                    if(!verify.isGiveUpOperation()){
+                        break;
+                    }
+                }
+            }
+            
         }
       //span[@id='j_id_2k:button']/button[3]
         this. selenium.waitForPageToLoad("300000");
