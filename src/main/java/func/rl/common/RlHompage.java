@@ -130,7 +130,47 @@ public class RlHompage {
     }
 
      
+    public void enterRl01Z00() {
+        while (this.selenium.isElementPresent("//*[@id='navmenu-v']/li")) {
+            this.selenium.refresh();
+            this.selenium.waitForPageToLoad("30000");
+            this.selenium.click("//*[@id='navmenu-v']/li[10]");// 進入戶籍申請書管理, 
+            this.selenium.waitForPageToLoad("30000");
 
+            final String rl01z00Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl01z00/rl01z00.xhtml')]"; 
+//            WebElement rl00001Element = this.driver.findElement(By.xpath(rl00001Xpath));
+//            WebDriverWait wait = new WebDriverWait(this.driver, 10);
+//
+//            wait.until(ExpectedConditions.visibilityOf(rl00001Element));
+
+            if (this.selenium.isVisible(rl01z00Xpath) && this.selenium.isElementPresent(rl01z00Xpath)) {
+
+                if (this.selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+                    this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                }
+
+                this.selenium.click(rl01z00Xpath);
+                this.selenium.waitForPageToLoad("7000");
+               
+                this.selenium.refresh();
+                // 進入現戶簿頁
+                // selenium.open("/rl/faces/pages/func/rl00001/rl00001.xhtml");
+
+                this.selenium.waitForPageToLoad("30000");
+                final String currentUrl = this.driver.getCurrentUrl();
+                // http://192.168.10.18:6280/rl/faces/pages/func/rl00001/householdMaintain.xhtml?windowId=5ae
+
+                this.logger.debug(currentUrl);
+                if (StringUtils.contains(currentUrl, "rl01z00/rl01z00.xhtml")) {
+                    if (this.selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
+                        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                    }
+                    this.selenium.refresh();
+                    break;
+                }
+            }
+        }
+    }
     /**
      * 進入現戶簿頁
      * ***/
