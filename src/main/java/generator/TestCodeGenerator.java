@@ -18,9 +18,36 @@ import org.slf4j.LoggerFactory;
  * **/
 public class TestCodeGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestCodeGenerator.class);
+    private final String beanReg =".*<entry.*key=\".*\">([.|\\W|\\w]*)\\W*.*<\\/entry>";
     public static void main(String[] args)  {
 	List<Operation> data = new TestCodeGenerator().retrieveData();
 	System.out.println(data.size());
+    }
+    protected List<Operation> retrieveDataV2(){
+	final List<String> initializedData = new ArrayList<String>();
+	final InputStream is = TestCodeGenerator.class.getResourceAsStream("operationContext.xml");
+	try {
+	    final String lines = IOUtils.toString(is);
+	    final Pattern pattern = Pattern.compile(beanReg);
+	    int count = 0;
+	    final Matcher matcher = pattern.matcher(lines);
+	    while (matcher.find()) {
+		 System.out.println(matcher.groupCount());
+		final String found = matcher.group(matcher.groupCount());
+		if (StringUtils.isNotBlank(found)) {
+		    count++;
+		    System.out.println(found);
+		}
+	    }
+	    System.out.println(count);
+	} catch (IOException e) {
+	    LOGGER.error(e.getMessage(), e);
+	    
+	}
+	final List<Operation> result =new ArrayList<TestCodeGenerator.Operation>();
+	
+	
+	return result;
     }
     protected List<Operation> retrieveData(){	
 	final List<String> initializedData = new ArrayList<String>();
