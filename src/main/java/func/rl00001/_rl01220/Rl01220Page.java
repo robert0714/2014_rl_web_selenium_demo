@@ -1,5 +1,8 @@
 package func.rl00001._rl01220;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.SeleniumException;
 
@@ -29,7 +32,14 @@ public class Rl01220Page {
 	this.selenium = selenium;
 	this.driver = driver;
     }
-
+    public String getTodayYyyMMdd(){
+	final String mmdd = new SimpleDateFormat("MMdd").format(new Date());
+	
+	return String.format("103%s", mmdd);
+    }
+    public static void main(String[] args){
+	     System.out.println(String.format("%1$,03d", 31));
+    }
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {
 	final String currentUrl = this.driver.getCurrentUrl();
 	if (StringUtils.contains(currentUrl, this.rl01220PartialUlr)) {
@@ -53,8 +63,8 @@ public class Rl01220Page {
     public void inputData02() throws UnhandledAlertException, SeleniumException, InterruptedException {
 	this.selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
 	this.selenium.waitForPageToLoad("300000");
-	// 資料驗證
-	final String verifyBtnXpath = "//span[contains(@id,'button')]/button";
+	// 資料驗證 
+	final String verifyBtnXpath = "//div[contains(@id,'content')]/button";
 	// this.selenium.click(verifyBtnXpath );
 	// 資料驗證
 	GrowlMsg verify = WebUtils.clickBtn(this.selenium, verifyBtnXpath);
@@ -63,14 +73,14 @@ public class Rl01220Page {
 	if (org.apache.commons.lang.StringUtils.isNotBlank(errorMessage) || org.apache.commons.lang.StringUtils.isNotBlank(errorExtMessage)) {
 	    System.out.println(".....");
 	    while (true) {
-		if (StringUtils.equalsIgnoreCase("請輸入發現地點", errorExtMessage)) {
+		if (StringUtils.equalsIgnoreCase("請輸入死亡原因", errorExtMessage)) {
 		    // Thread.sleep(1000l);
-		    this.selenium.click("//a[contains(text(),'全戶基本資料')]");
+		    this.selenium.click("//a[contains(text(),'死亡者')]");
 		    this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-		    typeBirthPlaceAC("63000");
+		    typeDeathReason("死亡原因");
 		    this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 		    this.selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
-		    this.selenium.waitForPageToLoad("300000");
+		    this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 
 		    verify = WebUtils.clickBtn(this.selenium, verifyBtnXpath);
 		    if (!verify.isGiveUpOperation()) {
@@ -81,16 +91,17 @@ public class Rl01220Page {
 
 	}
 	// span[@id='j_id_2k:button']/button[3]
-	this.selenium.waitForPageToLoad("300000");
+	 this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 	// Thread.sleep(1000l);
 	if (this.selenium.isElementPresent("//div[contains(@id,'growl2']/div/div/div")) {
 	    final String growl2Content = this.selenium.getText("//div[contains(@id,'growl2']");
 	    LOGGER.info(growl2Content);
 	}
 
-	// 暫存
-	this.selenium.click("//span[contains(@id,'button')]/button[3]");
-	this.selenium.waitForPageToLoad("300000");
+	// 暫存//button[@id='tabView:saveBtn']
+//	this.selenium.click("//button[contains(@id,'saveBtn')]");
+	WebUtils.handleClickBtn(this.selenium, "//button[contains(@id,'saveBtn')]");
+	 this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
 
     public void inputData01() throws UnhandledAlertException, SeleniumException, InterruptedException {
@@ -108,7 +119,7 @@ public class Rl01220Page {
 	selectIDPolicy(IDPolicy.RETURN);
 
 	// 死亡日期
-	typeDeathYyymmdd("1010201");
+	typeDeathYyymmdd(getTodayYyyMMdd());
 
 	// 死亡日期確定方式
 	selectDeathWay(DeathWay.SURE);
@@ -118,8 +129,10 @@ public class Rl01220Page {
 
 	// 死忙地點(國別)
 	typeBirthPlaceAC("001");
-
+	 this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 	// 死亡原因
+	typeDeathReason("死亡原因");
+	
 	// 附繳證件
     }
 

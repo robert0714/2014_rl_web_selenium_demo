@@ -58,7 +58,7 @@ public class RL01220Test001 extends AbstractSeleniumTestCase {
         assertTrue(true);
     }
     @Test
-    public void testOpenRl01210() throws Exception {
+    public void testOpenRl01220() throws Exception {
         final RlHompage homepage = new RlHompage(this.selenium, this.driver);
         homepage.login(this.selenium,this.user, this.passwd);
         final  Rl00001Page rl00001Page = new Rl00001Page(selenium, driver);
@@ -98,13 +98,8 @@ public class RL01220Test001 extends AbstractSeleniumTestCase {
                     if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
 
                         this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-                        householdMaintainPage = new HouseholdMaintainPage(selenium, driver);
-                        this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-                        while (!householdMaintainPage.switchTab()) {
-                            logger.debug("轉不過去");
-                        }
+                        householdMaintainPage = new HouseholdMaintainPage(selenium, driver);                        
                         //發現所需延遲時間需要更久
-                        selenium.waitForPageToLoad("300000");
                         if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
                             selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
                         }
