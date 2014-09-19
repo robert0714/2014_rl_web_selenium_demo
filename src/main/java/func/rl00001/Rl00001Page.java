@@ -20,7 +20,9 @@ public class Rl00001Page {
     private String personId;
     private String siteId;
     private Selenium selenium;
-    private final String patialUrl ="/rl/faces/pages/func/rl00001/rl00001.xhtml";
+    private final String rl00001Url ="rl00001/rl00001.xhtml";
+    private static final String closeBeforeUnloadAlert ="document.getElementsByName('ae_l_leaveCheck')[0].value = null;"; 
+    private static final String alertFlagXpath ="//*[contains(@id,'alert_flag')]";
     public Rl00001Page(final Selenium selenium, final WebDriver driver) throws UnhandledAlertException,
             SeleniumException {
         super();
@@ -61,8 +63,8 @@ public class Rl00001Page {
     }
     
     public void redirectPage(){
-        if (this.selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
-            this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+        if (this.selenium.isElementPresent(alertFlagXpath)) {
+            this.selenium.runScript(closeBeforeUnloadAlert);
         }
         this.selenium.refresh();
     }
@@ -72,7 +74,7 @@ public class Rl00001Page {
          
         if (this.selenium.isElementPresent(rl01210Xpath)) { 
 
-            this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+            this.selenium.runScript(closeBeforeUnloadAlert); 
             this.selenium.click(rl01210Xpath);
             this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad); 
         }
@@ -84,30 +86,30 @@ public class Rl00001Page {
          
         if (this.selenium.isElementPresent(rl01220Xpath)) { 
 
-            this.selenium.runScript("rl01220Xpath.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+            this.selenium.runScript(closeBeforeUnloadAlert); 
             this.selenium.click(rl01220Xpath);
             this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad); 
         }
      
      }
     public void clickSearchButton(final String inputCode) throws UnhandledAlertException, SeleniumException, InterruptedException {
-        outer: while (StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+        outer: while (StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
           //*[@id="j_id_8l:j_id_8o"]
             final String searchBtnXpath = "//div/div/button";
 
             if (this.selenium.isElementPresent(searchBtnXpath) && this.selenium.isVisible(searchBtnXpath)
-                    && StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+                    && StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
                 boolean giveUpOperation = WebUtils.handleClickBtn(this.selenium, searchBtnXpath);
                 if (giveUpOperation) {
-                    if (this.selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
-                        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                    if (this.selenium.isElementPresent(alertFlagXpath)) {
+                        this.selenium.runScript(closeBeforeUnloadAlert);
                     }
                     this.selenium.refresh();
                 }
 
                 int count = 0;
                 //由於點擊等待回應真的很花時間
-                inner: while (StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+                inner: while (StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
                     Thread.sleep(5000);//等待5秒
                     this.logger.debug(this.driver.getCurrentUrl());
                     if (StringUtils.contains(this.driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
@@ -119,26 +121,26 @@ public class Rl00001Page {
                     }
                 }
 
-            } else if (!StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+            } else if (!StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
                 break outer;
             }
         }
     }
     public void typingApplication() throws UnhandledAlertException, SeleniumException, InterruptedException {
 
-        outer: while (StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+        outer: while (StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
             //*[@id="txnPersonId"]
             //輸入當事人統號
             this.selenium.type("//input[contains(@id,'txnPersonId')]", getPersonId());
 
-            if (!StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+            if (!StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
                 break outer;
             }
             //輸入當事人
             SRISWebUtils.typeAutoComplete(this.selenium, "//td[contains(@id,'currentPersonSiteIdTD')]", getSiteId());
 
             this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-            if (!StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+            if (!StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
                 break outer;
             }
 
@@ -151,18 +153,18 @@ public class Rl00001Page {
             final String searchBtnXpath = "//div/div/button";
 
             if (this.selenium.isElementPresent(searchBtnXpath) && this.selenium.isVisible(searchBtnXpath)
-                    && StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+                    && StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
                 boolean giveUpOperation = WebUtils.handleClickBtn(this.selenium, searchBtnXpath);
                 if (giveUpOperation) {
-                    if (this.selenium.isElementPresent("//*[contains(@id,'alert_flag')]")) {
-                        this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
+                    if (this.selenium.isElementPresent(alertFlagXpath)) {
+                        this.selenium.runScript(closeBeforeUnloadAlert);
                     }
                     this.selenium.refresh();
                 }
 
                 int count = 0;
                 //由於點擊等待回應真的很花時間
-                inner: while (StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+                inner: while (StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
                     Thread.sleep(5000);//等待5秒
                     this.logger.debug(this.driver.getCurrentUrl());
                     if (StringUtils.contains(this.driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
@@ -174,7 +176,7 @@ public class Rl00001Page {
                     }
                 }
 
-            } else if (!StringUtils.contains(this.driver.getCurrentUrl(), "rl00001/rl00001.xhtml")) {
+            } else if (!StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
                 break outer;
             }
         }
