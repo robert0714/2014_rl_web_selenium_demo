@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd
+         http://www.springframework.org/schema/util
+         http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<!-- 需要 operationCommonContext.xml -->
+
+	<util:map id="removedHouseholdOperationMap" map-class="java.util.LinkedHashMap">
+	
+		<entry key="01130">
+			<bean class="tw.gov.moi.rl.component.dto.HouseholdOperation">
+				<property name="operationCode" value="01130" />
+				<property name="operationCategory" value="更正變更登記" />
+				<property name="operationName" value="除戶個人記事更正登記" />
+				<property name="operationPageName" value="_rl01130/rl01130.xhtml" />
+				<property name="operationPhase" value="1" />
+				<property name="crossSiteEnabled" value="true" />
+				<property name="applicantNumber" value="1" />
+				<property name="currentPersonRequired" value="true" />
+				<property name="applications">
+					<list value-type="java.lang.String">
+						<value>RLDFS0AH</value>
+						<value>RLDFS0C9</value>
+					</list>
+				</property>
+			</bean>
+		</entry>
+		
+		<entry key="01140">
+			<bean class="tw.gov.moi.rl.component.dto.HouseholdOperation">
+				<property name="operationCode" value="01140" />
+				<property name="operationCategory" value="更正變更登記" />
+				<property name="operationName" value="除戶全戶動態記事更正登記" />
+				<property name="operationPageName" value="_rl01140/rl01140.xhtml" />
+				<property name="operationPhase" value="1" />
+				<property name="crossSiteEnabled" value="true" />
+				<property name="applicantNumber" value="1" />
+				<property name="currentPersonRequired" value="true" />
+				<property name="applications">
+					<list value-type="java.lang.String">
+						<value>RLDFS0AI</value>
+						<value>RLDFS0CA</value>
+					</list>
+				</property>
+			</bean>
+		</entry>
+		
+		<entry key="01220">
+			<ref bean="operation01220"/>
+		</entry>
+		
+		<entry key="01230">
+			<ref bean="operation01230"/>
+		</entry>		
+
+		<entry key="01240">
+			<ref bean="operation01240"/>
+		</entry>
+		
+		<entry key="01814">
+			<ref bean="operation01814"/>
+		</entry>
+		
+		<entry key="01827">
+			<ref bean="operation01827"/>
+		</entry>
+		
+		<entry key="0A300">
+			<ref bean="operation0A300"/>
+		</entry>
+	</util:map>	
+</beans>
