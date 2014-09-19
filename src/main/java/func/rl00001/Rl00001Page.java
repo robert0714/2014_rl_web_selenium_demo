@@ -15,7 +15,7 @@ import com.thoughtworks.selenium.SeleniumException;
 import func.rl.common.WebUtils;
 
 public class Rl00001Page {
-	private  final Logger logger = LoggerFactory.getLogger(getClass());
+    private  final Logger logger = LoggerFactory.getLogger(getClass());
     private WebDriver driver;
     private String personId;
     private String siteId;
@@ -67,16 +67,26 @@ public class Rl00001Page {
         this.selenium.refresh();
     }
     public void clickRl1210()throws InterruptedException{
-        
-         
         final String rl01210Xpath = "//a[contains(text(),'出生登記')]";
-        this.logger.debug("rl172Bclick.isVisible()<HouseholdMaintainPage>: "+this.selenium.isVisible(rl01210Xpath));
+        this.logger.debug("rl01210click.isVisible()<HouseholdMaintainPage>: "+this.selenium.isVisible(rl01210Xpath));
          
         if (this.selenium.isElementPresent(rl01210Xpath)) { 
 
             this.selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
             this.selenium.click(rl01210Xpath);
-            this.selenium.waitForPageToLoad("300000");
+            this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad); 
+        }
+     
+     }
+    public void clickRl1220()throws InterruptedException{
+        final String rl01220Xpath = "//a[contains(text(),'出生登記')]";
+        this.logger.debug("rl01220click.isVisible()<HouseholdMaintainPage>: "+this.selenium.isVisible(rl01220Xpath));
+         
+        if (this.selenium.isElementPresent(rl01220Xpath)) { 
+
+            this.selenium.runScript("rl01220Xpath.getElementsByName('ae_l_leaveCheck')[0].value = null;"); 
+            this.selenium.click(rl01220Xpath);
+            this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad); 
         }
      
      }
