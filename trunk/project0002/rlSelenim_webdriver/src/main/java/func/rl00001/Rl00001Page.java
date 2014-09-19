@@ -79,7 +79,7 @@ public class Rl00001Page {
      
      }
     public void clickRl1220()throws InterruptedException{
-        final String rl01220Xpath = "//a[contains(text(),'出生登記')]";
+        final String rl01220Xpath = "//a[contains(text(),'死亡（死亡宣告）登記')]";
         this.logger.debug("rl01220click.isVisible()<HouseholdMaintainPage>: "+this.selenium.isVisible(rl01220Xpath));
          
         if (this.selenium.isElementPresent(rl01220Xpath)) { 
