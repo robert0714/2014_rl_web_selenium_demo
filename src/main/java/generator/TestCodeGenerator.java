@@ -1,6 +1,8 @@
 package generator;
  
 
+import generator.template.TemplateGenerator;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +28,7 @@ public class TestCodeGenerator {
 	List<Operation> data = new TestCodeGenerator().retrieveData();
 	System.out.println(data.size());
     generateFile(data.get(0), "/home/weblogic/Desktop/tmpOutputFile");    
-
+   
 
     }
     public static OutputFile generateFile(final Operation  operation, final String outPutFilePath){
@@ -36,7 +38,8 @@ public class TestCodeGenerator {
         final String fileName = String.format("%s/func/rl00001/_rl%s/Rl%sPage.java", outPutFilePath ,code, code);
       //func.rl00001._rl01210.Rl01210Page
         try {
-            org.apache.commons.io.FileUtils.writeStringToFile(new File(fileName), "", true);
+            final String content = TemplateGenerator.outPutStr(code);
+            org.apache.commons.io.FileUtils.writeStringToFile(new File(fileName), content, false);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             // LOGGER.error("", e);
