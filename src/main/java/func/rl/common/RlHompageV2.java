@@ -13,6 +13,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
@@ -171,21 +172,17 @@ public class RlHompageV2 {
     }
     private boolean isAlertPresent() {
 	try {
-	    if (this.wait.until(ExpectedConditions.alertIsPresent()) == null) {
-		this.logger.debug("alert was not present");
-	    } else {
-		Alert alert = driver.switchTo().alert();
-		this.logger.info(alert.getText());
-		alert.accept();
-		this.logger.debug("alert was present");
-	    }
-	    return false;
-	} catch (TimeoutException e) {
-	    // Modal dialog showed
+	    Alert alert = driver.switchTo().alert();
+	    this.logger.info(alert.getText());
+	    alert.accept();
+	    this.logger.debug("alert was present");
 	    return true;
+	} catch (NoAlertPresentException e) {
+	    // Modal dialog showed
+	    return false;
 	}catch (UnhandledAlertException e) {
 	    // Modal dialog showed
-	    return true;
+	    return false;
 	}
     }
 }
