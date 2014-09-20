@@ -18,18 +18,15 @@ import org.junit.BeforeClass;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
- 
+
 /**
- *這是設計給向下相容(可以使用selenium 1 的擇衷作法 ,
- *selenium 2.43.1己經標記deprecated 表示selenium 3 會移除它)
+ *
  */
-public abstract class AbstractSeleniumTestCase {
+public class AbstractSeleniumV2TestCase {
     
     /** The Constant logger. */
-    private static final Logger logger = LoggerFactory.getLogger(AbstractSeleniumTestCase.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSeleniumV2TestCase.class);
 
-    /** The selenium. */
-    protected static Selenium selenium;
     
     /** The driver. */
     public static WebDriver driver;
@@ -42,8 +39,6 @@ public abstract class AbstractSeleniumTestCase {
     @BeforeClass
     public static void beforeClass() throws Exception {
         driver = WebUtils.windowsMachine();
-        //        driver  = WebUtils.localMachine();
-        selenium = SeleniumTestHelper.initWebDriver(driver);
     }
 
     /**
@@ -51,8 +46,11 @@ public abstract class AbstractSeleniumTestCase {
      */
     @AfterClass
     public static void destroy() {
-
-        SeleniumTestHelper.destroy(selenium);
+        if (driver != null) {
+            LOGGER.info("*** Stopping selenium client driver ...");
+            driver.close();
+            driver.quit();
+        }
     }
 
     /**
@@ -66,5 +64,4 @@ public abstract class AbstractSeleniumTestCase {
         final Collection<String> intData = WebUtils.extract(expr, src);
         return (String) CollectionUtils.get(intData, 0);
     }
-
 }
