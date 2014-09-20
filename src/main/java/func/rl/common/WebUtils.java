@@ -247,7 +247,27 @@ public class WebUtils {
 
         }
     }
+    /**
+     * *
+     * 讓捲軸上跑
+     * *.
+     *
+     * @param selenium the selenium
+     * @param driver the driver
+     */
+    public static void scroolbarUp(final Selenium selenium, final WebDriver driver) {
+        driver.switchTo().defaultContent();
+        // Following is the code that scrolls through the page
 
+        for (int second = 0;; second++) {
+            if (second >= 10) {
+                break;
+            }
+            ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,-200)", "");
+
+            selenium.waitForPageToLoad("1000");
+        }
+    }
     /**
      * *
      * 讓捲軸上跑
