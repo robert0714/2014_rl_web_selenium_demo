@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
 import org.study.selenium.RisRemoteWebDriver;
+import org.study.selenium.SeleniumConfig;
 
 import com.thoughtworks.selenium.SeleniumException;
 
@@ -135,9 +136,10 @@ public class RlHompageV2 {
         
         final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
         
-        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(rl00001Xpath)));
-        
-        isBeforeUnloadEventPresent();
+//        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(rl00001Xpath)));
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+//        isBeforeUnloadEventPresent();
+        isAlertPresent();
         
         this.driver.findElement(By.xpath(rl00001Xpath)).click();
         
