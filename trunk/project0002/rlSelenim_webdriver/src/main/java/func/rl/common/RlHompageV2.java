@@ -5,9 +5,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.message.BasicNameValuePair;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.UnhandledAlertException;
@@ -120,7 +123,11 @@ public class RlHompageV2 {
      * 進入現戶簿頁
      * ***/
     public void enterRl00001() {
-        final WebDriverWait wait = new WebDriverWait(driver, 60);
+        Alert alert=driver.switchTo().alert();
+        System.out.println(alert.getText());
+        alert.accept();
+        this.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        final WebDriverWait wait = new WebDriverWait(driver, 60);       
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
         
         // 進入登記作業,
