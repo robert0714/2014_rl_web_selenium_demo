@@ -44,7 +44,7 @@ import static org.junit.Assert.assertTrue;
 public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
     private static final String closeBeforeUnloadAlert ="document.getElementsByName('ae_l_leaveCheck')[0].value = null;"; 
     private static final String alertFlagXpath ="//*[contains(@id,'alert_flag')]";
-	private  final Logger logger = LoggerFactory.getLogger(RL01210Test001V2.class);
+    private  final Logger logger = LoggerFactory.getLogger(RL01210Test001V2.class);
     private String user = null;
     private String passwd = null;
     List<String[]> personIdSiteIdList;

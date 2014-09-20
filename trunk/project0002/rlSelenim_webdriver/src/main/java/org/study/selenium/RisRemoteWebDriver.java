@@ -8,6 +8,10 @@ package org.study.selenium;
 
 import com.thoughtworks.selenium.webdriven.WebDriverCommandProcessor;
 
+import func.rl000001.common.RL01210Test001V2;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Set;
 import org.openqa.selenium.By;
@@ -15,14 +19,18 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class RisRemoteWebDriver.
  */
 public class RisRemoteWebDriver extends WebDriverCommandProcessor  implements  WrapsDriver ,WebDriver ,JavascriptExecutor{
     
+    private  final Logger logger = LoggerFactory.getLogger(RisRemoteWebDriver.class);
+    
     /** The base url. */
-    private  final String baseUrl;
+    private  final URL baseUrl;
     
     /** The wrapped driver. */
     private  final  WebDriver wrappedDriver;
@@ -32,11 +40,13 @@ public class RisRemoteWebDriver extends WebDriverCommandProcessor  implements  W
      *
      * @param baseUrl the base url
      * @param driver the driver
+     * @throws MalformedURLException 
      */
-    public RisRemoteWebDriver(final String baseUrl , final  WebDriver driver){
+    public RisRemoteWebDriver(final String baseUrl , final  WebDriver driver) throws MalformedURLException {
         super(baseUrl, driver);
         this.wrappedDriver =driver;
-        this.baseUrl =baseUrl ;
+        this.baseUrl =new  URL(baseUrl) ;
+        
     }
 
     /**
@@ -44,7 +54,7 @@ public class RisRemoteWebDriver extends WebDriverCommandProcessor  implements  W
      *
      * @return the base url
      */
-    public String getBaseUrl() {
+    public URL getBaseUrl() {
         return this.baseUrl;
     } 
 
@@ -65,8 +75,12 @@ public class RisRemoteWebDriver extends WebDriverCommandProcessor  implements  W
      * @param url the url
      */
     public void open(String url) {
-        super.doCommand("open", new String[] {url,});
-      }
+        //        super.doCommand("open", new String[] {url,});
+        
+        final String navigateUrl = String.format("%s://%s:%s%s",this.baseUrl.getProtocol(), this.baseUrl.getHost(), this.baseUrl.getPort(), url);
+        logger.debug("navigateUrl: {}",navigateUrl);
+        this.wrappedDriver.navigate().to(navigateUrl);
+    }
 
     /**
      * Gets the.

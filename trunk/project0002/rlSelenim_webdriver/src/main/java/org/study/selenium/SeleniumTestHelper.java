@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -64,8 +65,9 @@ public class SeleniumTestHelper {
     /**
      * @see "http://code.google.com/p/selenium/wiki/ChromeDriver"
      * @return
+     * @throws MalformedURLException 
      */
-    public static RisRemoteWebDriver initWebDriverV2(final WebDriver driver) {
+    public static RisRemoteWebDriver initWebDriverV2(final WebDriver driver) throws MalformedURLException {        
         LOGGER.info("*** Starting selenium WebDriver ...");
        
         final List<String> ip4Address = retrieveLocalIps();
