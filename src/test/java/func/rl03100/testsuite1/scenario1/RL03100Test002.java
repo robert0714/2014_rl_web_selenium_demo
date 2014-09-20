@@ -8,6 +8,8 @@ package func.rl03100.testsuite1.scenario1;
  
 
 
+import com.thoughtworks.selenium.SeleniumException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test; 
+import org.openqa.selenium.UnhandledAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumTestCase;
@@ -95,6 +98,9 @@ public class RL03100Test002 extends AbstractSeleniumTestCase {
     private void process4(final String personId, final String siteId) throws Exception {
         Rl03100Page rl00004Page = new Rl03100Page(selenium, driver);
         rl00004Page.typeApplication(personId, siteId, "/home/weblogic/Desktop/PIC/");
+    }
+    public void typeApplication(final String personId, final String siteId, final List<String[]> list) throws UnhandledAlertException, SeleniumException, InterruptedException{
+        
     }
     private List<String[]> getPsedoData(){
         final List<String[]>  result = new ArrayList<String[]>();
