@@ -20,6 +20,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHttpEntityEnclosingRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
@@ -31,6 +32,8 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.HttpCommandExecutor;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.SeleniumConfig;
@@ -64,7 +67,49 @@ public class WebUtils {
         boolean giveUpOperation = initData.isGiveUpOperation();        
         return giveUpOperation;
     }
-    
+    /**
+     * **
+     * 按鈕Xpath為clickBtnXpath點選後
+     * 針對訊息作處理
+     * 有錯誤訊息回傳 true,無錯誤訊息回傳false .
+     *
+     * @param driver the WebDriver
+     * @param clickBtnXpath the click btn xpath
+     * @return true, if successful
+     */
+    public static GrowlMsg clickBtn(final WebDriver driver , final String clickBtnXpath) {
+        final GrowlMsg result = new GrowlMsg();
+        boolean giveUpOperation = false;
+          
+        //等待6秒...不見得msg出來,改成60秒
+        final WebDriverWait wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(clickBtnXpath)));
+        
+        driver.findElement(By.xpath(clickBtnXpath)).click();
+        
+        if (driver.findElements(By.xpath("//*[@id='growl2_container']/div/div")).size() != 0 ) {
+            int count = 0;
+            while (true) {                
+                final String errorMessage = driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/span")).getText();
+                //driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")).getText();
+                final String errorExtMessage = driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")).getText();
+                LOGGER.info(errorMessage);
+                LOGGER.info(errorExtMessage);
+                result.setErrorMessage(errorMessage);
+                result.setErrorExtMessage(errorExtMessage);
+                result.setGiveUpOperation(giveUpOperation);
+                wait.until(ExpectedConditions.elementToBeClickable(By.xpath(clickBtnXpath)));
+                driver.findElement(By.xpath(clickBtnXpath)).click();
+                if (count > 3) {
+                    giveUpOperation = true;
+                    result.setGiveUpOperation(giveUpOperation);
+                    break;
+                }
+                count++;
+            }
+        }
+        return result;
+    }
     /**
      * **
      * 按鈕Xpath為clickBtnXpath點選後
@@ -115,6 +160,33 @@ public class WebUtils {
      * @param selenium the selenium
      * @param driver the driver
      */
+    public static void scroolbarDownUp(final WebDriver driver) {
+        driver.switchTo().defaultContent();
+        // Following is the code that scrolls through the page
+        for (int second = 0;; second++) {
+            if (second >= 3) {
+                break;
+            }
+            ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,200)", "");
+
+//            final WebDriverWait wait = new WebDriverWait(driver, 1);
+        }
+        for (int second = 0;; second++) {
+            if (second >= 10) {
+                break;
+            }
+            ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,-200)", "");
+
+           
+        }
+    } /**
+     * *
+     * 讓捲軸上下跑
+     * *.
+     *
+     * @param selenium the selenium
+     * @param driver the driver
+     */
     public static void scroolbarDownUp(final Selenium selenium, final WebDriver driver) {
         driver.switchTo().defaultContent();
         // Following is the code that scrolls through the page
@@ -156,16 +228,34 @@ public class WebUtils {
             selenium.waitForPageToLoad("1000");
         }
     }
+    /**
+     * *
+     * 讓捲軸下跑
+     * *.
+     *
+     * @param selenium the selenium
+     * @param driver the driver
+     */
+    public static void scroolbarDown( final WebDriver driver) {
+        driver.switchTo().defaultContent();
+        // Following is the code that scrolls through the page
+        for (int second = 0;; second++) {
+            if (second >= 3) {
+                break;
+            }
+            ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,200)", "");
+
+        }
+    }
 
     /**
      * *
      * 讓捲軸上跑
      * *.
      *
-     * @param selenium the selenium
      * @param driver the driver
      */
-    public static void scroolbarUp(final Selenium selenium, final WebDriver driver) {
+    public static void scroolbarUp( final WebDriver driver) {
         driver.switchTo().defaultContent();
         // Following is the code that scrolls through the page
 
@@ -175,7 +265,6 @@ public class WebUtils {
             }
             ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,-200)", "");
 
-            selenium.waitForPageToLoad("1000");
         }
     }
 
@@ -398,5 +487,41 @@ public class WebUtils {
             result.add(data);
         }
         return result;
+    }
+    
+    /**
+     * Wait page load by id.
+     * selenium.waitForPageToLoad替代方法
+     * @param driver the driver
+     * @param seconds the seconds
+     * @param id the id
+     */
+    public  static  void waitPageLoadById(final  WebDriver driver ,final long seconds,final  String id) {
+        final WebDriverWait wait = new WebDriverWait(driver, seconds);
+        wait.until(ExpectedConditions.elementToBeClickable(By.id(id)));
+    }
+    
+    /**
+     * Wait page load by xpath.
+     * selenium.waitForPageToLoad替代方法
+     * @param driver the driver
+     * @param seconds the seconds
+     * @param xpathExpression the xpath expression
+     */
+    public static void waitPageLoadByXpath(final WebDriver driver, final long seconds, final String xpathExpression) {
+        final WebDriverWait wait = new WebDriverWait(driver, seconds);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
+    }
+    
+    /**
+     * Wait page load by link text.
+     * selenium.waitForPageToLoad替代方法
+     * @param driver the driver
+     * @param seconds the seconds
+     * @param linkText the link text
+     */
+    public static void waitPageLoadByLinkText(final WebDriver driver, long seconds, String linkText) {
+        final WebDriverWait wait = new WebDriverWait(driver, seconds);
+        wait.until(ExpectedConditions.elementToBeClickable(By.linkText(linkText)));
     }
 }
