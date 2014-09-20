@@ -13,6 +13,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -27,15 +28,15 @@ import com.thoughtworks.selenium.SeleniumException;
 import func.rl00001.Rl00001PageV2;
 
 public class RlHompageV2 {
+    private final WebDriverWait wait ;
     private WebDriver driver;
-    private String user;
-    private String passwd;
     private final String patialUrl ="/rl/faces/pages/index.xhtml";
     private  final Logger logger = LoggerFactory.getLogger(getClass());
 
     public RlHompageV2(final WebDriver driver) throws UnhandledAlertException, SeleniumException {
         super();
         this.driver = driver;
+        this.wait = new WebDriverWait(driver, 10 /*timeout in seconds*/);
     }
 
     private Map<String, String> retrieve(String query) {
@@ -123,29 +124,66 @@ public class RlHompageV2 {
      * 進入現戶簿頁
      * ***/
     public void enterRl00001() {
-        Alert alert=driver.switchTo().alert();
-        System.out.println(alert.getText());
-        alert.accept();
+	isAlertPresent() ;
+	   
+        
         this.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        final WebDriverWait wait = new WebDriverWait(driver, 60);       
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
+        this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
         
         // 進入登記作業,
         this.driver.findElement(By.xpath("//*[@id='navmenu-v']/li")).click();
         
         final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
         
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(rl00001Xpath)));
+        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(rl00001Xpath)));
         
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id,'alert_flag')]")));
-        ((JavascriptExecutor) driver).executeScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;", "");
+        isBeforeUnloadEventPresent();
         
         this.driver.findElement(By.xpath(rl00001Xpath)).click();
         
+        isAlertPresent();
         final String currentUrl = this.driver.getCurrentUrl();
         
         this.logger.debug(currentUrl);        
 
     }   
-
+    private boolean isBeforeUnloadEventPresent(){
+	if(this.driver.getCurrentUrl().contains("/rl00001/rl00001.xhtml")){
+	    try {
+		    if ( this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id,'alert_flag')]"))) == null) {
+			this.logger.debug("BeforeUnloadEven was not present");
+		    } else {
+			((JavascriptExecutor) driver).executeScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;", "");
+			this.logger.debug("BeforeUnloadEven was present");
+		    }
+		    return false;
+		} catch (TimeoutException e) {
+		    // Modal dialog showed
+		    return true;
+		}catch (UnhandledAlertException e) {
+		    // Modal dialog showed
+		    return true;
+		}
+	}
+	return false;
+    }
+    private boolean isAlertPresent() {
+	try {
+	    if (this.wait.until(ExpectedConditions.alertIsPresent()) == null) {
+		this.logger.debug("alert was not present");
+	    } else {
+		Alert alert = driver.switchTo().alert();
+		this.logger.info(alert.getText());
+		alert.accept();
+		this.logger.debug("alert was present");
+	    }
+	    return false;
+	} catch (TimeoutException e) {
+	    // Modal dialog showed
+	    return true;
+	}catch (UnhandledAlertException e) {
+	    // Modal dialog showed
+	    return true;
+	}
+    }
 }

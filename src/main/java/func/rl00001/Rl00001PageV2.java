@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.study.selenium.SRISWebUtils;
 import com.thoughtworks.selenium.SeleniumException;
 
+import func.rl.common.WebUtils;
+import func.rl.common.internal.GrowlMsg;
+
 
 public class Rl00001PageV2 {
     private  final Logger logger = LoggerFactory.getLogger(getClass());
@@ -64,16 +67,20 @@ public class Rl00001PageV2 {
         ((RemoteWebDriver) driver).executeScript(closeBeforeUnloadAlert, "");
         driver.navigate().refresh();         
     }
-    public void clickRl1210()throws InterruptedException{
+    public boolean clickRl1210()throws InterruptedException{
         final String rl01210Xpath = "//a[contains(text(),'出生登記')]";
         this.logger.debug("rl01210click.isVisible()<HouseholdMaintainPage>: " );
         final WebDriverWait wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(rl01210Xpath)));
         ((RemoteWebDriver) driver).executeScript(closeBeforeUnloadAlert, "");
         
-        this.driver.findElement(By.xpath(rl01210Xpath)).click(); 
-         
-     
+//        this.driver.findElement(By.xpath(rl01210Xpath)).click(); 
+       final GrowlMsg result = WebUtils.clickBtn(this.driver, rl01210Xpath);
+       if(result.isGiveUpOperation()){
+	   return false;
+       }else{
+	   return true ;
+       }
      }
     public void clickRl1220()throws InterruptedException{
         final String rl01220Xpath = "//a[contains(text(),'死亡（死亡宣告）登記')]";

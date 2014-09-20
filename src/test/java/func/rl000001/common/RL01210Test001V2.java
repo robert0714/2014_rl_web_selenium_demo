@@ -10,6 +10,7 @@ package func.rl000001.common;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import func.rl.common.PagePartialURL;
 import func.rl.common.RlHompage;
@@ -56,6 +57,15 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
         this.personIdSiteIdList = getPsedoData();
     }
     @Test
+    public void testLogin() throws InterruptedException  {
+	final RlHompageV2 homepage = new RlHompageV2(this.driver);
+	homepage.login(this.driver, this.user, this.passwd);
+	Rl00001PageV2 rl00001Page = new Rl00001PageV2(this.driver);
+                
+        // Sleep the thread if you want to view the rendered page while testing.
+        assertTrue(true);
+    }
+    @Test
     public void testOpenRl01210() throws Exception {
         final RlHompageV2 homepage = new RlHompageV2( this.driver);
         homepage.login(this.driver,this.user, this.passwd);
@@ -74,10 +84,13 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
                 final String siteId = stringArray[1]; 
                 
                 try { 
-//                    Thread.sleep(1000l);
                     rl00001Page.typeApplicat1(personId, siteId,"爸嗎"); 
-                    rl00001Page.clickRl1210();  
+                    boolean trunPage = rl00001Page.clickRl1210();  
                     
+                    if(!trunPage){
+                	continue;
+                    }
+                    this.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
                     Rl01210PageV2 rl01210Page = new Rl01210PageV2(  this. driver);
                      
                     rl01210Page.switchTab(); 
@@ -121,33 +134,33 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
     
     private List<String[]> getPsedoData(){
         final List<String[]>  result = new ArrayList<String[]>();        
-//        result.add(new String[]{"B120138605","10010070"});
-//        result.add(new String[]{"B120702178","10010070"});
-//        result.add(new String[]{"C120600821","10010070"});
-//        result.add(new String[]{"C124277999","10010070"});
-//        result.add(new String[]{"E120499839","10010070"});
-//        result.add(new String[]{"E121473795","10010070"});
-//        result.add(new String[]{"E122760528","10010070"});
-//        result.add(new String[]{"F108308572","10010070"});
-//        result.add(new String[]{"G129180762","10010070"});
-        result.add(new String[]{"C100201902","65000120"});
-        result.add(new String[]{"C100202427","65000120"});
-        result.add(new String[]{"C100202632","65000120"});
-        result.add(new String[]{"C100203166","65000120"});
-        
-        result.add(new String[]{"C100204092","65000120"});
-        result.add(new String[]{"C100204985","65000120"});
-        result.add(new String[]{"C100205802","65000120"});
-        
-        result.add(new String[]{"C100205973","65000120"});
-        result.add(new String[]{"C100206783","65000120"});
-        result.add(new String[]{"C100208634","65000120"});
-        
-        result.add(new String[]{"C100209060","65000120"});
-        result.add(new String[]{"C100210661","65000120"});
-        
-        result.add(new String[]{"C100213359","65000120"});
-        result.add(new String[]{"C100217366","65000120"});
+        result.add(new String[]{"B120138605","10010070"});
+        result.add(new String[]{"B120702178","10010070"});
+        result.add(new String[]{"C120600821","10010070"});
+        result.add(new String[]{"C124277999","10010070"});
+        result.add(new String[]{"E120499839","10010070"});
+        result.add(new String[]{"E121473795","10010070"});
+        result.add(new String[]{"E122760528","10010070"});
+        result.add(new String[]{"F108308572","10010070"});
+        result.add(new String[]{"G129180762","10010070"});
+//        result.add(new String[]{"C100201902","65000120"});
+//        result.add(new String[]{"C100202427","65000120"});
+//        result.add(new String[]{"C100202632","65000120"});
+//        result.add(new String[]{"C100203166","65000120"});
+//        
+//        result.add(new String[]{"C100204092","65000120"});
+//        result.add(new String[]{"C100204985","65000120"});
+//        result.add(new String[]{"C100205802","65000120"});
+//        
+//        result.add(new String[]{"C100205973","65000120"});
+//        result.add(new String[]{"C100206783","65000120"});
+//        result.add(new String[]{"C100208634","65000120"});
+//        
+//        result.add(new String[]{"C100209060","65000120"});
+//        result.add(new String[]{"C100210661","65000120"});
+//        
+//        result.add(new String[]{"C100213359","65000120"});
+//        result.add(new String[]{"C100217366","65000120"});
         
         
         

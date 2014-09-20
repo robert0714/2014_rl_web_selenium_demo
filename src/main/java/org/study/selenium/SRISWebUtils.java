@@ -37,7 +37,7 @@ public class SRISWebUtils {
          * **/
         final String closeXpath =  xpath +"/span/span/img";
         
-        for (int i = 0; i < 2; ++i) {
+        for (int i = 0; i < 1; ++i) {
             final WebDriverWait wait = new WebDriverWait(driver, 60);
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath(typeXpath)));
             driver.findElement(By.xpath(typeXpath)).click();
