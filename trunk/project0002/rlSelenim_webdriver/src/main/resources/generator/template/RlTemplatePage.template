@@ -21,7 +21,7 @@ import org.study.selenium.SeleniumConfig;
 public class Rl%sPage {
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(Rl01210Page.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Rl%sPage.class);
 
     /** The driver. */
     private WebDriver driver;
