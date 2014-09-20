@@ -6,6 +6,9 @@
  */
 package generator.template;
 
+import generator.TestCodeGenerator;
+import generator.TestCodeGenerator.Operation;
+
 import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
@@ -16,21 +19,22 @@ import org.apache.commons.lang.StringUtils;
  */
 public class TemplateGenerator {
 
-    /**
-     * @param args
-     * @throws IOException 
-     */
-    public static void main(String[] args) throws IOException {
-      System.out.println(   outPutStr("01210")) ; 
-    }
+    
 
-    public static String outPutStr(final String code) throws IOException {
+    public static String outPutStr(final TestCodeGenerator.Operation operation) throws IOException {
+        final String chtName  = operation.getOperationName();
+        final String code = operation.getOperationCode();
         final String template = IOUtils.toString(TemplateGenerator.class.getResourceAsStream("RlTemplatePage.template"));
         final int tagCount = StringUtils.countMatches(template, "%s");
 //        System.out.println(tagCount);
         final String[] values = new String[tagCount];
         for (int i = 0; i < values.length; ++i) {
-            values[i] = code;
+            if(i == 2){
+                values[i] = chtName;
+            }else{
+                values[i] = code;
+            }
+            
         }
         return String.format(template, values);
     }
