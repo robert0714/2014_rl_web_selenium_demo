@@ -1,0 +1,91 @@
+
+package func.rl00001._rl%s;
+
+import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.SeleniumException;
+
+import func.rl.common.WebUtils;
+import func.rl.common.internal.GrowlMsg;
+
+
+import org.apache.commons.lang3.StringUtils;  
+import org.openqa.selenium.UnhandledAlertException;
+import org.openqa.selenium.WebDriver; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.study.selenium.SRISWebUtils;
+import org.study.selenium.SeleniumConfig;
+
+/**
+ *
+ */
+public class Rl%sPage {
+	private static final Logger LOGGER = LoggerFactory.getLogger(Rl%sPage.class);
+    private WebDriver driver;
+    private Selenium selenium;
+
+    private final String rl%sPartialUlr = "_rl%s/rl%s.xhtml";
+
+    public Rl%sPage(final Selenium selenium, final WebDriver driver) throws UnhandledAlertException,
+            SeleniumException {
+        super();
+        this.selenium = selenium;
+        this.driver = driver;
+    }
+
+    public void switchTab()throws  UnhandledAlertException,SeleniumException, InterruptedException  {
+        final String currentUrl = this.driver.getCurrentUrl();
+        if (StringUtils.contains(currentUrl,this. rl%sPartialUlr)) {
+            this.selenium.refresh();
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+            this. selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+            this.selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+            this.  selenium.focus("//a[contains(text(),'全戶基本資料')]");
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+            this. selenium.click("//a[contains(text(),'全戶基本資料')]");
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+            inputData01();
+            selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+            inputData02();
+           
+        }
+    }
+    public void inputData02() throws UnhandledAlertException, SeleniumException, InterruptedException {
+        this.selenium.click("//a[contains(text(),'戶籍記事/罰鍰清單')]");
+        this. selenium.waitForPageToLoad("300000");
+      //資料驗證
+        final   String verifyBtnXpath = "//span[contains(@id,'button')]/button";
+//     this.selenium.click(verifyBtnXpath );        
+      //資料驗證
+        GrowlMsg verify =   WebUtils.clickBtn(selenium, verifyBtnXpath);
+        final String errorExtMessage = verify.getErrorExtMessage();        
+        final String errorMessage = verify.getErrorMessage();
+        if(org.apache.commons.lang.StringUtils.isNotBlank(errorMessage) || 
+        	org.apache.commons.lang.StringUtils.isNotBlank(errorExtMessage) ){
+            
+            
+        }
+      //span[@id='j_id_2k:button']/button[3]
+        this. selenium.waitForPageToLoad("300000");
+//        Thread.sleep(1000l);
+        if(this. selenium.isElementPresent("//div[contains(@id,'growl2']/div/div/div")){
+            final String growl2Content = this. selenium.getText("//div[contains(@id,'growl2']");
+            LOGGER.info(growl2Content);
+        }
+        
+        //暫存
+        this.selenium.click("//span[contains(@id,'button')]/button[3]" );
+        this. selenium.waitForPageToLoad("300000");
+    }
+    public void inputData01() throws UnhandledAlertException, SeleniumException, InterruptedException {
+        this. selenium.click("//a[contains(text(),'全戶基本資料/出生者、父母資料')]");
+        this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        String element01 =this. selenium.getText("document.poopupForm.elements[1]");
+        this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        System.out.println(element01);
+        WebUtils.scroolbarDownUp(this.selenium,this. driver);          
+    }
+    
+}
