@@ -486,8 +486,7 @@ public class WebUtils {
      */
     public static boolean handleRLAlert(final WebDriver driver) {
         boolean giveUpOperation = false;
-        final WebDriverWait wait = new WebDriverWait(driver, 60);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div")));
+        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 
         int count = 0;
         while (true) {

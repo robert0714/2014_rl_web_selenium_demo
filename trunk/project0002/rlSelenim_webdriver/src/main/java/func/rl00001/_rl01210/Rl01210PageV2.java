@@ -3,12 +3,14 @@ package func.rl00001._rl01210;
 import java.util.concurrent.TimeUnit;
 
 import com.thoughtworks.selenium.SeleniumException;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 import func.rl.common.WebUtils;
 import func.rl.common.internal.GrowlMsg;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -81,7 +83,7 @@ public class Rl01210PageV2 {
      */
     public void inputOnTab02() throws UnhandledAlertException, SeleniumException, InterruptedException {
 	this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
-	this.driver.findElement(By.linkText("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();
+	this.driver.findElement(By.xpath("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();
         
 	this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
 	
@@ -98,14 +100,14 @@ public class Rl01210PageV2 {
             while (true) {
                 if (StringUtils.equalsIgnoreCase("請輸入發現地點", errorExtMessage)) {
                     
-                    this.driver.findElement(By.linkText("//a[contains(text(),'全戶基本資料')]")).click();
+                    this.driver.findElement(By.xpath("//a[contains(text(),'全戶基本資料')]")).click();
                     this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
                     
                     typeBirthPlaceAC("63000");
                     
                     this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
                     
-                    this.driver.findElement(By.linkText("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();
+                    this.driver.findElement(By.xpath("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();
 
                     verify = WebUtils.clickBtn(this.driver, verifyBtnXpath);
                     if (!verify.isGiveUpOperation()) {
@@ -136,10 +138,11 @@ public class Rl01210PageV2 {
      */
     public void inputOnTab01() throws UnhandledAlertException, SeleniumException, InterruptedException {
 	this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
-        this.driver.findElement(By.linkText("//a[contains(text(),'全戶基本資料/出生者、父母資料')]")).click();
+        this.driver.findElement(By.xpath("//a[contains(text(),'全戶基本資料/出生者、父母資料')]")).click();
         
-        final String element01 = this.driver.findElement(By.name("document.poopupForm.elements[1]")).getText();;
-        
+	final String element01 = this.driver.findElement(By.xpath("//a[contains(text(),'全戶基本資料/出生者、父母資料')]")).getText();
+	;
+
         LOGGER.info(element01);
         WebUtils.scroolbarDownUp(this.driver);
 
@@ -212,14 +215,24 @@ public class Rl01210PageV2 {
      * @param birthYyymmdd the birth yyymmdd
      */
     public void typeBirthYyymmdd(final String birthYyymmdd) {
+	final WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
         //input[@id='j_id_2k:birthYyymmdd:j_id_uj']
         final String yyy = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 0, 3);
         final String mm = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 3, 5);
         final String dd = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 5, 7);
         
-        this.driver.findElement(By.xpath("//span[@id='birthYyymmdd__calendar']/input")).sendKeys(yyy);        
+        
+        
+//        final WebElement yyyWE = driver.findElement(By.xpath("//span[@id='birthYyymmdd__calendar']/input[1]"));
+        this.driver.findElement(By.xpath("//span[contains(@id,'birthYyymmdd')]/input")).sendKeys(yyy);        
 //        this.selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input", "blur");
-        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+//        final Actions oAction = new Actions(driver);
+//        oAction.moveToElement(yyyWE);
+//        oAction.doubleClick(yyyWE).build().perform();
+//        driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+//        yyyWE.sendKeys(yyy); 
+        
+	this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         
         this. driver.findElement(By.xpath("//span[@id='birthYyymmdd__calendar']/input[2]")).sendKeys(mm); 
 //        this.selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input[2]", "blur");
@@ -229,11 +242,18 @@ public class Rl01210PageV2 {
 //        this.selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input[3]", "blur");
         this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         
-        this. driver.findElement(By.xpath("//span[@id='birthYyymmdd__calendar']/img")).click();
-        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+        selenium.type("//span[@id='birthYyymmdd__calendar']/input", yyy);
+        selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input", "blur");
         
-        this.driver.findElement(By.linkText("//a[contains(text(),'關閉')]")).click();
-        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        selenium.type("//span[@id='birthYyymmdd__calendar']/input[2]", mm);
+        selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input[2]", "blur");
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        selenium.type("//span[@id='birthYyymmdd__calendar']/input[3]", dd);
+        selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input[3]", "blur");
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        selenium.click("//span[@id='birthYyymmdd__calendar']/img");
+        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
          
         
     }

@@ -15,6 +15,10 @@ import java.util.Collection;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +36,10 @@ public class AbstractSeleniumV2TestCase {
     private static URL baseUrl;
     
     /** The driver. */
-//    public static RisRemoteWebDriver driver;
     public static WebDriver driver;
+    
+    private boolean acceptNextAlert = true;
+    
     /**
      * Before class.
      *
@@ -84,5 +90,38 @@ public class AbstractSeleniumV2TestCase {
         final String expr = "([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)";
         final Collection<String> intData = WebUtils.extract(expr, src);
         return (String) CollectionUtils.get(intData, 0);
+    }
+
+    public boolean isElementPresent(By by) {
+	try {
+	    driver.findElement(by);
+	    return true;
+	} catch (NoSuchElementException e) {
+	    return false;
+	}
+    }
+
+    public boolean isAlertPresent() {
+	try {
+	    driver.switchTo().alert();
+	    return true;
+	} catch (NoAlertPresentException e) {
+	    return false;
+	}
+    }
+
+    public String closeAlertAndGetItsText() {
+	try {
+	    Alert alert = driver.switchTo().alert();
+	    String alertText = alert.getText();
+	    if (acceptNextAlert) {
+		alert.accept();
+	    } else {
+		alert.dismiss();
+	    }
+	    return alertText;
+	} finally {
+	    acceptNextAlert = true;
+	}
     }
 }

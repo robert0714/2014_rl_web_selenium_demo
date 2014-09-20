@@ -151,7 +151,7 @@ public class SeleniumTestHelper {
      * @see "http://code.google.com/p/selenium/wiki/ChromeDriver"
      * @return
      */
-    public static DefaultSelenium initWebDriver(final WebDriver driver) {
+    public static WebDriverBackedSelenium initWebDriver(final WebDriver driver) {
         LOGGER.info("*** Starting selenium WebDriver ...");
        
         final List<String> ip4Address = retrieveLocalIps();
@@ -175,17 +175,14 @@ public class SeleniumTestHelper {
         final AppInfo[] all = org.study.selenium.internal.AppInfo.values();
         for (AppInfo unit : all) {
             if (StringUtils.contains(regIp, unit.getPrefixPremoteIp())) {
-                final DefaultSelenium selenium = new WebDriverBackedSelenium(driver, unit.getAppUrl());
+                final WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, unit.getAppUrl());                
                 return selenium;
             }
         }
        
-       //如果找步道可以切換...才用預設
-        final DefaultSelenium defaultSelenium = new DefaultSelenium(SeleniumConfig.getSeleniumServerHostName(),
-                SeleniumConfig.getSeleniumServerPort(), "*" + SeleniumConfig.getTargetBrowser(), "http://192.168.10.18:6280/rl/");
-        defaultSelenium.start();
+       
         
-        return defaultSelenium;
+        return null;
     }
 
     public static void destroy(DefaultSelenium selenium) {
