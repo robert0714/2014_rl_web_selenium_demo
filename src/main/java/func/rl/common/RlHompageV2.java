@@ -128,8 +128,8 @@ public class RlHompageV2 {
     public void enterRl00001() {
 	isAlertPresent() ;
 	   
-        
-        this.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+//        this.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
         
         // 進入登記作業,

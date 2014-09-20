@@ -70,10 +70,6 @@ public class Rl00001PageV2 {
     public boolean clickRl1210()throws InterruptedException{
         final String rl01210Xpath = "//a[contains(text(),'出生登記')]";
         this.logger.debug("rl01210click.isVisible()<HouseholdMaintainPage>: " );
-        final WebDriverWait wait = new WebDriverWait(driver, 60);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(rl01210Xpath)));
-        ((RemoteWebDriver) driver).executeScript(closeBeforeUnloadAlert, "");
-        
 //        this.driver.findElement(By.xpath(rl01210Xpath)).click(); 
        final GrowlMsg result = WebUtils.clickBtn(this.driver, rl01210Xpath);
        if(result.isGiveUpOperation()){
