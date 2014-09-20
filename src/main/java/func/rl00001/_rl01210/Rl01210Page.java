@@ -16,6 +16,7 @@ import org.study.selenium.SeleniumConfig;
 
 /**
  * The Class Rl01210Page.
+ *  出生登記 頁面
  */
 public class Rl01210Page {
 
