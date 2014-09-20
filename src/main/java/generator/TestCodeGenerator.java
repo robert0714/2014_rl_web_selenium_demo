@@ -39,7 +39,7 @@ public class TestCodeGenerator {
         final String fileName = String.format("%s/func/rl00001/_rl%s/Rl%sPage.java", outPutFilePath, code, code);
         //func.rl00001._rl01210.Rl01210Page
         try {
-            final String content = TemplateGenerator.outPutStr(operation);
+            final String content = TemplateGenerator.outPutPageStr(operation);
             org.apache.commons.io.FileUtils.writeStringToFile(new File(fileName), content, false);
         } catch (IOException e) {
             LOGGER.error("", e);
