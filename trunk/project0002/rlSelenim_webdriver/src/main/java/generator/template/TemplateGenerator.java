@@ -21,12 +21,11 @@ public class TemplateGenerator {
 
     
 
-    public static String outPutStr(final TestCodeGenerator.Operation operation) throws IOException {
+    public static String outPutPageStr(final TestCodeGenerator.Operation operation) throws IOException {
         final String chtName  = operation.getOperationName();
         final String code = operation.getOperationCode();
         final String template = IOUtils.toString(TemplateGenerator.class.getResourceAsStream("RlTemplatePage.template"));
         final int tagCount = StringUtils.countMatches(template, "%s");
-//        System.out.println(tagCount);
         final String[] values = new String[tagCount];
         for (int i = 0; i < values.length; ++i) {
             if(i == 2){
