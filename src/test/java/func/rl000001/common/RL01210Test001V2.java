@@ -102,7 +102,7 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
                         //發現所需延遲時間需要更久
                         final WebDriverWait wait = new WebDriverWait(driver, 60);
                         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(alertFlagXpath)));
-                        ((RemoteWebDriver) this.driver).executeScript(closeBeforeUnloadAlert, "");
+                        ((RemoteWebDriver) this.driver.getWrappedDriver()).executeScript(closeBeforeUnloadAlert, "");
                          
                          
                     }
@@ -111,7 +111,7 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
                         householdMaintainPage.processPrintView();
                         final WebDriverWait wait = new WebDriverWait(driver, 60);
                         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(alertFlagXpath)));
-                        ((RemoteWebDriver) this.driver).executeScript(closeBeforeUnloadAlert, "");
+                        ((RemoteWebDriver) this.driver.getWrappedDriver()).executeScript(closeBeforeUnloadAlert, "");
                         householdMaintainPage.processAppyCahange();
                     }
                 } catch (Exception e) {
