@@ -6,7 +6,6 @@
  */
 package org.study.selenium;
 
-import com.thoughtworks.selenium.Selenium;
 
 import func.rl.common.WebUtils;
 
@@ -20,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * 這是設計給Selenium 2.43.1以後的版本使用 據說Selenium 3 會完全使用Wb driver
  */
 public class AbstractSeleniumV2TestCase {
     
