@@ -23,6 +23,37 @@ import org.slf4j.LoggerFactory;
  */
 public class SRISWebUtils {
     private  final static Logger LOGGER = LoggerFactory.getLogger(SRISWebUtils.class);
+    
+    public static void typeAutoComplete(final WebDriver driver ,final String xpath ,final String value){
+        /***
+         * ex: //td[contains(@id,'currentPersonSiteIdTD')]/span/input
+         * **/
+        final String typeXpath = xpath + "/span/input";
+        
+        final WebElement oWE = driver.findElement(By.xpath(typeXpath));
+        
+        /***
+         * ex: //td[contains(@id,'currentPersonSiteIdTD')]/span/span/img
+         * **/
+        final String closeXpath =  xpath +"/span/span/img";
+        
+        for (int i = 0; i < 2; ++i) {
+            final WebDriverWait wait = new WebDriverWait(driver, 60);
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(typeXpath)));
+            driver.findElement(By.xpath(typeXpath)).click();
+            Actions oAction = new Actions(driver);
+            oAction.moveToElement(oWE);
+            oAction.doubleClick(oWE).build().perform();
+             
+            oWE.sendKeys(value); 
+             
+        }
+//        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+//        selenium.fireEvent(typeXpath, "blur");
+//        selenium.click(closeXpath);
+//        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+    }
+    
     public static void typeAutoCompleteBySpanXpath(final WebDriver driver,final String spanXpath ,final String value){
         /***
          * ex: //td[contains(@id,'currentPersonSiteIdTD')]/span/input
@@ -74,6 +105,7 @@ public class SRISWebUtils {
         selenium.fireEvent(typeXpath, "blur");
         selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
+    
     public static void typeAutoComplete(final Selenium selenium ,final String xpath ,final String value){
         /***
          * ex: //td[contains(@id,'currentPersonSiteIdTD')]/span/input
