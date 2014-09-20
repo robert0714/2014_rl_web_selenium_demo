@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 測試程式碼產生器
+ * 測試程式碼Archetype產生器
  * **/
 public class TestCodeGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestCodeGenerator.class);
