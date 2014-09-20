@@ -56,14 +56,6 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
         this.personIdSiteIdList = getPsedoData();
     }
     @Test
-    public void testLogin() throws InterruptedException  {
-        final RlHompageV2 homepage = new RlHompageV2( this.driver);
-        homepage.login(this.driver,this.user, this.passwd); 
-                
-        // Sleep the thread if you want to view the rendered page while testing.
-//        assertTrue(true);
-    }
-    @Test
     public void testOpenRl01210() throws Exception {
         final RlHompageV2 homepage = new RlHompageV2( this.driver);
         homepage.login(this.driver,this.user, this.passwd);

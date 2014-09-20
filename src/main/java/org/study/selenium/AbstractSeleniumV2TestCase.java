@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 這是設計給Selenium 2.43.1以後的版本使用 據說Selenium 3 會完全使用Wb driver
+ * 只能使用單一的test
  */
 public class AbstractSeleniumV2TestCase {
     
@@ -48,6 +49,7 @@ public class AbstractSeleniumV2TestCase {
 //      driver = initDriver;
        final  String url = SeleniumTestHelper.initWebDriverV3(driver);
        baseUrl = new URL(url);
+       
     }
 
     /**
@@ -55,11 +57,11 @@ public class AbstractSeleniumV2TestCase {
      */
     @AfterClass
     public static void destroy() {
-//        if (driver != null) {
-//            LOGGER.info("*** Stopping selenium client driver ...");
-//            driver.close();
-//            driver.quit();
-//        }
+        if (driver != null) {
+            LOGGER.info("*** Stopping selenium client driver ...");
+            driver.close();
+            driver.quit();
+        }
     }
     /**
      * Open.
@@ -67,12 +69,9 @@ public class AbstractSeleniumV2TestCase {
      *
      * @param url the url
      */
-    public static  void open(String url) {
-        //        super.doCommand("open", new String[] {url,});
-        
+    public static  void open(String url) {        
         final String navigateUrl = String.format("%s://%s:%s%s",baseUrl.getProtocol(), baseUrl.getHost(), baseUrl.getPort(), url);
         LOGGER.debug("navigateUrl: {}",navigateUrl);
-//        this.wrappedDriver.navigate().to(navigateUrl);
         driver.navigate().to(navigateUrl);
     }
     /**
