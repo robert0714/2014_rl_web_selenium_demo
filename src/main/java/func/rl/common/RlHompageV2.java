@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.study.selenium.AbstractSeleniumV2TestCase;
 import org.study.selenium.RisRemoteWebDriver;
 
 import com.thoughtworks.selenium.SeleniumException;
@@ -23,13 +24,13 @@ import com.thoughtworks.selenium.SeleniumException;
 import func.rl00001.Rl00001PageV2;
 
 public class RlHompageV2 {
-    private RisRemoteWebDriver driver;
+    private WebDriver driver;
     private String user;
     private String passwd;
     private final String patialUrl ="/rl/faces/pages/index.xhtml";
     private  final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public RlHompageV2(final RisRemoteWebDriver driver) throws UnhandledAlertException, SeleniumException {
+    public RlHompageV2(final WebDriver driver) throws UnhandledAlertException, SeleniumException {
         super();
         this.driver = driver;
     }
@@ -54,17 +55,17 @@ public class RlHompageV2 {
         return result;
     }
 
-    public void login(final RisRemoteWebDriver driver , final String user, final String passwd) throws UnhandledAlertException, SeleniumException {
+    public void login(final WebDriver driver , final String user, final String passwd) throws UnhandledAlertException, SeleniumException {
         final String sitLoginPage = "/rl/pages/common/login.jsp";
         final String homapage ="/rl/faces/pages/index.xhtml";
         final String partialPage ="/rl/faces/pages";
-        driver.open(homapage);
+        AbstractSeleniumV2TestCase.open(homapage);
         String currentUrl = driver.getCurrentUrl();
         System.out.println("辨識基準頁面網址: "+currentUrl);
         
         
         if (StringUtils.contains(currentUrl, partialPage)) {
-            driver.open("/rl/");
+            AbstractSeleniumV2TestCase.open("/rl/");
             //http://rlfl.ris.gov.tw/rl/
         } else if (StringUtils.contains(currentUrl, sitLoginPage)) {
             //		selenium.type("name=j_username", getUser() );
@@ -77,7 +78,7 @@ public class RlHompageV2 {
             final String mainUrl = getMainUrl(currentUrl);
             //得到https://idpfl.ris.gov.tw:8443
             String openAuthorizationUrl = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";//https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
-            driver.open(openAuthorizationUrl);
+            AbstractSeleniumV2TestCase.open(openAuthorizationUrl);
 
             logger.info(driver.getCurrentUrl());
             //		String user = getUser();
@@ -89,7 +90,7 @@ public class RlHompageV2 {
             
             //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
             // 然後必須想辦法到target所指定網址
-            driver.open("/rl/");//http://rlfl.ris.gov.tw/rl/
+            AbstractSeleniumV2TestCase.open("/rl/");//http://rlfl.ris.gov.tw/rl/
         }
     }
     public void login(final String user, final String passwd) throws UnhandledAlertException, SeleniumException {

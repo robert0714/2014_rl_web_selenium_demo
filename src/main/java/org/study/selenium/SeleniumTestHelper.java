@@ -62,6 +62,46 @@ public class SeleniumTestHelper {
         }
         return list;
     }
+    
+    public  static String initWebDriverV3(final WebDriver driver){
+        LOGGER.info("*** Starting selenium WebDriver ...");
+        
+        final List<String> ip4Address = retrieveLocalIps();
+        final Dimension targetSize = new Dimension(1500, 860);
+        driver.manage().window().setSize(targetSize);
+        //        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS); 
+        String regIp =null;
+        if (driver instanceof FirefoxDriver) {
+            //使用local browser 進行操作
+            for(String ip : ip4Address){
+                if(!org.apache.commons.lang.StringUtils.equalsIgnoreCase("127.0.0.1", ip)){
+                    regIp = ip;
+                }
+            }
+        } else {
+            //使用遙控別台機器browser
+            final String remoteNodIp = WebUtils.getIPOfNode((RemoteWebDriver) driver); 
+            regIp = remoteNodIp;
+        }
+
+        final AppInfo[] all = org.study.selenium.internal.AppInfo.values();
+        for (AppInfo unit : all) {
+            if (StringUtils.contains(regIp, unit.getPrefixPremoteIp())) { 
+                
+                
+                if (!(driver instanceof JavascriptExecutor)) {
+                    throw new IllegalStateException("Driver instance must support JS.");
+                }
+                if (!((HasCapabilities) driver).getCapabilities().isJavascriptEnabled()) {
+                    throw new IllegalStateException("JS support must be enabled.");
+                }
+                driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS); 
+                return unit.getAppUrl();
+            }
+        }
+        final String baseUrl = String.format("http://%s:%s", SeleniumConfig.getSeleniumServerHostName(),SeleniumConfig.getSeleniumServerPort());
+        return baseUrl;
+    }
     /**
      * @see "http://code.google.com/p/selenium/wiki/ChromeDriver"
      * @return
@@ -111,7 +151,7 @@ public class SeleniumTestHelper {
      * @see "http://code.google.com/p/selenium/wiki/ChromeDriver"
      * @return
      */
-    public static Selenium initWebDriver(final WebDriver driver) {
+    public static DefaultSelenium initWebDriver(final WebDriver driver) {
         LOGGER.info("*** Starting selenium WebDriver ...");
        
         final List<String> ip4Address = retrieveLocalIps();
@@ -135,7 +175,7 @@ public class SeleniumTestHelper {
         final AppInfo[] all = org.study.selenium.internal.AppInfo.values();
         for (AppInfo unit : all) {
             if (StringUtils.contains(regIp, unit.getPrefixPremoteIp())) {
-                final Selenium selenium = new WebDriverBackedSelenium(driver, unit.getAppUrl());
+                final DefaultSelenium selenium = new WebDriverBackedSelenium(driver, unit.getAppUrl());
                 return selenium;
             }
         }
@@ -148,7 +188,7 @@ public class SeleniumTestHelper {
         return defaultSelenium;
     }
 
-    public static void destroy(Selenium selenium) {
+    public static void destroy(DefaultSelenium selenium) {
         LOGGER.info("*** Stopping selenium client driver ...");        
         selenium.stop();
     }
