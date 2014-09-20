@@ -55,7 +55,7 @@ public class Rl%sPage {
      */
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {
         final String currentUrl = this.driver.getCurrentUrl();
-        if (StringUtils.contains(currentUrl, this.rl01210PartialUlr)) {
+        if (StringUtils.contains(currentUrl, this.rl%sPartialUlr)) {
             this.selenium.refresh();
             selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             this.selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
