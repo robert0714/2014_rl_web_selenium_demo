@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -99,8 +100,8 @@ public class WebUtils {
         boolean giveUpOperation = false;
           
         //等待6秒...不見得msg出來,改成60秒
-        final WebDriverWait wait = new WebDriverWait(driver, 60);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(clickBtnXpath)));
+        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+        ;
         
         driver.findElement(By.xpath(clickBtnXpath)).click();
         
@@ -115,7 +116,8 @@ public class WebUtils {
                 result.setErrorMessage(errorMessage);
                 result.setErrorExtMessage(errorExtMessage);
                 result.setGiveUpOperation(giveUpOperation);
-                wait.until(ExpectedConditions.elementToBeClickable(By.xpath(clickBtnXpath)));
+                driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+                
                 driver.findElement(By.xpath(clickBtnXpath)).click();
                 if (count > 3) {
                     giveUpOperation = true;
@@ -185,15 +187,14 @@ public class WebUtils {
                 break;
             }
             ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,200)", "");
-
-//            final WebDriverWait wait = new WebDriverWait(driver, 1);
+            driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         }
         for (int second = 0;; second++) {
             if (second >= 10) {
                 break;
             }
             ((RemoteWebDriver) driver).executeScript("window.scrollBy(0,-200)", "");
-
+            driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
            
         }
     } /**
@@ -551,39 +552,39 @@ public class WebUtils {
         return result;
     }
     
-    /**
-     * Wait page load by id.
-     * selenium.waitForPageToLoad替代方法
-     * @param driver the driver
-     * @param seconds the seconds
-     * @param id the id
-     */
-    public  static  void waitPageLoadById(final  WebDriver driver ,final long seconds,final  String id) {
-        final WebDriverWait wait = new WebDriverWait(driver, seconds);
-        wait.until(ExpectedConditions.elementToBeClickable(By.id(id)));
-    }
-    
-    /**
-     * Wait page load by xpath.
-     * selenium.waitForPageToLoad替代方法
-     * @param driver the driver
-     * @param seconds the seconds
-     * @param xpathExpression the xpath expression
-     */
-    public static void waitPageLoadByXpath(final WebDriver driver, final long seconds, final String xpathExpression) {
-        final WebDriverWait wait = new WebDriverWait(driver, seconds);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
-    }
-    
-    /**
-     * Wait page load by link text.
-     * selenium.waitForPageToLoad替代方法
-     * @param driver the driver
-     * @param seconds the seconds
-     * @param linkText the link text
-     */
-    public static void waitPageLoadByLinkText(final WebDriver driver, long seconds, String linkText) {
-        final WebDriverWait wait = new WebDriverWait(driver, seconds);
-        wait.until(ExpectedConditions.elementToBeClickable(By.linkText(linkText)));
-    }
+//    /**
+//     * Wait page load by id.
+//     * selenium.waitForPageToLoad替代方法
+//     * @param driver the driver
+//     * @param seconds the seconds
+//     * @param id the id
+//     */
+//    public  static  void waitPageLoadById(final  WebDriver driver ,final long seconds,final  String id) {
+//        final WebDriverWait wait = new WebDriverWait(driver, seconds);
+//        wait.until(ExpectedConditions.elementToBeClickable(By.id(id)));
+//    }
+//    
+//    /**
+//     * Wait page load by xpath.
+//     * selenium.waitForPageToLoad替代方法
+//     * @param driver the driver
+//     * @param seconds the seconds
+//     * @param xpathExpression the xpath expression
+//     */
+//    public static void waitPageLoadByXpath(final WebDriver driver, final long seconds, final String xpathExpression) {
+//        final WebDriverWait wait = new WebDriverWait(driver, seconds);
+//        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
+//    }
+//    
+//    /**
+//     * Wait page load by link text.
+//     * selenium.waitForPageToLoad替代方法
+//     * @param driver the driver
+//     * @param seconds the seconds
+//     * @param linkText the link text
+//     */
+//    public static void waitPageLoadByLinkText(final WebDriver driver, long seconds, String linkText) {
+//        final WebDriverWait wait = new WebDriverWait(driver, seconds);
+//        wait.until(ExpectedConditions.elementToBeClickable(By.linkText(linkText)));
+//    }
 }

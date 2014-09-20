@@ -1,5 +1,7 @@
 package func.rl00001._rl01210;
  
+import java.util.concurrent.TimeUnit;
+
 import com.thoughtworks.selenium.SeleniumException;
 
 import func.rl.common.WebUtils;
@@ -57,14 +59,14 @@ public class Rl01210PageV2 {
         final String currentUrl = this.driver.getCurrentUrl();
         if (StringUtils.contains(currentUrl, this.rl01210PartialUlr)) {
             this.driver.navigate().refresh();
-            WebUtils.waitPageLoadByLinkText(this.driver,SeleniumConfig.waitForPageToLoadS , "//a[contains(text(),'戶籍記事/罰鍰清單')]");
-            this.driver.findElement(By.linkText("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();
+            this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+            this.driver.findElement(By.xpath("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();
            
-            WebUtils.waitPageLoadByLinkText(this.driver,SeleniumConfig.waitForPageToLoadS , "//a[contains(text(),'全戶基本資料')]");
-            this.driver.findElement(By.linkText("//a[contains(text(),'全戶基本資料')]")).click();
+            this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+            this.driver.findElement(By.xpath("//a[contains(text(),'全戶基本資料')]")).click();
             
             inputOnTab01();
-            WebUtils.waitPageLoadByLinkText(this.driver,SeleniumConfig.waitForPageToLoadS , "//a[contains(text(),'全戶基本資料')]");
+            this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
             inputOnTab02();
 
         }
@@ -78,11 +80,11 @@ public class Rl01210PageV2 {
      * @throws InterruptedException the interrupted exception
      */
     public void inputOnTab02() throws UnhandledAlertException, SeleniumException, InterruptedException {
-        WebUtils.waitPageLoadByLinkText(this.driver,SeleniumConfig.waitForPageToLoadS , "//a[contains(text(),'戶籍記事/罰鍰清單')]");
-        this.driver.findElement(By.linkText("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();
+	this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+	this.driver.findElement(By.linkText("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();
         
-        WebUtils.waitPageLoadByLinkText(this.driver,SeleniumConfig.waitForPageToLoadS , "//a[contains(text(),'戶籍記事/罰鍰清單')]");
-        
+	this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+	
         //資料驗證
         final String verifyBtnXpath = "//span[contains(@id,'button')]/button";
         //     this.selenium.click(verifyBtnXpath );        
@@ -97,11 +99,12 @@ public class Rl01210PageV2 {
                 if (StringUtils.equalsIgnoreCase("請輸入發現地點", errorExtMessage)) {
                     
                     this.driver.findElement(By.linkText("//a[contains(text(),'全戶基本資料')]")).click();
-                    WebUtils.waitPageLoadByLinkText(this.driver,SeleniumConfig.waitForPageToLoadS , "//span[contains(@id,'birthPlaceAC')]");
+                    this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
                     
                     typeBirthPlaceAC("63000");
                     
-                    WebUtils.waitPageLoadByLinkText(this.driver,SeleniumConfig.waitForPageToLoadS , "//a[contains(text(),'戶籍記事/罰鍰清單')]");
+                    this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+                    
                     this.driver.findElement(By.linkText("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();
 
                     verify = WebUtils.clickBtn(this.driver, verifyBtnXpath);
@@ -111,7 +114,7 @@ public class Rl01210PageV2 {
                 }
             }
         } 
-        WebUtils.waitPageLoadByXpath(this.driver,SeleniumConfig.waitForPageToLoadS , "//div[contains(@id,'growl2']/div/div/div");
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         boolean present = driver.findElements(By.xpath("//div[contains(@id,'growl2']/div/div/div")).size() != 0  ;
         
         if (present) {
@@ -120,7 +123,7 @@ public class Rl01210PageV2 {
         }
 
         //暫存
-        WebUtils.waitPageLoadByXpath(this.driver,SeleniumConfig.waitForPageToLoadS , "//span[contains(@id,'button')]/button[3]");
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         this.driver.findElement(By.xpath("//span[contains(@id,'button')]/button[3]")).click(); 
     }
 
@@ -132,7 +135,7 @@ public class Rl01210PageV2 {
      * @throws InterruptedException the interrupted exception
      */
     public void inputOnTab01() throws UnhandledAlertException, SeleniumException, InterruptedException {
-        WebUtils.waitPageLoadByLinkText(this.driver,SeleniumConfig.waitForPageToLoadS , "//a[contains(text(),'全戶基本資料/出生者、父母資料')]");
+	this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         this.driver.findElement(By.linkText("//a[contains(text(),'全戶基本資料/出生者、父母資料')]")).click();
         
         final String element01 = this.driver.findElement(By.name("document.poopupForm.elements[1]")).getText();;
@@ -171,6 +174,7 @@ public class Rl01210PageV2 {
      */
     public void typeBirthPlaceAC(final String birthPlaceAC) {
         SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, "//span[contains(@id,'birthPlaceAC')]", birthPlaceAC);
+        
     }
 
     //
@@ -185,7 +189,9 @@ public class Rl01210PageV2 {
         Actions oAction = new Actions(driver);
         oAction.moveToElement(oWE);
         oAction.doubleClick(oWE).build().perform();
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         oWE.sendKeys(relationship); 
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
     }
 
     /**
@@ -194,7 +200,9 @@ public class Rl01210PageV2 {
      */
     public void typeBirthOrderSexSelectOneMenu() {
         this.driver.findElement(By.xpath("//label[contains(@id,'birthOrderSexSelectOneMenu')]")).click();
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         this.driver.findElement(By.xpath("//div[contains(@id,'birthOrderSexSelectOneMenu')]/div/ul/li[2]")).click(); 
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
     }
 
     /**
@@ -211,16 +219,21 @@ public class Rl01210PageV2 {
         
         this.driver.findElement(By.xpath("//span[@id='birthYyymmdd__calendar']/input")).sendKeys(yyy);        
 //        this.selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input", "blur");
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         
         this. driver.findElement(By.xpath("//span[@id='birthYyymmdd__calendar']/input[2]")).sendKeys(mm); 
 //        this.selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input[2]", "blur");
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         
         this.driver.findElement(By.xpath("//span[@id='birthYyymmdd__calendar']/input[3]")).sendKeys(dd);
 //        this.selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input[3]", "blur");
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         
         this. driver.findElement(By.xpath("//span[@id='birthYyymmdd__calendar']/img")).click();
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         
         this.driver.findElement(By.linkText("//a[contains(text(),'關閉')]")).click();
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
          
         
     }
@@ -232,9 +245,9 @@ public class Rl01210PageV2 {
      * @param lastName the last name
      */
     public void typeLastName(final String lastName) {
-        ////span[@id='j_id_2k:lastName']/span/input
-        
+        ////span[@id='j_id_2k:lastName']/span/input        
         this. driver.findElement(By.xpath("//span[contains(@id,'lastName')]/span/input")).sendKeys(lastName);  
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
     }
 
     /**
@@ -246,6 +259,7 @@ public class Rl01210PageV2 {
     public void typeFirstName(final String firstName) {
         ////span[@id='j_id_2k:firstName']/span/input
         this. driver.findElement(By.xpath("//span[contains(@id,'firstName')]/span/input")).sendKeys(firstName);  
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
     }
 
     /**
@@ -257,6 +271,7 @@ public class Rl01210PageV2 {
     public void getRLDF001MByClickBtn() {
         //span[@id='j_id_2k:household']/table/tbody/tr/td/button
         this.driver.findElement(By.xpath("//span[contains(@id,'household')]/table/tbody/tr/td/button")).click();
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
     }
 
     /**
@@ -266,6 +281,7 @@ public class Rl01210PageV2 {
      */
     public void typeHouseholdHeadId(final String householdHeadId) {
         this. driver.findElement(By.xpath("//input[contains(@id,'oldHouseholdHeadPersonId')]")).sendKeys(householdHeadId); 
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
     }
 
     /**
@@ -275,6 +291,7 @@ public class Rl01210PageV2 {
      */
     public void typeHouseholdId(final String householdId) {
         this.driver.findElement(By.xpath("//input[contains(@id,'oldHouseholdId')]")).sendKeys(householdId);  
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
     }
 
     /**
@@ -286,6 +303,7 @@ public class Rl01210PageV2 {
         //input[@id='j_id_2k:isNewHousehold:0']
         final String xpath = String.format("//input[contains(@id,'isNewHousehold:%s')]", isNewHousehold ? 0 : 1); 
         this.driver.findElement(By.xpath(xpath)).click();  
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
     }
 
     /**
@@ -296,7 +314,7 @@ public class Rl01210PageV2 {
     public void checkBirthKind(final BirthKind type) {
         final String xpath = String.format("//input[contains(@id,'birthKind:%s')]", type.value);
         this.driver.findElement(By.xpath(xpath)).click();  
-
+        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
     }
 
     /**
