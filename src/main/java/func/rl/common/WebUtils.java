@@ -67,6 +67,23 @@ public class WebUtils {
         boolean giveUpOperation = initData.isGiveUpOperation();        
         return giveUpOperation;
     }
+    
+    /**
+     * **
+     * 按鈕Xpath為clickBtnXpath點選後
+     * 針對訊息作處理
+     * 有錯誤訊息回傳 true,無錯誤訊息回傳false .
+     *
+     * @param selenium the selenium
+     * @param clickBtnXpath the click btn xpath
+     * @return true, if successful
+     */
+    public static boolean handleClickBtn(final WebDriver driver ,  final String clickBtnXpath) {
+        final GrowlMsg initData = clickBtn(driver, clickBtnXpath);
+        boolean giveUpOperation = initData.isGiveUpOperation();
+        return giveUpOperation;
+    }
+    
     /**
      * **
      * 按鈕Xpath為clickBtnXpath點選後
@@ -460,7 +477,32 @@ public class WebUtils {
         }
         return giveUpOperation;
     }
+    /**
+     * Handle rl alert.
+     *
+     * @param selenium the selenium
+     * @return true, if successful
+     */
+    public static boolean handleRLAlert(final WebDriver driver) {
+        boolean giveUpOperation = false;
+        final WebDriverWait wait = new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div")));
 
+        int count = 0;
+        while (true) {
+            String errorMessage = driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/span")).getText();
+            String errorExtMessage = driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")).getText();
+            LOGGER.info(errorMessage);
+            LOGGER.info(errorExtMessage);
+            if (count > 3) {
+                giveUpOperation = true;
+                break;
+            }
+            count++;
+        }
+
+        return giveUpOperation;
+    }
     /**
      * Take screen.
      *
