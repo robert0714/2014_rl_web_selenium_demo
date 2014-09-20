@@ -6,6 +6,7 @@
  */
 package org.study.selenium;
 
+import com.thoughtworks.selenium.DefaultSelenium;
 import com.thoughtworks.selenium.Selenium;
 
 import func.rl.common.WebUtils;
@@ -52,7 +53,7 @@ public abstract class AbstractSeleniumTestCase {
     @AfterClass
     public static void destroy() {
 
-        SeleniumTestHelper.destroy(selenium);
+        SeleniumTestHelper.destroy((DefaultSelenium) selenium);
     }
 
     /**
