@@ -13,6 +13,8 @@ import org.apache.http.HttpResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.HasCapabilities;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -29,6 +31,7 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SeleniumTestHelper {
 
@@ -58,6 +61,50 @@ public class SeleniumTestHelper {
         }
         return list;
     }
+    /**
+     * @see "http://code.google.com/p/selenium/wiki/ChromeDriver"
+     * @return
+     */
+    public static RisRemoteWebDriver initWebDriverV2(final WebDriver driver) {
+        LOGGER.info("*** Starting selenium WebDriver ...");
+       
+        final List<String> ip4Address = retrieveLocalIps();
+        final Dimension targetSize = new Dimension(1500, 860);
+        driver.manage().window().setSize(targetSize);
+        //        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS); 
+        String regIp =null;
+        if (driver instanceof FirefoxDriver) {
+            //使用local browser 進行操作
+            for(String ip : ip4Address){
+                if(!org.apache.commons.lang.StringUtils.equalsIgnoreCase("127.0.0.1", ip)){
+                    regIp = ip;
+                }
+            }
+        } else {
+            //使用遙控別台機器browser
+            final String remoteNodIp = WebUtils.getIPOfNode((RemoteWebDriver) driver); 
+            regIp = remoteNodIp;
+        }
+
+        final AppInfo[] all = org.study.selenium.internal.AppInfo.values();
+        for (AppInfo unit : all) {
+            if (StringUtils.contains(regIp, unit.getPrefixPremoteIp())) { 
+                
+                
+                if (!(driver instanceof JavascriptExecutor)) {
+                    throw new IllegalStateException("Driver instance must support JS.");
+                }
+                if (!((HasCapabilities) driver).getCapabilities().isJavascriptEnabled()) {
+                    throw new IllegalStateException("JS support must be enabled.");
+                }
+                driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS); 
+                return new RisRemoteWebDriver(unit.getAppUrl(), driver);
+            }
+        }
+        final String baseUrl = String.format("http://%s:%s", SeleniumConfig.getSeleniumServerHostName(),SeleniumConfig.getSeleniumServerPort());
+        return new RisRemoteWebDriver(baseUrl,driver);
+    }
+    
     /**
      * @see "http://code.google.com/p/selenium/wiki/ChromeDriver"
      * @return

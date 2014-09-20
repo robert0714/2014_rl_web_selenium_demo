@@ -28,7 +28,7 @@ public class AbstractSeleniumV2TestCase {
 
     
     /** The driver. */
-    public static WebDriver driver;
+    public static RisRemoteWebDriver driver;
 
     /**
      * Before class.
@@ -37,7 +37,9 @@ public class AbstractSeleniumV2TestCase {
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
-        driver = WebUtils.windowsMachine();
+//        final   WebDriver initDriver = WebUtils.windowsMachine();
+      final   WebDriver initDriver = WebUtils.localMachine();
+      driver =  SeleniumTestHelper.initWebDriverV2( initDriver);
     }
 
     /**
