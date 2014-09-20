@@ -1825,48 +1825,7 @@
 				<property name="order" value="3"/>
 			</bean>
 		</entry>
-		
-		<entry key="02E00">
-			<bean class="tw.gov.moi.rl.component.dto.HouseholdOperation">
-				<property name="operationCode" value="02E00" />
-				<property name="operationCategory" value="文件核發" />
-				<property name="operationName" value="婚姻紀錄證明" />
-				<property name="operationPageName" value="" />
-				<property name="operationPhase" value="2" />
-				<property name="crossSiteEnabled" value="true" />
-				<property name="applicantNumber" value="1" />
-				<property name="currentPersonRequired" value="true" />				
-				<property name="order" value="7"/>
-			</bean>
-		</entry>
-		
-		<entry key="02F00">
-			<bean class="tw.gov.moi.rl.component.dto.HouseholdOperation">
-				<property name="operationCode" value="02F00" />
-				<property name="operationCategory" value="文件核發" />
-				<property name="operationName" value="遷徙紀錄證明" />
-				<property name="operationPageName" value="" />
-				<property name="operationPhase" value="2" />
-				<property name="crossSiteEnabled" value="true" />
-				<property name="applicantNumber" value="1" />
-				<property name="currentPersonRequired" value="true" />				
-				<property name="order" value="8"/>
-			</bean>
-		</entry>
-		
-		<entry key="02G00">
-			<bean class="tw.gov.moi.rl.component.dto.HouseholdOperation">
-				<property name="operationCode" value="02G00" />
-				<property name="operationCategory" value="文件核發" />
-				<property name="operationName" value="姓名更改紀錄證明" />
-				<property name="operationPageName" value="" />
-				<property name="operationPhase" value="2" />
-				<property name="crossSiteEnabled" value="true" />
-				<property name="applicantNumber" value="1" />
-				<property name="currentPersonRequired" value="true" />				
-				<property name="order" value="9"/>
-			</bean>
-		</entry>
+				
 
 		<entry key="0W100">
 			<bean class="tw.gov.moi.rl.component.dto.HouseholdOperation">
