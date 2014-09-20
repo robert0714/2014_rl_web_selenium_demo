@@ -6,6 +6,8 @@
  */
 package org.study.selenium;
 
+import java.util.concurrent.TimeUnit;
+
 import com.thoughtworks.selenium.Selenium;
 
 import org.openqa.selenium.By;
@@ -38,15 +40,14 @@ public class SRISWebUtils {
         final String closeXpath =  xpath +"/span/span/img";
         
         for (int i = 0; i < 1; ++i) {
-            final WebDriverWait wait = new WebDriverWait(driver, 60);
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(typeXpath)));
+            driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
             driver.findElement(By.xpath(typeXpath)).click();
             Actions oAction = new Actions(driver);
             oAction.moveToElement(oWE);
             oAction.doubleClick(oWE).build().perform();
-             
+            driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
             oWE.sendKeys(value); 
-             
+            driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         }
 //        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 //        selenium.fireEvent(typeXpath, "blur");
@@ -66,16 +67,15 @@ public class SRISWebUtils {
         final String closeXpath =  spanXpath +"/span/img";
         
         final WebElement oWE = driver.findElement(By.xpath(typeXpath));
-        for (int i = 0; i < 2; ++i) {
-            final WebDriverWait wait = new WebDriverWait(driver, 60);
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(typeXpath)));
+        for (int i = 0; i < 1; ++i) {            
+            driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);;
             driver.findElement(By.xpath(typeXpath)).click();
             Actions oAction = new Actions(driver);
             oAction.moveToElement(oWE);
             oAction.doubleClick(oWE).build().perform();
-             
+            driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
             oWE.sendKeys(value); 
-            
+            driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         }
         
 //        JavascriptExecutor js = (JavascriptExecutor) driver;
