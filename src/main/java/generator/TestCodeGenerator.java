@@ -1,5 +1,7 @@
 package generator;
+ 
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -19,9 +21,27 @@ import org.slf4j.LoggerFactory;
 public class TestCodeGenerator {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestCodeGenerator.class);
     private final String beanReg =".*<entry.*key=\".*\">([.|\\W|\\w]*)\\W*.*<\\/entry>";
+    private final String codeFromPageNameReg = ".([.|\\w]*).xhtml";
     public static void main(String[] args)  {
 	List<Operation> data = new TestCodeGenerator().retrieveData();
 	System.out.println(data.size());
+    generateFile(data.get(0), "/home/weblogic/Desktop/tmpOutputFile");    
+
+
+    }
+    public static OutputFile generateFile(final Operation  operation, final String outPutFilePath){
+        final OutputFile result = new OutputFile();
+        final String pageName = operation.getOperationPageName();
+        final String code = operation.getOperationCode();
+        final String fileName = String.format("%s/func/rl00001/_rl%s/Rl%sPage.java", outPutFilePath ,code, code);
+      //func.rl00001._rl01210.Rl01210Page
+        try {
+            org.apache.commons.io.FileUtils.writeStringToFile(new File(fileName), "", true);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            // LOGGER.error("", e);
+        }
+        return result;
     }
     protected List<Operation> retrieveDataV2(){
 	final List<String> initializedData = new ArrayList<String>();
