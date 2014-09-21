@@ -73,7 +73,7 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
                 final String siteId = stringArray[1];
                 this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                 
-                try {
+                try {                    
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 //                    Thread.sleep(1000l);
                     rl00001Page.typeApplicat1(personId, siteId,"爸嗎");
