@@ -555,7 +555,7 @@ public class WebUtils {
      * @param clazz the Class
      */
     public static void takeScreen(final WebDriver driver,final Class<?> clazz) {
-	final SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_ss");
+	final SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 	final StringBuilder sbf = new StringBuilder();
 	final String[] args = new String[] { System.getProperty("user.home"), File.separator, "SeleniumExceptionPNG", File.separator, clazz.getSimpleName(),
 		File.separator, sdf.format(new Date()) };
