@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.thoughtworks.selenium.SeleniumException;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 import func.rl.common.WebUtils;
 import func.rl.common.internal.GrowlMsg;
@@ -197,8 +198,13 @@ public class Rl01220PageV2 {
      * @param birthPlaceAC the birth place ac
      */
     public void typeBirthPlaceAC(final String birthPlaceAC) {
-//        SRISWebUtils.typeAutoCompleteBySpanXpath(selenium, "//span[contains(@id,'deadPlaceNationalityAC')]", birthPlaceAC);
-        SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, "//span[contains(@id,'deadPlaceNationalityAC')]", birthPlaceAC);
+        /***
+         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1)
+         * ***/
+        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
+        SRISWebUtils.typeAutoCompleteBySpanXpath(selenium, "//span[contains(@id,'deadPlaceNationalityAC')]", birthPlaceAC);
+        selenium = null;
+//        SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, "//span[contains(@id,'deadPlaceNationalityAC')]", birthPlaceAC);
     }
 
     /**
@@ -249,22 +255,41 @@ public class Rl01220PageV2 {
         final String mm = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 3, 5);
         final String dd = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 5, 7);
 
-        this. driver.findElement(By.xpath("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input")).sendKeys(yyy);
-//        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input", yyy);
-//        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input", "blur");
-//        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-
+//        this. driver.findElement(By.xpath("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input")).sendKeys(yyy);
+//        this. driver.findElement(By.xpath("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]")).sendKeys(mm);
+//        this. driver.findElement(By.xpath("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]")).sendKeys(dd);
         
-        this. driver.findElement(By.xpath("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]")).sendKeys(mm);
-//        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]", mm);
-//        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]", "blur");
-//        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-
-        this. driver.findElement(By.xpath("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]")).sendKeys(dd);
+        /***
+         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1)
+         * ***/
+        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
         
-//        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]", dd);
-//        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]", "blur");
-//        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input", yyy);
+        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input", "blur");
+        WebUtils.pageLoadTimeout(this.driver);
+        try {
+            Thread.sleep(1000l);
+        } catch (InterruptedException e) {
+           LOGGER.error(e.getMessage(), e);
+        }
+        
+        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]", mm);
+        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]", "blur");
+        WebUtils.pageLoadTimeout(this.driver);
+        try {
+            Thread.sleep(1000l);
+        } catch (InterruptedException e) {
+           LOGGER.error(e.getMessage(), e);
+        }
+        
+        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]", dd);
+        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]", "blur");
+        WebUtils.pageLoadTimeout(this.driver);
+        try {
+            Thread.sleep(1000l);
+        } catch (InterruptedException e) {
+           LOGGER.error(e.getMessage(), e);
+        }
 
     }
 
