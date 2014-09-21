@@ -87,8 +87,7 @@ public class HouseholdMaintainPageV2 {
     private boolean ready(){
         boolean result =false ;
         final JavascriptExecutor js = (JavascriptExecutor)  driver;
-//        Object aaa = js.executeScript("var aaa= risPdfPrinterApplet.getConvertStatus();console.log('robert test: '+aaa);");
-        final Object jsValue = js.executeScript("return  risPdfPrinterApplet.getConvertStatus();");
+        Object jsValue = js.executeScript("return  risPdfPrinterApplet.getConvertStatus();");
         if(jsValue != null){
             if(jsValue instanceof String){
                 result =  Boolean.valueOf((String)jsValue);
@@ -109,30 +108,27 @@ public class HouseholdMaintainPageV2 {
 	// Save the WindowHandle of Parent Browser Window
 	final String parentWindowId = driver.getWindowHandle();
 	logger.debug("parentWindowId: " + parentWindowId);
-	boolean printBtnXpathHit = false;
+
 	final String printBtnXpath = "//div[contains(@id,'householdbtns_content')]/button";
 
         WebDriverWait wait = new WebDriverWait(driver, 60);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(printBtnXpath)));
         final WebElement printBtn = this.driver.findElement(By.xpath(printBtnXpath));
+        wait.until(ExpectedConditions.visibilityOf(printBtn) );
         
-        final String disabledAttribute = printBtn.getAttribute("disabled");
-        logger.debug("-----------------disabledAttribute: " + disabledAttribute);
-        if (StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())) {
-            printBtnXpathHit = false;
-        } else if (disabledAttribute == null || StringUtils.equals(disabledAttribute, Boolean.FALSE.toString())) {
-            printBtnXpathHit = true;
-            giveUpOperation = WebUtils.handleClickBtn(this.driver ,  printBtnXpath);
-        }
+        
+        giveUpOperation = WebUtils.handleClickBtn(this.driver ,  printBtnXpath);
 
-	if (!giveUpOperation && printBtnXpathHit) {
+	if (!giveUpOperation ) {
 	    // 預覽申請書會彈跳出視窗
 	    int count = 0;
-	    privntViewLoop: while (printBtnXpathHit) {
-		Thread.sleep(5000);// 建議5秒
+	    privntViewLoop: while (true) {
+//	        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	        Thread.sleep(5000);
+	        // 建議5秒
 		boolean printViewPresent = false;
 		try {
 		    final Set<String> windowHandles = driver.getWindowHandles();
+		    windowHandles.remove(parentWindowId);
 		    browerWindowLoop: for (final String windowId : windowHandles) {
 			if (!StringUtils.equalsIgnoreCase(windowId, parentWindowId)) {
 			    // Switch to the Help Popup Browser Window
@@ -143,21 +139,31 @@ public class HouseholdMaintainPageV2 {
 				// 戶役資訊服務網
 				String title = driver.getTitle();
 				logger.debug("title: " + title);
-                                while (!ready()) {
-                                    //applet的id為risPdfPrinterApplet方法為getConvertState
-                                    driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-                                    ;// 建議5秒畢竟cognos實在太慢了
-                                    
-                                }
+                                final String terminatorPrintXpath = "//span[contains(@id,'pdfbanner')]/span[2]/button[2]";
+                                wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
+                                logger.info("等待預覽列印網頁");
                                 WebUtils.scroolbarDownUp( driver);
                                 // *[@id="j_id4_j_id_9:j_id_y"]/span
                                 // *[@id="j_id4_j_id_9:j_id_y"]
-                                this.driver.findElement(By.xpath("//span[contains(@id,'pdfbanner')]/span[2]/button[2]")).click();
+                                this.driver.findElement(By.xpath(terminatorPrintXpath)).click();
                                  // 端未列印
                                 // form/div/div/div/div[2]/button[2]
                                 // selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
-                                printViewPresent = true;
-                                break browerWindowLoop;
+                                
+                                // Move back to the Parent Browser Window
+                                final Set<String> nowWindowHandles = driver.getWindowHandles();
+                                nowWindowHandles.remove(parentWindowId);
+                                if(!nowWindowHandles.contains(windowId)){
+                                    //只有在被關閉的情形下才會找不到
+                                    driver.switchTo().window(parentWindowId);
+                                    if(StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")){
+                                        break privntViewLoop;
+                                    }
+                                }else{
+                                    printViewPresent = true;
+                                    break browerWindowLoop;
+                                }
+                                
 			    }
 			}
 		    }
@@ -165,14 +171,20 @@ public class HouseholdMaintainPageV2 {
 		    logger.debug(e.getMessage() ,e );
 		}
 
-		if (printViewPresent) {
-		    // Close the Help Popup Window
-		    driver.close();
+                try {
+                    if (printViewPresent && !StringUtils.equalsIgnoreCase(driver.getWindowHandle(), parentWindowId)) {
+                        // Close the Help Popup Window
+                        driver.close();
 
-		    // Move back to the Parent Browser Window
-		    driver.switchTo().window(parentWindowId);
-		    break privntViewLoop;
-		}
+                        // Move back to the Parent Browser Window
+                        driver.switchTo().window(parentWindowId);
+                        break privntViewLoop;
+                    }
+                } catch (NoSuchWindowException e) {
+                    logger.debug(e.getMessage() ,e );
+                    driver.switchTo().window(parentWindowId);
+                    break privntViewLoop;
+                }
 		if (count > 10) {
 		    break privntViewLoop;
 		}

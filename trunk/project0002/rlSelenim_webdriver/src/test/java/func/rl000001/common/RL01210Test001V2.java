@@ -133,7 +133,7 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
 	    }
 	} 
         
-        rl00001Page.redirectPage(); 
+//        rl00001Page.redirectPage(); 
         // Sleep the thread if you want to view the rendered page while testing.
         assertTrue(true);
     }
