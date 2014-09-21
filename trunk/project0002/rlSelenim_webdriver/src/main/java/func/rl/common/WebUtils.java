@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -117,10 +119,9 @@ public class WebUtils {
                 result.setErrorMessage(errorMessage);
                 result.setErrorExtMessage(errorExtMessage);
                 result.setGiveUpOperation(giveUpOperation);
-                driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-                
                 driver.findElement(By.xpath(clickBtnXpath)).click();
-                if (count > 3) {
+                if (count > 4) {
+                    driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
                     giveUpOperation = true;
                     result.setGiveUpOperation(giveUpOperation);
                     break;
@@ -525,6 +526,7 @@ public class WebUtils {
      * @param outputFile the output file
      */
     public static void takeScreen(final WebDriver driver, final File outputFile) {
+	
         try {
             if (driver instanceof FirefoxDriver) {
                 File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -534,7 +536,7 @@ public class WebUtils {
                 File scrFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(scrFile, outputFile);
             }
-
+            LOGGER.info("takeScreen: {}" , outputFile.getCanonicalPath());
             //Take screenshot and convert into byte[] 	    
             //	    byte[] decodedScreenshot = Base64.decodeBase64(((TakesScreenshot)augmentedDriver).getScreenshotAs(OutputType.BASE64).getBytes());	
             //	    //write the byte array into your local folder	
@@ -546,7 +548,25 @@ public class WebUtils {
             LOGGER.error(e.getMessage(), e);
         }
     }
-
+    /**
+     * Take screen.
+     *
+     * @param driver the driver
+     * @param clazz the Class
+     */
+    public static void takeScreen(final WebDriver driver,final Class<?> clazz) {
+	final SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_ss");
+	final StringBuilder sbf = new StringBuilder();
+	final String[] args = new String[] { System.getProperty("user.home"), File.separator, "SeleniumExceptionPNG", File.separator, clazz.getSimpleName(),
+		File.separator, sdf.format(new Date()) };
+	for (int i = 0; i < args.length; ++i) {
+	    sbf.append("%s");
+	}
+	final String fileName = String.format(sbf.append(".png").toString(), args);
+	final File outputFile = new File(fileName);
+	takeScreen(driver, outputFile);
+    }
+    
     /**
      * Extract.
      *
