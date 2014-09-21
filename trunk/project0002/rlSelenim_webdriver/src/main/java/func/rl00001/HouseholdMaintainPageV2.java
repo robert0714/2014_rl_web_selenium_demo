@@ -84,22 +84,6 @@ public class HouseholdMaintainPageV2 {
 	// div[@id='j_id39_j_id_sx_content']/button
     }
     
-    private boolean ready(){
-        boolean result =false ;
-        final JavascriptExecutor js = (JavascriptExecutor)  driver;
-        Object jsValue = js.executeScript("return  risPdfPrinterApplet.getConvertStatus();");
-        if(jsValue != null){
-            if(jsValue instanceof String){
-                result =  Boolean.valueOf((String)jsValue);
-            }else if(jsValue instanceof Boolean ){
-                result = (Boolean)jsValue;
-            }
-            
-        }
-       
-        return result;
-    }
-    
     /******
      * 列印申請書測試程序
      * *****/

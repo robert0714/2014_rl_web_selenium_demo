@@ -154,26 +154,29 @@ public class RlHompageV2 {
         this.logger.debug(currentUrl);        
 
     }   
-    private boolean isBeforeUnloadEventPresent(){
-	if(this.driver.getCurrentUrl().contains("/rl00001/rl00001.xhtml")){
-	    try {
-		    if ( this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[contains(@id,'alert_flag')]"))) == null) {
-			this.logger.debug("BeforeUnloadEven was not present");
-		    } else {
-			((JavascriptExecutor) driver).executeScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;", "");
-			this.logger.debug("BeforeUnloadEven was present");
-		    }
-		    return false;
-		} catch (TimeoutException e) {
-		    // Modal dialog showed
-		    return true;
-		}catch (UnhandledAlertException e) {
-		    // Modal dialog showed
-		    return true;
-		}
-	}
-	return false;
+    public void enterRl01Z00() {
+	isAlertPresent() ;
+	driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);   
+//	WebUtils.pageLoadTimeout(this.driver);
+	
+        this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
+	
+     // 進入戶籍申請書管理, 
+        this.driver.findElement(By.xpath("//*[@id='navmenu-v']/li[10]")).click();
+        
+        final String rl01z00Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl01z00/rl01z00.xhtml')]";
+        
+        WebUtils.pageLoadTimeout(this.driver);
+//      isBeforeUnloadEventPresent();
+        isAlertPresent();
+      
+        this.driver.findElement(By.xpath(rl01z00Xpath)).click();
+        
+        final String currentUrl = this.driver.getCurrentUrl();
+        
+        this.logger.debug(currentUrl);
     }
+    
     private boolean isAlertPresent() {
 	try {
 	    Alert alert = driver.switchTo().alert();
