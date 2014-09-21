@@ -82,6 +82,7 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
 
 		    HouseholdMaintainPageV2 householdMaintainPage = null;
 
+		    //頁籤翻轉測試
 		    if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
 
 		        householdMaintainPage = new HouseholdMaintainPageV2(driver);
@@ -89,13 +90,9 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
 		        while (!householdMaintainPage.switchTab()) {
 		    	logger.debug("轉不過去");
 		        }
-		        // 發現所需延遲時間需要更久
-		        // final WebDriverWait wait = new WebDriverWait(driver, 60);
-		        // wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(alertFlagXpath)));
-		        // ((RemoteWebDriver) this.driver).executeScript(closeBeforeUnloadAlert, "");
 		        isAlertPresent();
-
 		    }
+		    
 		    if (householdMaintainPage != null && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
 		        householdMaintainPage.processPrintView();
 		        isAlertPresent();

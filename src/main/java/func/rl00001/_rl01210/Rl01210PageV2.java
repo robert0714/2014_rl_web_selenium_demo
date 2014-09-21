@@ -65,14 +65,25 @@ public class Rl01210PageV2 {
            
             WebUtils.pageLoadTimeout(this.driver);
             this.driver.findElement(By.xpath("//a[contains(text(),'全戶基本資料')]")).click();
-            
-            inputOnTab01();
-            
-            WebUtils.pageLoadTimeout(this.driver);
-            
-            inputOnTab02();
 
         }
+    }
+    /**
+     * Demo Scenario. 展示為無依兒童的情境
+     *
+     * @throws UnhandledAlertException the unhandled alert exception
+     * @throws SeleniumException the selenium exception
+     * @throws InterruptedException the interrupted exception
+     */
+    public void demo01() throws UnhandledAlertException, SeleniumException, InterruptedException {
+	LOGGER.info("展示為無依兒童的情境");
+	WebUtils.pageLoadTimeout(this.driver);
+        this.driver.findElement(By.xpath("//a[contains(text(),'全戶基本資料')]")).click();
+        WebUtils.pageLoadTimeout(this.driver);
+        
+        inputOnTab01ForDemo();        
+        WebUtils.pageLoadTimeout(this.driver);        
+        inputOnTab02();
     }
     
     /**
@@ -132,13 +143,13 @@ public class Rl01210PageV2 {
     }
 
     /**
-     * 在頁籤01上輸入資料.
+     * 在頁籤01上輸入資料.展示為無依兒童的情境
      *
      * @throws UnhandledAlertException the unhandled alert exception
      * @throws SeleniumException the selenium exception
      * @throws InterruptedException the interrupted exception
      */
-    public void inputOnTab01() throws UnhandledAlertException, SeleniumException, InterruptedException {
+    public void inputOnTab01ForDemo() throws UnhandledAlertException, SeleniumException, InterruptedException {
 	WebUtils.pageLoadTimeout(this.driver);
         this.driver.findElement(By.xpath("//a[contains(text(),'全戶基本資料/出生者、父母資料')]")).click();
         
