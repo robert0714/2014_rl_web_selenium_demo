@@ -171,13 +171,14 @@ public class Rl01210PageV2 {
         
     }
 
-    //輸入出生地
+     
     /**
      * Type birth place ac.
-     *
+     * 輸入出生地
      * @param birthPlaceAC the birth place ac
      */
     public void typeBirthPlaceAC(final String birthPlaceAC) {
+        LOGGER.debug("輸入出生地: {}" ,birthPlaceAC);
 	final String typeXpath = "//span[contains(@id,'birthPlaceAC')]";
 	/***
          * 由於發現使用Selenium2 (WebDrvier在firefox 17下 有異常不能正常操作,所以實作暫時改用Selenium1)
@@ -187,13 +188,14 @@ public class Rl01210PageV2 {
         SRISWebUtils.typeAutoCompleteBySpanXpath(selenium, typeXpath, birthPlaceAC);
     }
 
-    //
+     
     /**
      * Type relation ship.
      * 輸入稱謂
      * @param relationship the relationship
      */
     public void typeRelationShip(final String relationship) {
+        LOGGER.debug("輸入稱: {}" ,relationship);
         //span[@id='j_id_2k:relationship']/span/input
         final WebElement oWE = driver.findElement(By.xpath("//span[contains(@id,'relationship')]/span/input"));
         Actions oAction = new Actions(driver);
@@ -209,6 +211,7 @@ public class Rl01210PageV2 {
      * Type birth order sex select one menu.
      */
     public void typeBirthOrderSexSelectOneMenu() {
+        LOGGER.debug("輸入出生別" );
         this.driver.findElement(By.xpath("//label[contains(@id,'birthOrderSexSelectOneMenu')]")).click();
         WebUtils.pageLoadTimeout(this.driver);
         this.driver.findElement(By.xpath("//div[contains(@id,'birthOrderSexSelectOneMenu')]/div/ul/li[2]")).click(); 
@@ -222,7 +225,8 @@ public class Rl01210PageV2 {
      * @param birthYyymmdd the birth yyymmdd
      */
     public void typeBirthYyymmdd(final String birthYyymmdd) {
-	
+        LOGGER.debug("輸入出生日期: {}", birthYyymmdd);
+        
         //input[@id='j_id_2k:birthYyymmdd:j_id_uj']
         final String yyy = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 0, 3);
         final String mm = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 3, 5);
@@ -308,6 +312,7 @@ public class Rl01210PageV2 {
      * @return the RLD f001 m by click btn
      */
     public void getRLDF001MByClickBtn() {
+        LOGGER.debug("取得全戶基本資料" );
         //span[@id='j_id_2k:household']/table/tbody/tr/td/button
         this.driver.findElement(By.xpath("//span[contains(@id,'household')]/table/tbody/tr/td/button")).click();
         WebUtils.pageLoadTimeout(this.driver);
@@ -315,30 +320,34 @@ public class Rl01210PageV2 {
 
     /**
      * Type household head id.
-     *
+     *  輸入戶長統號
      * @param householdHeadId the household head id
      */
     public void typeHouseholdHeadId(final String householdHeadId) {
+        LOGGER.debug("輸入戶長統號: {}", householdHeadId);
         this. driver.findElement(By.xpath("//input[contains(@id,'oldHouseholdHeadPersonId')]")).sendKeys(householdHeadId); 
         WebUtils.pageLoadTimeout(this.driver);
     }
 
     /**
      * Type household id.
-     *
+     * 輸入戶號
      * @param householdId the household id
      */
     public void typeHouseholdId(final String householdId) {
+        LOGGER.debug("輸入戶號: {}", householdId);
         this.driver.findElement(By.xpath("//input[contains(@id,'oldHouseholdId')]")).sendKeys(householdId);  
         WebUtils.pageLoadTimeout(this.driver);
     }
 
     /**
      * Sets the new household.
-     *
+     * 自立新戶 true
+     * 非自立新戶(入他人戶) false
      * @param isNewHousehold the new new household
      */
     public void setNewHousehold(final boolean isNewHousehold) {
+        LOGGER.debug("自立新戶: {}", isNewHousehold);
         //input[@id='j_id_2k:isNewHousehold:0']
         final String xpath = String.format("//input[contains(@id,'isNewHousehold:%s')]", isNewHousehold ? 0 : 1); 
         this.driver.findElement(By.xpath(xpath)).click();  
@@ -347,10 +356,11 @@ public class Rl01210PageV2 {
 
     /**
      * Check birth kind.
-     *
+     * 選擇出生類別
      * @param type the type
      */
     public void checkBirthKind(final BirthKind type) {
+        LOGGER.debug("選擇出生類別: {}", type.toString().intern());
         final String xpath = String.format("//input[contains(@id,'birthKind:%s')]", type.value);
         this.driver.findElement(By.xpath(xpath)).click();  
         WebUtils.pageLoadTimeout(this.driver);
