@@ -120,16 +120,12 @@ public class Rl01210PageV2 {
             }
         } 
         WebUtils.pageLoadTimeout(this.driver);
-        boolean present = driver.findElements(By.xpath("//div[contains(@id,'growl2']/div/div/div")).size() != 0  ;
         
-        if (present) {
-            final String growl2Content = driver.findElement(By.xpath("//div[contains(@id,'growl2']")).getText(); 
-            LOGGER.info(growl2Content);
-        }
 
         //暫存
         WebUtils.pageLoadTimeout(this.driver);
-        this.driver.findElement(By.xpath("//span[contains(@id,'button')]/button[3]")).click(); 
+//        this.driver.findElement(By.xpath("//span[contains(@id,'button')]/button[3]")).click(); 
+        WebUtils.clickBtn(this.driver, "//span[contains(@id,'button')]/button[3]");
     }
 
     /**
@@ -169,6 +165,7 @@ public class Rl01210PageV2 {
         typeBirthOrderSexSelectOneMenu();
         typeRelationShip("稱謂");
         typeBirthPlaceAC("63000");
+        
     }
 
     //輸入出生地
@@ -178,12 +175,13 @@ public class Rl01210PageV2 {
      * @param birthPlaceAC the birth place ac
      */
     public void typeBirthPlaceAC(final String birthPlaceAC) {
+	final String typeXpath = "//span[contains(@id,'birthPlaceAC')]";
 	/***
          * 由於發現使用Selenium2 (WebDrvier在firefox 17下 有異常不能正常操作,所以實作暫時改用Selenium1)
          * ***/
-//	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-        SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, "//span[contains(@id,'birthPlaceAC')]", birthPlaceAC);
-//        SRISWebUtils.typeAutoCompleteBySpanXpath(selenium, "//span[contains(@id,'birthPlaceAC')]", birthPlaceAC);
+	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
+//        SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, typeXpath, birthPlaceAC);
+        SRISWebUtils.typeAutoCompleteBySpanXpath(selenium, typeXpath, birthPlaceAC);
     }
 
     //
