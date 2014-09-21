@@ -8,7 +8,12 @@ package func.rl000001.common;
  
 
 
+import java.io.File;
+import java.net.URI;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -70,6 +75,7 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
     }
     @Test
     public void testOpenRl01210() throws Exception {
+	final SimpleDateFormat sdf =new SimpleDateFormat(this.getClass().getSimpleName()+"yyyy_MM_dd_ss");
         final RlHompageV2 homepage = new RlHompageV2( this.driver);
         homepage.login(this.driver,this.user, this.passwd);
         Rl00001PageV2 rl00001Page = new Rl00001PageV2( this.driver);
@@ -77,45 +83,52 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
         
 	if (CollectionUtils.isNotEmpty(this.personIdSiteIdList)) {
 	    for (String[] stringArray : this.personIdSiteIdList) {
-		homepage.enterRl00001();
+		try {
+		    homepage.enterRl00001();
 
-		final String personId = stringArray[0];
-		if (StringUtils.contains(personId, "*")) {
-		    continue;
-		}
-		final String siteId = stringArray[1];
-
-		rl00001Page.typeApplicat1(personId, siteId, "爸嗎");
-		boolean trunPage = rl00001Page.clickRl01210();
-
-		if (!trunPage  ) {
-		    logger.info("發生無法進入Rl01210出生登記");
-		    continue;
-		}
-		WebUtils.pageLoadTimeout(this.driver);
-
-		rl01210Page.switchTab();
-
-		HouseholdMaintainPageV2 householdMaintainPage = null;
-
-		if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
-
-		    householdMaintainPage = new HouseholdMaintainPageV2(driver);
-
-		    while (!householdMaintainPage.switchTab()) {
-			logger.debug("轉不過去");
+		    final String personId = stringArray[0];
+		    if (StringUtils.contains(personId, "*")) {
+		        continue;
 		    }
-		    // 發現所需延遲時間需要更久
-		    // final WebDriverWait wait = new WebDriverWait(driver, 60);
-		    // wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(alertFlagXpath)));
-		    // ((RemoteWebDriver) this.driver).executeScript(closeBeforeUnloadAlert, "");
-		    isAlertPresent();
+		    final String siteId = stringArray[1];
 
-		}
-		if (householdMaintainPage != null && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
-		    householdMaintainPage.processPrintView();
-		    isAlertPresent();
-		    householdMaintainPage.processAppyCahange();
+		    rl00001Page.typeApplicat1(personId, siteId, "爸嗎");
+		    boolean trunPage = rl00001Page.clickRl01210();
+
+		    if (!trunPage  ) {
+		        logger.info("發生無法進入Rl01210出生登記");
+		        continue;
+		    }
+		    WebUtils.pageLoadTimeout(this.driver);
+
+		    rl01210Page.switchTab();
+
+		    HouseholdMaintainPageV2 householdMaintainPage = null;
+
+		    if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
+
+		        householdMaintainPage = new HouseholdMaintainPageV2(driver);
+
+		        while (!householdMaintainPage.switchTab()) {
+		    	logger.debug("轉不過去");
+		        }
+		        // 發現所需延遲時間需要更久
+		        // final WebDriverWait wait = new WebDriverWait(driver, 60);
+		        // wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(alertFlagXpath)));
+		        // ((RemoteWebDriver) this.driver).executeScript(closeBeforeUnloadAlert, "");
+		        isAlertPresent();
+
+		    }
+		    if (householdMaintainPage != null && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
+		        householdMaintainPage.processPrintView();
+		        isAlertPresent();
+		        householdMaintainPage.processAppyCahange();
+		    }
+		} catch (Exception e) {
+		    logger.error(e.getMessage(),e);
+		    //發生錯誤...螢幕截圖		    
+		    WebUtils.takeScreen(driver, getClass());
+		   
 		}
 
 	    }
