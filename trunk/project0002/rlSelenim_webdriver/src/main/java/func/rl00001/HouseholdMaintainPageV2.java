@@ -122,6 +122,7 @@ public class HouseholdMaintainPageV2 {
         
         final  ExpectedCondition<Boolean> popupExpected =  new ExpectedCondition<Boolean>() {
 	    public Boolean apply(WebDriver input) {
+		//預覽列印是新增加視窗
 		return (driver.getWindowHandles().size() > originalSize);
 	    }
 	};
