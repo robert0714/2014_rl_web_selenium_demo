@@ -24,10 +24,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHttpEntityEnclosingRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Augmenter;
@@ -87,7 +90,18 @@ public class WebUtils {
         boolean giveUpOperation = initData.isGiveUpOperation();
         return giveUpOperation;
     }
-    
+    public static String acceptAlertAndGetItsText(final WebDriver driver) {
+        try {
+            final Alert alert = driver.switchTo().alert();
+            final String alertText = alert.getText();
+            alert.accept();
+            return alertText;
+        }catch (Exception e) {
+            LOGGER.error(e.getMessage() ,e);
+            // Modal dialog showed
+            return null;
+        }
+    }
     /**
      * **
      * 按鈕Xpath為clickBtnXpath點選後
@@ -104,9 +118,9 @@ public class WebUtils {
           
         //等待6秒...不見得msg出來,改成60秒
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-        ;
         
         driver.findElement(By.xpath(clickBtnXpath)).click();
+        
         
         if (driver.findElements(By.xpath("//*[@id='growl2_container']/div/div")).size() != 0 ) {
             int count = 0;
@@ -136,15 +150,6 @@ public class WebUtils {
 	 driver.manage().timeouts().implicitlyWait(3,  TimeUnit.SECONDS);
 	 driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
    }
-    public static void showIME(final WebDriver driver){
-	final String activeEngine = driver.manage().ime().getActiveEngine();
-        final List<String> availableEngines = driver.manage().ime(). getAvailableEngines();
-        for(String engine : availableEngines){
-            driver.manage().ime().activateEngine(engine);
-            WebUtils.pageLoadTimeout(driver);
-        }
-        driver.manage().ime().activateEngine(activeEngine);
-    }
     /**
      * **
      * 按鈕Xpath為clickBtnXpath點選後
@@ -586,40 +591,4 @@ public class WebUtils {
         }
         return result;
     }
-    
-//    /**
-//     * Wait page load by id.
-//     * selenium.waitForPageToLoad替代方法
-//     * @param driver the driver
-//     * @param seconds the seconds
-//     * @param id the id
-//     */
-//    public  static  void waitPageLoadById(final  WebDriver driver ,final long seconds,final  String id) {
-//        final WebDriverWait wait = new WebDriverWait(driver, seconds);
-//        wait.until(ExpectedConditions.elementToBeClickable(By.id(id)));
-//    }
-//    
-//    /**
-//     * Wait page load by xpath.
-//     * selenium.waitForPageToLoad替代方法
-//     * @param driver the driver
-//     * @param seconds the seconds
-//     * @param xpathExpression the xpath expression
-//     */
-//    public static void waitPageLoadByXpath(final WebDriver driver, final long seconds, final String xpathExpression) {
-//        final WebDriverWait wait = new WebDriverWait(driver, seconds);
-//        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
-//    }
-//    
-//    /**
-//     * Wait page load by link text.
-//     * selenium.waitForPageToLoad替代方法
-//     * @param driver the driver
-//     * @param seconds the seconds
-//     * @param linkText the link text
-//     */
-//    public static void waitPageLoadByLinkText(final WebDriver driver, long seconds, String linkText) {
-//        final WebDriverWait wait = new WebDriverWait(driver, seconds);
-//        wait.until(ExpectedConditions.elementToBeClickable(By.linkText(linkText)));
-//    }
 }
