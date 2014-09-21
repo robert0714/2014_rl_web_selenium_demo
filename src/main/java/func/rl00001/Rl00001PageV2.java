@@ -1,6 +1,10 @@
 package func.rl00001;
 
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -67,11 +71,13 @@ public class Rl00001PageV2 {
         ((RemoteWebDriver) driver).executeScript(closeBeforeUnloadAlert, "");
         driver.navigate().refresh();         
     }
-    public boolean clickRl1210()throws InterruptedException{
+    public boolean clickRl01210()throws InterruptedException{
         final String rl01210Xpath = "//a[contains(text(),'出生登記')]";
         this.logger.debug("rl01210click.isVisible()<HouseholdMaintainPage>: " );
-//        this.driver.findElement(By.xpath(rl01210Xpath)).click(); 
-       final GrowlMsg result = WebUtils.clickBtn(this.driver, rl01210Xpath);
+        final GrowlMsg result = WebUtils.clickBtn(this.driver, rl01210Xpath);
+        WebUtils.pageLoadTimeout(this.driver);
+       driver.manage().timeouts().implicitlyWait(10,  TimeUnit.SECONDS);
+       isAlertPresent();
        if(result.isGiveUpOperation()){
 	   return false;
        }else{
@@ -88,7 +94,21 @@ public class Rl00001PageV2 {
         
         this.driver.findElement(By.xpath(rl01220Xpath)).click();      
      }
-    
+    private boolean isAlertPresent() {
+	try {
+	    Alert alert = driver.switchTo().alert();
+	    this.logger.info(alert.getText());
+	    alert.accept();
+	    this.logger.debug("alert was present");
+	    return true;
+	} catch (NoAlertPresentException e) {
+	    // Modal dialog showed
+	    return false;
+	}catch (UnhandledAlertException e) {
+	    // Modal dialog showed
+	    return false;
+	}
+    }
     
     
 

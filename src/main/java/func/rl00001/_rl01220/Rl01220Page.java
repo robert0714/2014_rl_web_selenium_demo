@@ -25,7 +25,7 @@ public class Rl01220Page {
     private WebDriver driver;
     private Selenium selenium;
 
-    private final String rl01220PartialUlr = "_rl01220/rl01220.xhtml";
+    private final String rl01220PartialURL = "_rl01220/rl01220.xhtml";
 
     public Rl01220Page(final Selenium selenium, final WebDriver driver) throws UnhandledAlertException, SeleniumException {
 	super();
@@ -42,7 +42,7 @@ public class Rl01220Page {
     }
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {
 	final String currentUrl = this.driver.getCurrentUrl();
-	if (StringUtils.contains(currentUrl, this.rl01220PartialUlr)) {
+	if (StringUtils.contains(currentUrl, this.rl01220PartialURL)) {
 	    this.selenium.refresh();
 	    this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 	    this.selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
