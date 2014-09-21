@@ -22,7 +22,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
-import org.study.selenium.RisRemoteWebDriver;
 import org.study.selenium.SeleniumConfig;
 
 import com.thoughtworks.selenium.SeleniumException;
@@ -83,7 +82,8 @@ public class RlHompageV2 {
         } else {
             final String mainUrl = getMainUrl(currentUrl);
             //得到https://idpfl.ris.gov.tw:8443
-            String openAuthorizationUrl = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";//https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
+            String openAuthorizationUrl = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";
+            //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
             AbstractSeleniumV2TestCase.open(openAuthorizationUrl);
 
             logger.info(driver.getCurrentUrl());
@@ -127,9 +127,9 @@ public class RlHompageV2 {
      * ***/
     public void enterRl00001() {
 	isAlertPresent() ;
-	   
-	this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
-//        this.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);   
+//	WebUtils.pageLoadTimeout(this.driver);
+	
         this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
         
         // 進入登記作業,
@@ -138,7 +138,8 @@ public class RlHompageV2 {
         final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
         
 //        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(rl00001Xpath)));
-        this.driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+        
+        WebUtils.pageLoadTimeout(this.driver);
 //        isBeforeUnloadEventPresent();
         isAlertPresent();
         

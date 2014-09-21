@@ -7,6 +7,7 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -128,6 +129,20 @@ public class WebUtils {
             }
         }
         return result;
+    }
+    
+    public  static void pageLoadTimeout(final WebDriver driver){
+	 driver.manage().timeouts().implicitlyWait(3,  TimeUnit.SECONDS);
+	 driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+   }
+    public static void showIME(final WebDriver driver){
+	final String activeEngine = driver.manage().ime().getActiveEngine();
+        final List<String> availableEngines = driver.manage().ime(). getAvailableEngines();
+        for(String engine : availableEngines){
+            driver.manage().ime().activateEngine(engine);
+            WebUtils.pageLoadTimeout(driver);
+        }
+        driver.manage().ime().activateEngine(activeEngine);
     }
     /**
      * **

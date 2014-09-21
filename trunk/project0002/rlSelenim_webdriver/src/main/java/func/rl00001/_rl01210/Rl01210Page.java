@@ -30,7 +30,7 @@ public class Rl01210Page {
     private Selenium selenium;
 
     /** The rl01210 partial ulr. */
-    private final String rl01210PartialUlr = "_rl01210/rl01210.xhtml";
+    private final String rl01210PartialURL = "_rl01210/rl01210.xhtml";
 
     /**
      * Instantiates a new rl01210 page.
@@ -55,7 +55,7 @@ public class Rl01210Page {
      */
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {
         final String currentUrl = this.driver.getCurrentUrl();
-        if (StringUtils.contains(currentUrl, this.rl01210PartialUlr)) {
+        if (StringUtils.contains(currentUrl, this.rl01210PartialURL)) {
             this.selenium.refresh();
             selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
             this.selenium.focus("//a[contains(text(),'戶籍記事/罰鍰清單')]");
