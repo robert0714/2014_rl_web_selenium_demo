@@ -88,10 +88,9 @@ public class RL02D00Test001 extends AbstractSeleniumTestCase {
     private void process(final RlHompage homepage, final String personId, final String siteId) throws Exception {
         final Rl00001Page aTypingApplication = homepage.typingApplication();
         selenium.waitForPageToLoad("30000");
-        aTypingApplication.setPersonId(personId);
-        aTypingApplication.setSiteId(siteId);
-        aTypingApplication.typingApplication();
-
+        aTypingApplication.typeTxnPerson(personId, siteId);
+        aTypingApplication.typeApplicat1(personId, siteId, "相同");
+        
         if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
             selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
         }

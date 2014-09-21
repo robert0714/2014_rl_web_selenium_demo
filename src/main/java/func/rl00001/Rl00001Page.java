@@ -17,8 +17,6 @@ import func.rl.common.WebUtils;
 public class Rl00001Page {
     private  final Logger logger = LoggerFactory.getLogger(getClass());
     private WebDriver driver;
-    private String personId;
-    private String siteId;
     private Selenium selenium;
     private final String rl00001Url ="rl00001/rl00001.xhtml";
     private static final String closeBeforeUnloadAlert ="document.getElementsByName('ae_l_leaveCheck')[0].value = null;"; 
@@ -125,80 +123,6 @@ public class Rl00001Page {
                 break outer;
             }
         }
-    }
-    public void typingApplication() throws UnhandledAlertException, SeleniumException, InterruptedException {
-
-        outer: while (StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
-            //*[@id="txnPersonId"]
-            //輸入當事人統號
-            this.selenium.type("//input[contains(@id,'txnPersonId')]", getPersonId());
-
-            if (!StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
-                break outer;
-            }
-            //輸入當事人
-            SRISWebUtils.typeAutoComplete(this.selenium, "//td[contains(@id,'currentPersonSiteIdTD')]", getSiteId());
-
-            this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-            if (!StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
-                break outer;
-            }
-
-            //點選當事人同申請人
-            this.selenium.click("//input[@id='applicantSameTxnPerson']");
-            this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-
-            
-            //點選查詢按鈕
-            final String searchBtnXpath = "//div/div/button";
-
-            if (this.selenium.isElementPresent(searchBtnXpath) && this.selenium.isVisible(searchBtnXpath)
-                    && StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
-                boolean giveUpOperation = WebUtils.handleClickBtn(this.selenium, searchBtnXpath);
-                if (giveUpOperation) {
-                    if (this.selenium.isElementPresent(alertFlagXpath)) {
-                        this.selenium.runScript(closeBeforeUnloadAlert);
-                    }
-                    this.selenium.refresh();
-                }
-
-                int count = 0;
-                //由於點擊等待回應真的很花時間
-                inner: while (StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
-                    Thread.sleep(5000);//等待5秒
-                    this.logger.debug(this.driver.getCurrentUrl());
-                    if (StringUtils.contains(this.driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
-                        break outer;
-                    }
-                    count++;
-                    if (count > 2) {
-                        break inner;
-                    }
-                }
-
-            } else if (!StringUtils.contains(this.driver.getCurrentUrl(), rl00001Url)) {
-                break outer;
-            }
-        }
-        System.out.println("Rl00001Page.typingApplication end: "+this.driver.getCurrentUrl());
-        
-    }
-
-    public String getPersonId() {
-
-        return this.personId;
-    }
-
-    public void setPersonId(String personId) {
-        this.personId = personId;
-    }
-
-    public String getSiteId() {
-        return this.siteId;
-    }
-
-    public void setSiteId(String siteId) {
-        this.siteId = siteId;
     }
 
 }

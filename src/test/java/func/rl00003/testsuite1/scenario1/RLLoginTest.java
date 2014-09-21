@@ -85,9 +85,7 @@ public class RLLoginTest {
     private void process(final RlHompage homepage, final String personId, final String siteId) throws Exception {
         final Rl00001Page aTypingApplication = homepage.typingApplication();
         selenium.waitForPageToLoad("30000");
-        aTypingApplication.setPersonId(personId);
-        aTypingApplication.setSiteId(siteId);
-        aTypingApplication.typingApplication();
+       
 
         if (selenium.isElementPresent("//input[contains(@id,'alert_flag')]")) {
             selenium.runScript("document.getElementsByName('ae_l_leaveCheck')[0].value = null;");
