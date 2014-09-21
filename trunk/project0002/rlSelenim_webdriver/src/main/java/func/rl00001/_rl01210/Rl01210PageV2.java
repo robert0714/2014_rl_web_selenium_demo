@@ -94,6 +94,7 @@ public class Rl01210PageV2 {
         final String verifyBtnXpath = "//span[contains(@id,'button')]/button";
         //     this.selenium.click(verifyBtnXpath );        
         //資料驗證
+        LOGGER.info("點選資料驗證");
         GrowlMsg verify = WebUtils.clickBtn(this.driver, verifyBtnXpath);
         final String errorExtMessage = verify.getErrorExtMessage();
         final String errorMessage = verify.getErrorMessage();
@@ -120,10 +121,14 @@ public class Rl01210PageV2 {
             }
         } 
         WebUtils.pageLoadTimeout(this.driver);
-        
+        if (verify.isGiveUpOperation()) {
+            LOGGER.info("點選關閉視窗");
+            WebUtils.clickBtn(this.driver, "//span[contains(@id,'button')]/button[4]");
+        }
 
         //暫存
         WebUtils.pageLoadTimeout(this.driver);
+        LOGGER.info("點選暫存");
 //        this.driver.findElement(By.xpath("//span[contains(@id,'button')]/button[3]")).click(); 
         WebUtils.clickBtn(this.driver, "//span[contains(@id,'button')]/button[3]");
     }
