@@ -68,7 +68,7 @@ public class Rl00001Page {
         }
         this.selenium.refresh();
     }
-    public void clickRl1210()throws InterruptedException{
+    public void clickRl01210()throws InterruptedException{
         final String rl01210Xpath = "//a[contains(text(),'出生登記')]";
         this.logger.debug("rl01210click.isVisible()<HouseholdMaintainPage>: "+this.selenium.isVisible(rl01210Xpath));
          
@@ -80,7 +80,7 @@ public class Rl00001Page {
         }
      
      }
-    public void clickRl1220()throws InterruptedException{
+    public void clickRl01220()throws InterruptedException{
         final String rl01220Xpath = "//a[contains(text(),'死亡（死亡宣告）登記')]";
         this.logger.debug("rl01220click.isVisible()<HouseholdMaintainPage>: "+this.selenium.isVisible(rl01220Xpath));
          

@@ -76,23 +76,27 @@ public class Rl00001PageV2 {
         this.logger.debug("rl01210click.isVisible()<HouseholdMaintainPage>: " );
         final GrowlMsg result = WebUtils.clickBtn(this.driver, rl01210Xpath);
         WebUtils.pageLoadTimeout(this.driver);
-       driver.manage().timeouts().implicitlyWait(10,  TimeUnit.SECONDS);
-       isAlertPresent();
-       if(result.isGiveUpOperation()){
-	   return false;
-       }else{
-	   return true ;
-       }
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        isAlertPresent();
+        if (result.isGiveUpOperation()) {
+            return false;
+        } else {
+            return true;
+        }
      }
-    public void clickRl1220()throws InterruptedException{
+    public boolean clickRl01220()throws InterruptedException{
         final String rl01220Xpath = "//a[contains(text(),'死亡（死亡宣告）登記')]";
         this.logger.debug("rl01220click.isVisible()<HouseholdMaintainPage>: " );
          
-        final WebDriverWait wait = new WebDriverWait(driver, 60);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(rl01220Xpath)));
-        ((RemoteWebDriver) driver).executeScript(closeBeforeUnloadAlert, "");
-        
-        this.driver.findElement(By.xpath(rl01220Xpath)).click();      
+        final GrowlMsg result = WebUtils.clickBtn(this.driver, rl01220Xpath);
+        WebUtils.pageLoadTimeout(this.driver);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        isAlertPresent();
+        if (result.isGiveUpOperation()) {
+            return false;
+        } else {
+            return true;
+        }
      }
     private boolean isAlertPresent() {
 	try {
