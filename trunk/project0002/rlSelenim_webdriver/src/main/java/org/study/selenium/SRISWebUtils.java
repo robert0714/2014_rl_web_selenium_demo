@@ -12,6 +12,7 @@ import com.thoughtworks.selenium.Selenium;
 
 import func.rl.common.WebUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -44,14 +45,20 @@ public class SRISWebUtils {
         for (int i = 0; i < 1; ++i) {
             WebUtils.pageLoadTimeout(driver);
             driver.findElement(By.xpath(typeXpath)).click();
+            driver.manage().timeouts().implicitlyWait(20,  TimeUnit.SECONDS);
             Actions oAction = new Actions(driver);
             oAction.moveToElement(oWE);
             oAction.doubleClick(oWE).build().perform();
-            WebUtils.pageLoadTimeout(driver);
+            driver.manage().timeouts().implicitlyWait(20,  TimeUnit.SECONDS);
+            if (StringUtils.isNotBlank(oWE.getText())) {
+		oWE.clear();
+		driver.manage().timeouts().implicitlyWait(20,  TimeUnit.SECONDS);
+	    }
             oWE.sendKeys(value); 
-            WebUtils.pageLoadTimeout(driver);
+            driver.manage().timeouts().implicitlyWait(20,  TimeUnit.SECONDS);
         }
         driver.findElement(By.xpath(closeXpath)).click();
+        WebUtils.pageLoadTimeout(driver);
 //        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
 //        selenium.fireEvent(typeXpath, "blur");
 //        selenium.click(closeXpath);
@@ -73,14 +80,20 @@ public class SRISWebUtils {
         for (int i = 0; i < 1; ++i) {            
             WebUtils.pageLoadTimeout(driver);
             driver.findElement(By.xpath(typeXpath)).click();
+            driver.manage().timeouts().implicitlyWait(20,  TimeUnit.SECONDS);
             Actions oAction = new Actions(driver);
             oAction.moveToElement(oWE);
             oAction.doubleClick(oWE).build().perform();
-            WebUtils.pageLoadTimeout(driver);
+            driver.manage().timeouts().implicitlyWait(20,  TimeUnit.SECONDS);;
+	    if (StringUtils.isNotBlank(oWE.getText())) {
+		oWE.clear();
+		driver.manage().timeouts().implicitlyWait(20,  TimeUnit.SECONDS);
+	    }
             oWE.sendKeys(value); 
             WebUtils.pageLoadTimeout(driver);
         }
         driver.findElement(By.xpath(closeXpath)).click();
+        WebUtils.pageLoadTimeout(driver);
 //        JavascriptExecutor js = (JavascriptExecutor) driver;
 //        StringBuilder stringBuilder = new StringBuilder();
 //        stringBuilder.append("var x = $(\'"+cssSelctr+"\');");
