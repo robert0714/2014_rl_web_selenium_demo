@@ -12,17 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import func.rl.common.PagePartialURL;
-import func.rl.common.RlHompage;
 import func.rl.common.RlHompageV2;
 import func.rl.common.WebUtils;
 import func.rl000001.rl01220.internal.DeathReader;
-import func.rl00001.HouseholdMaintainPage;
 import func.rl00001.HouseholdMaintainPageV2;
-import func.rl00001.Rl00001Page;
 import func.rl00001.Rl00001PageV2;
-import func.rl00001._rl01210.Rl01210Page;
-import func.rl00001._rl01210.Rl01210PageV2;
-import func.rl00001._rl01220.Rl01220Page;
 import func.rl00001._rl01220.Rl01220PageV2;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -32,9 +26,7 @@ import org.junit.Before;
 import org.junit.Test; 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.study.selenium.AbstractSeleniumTestCase;
 import org.study.selenium.AbstractSeleniumV2TestCase;
-import org.study.selenium.SeleniumConfig;
 
 import static org.junit.Assert.assertTrue;
 
@@ -88,23 +80,21 @@ public class RL01220Test001V2 extends AbstractSeleniumV2TestCase {
                     rl00001Page.typeApplicat1(applicat1Data[0], applicat1Data[1], "爸媽");                    
 
                     WebUtils.pageLoadTimeout(this.driver);
-                    rl00001Page.clickRl1220();                    
+                    boolean trunPage = rl00001Page.clickRl01220();
 
-                    WebUtils.pageLoadTimeout(this.driver);                    
+                    if (!trunPage  ) {
+                        logger.info("發生無法進入Rl01220 死亡登記/死亡宣告登記");
+                        continue;
+                    }                    
+               
                     
                     WebUtils.pageLoadTimeout(this.driver);
                     rl01220Page.switchTab();
                     WebUtils.pageLoadTimeout(this.driver); 
                     
-                    HouseholdMaintainPageV2 householdMaintainPage = null;
+                    HouseholdMaintainPageV2  householdMaintainPage = new HouseholdMaintainPageV2(driver);;
 
-                    if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
-                        householdMaintainPage = new HouseholdMaintainPageV2(driver);
-                        while (!householdMaintainPage.switchTab()) {
-                            logger.debug("轉不過去");
-                        }
-                        isAlertPresent();
-                    }
+                    
                     if (householdMaintainPage != null
                             && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
                         householdMaintainPage.processPrintView();

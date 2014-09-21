@@ -78,7 +78,7 @@ public class RL01210Test001 extends AbstractSeleniumTestCase {
 //                    Thread.sleep(1000l);
                     rl00001Page.typeApplicat1(personId, siteId,"爸嗎");
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-                    rl00001Page.clickRl1210();
+                    rl00001Page.clickRl01210();
 //                    boolean giveUpOperation =  WebUtils.handleRLAlert(this.selenium);
 //                    if(giveUpOperation){ 
 //                        continue;

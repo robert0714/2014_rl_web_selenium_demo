@@ -85,7 +85,7 @@ public class RL01220Test001 extends AbstractSeleniumTestCase {
                     rl00001Page.typeApplicat1(applicat1Data[0], applicat1Data[1], "爸媽");
                     
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-                    rl00001Page.clickRl1220();
+                    rl00001Page.clickRl01220();
                     
                     this. selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
                     Rl01220Page rl01220Page = new Rl01220Page(this. selenium, this. driver);
