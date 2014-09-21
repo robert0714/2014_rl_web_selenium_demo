@@ -120,12 +120,6 @@ public class RL01220Test001 extends AbstractSeleniumTestCase {
                     WebUtils.handleRLAlert(selenium);
                 }
             }
-        } else {
-            this. selenium.waitForPageToLoad("30000");
-            rl00001Page.setPersonId("C100201902");
-            rl00001Page.setSiteId("65000120");
-            rl00001Page.typingApplication();
-            
         }
         
         rl00001Page.redirectPage();
