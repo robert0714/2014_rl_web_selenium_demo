@@ -2,6 +2,7 @@ package func.rl00001._rl01210;
  
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.thoughtworks.selenium.SeleniumException;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
@@ -168,7 +169,6 @@ public class Rl01210PageV2 {
         typeBirthOrderSexSelectOneMenu();
         typeRelationShip("稱謂");
         typeBirthPlaceAC("63000");
-
     }
 
     //輸入出生地
@@ -178,8 +178,12 @@ public class Rl01210PageV2 {
      * @param birthPlaceAC the birth place ac
      */
     public void typeBirthPlaceAC(final String birthPlaceAC) {
+	/***
+         * 由於發現使用Selenium2 (WebDrvier在firefox 17下 有異常不能正常操作,所以實作暫時改用Selenium1)
+         * ***/
+//	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
         SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, "//span[contains(@id,'birthPlaceAC')]", birthPlaceAC);
-        
+//        SRISWebUtils.typeAutoCompleteBySpanXpath(selenium, "//span[contains(@id,'birthPlaceAC')]", birthPlaceAC);
     }
 
     //
@@ -268,7 +272,7 @@ public class Rl01210PageV2 {
 //        this. driver.findElement(By.xpath("//span[contains(@id,'lastName')]/span/input")).sendKeys(lastName);  
 //        WebUtils.pageLoadTimeout(this.driver);
 	 /***
-         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1)
+         * 由於發現使用Selenium2 (WebDrvier在firefox 17下 有異常不能正常操作,所以實作暫時改用Selenium1)
          * ***/
 	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
         selenium.type("//span[contains(@id,'lastName')]/span/input", lastName);
