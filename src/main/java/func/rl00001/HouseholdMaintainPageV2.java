@@ -1,8 +1,7 @@
 package func.rl00001;
 
 
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import java.util.Set; 
 
 import org.apache.commons.lang3.StringUtils; 
 import org.openqa.selenium.By;
@@ -11,6 +10,7 @@ import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -99,6 +99,7 @@ public class HouseholdMaintainPageV2 {
        
         return result;
     }
+    
     /******
      * 列印申請書測試程序
      * *****/
@@ -115,16 +116,26 @@ public class HouseholdMaintainPageV2 {
         final WebElement printBtn = this.driver.findElement(By.xpath(printBtnXpath));
         wait.until(ExpectedConditions.visibilityOf(printBtn) );
         
-        
+        final int originalSize = driver.getWindowHandles().size() ;
+        logger.info("預覽列印");
         giveUpOperation = WebUtils.handleClickBtn(this.driver ,  printBtnXpath);
-
+        
+        final  ExpectedCondition<Boolean> popupExpected =  new ExpectedCondition<Boolean>() {
+	    public Boolean apply(WebDriver input) {
+		return (driver.getWindowHandles().size() > originalSize);
+	    }
+	};
+	
+	
 	if (!giveUpOperation ) {
+	    
+	    wait.until(popupExpected);
+	    logger.info("預覽列印視窗出現");
+	    
 	    // 預覽申請書會彈跳出視窗
 	    int count = 0;
 	    privntViewLoop: while (true) {
-//	        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-	        Thread.sleep(5000);
-	        // 建議5秒
+		
 		boolean printViewPresent = false;
 		try {
 		    final Set<String> windowHandles = driver.getWindowHandles();
@@ -142,6 +153,21 @@ public class HouseholdMaintainPageV2 {
                                 final String terminatorPrintXpath = "//span[contains(@id,'pdfbanner')]/span[2]/button[2]";
                                 wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
                                 logger.info("等待預覽列印網頁");
+                                
+                                final  WebElement imgElement = this.driver.findElement(By.xpath("//*[@id='pdfpreviewimg']"));
+                                wait.until(ExpectedConditions.visibilityOf(imgElement));
+                                logger.info("imgElement presented");
+                                
+                                final String pdfViewerContentXpath = "//*[contains(@id,'pdfViewerContent')]/input";
+                                final  WebElement hiddenElement = this.driver.findElement(By.xpath(pdfViewerContentXpath));
+                                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(pdfViewerContentXpath)));
+                                logger.info("base64 presented");
+                                
+                                final  String base64 = hiddenElement.getText() ;           
+                                logger.info("預覽列印網頁內容 (base64): {}",base64);
+                                
+                                wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
+                                
                                 WebUtils.scroolbarDownUp( driver);
                                 // *[@id="j_id4_j_id_9:j_id_y"]/span
                                 // *[@id="j_id4_j_id_9:j_id_y"]
@@ -172,6 +198,7 @@ public class HouseholdMaintainPageV2 {
 		}
 
                 try {
+                    //當點擊關閉預覽視窗按鈕失敗時,需要強制關閉
                     if (printViewPresent && !StringUtils.equalsIgnoreCase(driver.getWindowHandle(), parentWindowId)) {
                         // Close the Help Popup Window
                         driver.close();
@@ -191,6 +218,5 @@ public class HouseholdMaintainPageV2 {
 		count++;
 	    }
 	}
-	// div[@id='j_id39_j_id_sx_content']/button
     } 
-}
+} 
