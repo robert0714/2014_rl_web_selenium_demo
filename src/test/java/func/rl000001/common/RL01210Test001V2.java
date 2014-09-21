@@ -75,7 +75,6 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
     }
     @Test
     public void testOpenRl01210() throws Exception {
-	final SimpleDateFormat sdf =new SimpleDateFormat(this.getClass().getSimpleName()+"yyyy_MM_dd_ss");
         final RlHompageV2 homepage = new RlHompageV2( this.driver);
         homepage.login(this.driver,this.user, this.passwd);
         Rl00001PageV2 rl00001Page = new Rl00001PageV2( this.driver);
