@@ -2,6 +2,7 @@ package func.rl00001;
 
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils; 
 import org.openqa.selenium.By;
@@ -157,7 +158,8 @@ public class HouseholdMaintainPage {
 				logger.debug("title: " + title);
                                 while (!ready()) {
                                     //applet的id為risPdfPrinterApplet方法為getConvertState
-                                    Thread.sleep(5000);// 建議5秒畢竟cognos實在太慢了
+                                    driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+                                    // 建議5秒畢竟cognos實在太慢了
                                     
                                 }
                                 WebUtils.scroolbarDownUp(selenium, driver);

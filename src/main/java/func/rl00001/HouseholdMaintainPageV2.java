@@ -2,6 +2,7 @@ package func.rl00001;
 
 
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils; 
 import org.openqa.selenium.By;
@@ -86,8 +87,8 @@ public class HouseholdMaintainPageV2 {
     private boolean ready(){
         boolean result =false ;
         final JavascriptExecutor js = (JavascriptExecutor)  driver;
-        Object aaa = js.executeScript("var aaa= risPdfPrinterApplet.getConvertStatus();console.log('robert test: '+aaa);");
-        Object jsValue = js.executeScript("return  risPdfPrinterApplet.getConvertStatus();");
+//        Object aaa = js.executeScript("var aaa= risPdfPrinterApplet.getConvertStatus();console.log('robert test: '+aaa);");
+        final Object jsValue = js.executeScript("return  risPdfPrinterApplet.getConvertStatus();");
         if(jsValue != null){
             if(jsValue instanceof String){
                 result =  Boolean.valueOf((String)jsValue);
@@ -144,7 +145,8 @@ public class HouseholdMaintainPageV2 {
 				logger.debug("title: " + title);
                                 while (!ready()) {
                                     //applet的id為risPdfPrinterApplet方法為getConvertState
-                                    Thread.sleep(5000);// 建議5秒畢竟cognos實在太慢了
+                                    driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+                                    ;// 建議5秒畢竟cognos實在太慢了
                                     
                                 }
                                 WebUtils.scroolbarDownUp( driver);
