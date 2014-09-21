@@ -1,8 +1,6 @@
 package func.rl00001._rl01210;
  
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import com.thoughtworks.selenium.SeleniumException;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
