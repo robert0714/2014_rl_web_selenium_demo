@@ -64,7 +64,9 @@ public class RlHompageV2 {
         final String sitLoginPage = "/rl/pages/common/login.jsp";
         final String homapage ="/rl/faces/pages/index.xhtml";
         final String partialPage ="/rl/faces/pages";
+        isAlertPresent();
         AbstractSeleniumV2TestCase.open(homapage);
+        isAlertPresent();
         String currentUrl = driver.getCurrentUrl();
         System.out.println("辨識基準頁面網址: "+currentUrl);
         
@@ -98,6 +100,7 @@ public class RlHompageV2 {
             // 然後必須想辦法到target所指定網址
             AbstractSeleniumV2TestCase.open("/rl/");//http://rlfl.ris.gov.tw/rl/
         }
+        isAlertPresent();
     }
     public void login(final String user, final String passwd) throws UnhandledAlertException, SeleniumException {
         login(this.driver ,user, passwd);

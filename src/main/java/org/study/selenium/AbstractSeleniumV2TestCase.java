@@ -19,6 +19,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,6 +80,7 @@ public class AbstractSeleniumV2TestCase {
         final String navigateUrl = String.format("%s://%s:%s%s",baseUrl.getProtocol(), baseUrl.getHost(), baseUrl.getPort(), url);
         LOGGER.debug("navigateUrl: {}",navigateUrl);
         driver.navigate().to(navigateUrl);
+        
     }
     /**
      * Gets the main url.
@@ -110,9 +112,9 @@ public class AbstractSeleniumV2TestCase {
 	}
     }
 
-    public String closeAlertAndGetItsText() {
+    public String closeAlertAndGetItsText( ) {
 	try {
-	    Alert alert = driver.switchTo().alert();
+	    final Alert alert = driver.switchTo().alert();
 	    String alertText = alert.getText();
 	    if (acceptNextAlert) {
 		alert.accept();
@@ -123,5 +125,20 @@ public class AbstractSeleniumV2TestCase {
 	} finally {
 	    acceptNextAlert = true;
 	}
+    }
+
+    public static String acceptAlertAndGetItsText(final WebDriver driver) {
+        try {
+            final Alert alert = driver.switchTo().alert();
+            final String alertText = alert.getText();
+            alert.accept();
+            return alertText;
+        }catch (NoAlertPresentException e) {
+            // Modal dialog showed
+            return null;
+        }catch (UnhandledAlertException e) {
+            // Modal dialog showed
+            return null;
+        }
     }
 }
