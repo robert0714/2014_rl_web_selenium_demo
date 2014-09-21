@@ -167,13 +167,14 @@ public class Rl01210Page {
 
     }
 
-    //輸入出生地
+     
     /**
      * Type birth place ac.
-     *
+     * 輸入出生地
      * @param birthPlaceAC the birth place ac
      */
     public void typeBirthPlaceAC(final String birthPlaceAC) {
+        LOGGER.debug("輸入出生地: {}" ,birthPlaceAC);
         SRISWebUtils.typeAutoCompleteBySpanXpath(this.selenium, "//span[contains(@id,'birthPlaceAC')]", birthPlaceAC);
         this.selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
@@ -185,6 +186,7 @@ public class Rl01210Page {
      * @param relationship the relationship
      */
     public void typeRelationShip(final String relationship) {
+        LOGGER.debug("輸入稱: {}" ,relationship);
         //span[@id='j_id_2k:relationship']/span/input
         this.selenium.type("//span[contains(@id,'relationship')]/span/input", relationship);
         selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
@@ -208,6 +210,7 @@ public class Rl01210Page {
      * @param birthYyymmdd the birth yyymmdd
      */
     public void typeBirthYyymmdd(final String birthYyymmdd) {
+        LOGGER.debug("輸入出生日期: {}", birthYyymmdd);
         //input[@id='j_id_2k:birthYyymmdd:j_id_uj']
         final String yyy = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 0, 3);
         final String mm = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 3, 5);
@@ -235,6 +238,7 @@ public class Rl01210Page {
      * @param lastName the last name
      */
     public void typeLastName(final String lastName) {
+        LOGGER.debug("輸入出生者資料的姓: {}" ,lastName);
         ////span[@id='j_id_2k:lastName']/span/input
         this.selenium.type("//span[contains(@id,'lastName')]/span/input", lastName);
     }
@@ -246,6 +250,7 @@ public class Rl01210Page {
      * @param firstName the first name
      */
     public void typeFirstName(final String firstName) {
+        LOGGER.debug("輸入出生者資料的名: {}" ,firstName);
         ////span[@id='j_id_2k:firstName']/span/input
         this.selenium.type("//span[contains(@id,'firstName')]/span/input", firstName);
     }
@@ -263,28 +268,32 @@ public class Rl01210Page {
 
     /**
      * Type household head id.
-     *
+     * 輸入戶長統號
      * @param householdHeadId the household head id
      */
     public void typeHouseholdHeadId(final String householdHeadId) {
+        LOGGER.debug("輸入戶長統號: {}", householdHeadId);
         this.selenium.type("//input[contains(@id,'oldHouseholdHeadPersonId')]", householdHeadId);
     }
 
     /**
      * Type household id.
-     *
+     * 輸入戶號
      * @param householdId the household id
      */
     public void typeHouseholdId(final String householdId) {
+        LOGGER.debug("輸入戶號: {}", householdId);
         this.selenium.type("//input[contains(@id,'oldHouseholdId')]", householdId);
     }
 
     /**
      * Sets the new household.
-     *
+     * 自立新戶 true
+     * 非自立新戶(入他人戶) false
      * @param isNewHousehold the new new household
      */
     public void setNewHousehold(final boolean isNewHousehold) {
+        LOGGER.debug("自立新戶: {}", isNewHousehold);
         //input[@id='j_id_2k:isNewHousehold:0']
         final String xpath = String.format("//input[contains(@id,'isNewHousehold:%s')]", isNewHousehold ? 0 : 1);
         this.selenium.click(xpath);
@@ -292,10 +301,11 @@ public class Rl01210Page {
 
     /**
      * Check birth kind.
-     *
+     * 選擇出生類別
      * @param type the type
      */
     public void checkBirthKind(final BirthKind type) {
+        LOGGER.debug("選擇出生類別: {}", type.toString().intern());
         final String xpath = String.format("//input[contains(@id,'birthKind:%s')]", type.value);
         this.selenium.click(xpath);
 
