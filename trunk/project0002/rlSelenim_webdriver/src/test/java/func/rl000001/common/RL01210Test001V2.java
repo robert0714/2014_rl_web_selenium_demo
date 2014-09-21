@@ -68,7 +68,7 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
 		        continue;
 		    }
 		    final String siteId = stringArray[1];
-
+		    rl00001Page.displayTxId();
 		    rl00001Page.typeApplicat1(personId, siteId, "爸嗎");
 		    boolean trunPage = rl00001Page.clickRl01210();
 

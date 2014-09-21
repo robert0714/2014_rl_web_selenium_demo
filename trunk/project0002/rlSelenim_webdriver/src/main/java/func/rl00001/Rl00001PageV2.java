@@ -2,6 +2,7 @@ package func.rl00001;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -40,7 +41,19 @@ public class Rl00001PageV2 {
         super();
         this.driver = driver;
     }
-
+    public void displayTxId(){
+        if(this.driver.getCurrentUrl().contains( rl00001Url)){
+            try {
+                String txIdInfo = this.driver.findElement(By.xpath("//*[@id='masterForm']/span[1]")).getText();
+                
+                logger.info("Information: {}", txIdInfo);
+            } catch (Exception e) {
+                logger.error (e .getMessage(), e);
+            }
+        }
+        //
+      //*[@id="masterForm"]/span[1]/text()
+    }
     /**
      * Type txn person.
      *

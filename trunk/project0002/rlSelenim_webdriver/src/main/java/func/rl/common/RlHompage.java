@@ -77,7 +77,7 @@ public class RlHompage {
         final String partialPage ="/rl/faces/pages";
         selenium.open(homapage);
         String currentUrl = driver.getCurrentUrl();
-        System.out.println("辨識基準頁面網址: "+currentUrl);
+        logger.info("辨識基準頁面網址: {}" , currentUrl);
         
         
         if (StringUtils.contains(currentUrl, partialPage)) {

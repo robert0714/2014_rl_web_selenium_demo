@@ -77,6 +77,9 @@ public class RL01220Test001V2 extends AbstractSeleniumV2TestCase {
                     rl00001Page.typeTxnPerson(personId, siteId);
                     final int randomInt = RandomUtils.nextInt(this.appPersonIdSiteIdList.size());
                     final   String[] applicat1Data = this.appPersonIdSiteIdList.get(randomInt);
+                    
+                    rl00001Page.displayTxId();
+                    
                     rl00001Page.typeApplicat1(applicat1Data[0], applicat1Data[1], "爸媽");                    
 
                     WebUtils.pageLoadTimeout(this.driver);
