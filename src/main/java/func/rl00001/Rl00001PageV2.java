@@ -130,7 +130,7 @@ public class Rl00001PageV2 {
 
     /**
      * Click rl01210.
-     *
+     * 點選 出生登記 Rl01210
      * @return true, if successful
      * @throws InterruptedException the interrupted exception
      */
@@ -150,7 +150,7 @@ public class Rl00001PageV2 {
 
     /**
      * Click rl01220.
-     *
+     * 點選 死亡（死亡宣告）登記 Rl01220
      * @return true, if successful
      * @throws InterruptedException the interrupted exception
      */
