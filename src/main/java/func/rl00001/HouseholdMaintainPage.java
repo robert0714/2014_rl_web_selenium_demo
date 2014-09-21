@@ -2,7 +2,6 @@ package func.rl00001;
 
 
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils; 
 import org.openqa.selenium.By;
@@ -146,6 +145,7 @@ public class HouseholdMaintainPage {
 		boolean printViewPresent = false;
 		try {
 		    final Set<String> windowHandles = driver.getWindowHandles();
+		    windowHandles.remove(parentWindowId);
 		    browerWindowLoop: for (final String windowId : windowHandles) {
 			if (!StringUtils.equalsIgnoreCase(windowId, parentWindowId)) {
 			    // Switch to the Help Popup Browser Window
@@ -158,8 +158,7 @@ public class HouseholdMaintainPage {
 				logger.debug("title: " + title);
                                 while (!ready()) {
                                     //applet的id為risPdfPrinterApplet方法為getConvertState
-                                    driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-                                    // 建議5秒畢竟cognos實在太慢了
+                                    Thread.sleep(5000);// 建議5秒畢竟cognos實在太慢了
                                     
                                 }
                                 WebUtils.scroolbarDownUp(selenium, driver);
