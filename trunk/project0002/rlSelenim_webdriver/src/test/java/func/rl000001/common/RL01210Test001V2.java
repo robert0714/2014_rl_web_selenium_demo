@@ -8,42 +8,23 @@ package func.rl000001.common;
  
 
 
-import java.io.File;
-import java.net.URI;
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import func.rl.common.PagePartialURL;
-import func.rl.common.RlHompage;
 import func.rl.common.RlHompageV2;
 import func.rl.common.WebUtils;
-import func.rl00001.HouseholdMaintainPage;
 import func.rl00001.HouseholdMaintainPageV2;
-import func.rl00001.Rl00001Page;
 import func.rl00001.Rl00001PageV2;
-import func.rl00001._rl01210.Rl01210Page;
 import func.rl00001._rl01210.Rl01210PageV2;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test; 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.UnhandledAlertException;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.study.selenium.AbstractSeleniumTestCase;
 import org.study.selenium.AbstractSeleniumV2TestCase;
-import org.study.selenium.SeleniumConfig;
 
 import static org.junit.Assert.assertTrue;
 
@@ -51,9 +32,7 @@ import static org.junit.Assert.assertTrue;
  *
  */
 public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
-    private static final String closeBeforeUnloadAlert ="document.getElementsByName('ae_l_leaveCheck')[0].value = null;"; 
-    private static final String alertFlagXpath ="//*[contains(@id,'alert_flag')]";
-    private  final Logger logger = LoggerFactory.getLogger(RL01210Test001V2.class);
+     private  final Logger logger = LoggerFactory.getLogger(RL01210Test001V2.class);
     private String user = null;
     private String passwd = null;
     List<String[]> personIdSiteIdList;
@@ -68,7 +47,6 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
     public void testLogin() throws InterruptedException  {
 	final RlHompageV2 homepage = new RlHompageV2(this.driver);
 	homepage.login(this.driver, this.user, this.passwd);
-	Rl00001PageV2 rl00001Page = new Rl00001PageV2(this.driver);
                 
         // Sleep the thread if you want to view the rendered page while testing.
         assertTrue(true);
