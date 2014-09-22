@@ -38,6 +38,14 @@ public class SSOPageV3 extends LoadableComponent<SSOPageV3>{
     
     @FindBy(how = How.XPATH, using = "//input[@name='loginButton2']")
     WebElement logonSubmit;
+    
+    public void login(final WebDriver driver , final String user, final String passwd) {
+        usernameInput.sendKeys(user);
+        passwordInput.sendKeys(passwd);
+        logonSubmit.click();
+        AbstractSeleniumV2TestCase.open("/rl/");
+    }
+    
     @Override
     protected void load() {
       //得到https://idpfl.ris.gov.tw:8443
