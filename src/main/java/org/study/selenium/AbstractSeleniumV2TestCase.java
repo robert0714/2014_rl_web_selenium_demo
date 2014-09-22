@@ -48,9 +48,9 @@ public class AbstractSeleniumV2TestCase {
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
-//        final   WebDriver initDriver = WebUtils.windowsMachine();
+            driver = WebUtils.windowsMachine();
 //      final   WebDriver initDriver = WebUtils.localMachine();
-        driver =  WebUtils.localMachine();
+//        driver =  WebUtils.localMachine();
 //      driver =  SeleniumTestHelper.initWebDriverV2( initDriver);
 //      SeleniumTestHelper.initWebDriver( initDriver);
 //      driver = initDriver;

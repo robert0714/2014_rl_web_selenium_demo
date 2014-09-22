@@ -1,8 +1,9 @@
 package func.rl00001;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -41,18 +42,33 @@ public class Rl00001PageV2 {
         super();
         this.driver = driver;
     }
-    public void displayTxId(){
+    
+    /**
+     * Display tx id.
+     *
+     * @return the string
+     */
+    public String displayTxId(){
+        final String regExpr ="transactionId = ([\\w]*), ";
+       
         if(this.driver.getCurrentUrl().contains( rl00001Url)){
             try {
-                String txIdInfo = this.driver.findElement(By.xpath("//*[@id='masterForm']/span[1]")).getText();
+                final  String txIdInfo = this.driver.findElement(By.xpath("//*[@id='masterForm']/span[1]")).getText();
+                final Matcher matcher = Pattern.compile(regExpr).matcher(txIdInfo);
                 
                 logger.info("Information: {}", txIdInfo);
+                while(  matcher.find()){
+                   return  matcher.group(matcher.groupCount());
+                }
+              
+                return  txIdInfo;
             } catch (Exception e) {
                 logger.error (e .getMessage(), e);
             }
         }
         //
       //*[@id="masterForm"]/span[1]/text()
+        return  null;
     }
     /**
      * Type txn person.
