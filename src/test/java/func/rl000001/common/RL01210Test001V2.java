@@ -22,6 +22,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test; 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
@@ -55,9 +58,9 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
     public void testOpenRl01210() throws Exception {
         final RlHompageV2 homepage = new RlHompageV2( this.driver);
         homepage.login(this.driver,this.user, this.passwd);
-        Rl00001PageV2 rl00001Page = new Rl00001PageV2( this.driver);
-        Rl01210PageV2 rl01210Page = new Rl01210PageV2(  this. driver);
-        
+        final Rl00001PageV2 rl00001Page = new Rl00001PageV2( this.driver);
+        final Rl01210PageV2 rl01210Page = new Rl01210PageV2(  this. driver);
+        final WebDriverWait wait = new WebDriverWait(driver, 60);
 	if (CollectionUtils.isNotEmpty(this.personIdSiteIdList)) {
 	    for (String[] stringArray : this.personIdSiteIdList) {
 		try {
@@ -76,9 +79,19 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
 		        logger.info("發生無法進入Rl01210出生登記");
 		        continue;
 		    }
-		    WebUtils.pageLoadTimeout(this.driver);
-
+                    final ExpectedCondition<Boolean> turnPageExpected = new ExpectedCondition<Boolean>() {
+                        public Boolean apply(WebDriver input) {
+                            //預覽列印是新增加視窗
+                            return (driver.getCurrentUrl().contains(rl01210Page.getPartialURL()));
+                        }
+                    };
+                    
+                    wait.until(turnPageExpected);
+                    
 		    rl01210Page.switchTab();
+		    
+		    logger.info("進行Rl01210 Demo");
+		    rl01210Page.demo01();
 
 		    HouseholdMaintainPageV2 householdMaintainPage = null;
 
