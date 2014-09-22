@@ -46,7 +46,9 @@ public class RL01220Test001V2 extends AbstractSeleniumV2TestCase {
     public void beforeTest() throws Exception {
 	this.user ="RF1203008";
 	this.passwd ="RF1203008";
-        this.personIdSiteIdList = DeathReader.getPsedoData();
+        //得到要辦理死忙的名單
+//        this.personIdSiteIdList = DeathReader.getPsedoData();
+        this.personIdSiteIdList = DeathReader.getJDBCData();
         this.appPersonIdSiteIdList = getPsedoData();
     }
     @Test
@@ -65,7 +67,10 @@ public class RL01220Test001V2 extends AbstractSeleniumV2TestCase {
         final Rl01220PageV2 rl01220Page = new Rl01220PageV2( this. driver);
         final WebDriverWait wait = new WebDriverWait(driver, 60);
         if (CollectionUtils.isNotEmpty( this.personIdSiteIdList)) {
-            for (String[] stringArray :  this.personIdSiteIdList) {
+            for (int i =0 ;i < this.personIdSiteIdList.size() ; ++i) {
+                final String[] stringArray  =   this.personIdSiteIdList.get(i);
+                logger.info("第%s筆(全部%s筆)開始" ,i , this.personIdSiteIdList.size() );
+                
                 homepage.enterRl00001();
                
                 final String personId = stringArray[0];
@@ -117,6 +122,7 @@ public class RL01220Test001V2 extends AbstractSeleniumV2TestCase {
                     //發生錯誤...螢幕截圖    
                     WebUtils.takeScreen(driver, getClass());
                 }
+                logger.info("第%s筆(全部%s筆)結束" ,i , this.personIdSiteIdList.size() );
             }
         }
         
