@@ -16,7 +16,6 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.SRISWebUtils;
-import org.study.selenium.SeleniumConfig;
 
 /**
  * 
@@ -33,7 +32,7 @@ public class Rl01220PageV2 {
  
 
     /** The rl01220 partial url. */
-    private final String rl01220PartialURL = "_rl01220/rl01220.xhtml";
+    private final String partialURL = "_rl01220/rl01220.xhtml";
 
     /**
      * Instantiates a new rl01220 page.
@@ -77,7 +76,7 @@ public class Rl01220PageV2 {
      */
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {
         final String currentUrl = this.driver.getCurrentUrl();
-        if (StringUtils.contains(currentUrl, this.rl01220PartialURL)) {
+        if (StringUtils.contains(currentUrl, this.partialURL)) {
             this.driver.navigate().refresh();
             WebUtils.pageLoadTimeout(this.driver);
             this.driver.findElement(By.xpath("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();           
@@ -324,6 +323,12 @@ public class Rl01220PageV2 {
 //        selenium.fireEvent(xpath, "blur");
 //        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
     }
+    
+
+    public String getPartialURL() {
+        return this.partialURL;
+    }
+
 
     /**
      * The Enum IDPolicy.

@@ -24,6 +24,9 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test; 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
@@ -58,9 +61,9 @@ public class RL01220Test001V2 extends AbstractSeleniumV2TestCase {
     public void testOpenRl01220() throws Exception {
         final RlHompageV2 homepage = new RlHompageV2( this.driver);
         homepage.login(this.driver,this.user, this.passwd);
-        Rl00001PageV2 rl00001Page = new Rl00001PageV2( this.driver); 
-        Rl01220PageV2 rl01220Page = new Rl01220PageV2( this. driver);
-        
+        final Rl00001PageV2 rl00001Page = new Rl00001PageV2( this.driver); 
+        final Rl01220PageV2 rl01220Page = new Rl01220PageV2( this. driver);
+        final WebDriverWait wait = new WebDriverWait(driver, 60);
         if (CollectionUtils.isNotEmpty( this.personIdSiteIdList)) {
             for (String[] stringArray :  this.personIdSiteIdList) {
                 homepage.enterRl00001();
@@ -89,9 +92,14 @@ public class RL01220Test001V2 extends AbstractSeleniumV2TestCase {
                         logger.info("發生無法進入Rl01220 死亡登記/死亡宣告登記");
                         continue;
                     }                    
-               
+                    final ExpectedCondition<Boolean> turnPageExpected = new ExpectedCondition<Boolean>() {
+                        public Boolean apply(WebDriver input) {
+                            //預覽列印是新增加視窗
+                            return (driver.getCurrentUrl().contains(rl01220Page.getPartialURL()));
+                        }
+                    };
                     
-                    WebUtils.pageLoadTimeout(this.driver);
+                    wait.until(turnPageExpected);
                     rl01220Page.switchTab();
                     WebUtils.pageLoadTimeout(this.driver); 
                     
