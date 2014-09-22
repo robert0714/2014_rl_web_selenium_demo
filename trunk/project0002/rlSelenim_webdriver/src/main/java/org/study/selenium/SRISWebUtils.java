@@ -14,9 +14,12 @@ import com.thoughtworks.selenium.Selenium;
 import func.rl.common.WebUtils;
 
 import org.apache.commons.lang.StringUtils;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchWindowException;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -75,7 +78,8 @@ public class SRISWebUtils {
 			    // Switch to the Help Popup Browser Window
 			    driver.switchTo().window(windowId);
 			    String currentUrl = driver.getCurrentUrl();
-			    LOGGER.debug(currentUrl);
+			    LOGGER.debug(currentUrl);	
+//			    isAlertPresent(driver);
 			    if (StringUtils.contains(currentUrl, "common/popupContent.xhtml")) {
 				// 戶役資訊服務網
 				String title = driver.getTitle();
@@ -150,6 +154,19 @@ public class SRISWebUtils {
 	} 
     }
     
+    private static boolean isAlertPresent(final WebDriver driver) {
+        try {
+            Alert alert = driver.switchTo().alert();
+            LOGGER.info(alert.getText());
+            alert.accept();
+            LOGGER.debug("alert was present");
+            return true;
+        } catch (Exception e) {
+            LOGGER.info(e.getMessage() , e );
+            // Modal dialog showed
+            return false;
+        }   
+    }
     public static void typeAutoComplete(final WebDriver driver ,final String xpath ,final String value){
         /***
          * ex: //td[contains(@id,'currentPersonSiteIdTD')]/span/input
