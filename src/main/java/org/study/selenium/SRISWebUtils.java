@@ -67,7 +67,7 @@ public class SRISWebUtils {
 	    
 	    // 預覽申請書會彈跳出視窗
 	    int count = 0;
-	    privntViewLoop: while (true) {
+	    privntViewLoop: while (count < 10) {
 		
 		boolean printViewPresent = false;
 		try {
