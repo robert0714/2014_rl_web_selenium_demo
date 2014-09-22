@@ -25,7 +25,7 @@ public class DeathReader {
     private  final static Logger LOGGER = LoggerFactory.getLogger(DeathReader.class);
     
     /** The Constant sql. */
-    private static final String sql ="select person_id, site_id from rldf004m where site_id = '65000120' and person_id like 'F%' and person_name ='無姓無名' and  personal_mark='0'";
+    private static final String sql ="select first 10  person_id, site_id from rldf004m where site_id = '65000120' and person_id like 'F%' and person_name ='無姓無名' and  personal_mark='0'";
     
     public static List<String[]> getJDBCData() {
         final Connection conn = TableJDBCDao.getInstance();
