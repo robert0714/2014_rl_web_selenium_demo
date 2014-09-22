@@ -76,11 +76,11 @@ public class AbstractSeleniumV2TestCase {
      *
      * @param url the url
      */
-    public static  void open(String url) {        
+    public static  String open(String url) {        
         final String navigateUrl = String.format("%s://%s:%s%s",baseUrl.getProtocol(), baseUrl.getHost(), baseUrl.getPort(), url);
         LOGGER.debug("navigateUrl: {}",navigateUrl);
         driver.navigate().to(navigateUrl);
-        
+        return navigateUrl.intern();
     }
     /**
      * Gets the main url.
