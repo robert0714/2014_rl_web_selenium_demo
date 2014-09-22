@@ -32,7 +32,7 @@ import org.study.selenium.AbstractSeleniumV2TestCase;
 import static org.junit.Assert.assertTrue;
 
 /**
- *
+ * 出生登記 基本展示 (登入,吳依兒童情境測試)
  */
 public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
      private  final Logger logger = LoggerFactory.getLogger(RL01210Test001V2.class);
@@ -96,6 +96,7 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
 		    HouseholdMaintainPageV2 householdMaintainPage = null;
 
 		    //頁籤翻轉測試
+		    
 		    if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
 
 		        householdMaintainPage = new HouseholdMaintainPageV2(driver);
@@ -117,12 +118,8 @@ public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
 		    WebUtils.takeScreen(driver, getClass());
 		   
 		}
-
 	    }
 	} 
-        
-//        rl00001Page.redirectPage(); 
-        // Sleep the thread if you want to view the rendered page while testing.
         assertTrue(true);
     }
     
