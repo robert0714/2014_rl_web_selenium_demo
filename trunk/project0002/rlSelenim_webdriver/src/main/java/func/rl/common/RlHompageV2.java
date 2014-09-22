@@ -135,7 +135,9 @@ public class RlHompageV2 {
 	
         this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
         
+        logger.info("進入左邊選單: 登記作業");
         // 進入登記作業,
+        
         this.driver.findElement(By.xpath("//*[@id='navmenu-v']/li")).click();
         
         final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
@@ -145,6 +147,8 @@ public class RlHompageV2 {
         WebUtils.pageLoadTimeout(this.driver);
 //        isBeforeUnloadEventPresent();
         isAlertPresent();
+        
+        logger.info("進入左邊選單: 點選現戶簿頁");
         
         this.driver.findElement(By.xpath(rl00001Xpath)).click();
         
