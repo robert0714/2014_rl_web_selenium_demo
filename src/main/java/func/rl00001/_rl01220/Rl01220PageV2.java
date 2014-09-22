@@ -13,6 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.SRISWebUtils;
@@ -249,46 +251,54 @@ public class Rl01220PageV2 {
      * @param birthYyymmdd the birth yyymmdd
      */
     public void typeDeathYyymmdd(final String birthYyymmdd) {
+        final WebDriverWait wait = new WebDriverWait(driver, 60);
         // input[@id='j_id_2k:birthYyymmdd:j_id_uj']
         final String yyy = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 0, 3);
         final String mm = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 3, 5);
         final String dd = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 5, 7);
+        final String yyyXpath = "//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input" ;
+        final String mmXpath = "//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]" ;
+        final String ddXpath = "//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]" ;
 
-//        this. driver.findElement(By.xpath("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input")).sendKeys(yyy);
-//        this. driver.findElement(By.xpath("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]")).sendKeys(mm);
-//        this. driver.findElement(By.xpath("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]")).sendKeys(dd);
+//        this. driver.findElement(By.xpath(yyyXpath)).sendKeys(yyy);
+//        this. driver.findElement(By.xpath(mmXpath)).sendKeys(mm);
+//        this. driver.findElement(By.xpath(ddXpath)).sendKeys(dd);
         
         /***
          * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1)
          * ***/
         WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
+              
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(yyyXpath)));
         
-        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input", yyy);
-        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input", "blur");
+        selenium.type(yyyXpath, yyy);
+        selenium.fireEvent(yyyXpath, "blur");
         WebUtils.pageLoadTimeout(this.driver);
-        try {
-            Thread.sleep(1000l);
-        } catch (InterruptedException e) {
-           LOGGER.error(e.getMessage(), e);
-        }
+//        try {
+//            Thread.sleep(1000l);
+//        } catch (InterruptedException e) {
+//           LOGGER.error(e.getMessage(), e);
+//        }
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(mmXpath)));
         
-        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]", mm);
-        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]", "blur");
+        selenium.type(mmXpath, mm);
+        selenium.fireEvent(mmXpath, "blur");
         WebUtils.pageLoadTimeout(this.driver);
-        try {
-            Thread.sleep(1000l);
-        } catch (InterruptedException e) {
-           LOGGER.error(e.getMessage(), e);
-        }
+//        try {
+//            Thread.sleep(1000l);
+//        } catch (InterruptedException e) {
+//           LOGGER.error(e.getMessage(), e);
+//        }
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(ddXpath)));
         
-        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]", dd);
-        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]", "blur");
+        selenium.type(ddXpath, dd);
+        selenium.fireEvent(ddXpath, "blur");
         WebUtils.pageLoadTimeout(this.driver);
-        try {
-            Thread.sleep(1000l);
-        } catch (InterruptedException e) {
-           LOGGER.error(e.getMessage(), e);
-        }
+//        try {
+//            Thread.sleep(1000l);
+//        } catch (InterruptedException e) {
+//           LOGGER.error(e.getMessage(), e);
+//        }
 
     }
 

@@ -54,8 +54,8 @@ public class HouseholdMaintainPageV2 {
     /******
      * 存檔測試程序
      * *****/
-    public void processAppyCahange() throws InterruptedException {	
-//	boolean hitable = false;
+    public void processAppyCahange() throws InterruptedException {
+        
 	final String printBtnXpath = "//*[@id='saveBtnId']"; 
 	//*[@id='saveBtnId']
 	//div[contains(@id,'saveBtnId')]/button
@@ -65,32 +65,6 @@ public class HouseholdMaintainPageV2 {
         final WebElement printBtn = driver.findElement(By.xpath(printBtnXpath));
         
         printBtn.click();
-        
-//        final String disabledAttribute = printBtn.getAttribute("disabled");
-//        logger.debug("-----------------disabledAttribute: " + disabledAttribute);
-//        if (StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())) {
-//            hitable = false;
-//        } else if (disabledAttribute == null || StringUtils.equals(disabledAttribute, Boolean.FALSE.toString())) {
-//            hitable = true;
-//        } 
-//        
-//	if ( hitable) { 
-//    
-//            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(alertFlagXpath)));
-//            ((RemoteWebDriver) this.driver).executeScript(closeBeforeUnloadAlert, "");
-//             
-//            this.driver.findElement(By.xpath(printBtnXpath)).click();
-//
-//	    while(StringUtils.contains(driver.getCurrentUrl(), partialURL)){
-//		Thread.sleep(3000);
-//		if(!StringUtils.contains(driver.getCurrentUrl(), partialURL)){
-//		    break;
-//		}
-//	    }
-//	    WebUtils.scroolbarDownUp( driver);
-//	}
-	
-	// div[@id='j_id39_j_id_sx_content']/button
     }
     /**
      * Display tx id.
