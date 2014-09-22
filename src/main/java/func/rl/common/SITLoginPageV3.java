@@ -34,7 +34,11 @@ public class SITLoginPageV3  extends LoadableComponent<SITLoginPageV3>{
     @FindBy(how = How.XPATH, using = "//input[@value='登入']")
     WebElement logonSubmit;
      
-
+    public void login(final WebDriver driver , final String user, final String passwd) {
+        usernameInput.sendKeys(user);
+        passwordInput.sendKeys(passwd);
+        logonSubmit.click();
+    }
     @Override
     protected void load() {
         final String sitLoginPage = "/rl/pages/common/login.jsp";
