@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.study.selenium.SRISWebUtils;
 import org.study.selenium.SeleniumConfig;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Rl01210Page.
  *  出生登記 頁面
@@ -33,12 +34,11 @@ public class Rl01210PageV2 {
  
     
     /** The rl01210 partial ulr. */
-    private final String rl01210PartialURL = "_rl01210/rl01210.xhtml";
+    private final String partialURL = "_rl01210/rl01210.xhtml";
 
     /**
      * Instantiates a new rl01210 page.
      *
-     * @param selenium the selenium
      * @param driver the driver
      * @throws UnhandledAlertException the unhandled alert exception
      * @throws SeleniumException the selenium exception
@@ -58,7 +58,7 @@ public class Rl01210PageV2 {
      */
     public void switchTab() throws UnhandledAlertException, SeleniumException, InterruptedException {
         final String currentUrl = this.driver.getCurrentUrl();
-        if (StringUtils.contains(currentUrl, this.rl01210PartialURL)) {
+        if (StringUtils.contains(currentUrl, this.partialURL)) {
             this.driver.navigate().refresh();
             WebUtils.pageLoadTimeout(this.driver);
             this.driver.findElement(By.xpath("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();
@@ -101,7 +101,10 @@ public class Rl01210PageV2 {
 	
         //資料驗證
         final String verifyBtnXpath = "//span[contains(@id,'button')]/button";
-        //     this.selenium.click(verifyBtnXpath );        
+        //     this.selenium.click(verifyBtnXpath );
+        
+        
+        int count = 0;
         //資料驗證
         LOGGER.info("點選資料驗證");
         GrowlMsg verify = WebUtils.clickBtn(this.driver, verifyBtnXpath);
@@ -110,7 +113,8 @@ public class Rl01210PageV2 {
         if (org.apache.commons.lang.StringUtils.isNotBlank(errorMessage)
                 || org.apache.commons.lang.StringUtils.isNotBlank(errorExtMessage)) {
             LOGGER.info(".....");
-            while (true) {
+            while ( count < 10) {
+                //超過10次資料驗證...要點選關閉視窗放棄
                 if (StringUtils.equalsIgnoreCase("請輸入發現地點", errorExtMessage)) {
                     
                     this.driver.findElement(By.xpath("//a[contains(text(),'全戶基本資料')]")).click();
@@ -127,6 +131,9 @@ public class Rl01210PageV2 {
                         break;
                     }
                 }
+                
+                
+                count++;
             }
         } 
         WebUtils.pageLoadTimeout(this.driver);
@@ -376,6 +383,17 @@ public class Rl01210PageV2 {
         this.driver.findElement(By.xpath(xpath)).click();  
         WebUtils.pageLoadTimeout(this.driver);
     }
+
+    
+    /**
+     * Gets the partial url.
+     *
+     * @return the partial url
+     */
+    public String getPartialURL() {
+        return this.partialURL;
+    }
+
 
     /**
      * The Enum BirthKind.
