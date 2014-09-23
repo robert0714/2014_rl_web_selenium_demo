@@ -1,20 +1,16 @@
 package func.rl.common;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.ArrayList; 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.collections.CollectionUtils;
+ 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.message.BasicNameValuePair;
 import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.By; 
+import org.openqa.selenium.NoAlertPresentException; 
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -26,8 +22,7 @@ import org.study.selenium.AbstractSeleniumV2TestCase;
 import org.study.selenium.SeleniumConfig;
 
 import com.thoughtworks.selenium.SeleniumException;
-
-import func.rl00001.Rl00001PageV2;
+ 
 
 public class RlHompageV3 {
     private final WebDriverWait wait ;
@@ -82,8 +77,7 @@ public class RlHompageV3 {
             final SITLoginPageV3 sit = new SITLoginPageV3(driver);
             sit.login(driver, user, passwd);
         } else {
-            final SSOPageV3 uat = new SSOPageV3(driver);
-            uat.get();
+        	final SSOPageV3 uat = new SSOPageV3(driver); 
             uat.login(driver, user, passwd);
         }
         isAlertPresent();

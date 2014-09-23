@@ -16,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent; 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +29,12 @@ public class SSOPageV3 extends LoadableComponent<SSOPageV3>{
     private WebDriver driver;
     private  final Logger logger = LoggerFactory.getLogger(getClass());
     private String loadPage; 
-    public SSOPageV3(final WebDriver driver) throws UnhandledAlertException, SeleniumException {
+    private String loadPage2; 
+    public SSOPageV3(final WebDriver driver)   {
         super();
         this.driver = driver;
-        
+        load();
+        PageFactory.initElements(driver, this);
     } 
     @FindBy(how = How.XPATH, using = "//input[@name='Ecom_User_ID']" )
     WebElement usernameInput;
@@ -52,19 +55,22 @@ public class SSOPageV3 extends LoadableComponent<SSOPageV3>{
     @Override
     protected void load() {
       //得到https://idpfl.ris.gov.tw:8443
-        final String openAuthorizationUrl =  "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";
+    	final String mainUrl = getMainUrl(this.driver.getCurrentUrl());
         //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
-        loadPage =  AbstractSeleniumV2TestCase.open(openAuthorizationUrl);
-        final String mainUrl = getMainUrl(this.driver.getCurrentUrl());
+        loadPage = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential";
+         this.driver.get(loadPage);
+         
         //得到https://idpfl.ris.gov.tw:8443
-        String openRealAuthorizationUrl = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";
+           
 //      this.driver.get("https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1");
-        this.driver.get(openRealAuthorizationUrl);
+       
     }
 
     @Override
     protected void isLoaded() throws Error {
-        if(!this.driver.getCurrentUrl().equals(this.loadPage)){
+    	final String currentUrl = this.driver.getCurrentUrl();
+    	boolean  jugement =  !currentUrl.equals(this.loadPage)   ; 
+        if(jugement){
             throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
         } 
     }
