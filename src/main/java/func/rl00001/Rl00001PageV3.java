@@ -225,7 +225,9 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
 
     @Override
     protected void isLoaded() throws Error {
-        if(!this.driver.getCurrentUrl().equals(this.loadPage)){
+        final String currentUrl = this.driver.getCurrentUrl();
+        //由於頁面網址會帶上windowId,會造成誤判
+        if(!currentUrl.contains(this.loadPage)){
             throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
         } 
     }
