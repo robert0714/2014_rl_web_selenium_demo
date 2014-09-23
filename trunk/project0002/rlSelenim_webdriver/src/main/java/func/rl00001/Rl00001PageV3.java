@@ -1,5 +1,7 @@
 package func.rl00001;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,6 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
 import org.study.selenium.SRISWebUtils;
+
+import com.gargoylesoftware.htmlunit.util.UrlUtils;
+
 import func.rl.common.WebUtils;
 import func.rl.common.internal.GrowlMsg;
 import func.rl00001._rl01210.Rl01210PageV3;
@@ -97,8 +102,23 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
     @Override
     protected void isLoaded() throws Error {
         final String currentUrl = this.driver.getCurrentUrl();
-        //由於頁面網址會帶上windowId,會造成誤判       
-        if(! StringUtils.contains(currentUrl, this.loadPage)){
+		if (this.loadPage != null) {
+			try {
+				URL url1 = new URL(StringUtils.substringBefore(currentUrl, "?"));
+				URL url2 = new URL(StringUtils.substringBefore(this.loadPage, "?"));
+				if (!url1.equals(url2)) {
+					logger.info("current url: {}", currentUrl);
+					throw new Error(String.format(
+							"The wrong page has loaded: ",
+							this.driver.getCurrentUrl()));
+				}
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+        
+     else   if(! StringUtils.contains(currentUrl, this.loadPage)){ //由於頁面網址會帶上windowId,會造成誤判      		
             logger.info("current url: {}" , currentUrl);
             throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
         } 
