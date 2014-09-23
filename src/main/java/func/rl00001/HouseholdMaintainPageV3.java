@@ -146,8 +146,9 @@ public class HouseholdMaintainPageV3 extends LoadableComponent<HouseholdMaintain
         //div[contains(@id,'saveBtnId')]/button
         
         wait.until(ExpectedConditions.elementToBeClickable(saveBtn));
-
-        saveBtn.click();
+ 
+        WebUtils.clickBtn(driver, saveBtn);
+        
     }
 
     /**
