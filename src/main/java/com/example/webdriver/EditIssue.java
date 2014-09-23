@@ -28,7 +28,7 @@ public class EditIssue extends LoadableComponent<EditIssue> {
     @FindBy(name = "comment")
     private WebElement description;
 
-    public EditIssue(WebDriver driver ,LoadableComponent<?> parent) {
+    public EditIssue(WebDriver driver ,final LoadableComponent<?> parent ) {
 	this.driver = driver;
 	this.parent = parent;
 	// This call sets the WebElement fields.
