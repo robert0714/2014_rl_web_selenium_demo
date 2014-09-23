@@ -90,7 +90,7 @@ public class RlHompage {
             selenium.type("name=j_password", passwd);
             selenium.click("css=input[type=\"submit\"]");
         } else {
-            final String mainUrl = getMainUrl(currentUrl);
+            final String mainUrl = WebUtils .getMainUrl(currentUrl);
             //得到https://idpfl.ris.gov.tw:8443
             String openAuthorizationUrl = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";//https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
             selenium.open(openAuthorizationUrl);
@@ -108,22 +108,8 @@ public class RlHompage {
     }
     public void login(final String user, final String passwd) throws UnhandledAlertException, SeleniumException {
         login(this.selenium ,user, passwd);
-    }
-    private String retriveTargetUrl(final String src) {
-        String result = StringUtils.EMPTY;
-        final String[] strArray = StringUtils.split(src, "?");
-        if (strArray.length > 1) {
-            Map<String, String> mapData = retrieve(strArray[1]);
-            result = mapData.get("target");
-        }
-        return result;
-    }
+    } 
 
-    private String getMainUrl(final String src) {
-        final String expr = "([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)";
-        Collection<String> intData = WebUtils.extract(expr, src);
-        return (String) CollectionUtils.get(intData, 0);
-    }
 
     public Rl00001Page typingApplication() throws UnhandledAlertException, SeleniumException {
         return new Rl00001Page(this.selenium, this.driver);

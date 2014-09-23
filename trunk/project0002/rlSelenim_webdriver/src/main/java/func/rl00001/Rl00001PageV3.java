@@ -19,11 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
 import org.study.selenium.SRISWebUtils;
-import com.thoughtworks.selenium.SeleniumException;
-
-import func.rl.common.SSOPageV3;
 import func.rl.common.WebUtils;
 import func.rl.common.internal.GrowlMsg;
+import func.rl00001._rl01210.Rl01210PageV3;
 
 /**
  * The Class Rl00001PageV2.
@@ -42,11 +40,11 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
     private String loadPage; 
     
     @FindBy(how = How.XPATH, using = "//a[contains(text(),'出生登記')]")
-    WebElement rl01210Click;
+    private WebElement rl01210Click;
     
     
     @FindBy(how = How.XPATH, using = "//a[contains(text(),'死亡（死亡宣告）登記')]" )
-    WebElement rl01220Click;
+    private WebElement rl01220Click;
     
     /**
      * Instantiates a new rl00001 page v3.
@@ -59,6 +57,7 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
         PageFactory.initElements(driver, this);
         
     }
+    
     
     /**
      * Display tx id.
@@ -86,6 +85,22 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
         //
       //*[@id="masterForm"]/span[1]/text()
         return  null;
+    }
+    @Override
+    protected void load() {
+        final String url ="/rl/faces/pages/func/rl00001/rl00001.xhtml";       
+        loadPage = AbstractSeleniumV2TestCase.open(url);
+        WebUtils.acceptAlertAndGetItsText(this.driver);
+        logger.info("open url: {}",this.driver .getCurrentUrl());
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        final String currentUrl = this.driver.getCurrentUrl();
+        //由於頁面網址會帶上windowId,會造成誤判       
+        if(! StringUtils.contains(currentUrl, this.loadPage)){
+            throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
+        } 
     }
     /**
      * Type txn person.
@@ -181,17 +196,18 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
      * @return true, if successful
      * @throws InterruptedException the interrupted exception
      */
-    public boolean clickRl01210() throws InterruptedException {
+    public Rl01210PageV3 clickRl01210() throws InterruptedException {
         logger.info("點選 出生登記 Rl01210" );
-        final String rl01210Xpath = "//a[contains(text(),'出生登記')]";
-        final GrowlMsg result = WebUtils.clickBtn(this.driver, rl01210Xpath);
+        
+        final GrowlMsg result = WebUtils.clickBtn(this.driver, this.rl01210Click);
         WebUtils.pageLoadTimeout(this.driver);
+        
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         isAlertPresent();
         if (result.isGiveUpOperation()) {
-            return false;
+            return null;
         } else {
-            return true;
+            return new Rl01210PageV3(this.driver);
         }
     }
 
@@ -203,8 +219,8 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
      */
     public boolean clickRl01220() throws InterruptedException {
         logger.info("點選 死亡（死亡宣告）登記 Rl01220" );
-        final String rl01220Xpath = "//a[contains(text(),'死亡（死亡宣告）登記')]";
-        final GrowlMsg result = WebUtils.clickBtn(this.driver, rl01220Xpath);
+        
+        final GrowlMsg result = WebUtils.clickBtn(this.driver, this.rl01220Click);
         WebUtils.pageLoadTimeout(this.driver);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         isAlertPresent();
@@ -215,21 +231,5 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
         }
     }
 
-    @Override
-    protected void load() {
-        final String url ="/rl/faces/pages/func/rl00001/rl00001.xhtml";       
-        loadPage = AbstractSeleniumV2TestCase.open(url);
-//        this.driver.get("http://192.168.10.18:6280/rl/faces/pages/func/rl00001/rl00001.xhtml");
-        logger.info("open url: {}",this.driver .getCurrentUrl());
-        
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        final String currentUrl = this.driver.getCurrentUrl();
-        //由於頁面網址會帶上windowId,會造成誤判       
-        if(! StringUtils.contains(currentUrl, this.loadPage)){
-            throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
-        } 
-    }
+    
 }
