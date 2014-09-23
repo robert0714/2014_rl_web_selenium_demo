@@ -17,6 +17,7 @@ import func.rl.common.RlHompageV3;
 import func.rl.common.WebUtils;
 import func.rl00001.HouseholdMaintainPageV2;
 import func.rl00001.Rl00001PageV2;
+import func.rl00001.Rl00001PageV3;
 import func.rl00001._rl01210.Rl01210PageV2;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -55,6 +56,14 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                  
         assertTrue(true);
     } 
+    @Test
+    public void testOpenRl01210() throws Exception {
+        final RlHompageV3 homepage = new RlHompageV3(this.driver);
+        homepage.login(this.driver, this.user, this.passwd);
+        Rl00001PageV3 rl0001= new Rl00001PageV3(driver);
+        rl0001.get();
+        assertTrue(true);
+    }
     
     private List<String[]> getPsedoData(){
         final List<String[]>  result = new ArrayList<String[]>();        
