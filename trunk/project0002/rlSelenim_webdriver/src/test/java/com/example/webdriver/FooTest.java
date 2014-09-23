@@ -14,9 +14,9 @@ public class FooTest {
       WebDriver driver = new FirefoxDriver();
 
       ProjectPage project = new ProjectPage(driver, "selenium");
-      SecuredPage securedPage = new SecuredPage(driver, project, "robert0714@gmail.com", "AAAAAA");
-//      editIssue = new EditIssue(driver, securedPage);
-      editIssue = new EditIssue(driver ,securedPage);
+      SecuredPage securedPage = new SecuredPage(driver, project, "robert0714@gmail.com", "79111080");
+      editIssue = new EditIssue(driver, securedPage);
+//      editIssue = new EditIssue(driver );
     }
 
     @Test
