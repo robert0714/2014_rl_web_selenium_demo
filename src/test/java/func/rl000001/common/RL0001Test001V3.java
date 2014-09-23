@@ -14,6 +14,7 @@ import java.util.List;
 import func.rl.common.PagePartialURL;
 import func.rl.common.RlHompageV2;
 import func.rl.common.RlHompageV3;
+import func.rl.common.SecuredPageV3;
 import func.rl.common.WebUtils;
 import func.rl00001.HouseholdMaintainPageV2;
 import func.rl00001.Rl00001PageV2;
@@ -52,7 +53,7 @@ public class RL0001Test001V3 extends AbstractSeleniumV2TestCase {
         passwd ="RF1203008";
         this.personIdSiteIdList = getPsedoData();
     }
-    @Test
+//    @Test
     public void testLogin() throws InterruptedException  {
 	final RlHompageV3 homepage = new RlHompageV3(this.driver);
 
@@ -62,10 +63,10 @@ public class RL0001Test001V3 extends AbstractSeleniumV2TestCase {
     } 
     @Test
     public void testOpenRl00001() throws Exception {
-    	final Rl00001PageV3 rl0001Page = new Rl00001PageV3(this.driver);
-    	SecuredPage securedPage = new SecuredPage(driver, rl0001Page, "robert0714@gmail.com", "AAAAAA");
+    	rl00001Page = new Rl00001PageV3(this.driver);
+    	SecuredPageV3 securedPage = new SecuredPageV3(driver, rl00001Page, this.user, this.passwd);
     	
-    	
+    	rl00001Page.get();
     }
     private List<String[]> getPsedoData(){
         final List<String[]>  result = new ArrayList<String[]>();        
