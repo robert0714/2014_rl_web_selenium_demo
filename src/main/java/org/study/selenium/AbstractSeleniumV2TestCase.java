@@ -82,17 +82,6 @@ public class AbstractSeleniumV2TestCase {
         driver.navigate().to(navigateUrl);
         return navigateUrl.intern();
     }
-    /**
-     * Gets the main url.
-     *
-     * @param src the src
-     * @return the main url
-     */
-    public String getMainUrl(final String src) {
-        final String expr = "([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)";
-        final Collection<String> intData = WebUtils.extract(expr, src);
-        return (String) CollectionUtils.get(intData, 0);
-    }
 
     public boolean isElementPresent(By by) {
 	try {
@@ -112,20 +101,7 @@ public class AbstractSeleniumV2TestCase {
 	}
     }
 
-    public String closeAlertAndGetItsText( ) {
-	try {
-	    final Alert alert = driver.switchTo().alert();
-	    String alertText = alert.getText();
-	    if (acceptNextAlert) {
-		alert.accept();
-	    } else {
-		alert.dismiss();
-	    }
-	    return alertText;
-	} finally {
-	    acceptNextAlert = true;
-	}
-    }
+   
 
     public static String acceptAlertAndGetItsText(final WebDriver driver) {
         try {

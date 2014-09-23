@@ -55,7 +55,7 @@ public class SSOPageV3 extends LoadableComponent<SSOPageV3>{
     @Override
     protected void load() {
       //得到https://idpfl.ris.gov.tw:8443
-    	final String mainUrl = getMainUrl(this.driver.getCurrentUrl());
+    	final String mainUrl = WebUtils.getMainUrl(this.driver.getCurrentUrl());
         //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
         loadPage = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential";
          this.driver.get(loadPage);
@@ -73,10 +73,5 @@ public class SSOPageV3 extends LoadableComponent<SSOPageV3>{
         if(jugement){
             throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
         } 
-    }
-    private String getMainUrl(final String src) {
-        final String expr = "([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)";
-        Collection<String> intData = WebUtils.extract(expr, src);
-        return (String) CollectionUtils.get(intData, 0);
     }
 }

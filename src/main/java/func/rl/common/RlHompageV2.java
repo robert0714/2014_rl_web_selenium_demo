@@ -82,7 +82,7 @@ public class RlHompageV2 {
           
             driver.findElement(By.xpath("//input[@value='登入']")).click();
         } else {
-            final String mainUrl = getMainUrl(currentUrl);
+            final String mainUrl = WebUtils.getMainUrl(currentUrl);
             //得到https://idpfl.ris.gov.tw:8443
             String openAuthorizationUrl = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";
             //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
@@ -115,11 +115,7 @@ public class RlHompageV2 {
         return result;
     }
 
-    private String getMainUrl(final String src) {
-        final String expr = "([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)";
-        Collection<String> intData = WebUtils.extract(expr, src);
-        return (String) CollectionUtils.get(intData, 0);
-    }
+    
 
     public Rl00001PageV2 typingApplication() throws UnhandledAlertException, SeleniumException {
         return new Rl00001PageV2(  this.driver);

@@ -56,16 +56,4 @@ public abstract class AbstractSeleniumTestCase {
         SeleniumTestHelper.destroy((DefaultSelenium) selenium);
     }
 
-    /**
-     * Gets the main url.
-     *
-     * @param src the src
-     * @return the main url
-     */
-    public String getMainUrl(final String src) {
-        final String expr = "([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)";
-        final Collection<String> intData = WebUtils.extract(expr, src);
-        return (String) CollectionUtils.get(intData, 0);
-    }
-
 }

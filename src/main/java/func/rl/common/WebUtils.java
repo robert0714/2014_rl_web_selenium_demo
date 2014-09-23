@@ -7,6 +7,7 @@ import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -429,6 +431,8 @@ public class WebUtils {
 
         dc.setCapability("screenrecorder", true);
         dc.setCapability("screenshot", true);
+        dc.setCapability("applicationCacheEnabled", false);
+          
 
         if (StringUtils.isNotBlank(spcificIp)) {
             //交代指明要遙控哪一台機器
@@ -587,7 +591,17 @@ public class WebUtils {
 	final File outputFile = new File(fileName);
 	takeScreen(driver, outputFile);
     }
-    
+    /**
+     * Gets the main url.
+     *
+     * @param src the src
+     * @return the main url
+     */
+    public static String getMainUrl(final String src) {
+        final String expr = "([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)";
+        final Collection<String> intData = extract(expr, src);
+        return (String) CollectionUtils.get(intData, 0);
+    }
     /**
      * Extract.
      *
