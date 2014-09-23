@@ -30,7 +30,7 @@ public class RlHompageV3 {
     private final String patialUrl ="/rl/faces/pages/index.xhtml";
     private  final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public RlHompageV3(final WebDriver driver) throws UnhandledAlertException, SeleniumException {
+    public RlHompageV3(final WebDriver driver)  {
         super();
         this.driver = driver;
         this.wait = new WebDriverWait(driver, 10 /*timeout in seconds*/);
@@ -74,10 +74,13 @@ public class RlHompageV3 {
             AbstractSeleniumV2TestCase.open("/rl/");
             //http://rlfl.ris.gov.tw/rl/
         } else if (StringUtils.contains(currentUrl, sitLoginPage)) {
-            final SITLoginPageV3 sit = new SITLoginPageV3(driver);
+//            final SITLoginPageV3 sit = new SITLoginPageV3(driver);
+        	  final SITLoginPageV3 sit = sit(driver);
             sit.login(driver, user, passwd);
         } else {
-        	final SSOPageV3 uat = new SSOPageV3(driver); 
+//        	final SSOPageV3 uat = new SSOPageV3(driver); 
+        	final SSOPageV3 uat = uat(driver); 
+        	
             uat.login(driver, user, passwd);
         }
         isAlertPresent();

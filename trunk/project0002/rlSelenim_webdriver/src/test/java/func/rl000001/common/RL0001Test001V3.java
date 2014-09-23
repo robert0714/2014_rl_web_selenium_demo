@@ -53,7 +53,7 @@ public class RL0001Test001V3 extends AbstractSeleniumV2TestCase {
         passwd ="RF1203008";
         this.personIdSiteIdList = getPsedoData();
     }
-//    @Test
+    @Test
     public void testLogin() throws InterruptedException  {
 	final RlHompageV3 homepage = new RlHompageV3(this.driver);
 
@@ -64,8 +64,10 @@ public class RL0001Test001V3 extends AbstractSeleniumV2TestCase {
     @Test
     public void testOpenRl00001() throws Exception {
     	rl00001Page = new Rl00001PageV3(this.driver);
-    	SecuredPageV3 securedPage = new SecuredPageV3(driver, rl00001Page, this.user, this.passwd);
-    	
+    	final RlHompageV3 homepage = new RlHompageV3(this.driver);
+
+    	homepage.login(this.driver, this.user, this.passwd);
+    	 
     	rl00001Page.get();
     }
     private List<String[]> getPsedoData(){
