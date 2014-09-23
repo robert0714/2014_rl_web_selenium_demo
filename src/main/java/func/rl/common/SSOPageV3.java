@@ -8,6 +8,9 @@ package func.rl.common;
 
 import com.thoughtworks.selenium.SeleniumException;
 
+import java.util.Collection;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -52,8 +55,11 @@ public class SSOPageV3 extends LoadableComponent<SSOPageV3>{
         final String openAuthorizationUrl =  "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";
         //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
         loadPage =  AbstractSeleniumV2TestCase.open(openAuthorizationUrl);
+        final String mainUrl = getMainUrl(this.driver.getCurrentUrl());
+        //得到https://idpfl.ris.gov.tw:8443
+        String openRealAuthorizationUrl = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";
 //      this.driver.get("https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1");
-        
+        this.driver.get(openRealAuthorizationUrl);
     }
 
     @Override
@@ -62,5 +68,9 @@ public class SSOPageV3 extends LoadableComponent<SSOPageV3>{
             throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
         } 
     }
-    
+    private String getMainUrl(final String src) {
+        final String expr = "([a-z][a-z0-9+\\-.]*:(//[^/?#]+)?)";
+        Collection<String> intData = WebUtils.extract(expr, src);
+        return (String) CollectionUtils.get(intData, 0);
+    }
 }

@@ -79,11 +79,11 @@ public class RlHompageV3 {
             AbstractSeleniumV2TestCase.open("/rl/");
             //http://rlfl.ris.gov.tw/rl/
         } else if (StringUtils.contains(currentUrl, sitLoginPage)) {
-           
             final SITLoginPageV3 sit = new SITLoginPageV3(driver);
             sit.login(driver, user, passwd);
         } else {
             final SSOPageV3 uat = new SSOPageV3(driver);
+            uat.get();
             uat.login(driver, user, passwd);
         }
         isAlertPresent();
