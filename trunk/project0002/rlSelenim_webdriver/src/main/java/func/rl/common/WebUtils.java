@@ -32,6 +32,7 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.BrowserType;
@@ -102,6 +103,7 @@ public class WebUtils {
             return null;
         }
     }
+    
     /**
      * **
      * 按鈕Xpath為clickBtnXpath點選後
@@ -109,18 +111,16 @@ public class WebUtils {
      * 有錯誤訊息回傳 true,無錯誤訊息回傳false .
      *
      * @param driver the WebDriver
-     * @param clickBtnXpath the click btn xpath
+     * @param btnElement the click btn  
      * @return true, if successful
      */
-    public static GrowlMsg clickBtn(final WebDriver driver , final String clickBtnXpath) {
+    public static GrowlMsg clickBtn(final WebDriver driver ,  final     WebElement btnElement ) {
         final GrowlMsg result = new GrowlMsg();
         boolean giveUpOperation = false;
           
         //等待6秒...不見得msg出來,改成60秒
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-        
-        driver.findElement(By.xpath(clickBtnXpath)).click();
-        
+        btnElement.click();
         
         if (driver.findElements(By.xpath("//*[@id='growl2_container']/div/div")).size() != 0 ) {
             int count = 0;
@@ -133,7 +133,7 @@ public class WebUtils {
                 result.setErrorMessage(errorMessage);
                 result.setErrorExtMessage(errorExtMessage);
                 result.setGiveUpOperation(giveUpOperation);
-                driver.findElement(By.xpath(clickBtnXpath)).click();
+                btnElement.click();
                 if (count > 4) {
                     driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
                     giveUpOperation = true;
@@ -143,6 +143,21 @@ public class WebUtils {
                 count++;
             }
         }
+        return result;
+    }
+    /**
+     * **
+     * 按鈕Xpath為clickBtnXpath點選後
+     * 針對訊息作處理
+     * 有錯誤訊息回傳 true,無錯誤訊息回傳false .
+     *
+     * @param driver the WebDriver
+     * @param clickBtnXpath the click btn xpath
+     * @return true, if successful
+     */
+    public static GrowlMsg clickBtn(final WebDriver driver , final String clickBtnXpath) {
+        final     WebElement btnElement = driver.findElement(By.xpath(clickBtnXpath)) ;
+        final GrowlMsg result = clickBtn(driver, btnElement);       
         return result;
     }
     
