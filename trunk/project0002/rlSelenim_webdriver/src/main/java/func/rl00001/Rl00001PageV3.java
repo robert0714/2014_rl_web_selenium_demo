@@ -99,6 +99,7 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
         final String currentUrl = this.driver.getCurrentUrl();
         //由於頁面網址會帶上windowId,會造成誤判       
         if(! StringUtils.contains(currentUrl, this.loadPage)){
+            logger.info("current url: {}" , currentUrl);
             throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
         } 
     }
@@ -207,7 +208,7 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
         if (result.isGiveUpOperation()) {
             return null;
         } else {
-            return new Rl01210PageV3(this.driver);
+            return new Rl01210PageV3(this.driver,this);
         }
     }
 

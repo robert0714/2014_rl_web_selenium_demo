@@ -92,7 +92,24 @@ public class WebUtils {
         final GrowlMsg initData = clickBtn(driver, clickBtnXpath);
         boolean giveUpOperation = initData.isGiveUpOperation();
         return giveUpOperation;
+    } 
+
+    /**
+     * **
+     * 按鈕Xpath為clickBtnXpath點選後
+     * 針對訊息作處理
+     * 有錯誤訊息回傳 true,無錯誤訊息回傳false .
+     *
+     * @param selenium the selenium
+     * @param clickBtn the click 
+     * @return true, if successful
+     */
+    public static boolean handleClickBtn(final WebDriver driver, final WebElement clickBtn) {
+        final GrowlMsg initData = clickBtn(driver, clickBtn);
+        boolean giveUpOperation = initData.isGiveUpOperation();
+        return giveUpOperation;
     }
+    
     public static String acceptAlertAndGetItsText(final WebDriver driver) {
         try {
             final Alert alert = driver.switchTo().alert();

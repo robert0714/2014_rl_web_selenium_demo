@@ -35,6 +35,7 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
     /** The rl01210 partial ulr. */
     private final String partialURL = "_rl01210/rl01210.xhtml";
 
+    private final LoadableComponent<?> parent;
     
     /***
      * 戶籍記事/罰鍰清單 頁籤
@@ -79,9 +80,10 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
      *
      * @param driver the driver
      */
-    public Rl01210PageV3(final WebDriver driver)   {
+    public Rl01210PageV3(final WebDriver driver ,final LoadableComponent<?> parent)   {
         super();
         this.driver = driver;
+        this.parent = parent;
         PageFactory.initElements(driver, this);
     }
     @Override

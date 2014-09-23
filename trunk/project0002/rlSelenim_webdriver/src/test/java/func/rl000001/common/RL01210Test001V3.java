@@ -9,9 +9,13 @@ package func.rl000001.common;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import func.rl.common.PagePartialURL;
 import func.rl.common.RlHompageV3;
 import func.rl.common.WebUtils;
 import func.rl.common.internal.GrowlMsg;
+import func.rl00001.HouseholdMaintainPageV2;
+import func.rl00001.HouseholdMaintainPageV3;
 import func.rl00001.Rl00001PageV3;
 import func.rl00001._rl01210.Rl01210PageV3;
 
@@ -70,6 +74,26 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                 rl01210Page = rl00001Page.clickRl01210();
                 if (rl01210Page != null) {
                     demo01(rl01210Page);
+                }
+                HouseholdMaintainPageV3 householdMaintainPage = null;
+
+                //頁籤翻轉測試
+                
+                if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
+
+                    householdMaintainPage = new HouseholdMaintainPageV3(driver,rl01210Page);
+
+                    while (!householdMaintainPage.switchTab()) {
+                        LOGGER.debug("轉不過去");
+                    }
+                    isAlertPresent();
+                }
+
+                if (householdMaintainPage != null
+                        && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
+                    householdMaintainPage.processPrintView();
+                    isAlertPresent();
+                    householdMaintainPage.processAppyCahange();
                 }
             }
         }
@@ -141,7 +165,11 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         //暫存
         WebUtils.pageLoadTimeout(this.driver);
         LOGGER.info("點選暫存");
-        WebUtils.clickBtn(this.driver, rl01210Page.tempSaveBtn);
+        final GrowlMsg result = WebUtils.clickBtn(this.driver, rl01210Page.tempSaveBtn);
+        if(!result.isGiveUpOperation()){
+            final HouseholdMaintainPageV3 l2page =  new HouseholdMaintainPageV3(this.driver , rl01210Page);
+            l2page.get();
+        }
     }
     
     

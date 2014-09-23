@@ -35,7 +35,7 @@ import static org.junit.Assert.assertTrue;
  * 出生登記 基本展示 (登入,吳依兒童情境測試)
  */
 public class RL01210Test001V2 extends AbstractSeleniumV2TestCase {
-     private  final Logger logger = LoggerFactory.getLogger(RL01210Test001V2.class);
+    private  final Logger logger = LoggerFactory.getLogger(RL01210Test001V2.class);
     private String user = null;
     private String passwd = null;
     List<String[]> personIdSiteIdList;
