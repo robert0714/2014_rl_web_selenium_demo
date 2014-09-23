@@ -69,7 +69,9 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                 final String siteId = stringArray[1];
                 final String txId = rl00001Page.displayTxId();
                 rl00001Page.get();
-
+                
+                pageLoadTimeout(this.driver);  
+                        
                 rl00001Page.typeApplicat1(personId, siteId, "爸媽");
                 rl01210Page = rl00001Page.clickRl01210();
                 if (rl01210Page != null) {
@@ -78,6 +80,7 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                 HouseholdMaintainPageV3 householdMaintainPage = null;
 
                 //頁籤翻轉測試
+                pageLoadTimeout(this.driver);  
                 
                 if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
 
@@ -88,7 +91,8 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                     }
                     isAlertPresent();
                 }
-
+                pageLoadTimeout(this.driver);  
+                
                 if (householdMaintainPage != null
                         && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
                     householdMaintainPage.processPrintView();
