@@ -13,7 +13,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.SRISWebUtils;
@@ -31,6 +33,8 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
     /** The driver. */
     private WebDriver driver;
  
+    /** The wait. */
+    private  WebDriverWait wait  ;
     
     /** The rl01210 partial ulr. */
     private final String partialURL = "_rl01210/rl01210.xhtml";
@@ -84,6 +88,7 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
         super();
         this.driver = driver;
         this.parent = parent;
+        this.wait = new WebDriverWait(driver, 60);
         PageFactory.initElements(driver, this);
     }
     @Override
@@ -301,11 +306,11 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
         
         final  WebElement element = this.driver.findElement(By.xpath(xpath));
         
+        wait.until(ExpectedConditions.visibilityOf(element));
+        
         final Actions oAction = new Actions(driver);
         oAction.moveToElement(element);
-                
-        oAction.doubleClick(element).build().perform();
-        
+          
         oAction.click(element).build().perform();  
         
         WebUtils.pageLoadTimeout(this.driver);

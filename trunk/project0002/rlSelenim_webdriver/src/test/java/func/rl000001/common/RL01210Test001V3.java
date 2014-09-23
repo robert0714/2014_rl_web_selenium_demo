@@ -13,8 +13,7 @@ import java.util.List;
 import func.rl.common.PagePartialURL;
 import func.rl.common.RlHompageV3;
 import func.rl.common.WebUtils;
-import func.rl.common.internal.GrowlMsg;
-import func.rl00001.HouseholdMaintainPageV2;
+import func.rl.common.internal.GrowlMsg; 
 import func.rl00001.HouseholdMaintainPageV3;
 import func.rl00001.Rl00001PageV3;
 import func.rl00001._rl01210.Rl01210PageV3;
@@ -182,24 +181,42 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         rl01210Page.tabBasicHouseholdData.click();
         
         WebUtils.scroolbarDownUp(this.driver);
-
+        
+        WebUtils.pageLoadTimeout(this.driver);        
+        
         //選擇無依兒童        
         rl01210Page.checkBirthKind(Rl01210PageV3.BirthKind.INNOCENTI);
+        
+        WebUtils.pageLoadTimeout(this.driver);
+        
         
         //自立新戶
         rl01210Page.setNewHousehold(true);
         
+        WebUtils.pageLoadTimeout(this.driver);        
+        
         WebUtils.scroolbarDownUp(this.driver);
+        
+        WebUtils.pageLoadTimeout(this.driver);        
         
         //非自立新戶(入他人戶)
         rl01210Page.setNewHousehold(false);
 
+        WebUtils.pageLoadTimeout(this.driver);        
+        
         //輸入戶長統號
         rl01210Page.typeHouseholdHeadId("C100202427");
+        
+        WebUtils.pageLoadTimeout(this.driver);        
+        
         //輸入戶號
         rl01210Page.typeHouseholdId("F5261129");
         
+        WebUtils.pageLoadTimeout(this.driver);        
+        
         rl01210Page.getRLDF001MByClickBtn();
+        
+        WebUtils.pageLoadTimeout(this.driver);        
         
         WebUtils.scroolbarDown(this.driver);
         
