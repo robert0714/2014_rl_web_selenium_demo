@@ -50,6 +50,7 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
     @Test
     public void testLogin() throws InterruptedException  {
 	final RlHompageV3 homepage = new RlHompageV3(this.driver);
+
 	homepage.login(this.driver, this.user, this.passwd);
                 
         // Sleep the thread if you want to view the rendered page while testing.

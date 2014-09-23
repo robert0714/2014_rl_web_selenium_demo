@@ -11,7 +11,7 @@ package org.study.selenium.internal;
  */
 public enum AppInfo {
     DEV("192.168.10.18","rl",6280,"192"),
-    DEVin140("140.92.86.173","rl",6280,"140"),//如果DEVin140在UAT之前....則140的機器都是會跑SIT
+//    DEVin140("140.92.86.173","rl",6280,"140"),//如果DEVin140在UAT之前....則140的機器都是會跑SIT
     UAT("rlfl.ris.gov.tw","rl",80,"140");
     
      
