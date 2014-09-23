@@ -146,7 +146,10 @@ public class Rl01210PageV2 {
         WebUtils.pageLoadTimeout(this.driver);
         LOGGER.info("點選暫存");
 //        this.driver.findElement(By.xpath("//span[contains(@id,'button')]/button[3]")).click(); 
-        WebUtils.clickBtn(this.driver, "//span[contains(@id,'button')]/button[3]");
+        final GrowlMsg saveResult = WebUtils.clickBtn(this.driver, "//span[contains(@id,'button')]/button[3]");
+        if(StringUtils.isNotBlank(saveResult.getErrorExtMessage()) && StringUtils.isNotBlank(saveResult.getErrorMessage())){
+            
+        }
     }
 
     /**

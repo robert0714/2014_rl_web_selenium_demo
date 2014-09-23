@@ -1,18 +1,12 @@
 package func.rl00001;
 
-
-import java.util.Set; 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils; 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -20,11 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.study.selenium.SRISWebUtils;
 
 
-import func.rl.common.WebUtils;
 
 public class HouseholdMaintainPageV2 {
-//    private static final String closeBeforeUnloadAlert ="document.getElementsByName('ae_l_leaveCheck')[0].value = null;"; 
-//    private static final String alertFlagXpath ="//*[contains(@id,'alert_flag')]";
+    
     private  final Logger logger = LoggerFactory.getLogger(getClass());
     private WebDriver driver;
     
