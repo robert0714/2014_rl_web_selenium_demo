@@ -373,7 +373,15 @@ public class WebUtils {
         final RemoteWebDriver driver = getWindowsMachine(null, "192.168.10.20", 4444);
         return driver;
     }
-
+    /**
+     *
+     * @return the remote web driver
+     * @throws MalformedURLException the malformed url exception
+     */
+    public static  RemoteWebDriver  getRandomPlatformMachine () throws MalformedURLException {
+        final RemoteWebDriver driver = getRandomPlatformMachine( "192.168.10.20", 4444);
+        return driver;
+    }
     /**
      * Local machine.
      *
@@ -458,6 +466,36 @@ public class WebUtils {
             //ex: http://192.168.9.47:5555
             dc.setCapability("id", spificUrl);
         }
+
+        final RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
+        System.out.println(getIPOfNode(driver));
+        return driver;
+    }
+    /**
+     * Gets the machine.
+     * 
+     * http://127.0.0.1:5555/wd/hub/static/resource/hub.html
+     * @param platmform the platmform
+     * @param spcificIp the spcific ip
+     * @param seleniumServerUrl the selenium server url
+     * @param seleniumServerPort the selenium server port
+     * @return the machine
+     * @throws MalformedURLException the malformed url exception
+     */
+    public static RemoteWebDriver getRandomPlatformMachine( final String seleniumServerUrl,
+            final int seleniumServerPort) throws MalformedURLException {
+        final URL remoteAddress = new URL("http://" + seleniumServerUrl + ":" + seleniumServerPort + "/wd/hub");
+        // have tried using the below commented out lines as well, but in all
+        // cases I face errors.
+        // URL remoteAddress = new URL("http://mymachine:4444/grid/register");
+        // URL remoteAddress = new URL("http://mymachine:4444/wd/hub");
+        final DesiredCapabilities dc = DesiredCapabilities.firefox();
+        dc.setBrowserName(BrowserType.FIREFOX);
+
+        dc.setCapability("screenrecorder", true);
+        dc.setCapability("screenshot", true);
+        dc.setCapability("applicationCacheEnabled", false);
+          
 
         final RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
         System.out.println(getIPOfNode(driver));
