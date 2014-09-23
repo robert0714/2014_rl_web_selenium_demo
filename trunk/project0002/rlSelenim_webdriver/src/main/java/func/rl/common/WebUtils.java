@@ -180,9 +180,10 @@ public class WebUtils {
         return result;
     }
     
-    public  static void pageLoadTimeout(final WebDriver driver){
-	 driver.manage().timeouts().implicitlyWait(3,  TimeUnit.SECONDS);
-	 driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+    public  static void pageLoadTimeout(final WebDriver driver){       
+        driver.manage().timeouts().implicitlyWait(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
    }
     /**
      * **

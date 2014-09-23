@@ -22,6 +22,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
@@ -176,47 +177,50 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
      * 在頁籤01上輸入資料.展示為無依兒童的情境
      */
     public void inputOnTab01ForDemo(Rl01210PageV3 rl01210Page) {
-        WebUtils.pageLoadTimeout(this.driver);
+        pageLoadTimeout(this.driver);    
         
         rl01210Page.tabBasicHouseholdData.click();
         
+        this.driver.navigate().refresh();
+        
+        
         WebUtils.scroolbarDownUp(this.driver);
         
-        WebUtils.pageLoadTimeout(this.driver);        
+        pageLoadTimeout(this.driver);    
         
         //選擇無依兒童        
         rl01210Page.checkBirthKind(Rl01210PageV3.BirthKind.INNOCENTI);
-        
-        WebUtils.pageLoadTimeout(this.driver);
+         
+        pageLoadTimeout(this.driver);    
         
         
         //自立新戶
         rl01210Page.setNewHousehold(true);
         
-        WebUtils.pageLoadTimeout(this.driver);        
+        pageLoadTimeout(this.driver);     
         
         WebUtils.scroolbarDownUp(this.driver);
         
-        WebUtils.pageLoadTimeout(this.driver);        
+        pageLoadTimeout(this.driver);        
         
         //非自立新戶(入他人戶)
         rl01210Page.setNewHousehold(false);
 
-        WebUtils.pageLoadTimeout(this.driver);        
+        pageLoadTimeout(this.driver);        
         
         //輸入戶長統號
         rl01210Page.typeHouseholdHeadId("C100202427");
         
-        WebUtils.pageLoadTimeout(this.driver);        
+        pageLoadTimeout(this.driver);         
         
         //輸入戶號
         rl01210Page.typeHouseholdId("F5261129");
         
-        WebUtils.pageLoadTimeout(this.driver);        
+        pageLoadTimeout(this.driver);           
         
         rl01210Page.getRLDF001MByClickBtn();
         
-        WebUtils.pageLoadTimeout(this.driver);        
+        pageLoadTimeout(this.driver);       
         
         WebUtils.scroolbarDown(this.driver);
         
@@ -232,6 +236,14 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         
         rl01210Page. typeBirthPlaceAC("63000");
 
+    }
+    private void pageLoadTimeout (WebDriver driver){
+        WebUtils.pageLoadTimeout(this.driver);
+        try {
+            Thread.sleep(3000l);
+        } catch (InterruptedException e) {
+           LOGGER.error( e.getMessage(), e);
+        }
     }
     private List<String[]> getPsedoData() {
         final List<String[]> result = new ArrayList<String[]>();
