@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -226,8 +227,8 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
     @Override
     protected void isLoaded() throws Error {
         final String currentUrl = this.driver.getCurrentUrl();
-        //由於頁面網址會帶上windowId,會造成誤判
-        if(!currentUrl.contains(this.loadPage)){
+        //由於頁面網址會帶上windowId,會造成誤判       
+        if(! StringUtils.contains(currentUrl, this.loadPage)){
             throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
         } 
     }
