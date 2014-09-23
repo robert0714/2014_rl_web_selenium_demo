@@ -86,7 +86,7 @@ public class RlHompageV2 {
             //得到https://idpfl.ris.gov.tw:8443
             String openAuthorizationUrl = mainUrl + "/nidp/idff/sso?id=1&sid=1&option=credential&sid=1";
             //https://idpfl.ris.gov.tw:8443/nidp/idff/sso?id=1&sid=1&option=credential&sid=1
-            AbstractSeleniumV2TestCase.open(openAuthorizationUrl);
+            this.driver.get(openAuthorizationUrl);
 
             logger.info(driver.getCurrentUrl());
             //		String user = getUser();
