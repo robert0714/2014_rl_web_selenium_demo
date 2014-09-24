@@ -139,6 +139,7 @@ public class WebUtils {
           
         //等待6秒...不見得msg出來,改成60秒
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+        final String originalUrl = driver.getCurrentUrl();
         btnElement.click();
         
         if (driver.findElements(By.xpath("//*[@id='growl2_container']/div/div")).size() != 0 ) {
@@ -152,6 +153,9 @@ public class WebUtils {
                 result.setErrorMessage(errorMessage);
                 result.setErrorExtMessage(errorExtMessage);
                 result.setGiveUpOperation(giveUpOperation);
+                if(!StringUtils.equalsIgnoreCase(originalUrl, driver.getCurrentUrl())){
+                    break; 
+                }
                 btnElement.click();
                 if (count > 4) {
                     driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);

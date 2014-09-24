@@ -39,7 +39,7 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
     private final static Logger LOGGER = LoggerFactory.getLogger(RL02510Test001V3.class);
     private String user = null;
     private String passwd = null;
-    private Rl02510PageV3 rl01210Page = null;;
+    private Rl02510PageV3 rl02510Page = null;;
     List<String[]> personIdSiteIdList;
 
     @Before
@@ -88,9 +88,10 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
                 
                 rl00004Page.applicantSameTxnPerso.click();
 //                rl00004Page.typeApplicat1(personId, siteId, "爸媽");
-                rl01210Page = rl00004Page.clickRl02510();
-                if (rl01210Page != null) {
-                    demo01(rl01210Page);
+                rl02510Page = rl00004Page.clickRl02510();
+                pageLoadTimeout(this.driver);  
+                if (rl02510Page != null) {
+                    demo01(rl02510Page);
                 }
                 HouseholdMaintainPageV3 householdMaintainPage = null;
 
@@ -111,21 +112,9 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
     }
 
     /**
-     * Demo Scenario. 展示為無依兒童的情境
+     * Demo Scenario. 展示為戶口名簿
      */
     public void demo01(Rl02510PageV3 rl01210Page)  {
-        driver.findElement(By.xpath("//input[@id='txnPersonIdTx']")).clear();
-        driver.findElement(By.xpath("//input[@id='txnPersonIdTx']")).sendKeys("A126222114");
-        driver.findElement(By.xpath("//input[@id='applicantSameTxnPerson']")).click();
-        driver.findElement(By.id("j_id_ey:3:j_id_ez:j_id_f1")).click();
-        driver.findElement(By.id("txnPersonIdTx")).click();
-        driver.findElement(By.xpath("//div[@id='growl2_container']/div/div/div")).click();
-        driver.findElement(By.xpath("//td[@id='currentPersonIdTD']/input")).clear();
-        driver.findElement(By.xpath("//td[@id='currentPersonIdTD']/input")).sendKeys("C100202427");
-        driver.findElement(By.xpath("//input[@id='applicant1PersonId']")).click();
-        driver.findElement(By.xpath("//input[@id='applicant1PersonId']")).clear();
-        driver.findElement(By.xpath("//input[@id='applicant1PersonId']")).sendKeys("C100202427");
-        driver.findElement(By.xpath("(//a[contains(text(),'戶口名簿')])[5]")).click();
         driver.findElement(By.xpath("//td[2]/table/tbody/tr/td[2]/input")).click();
         driver.findElement(By.xpath("//td[2]/table/tbody/tr/td/input")).click();
         driver.findElement(By.xpath("//td[3]/table/tbody/tr/td[2]/input")).click();

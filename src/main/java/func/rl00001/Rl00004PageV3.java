@@ -46,7 +46,7 @@ public class Rl00004PageV3 extends LoadableComponent<Rl00004PageV3>{
     
     private String loadPage; 
     
-    @FindBy(how = How.XPATH, using = "(//a[contains(text(),'戶口名簿')])[5]")
+    @FindBy(how = How.LINK_TEXT, using = "戶口名簿")
     private WebElement rl02510Click;
     
     @FindBy(how = How.XPATH, using = "//input[@id='applicantSameTxnPerson']")
