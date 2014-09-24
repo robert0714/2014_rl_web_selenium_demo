@@ -82,8 +82,12 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
                 rl00004Page.get();
                 
                 pageLoadTimeout(this.driver);  
-                        
-                rl00004Page.typeApplicat1(personId, siteId, "爸媽");
+                
+                
+                rl00004Page.typeTxnPerson(personId, siteId);
+                
+                rl00004Page.applicantSameTxnPerso.click();
+//                rl00004Page.typeApplicat1(personId, siteId, "爸媽");
                 rl01210Page = rl00004Page.clickRl02510();
                 if (rl01210Page != null) {
                     demo01(rl01210Page);
