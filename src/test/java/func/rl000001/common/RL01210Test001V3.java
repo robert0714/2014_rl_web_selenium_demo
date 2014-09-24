@@ -63,6 +63,7 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         if (CollectionUtils.isNotEmpty(this.personIdSiteIdList)) {
         	int count = 0 ; 
         	
+        	 LOGGER.info("測試資料共{}組  " ,this.personIdSiteIdList.size());
             for (String[] stringArray : this.personIdSiteIdList) {
                 final String personId = stringArray[0];
                 if (StringUtils.contains(personId, "*")) {
@@ -106,9 +107,10 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                     isAlertPresent();
                     householdMaintainPage.processAppyCahange();
                 }
+                LOGGER.info("第{}組測試資料測試完成  " ,count);
             }
         }
-
+        LOGGER.info("測試資料共{}組完成  " ,this.personIdSiteIdList.size());
         assertTrue(true);
     }
 
