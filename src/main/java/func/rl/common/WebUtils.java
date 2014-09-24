@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -36,6 +38,8 @@ import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.Extension;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
@@ -393,11 +397,37 @@ public class WebUtils {
      */
     public static WebDriver localMachine(){
         final DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-        final WebDriver driver = new FirefoxDriver(capabilities);
+        capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true); 
+//        final WebDriver driver = new FirefoxDriver(capabilities);
+        final WebDriver driver = new FirefoxDriver(configure(capabilities));
         return driver ;
     }
-    
+
+    public static DesiredCapabilities configure(DesiredCapabilities capabilities) {
+ 
+        FirefoxProfile profile;
+
+        profile = (FirefoxProfile) capabilities.getCapability(FirefoxDriver.PROFILE);
+
+        if (profile == null)
+            profile = new FirefoxProfile();
+
+        // enable access to XPCComponents
+        profile.setPreference("signed.applets.codebase_principal_support", true);
+        
+        try {
+            profile.addExtension(new File(new URI("https://getfirebug.com/releases/firebug/2.0/firebug-2.0.xpi")));
+            profile.setPreference("extensions.firebug.currentVersion", "99.9");
+            
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
+        } catch (URISyntaxException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+        capabilities.setCapability(FirefoxDriver.PROFILE, profile);
+
+        return capabilities;
+    }
     /**
      * Gets the windows machine.
      *
