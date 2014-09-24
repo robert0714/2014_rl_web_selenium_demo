@@ -225,7 +225,8 @@ public class Rl00004PageV3 extends LoadableComponent<Rl00004PageV3>{
         if (result.isGiveUpOperation()) {
             return null;
         } else {
-            return new Rl02510PageV3(this.driver,this);
+//            return new Rl02510PageV3(this.driver,this);
+            return PageFactory.initElements(this.driver, Rl02510PageV3.class);
         }
     } 
 
