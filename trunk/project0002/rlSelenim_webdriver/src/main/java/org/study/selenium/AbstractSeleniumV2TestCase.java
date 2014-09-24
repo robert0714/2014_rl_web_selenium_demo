@@ -9,10 +9,7 @@ package org.study.selenium;
 
 import func.rl.common.WebUtils;
 
-import java.net.URL;
-import java.util.Collection;
-
-import org.apache.commons.collections.CollectionUtils;
+import java.net.URL; 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.openqa.selenium.Alert;
@@ -37,9 +34,7 @@ public class AbstractSeleniumV2TestCase {
     private static URL baseUrl;
     
     /** The driver. */
-    public static WebDriver driver;
-    
-    private boolean acceptNextAlert = true;
+    public static WebDriver driver; 
     
     /**
      * Before class.
@@ -48,12 +43,8 @@ public class AbstractSeleniumV2TestCase {
      */
     @BeforeClass
     public static void beforeClass() throws Exception {
-            driver = WebUtils.getRandomPlatformMachine ();
-//      final   WebDriver initDriver = WebUtils.localMachine();
-//        driver =  WebUtils.localMachine();
-//      driver =  SeleniumTestHelper.initWebDriverV2( initDriver);
-//      SeleniumTestHelper.initWebDriver( initDriver);
-//      driver = initDriver;
+            driver = WebUtils.getRandomPlatformMachine (); 
+//        driver =  WebUtils.localMachine(); 
        final  String url = SeleniumTestHelper.initWebDriverV3(driver);
        baseUrl = new URL(url);
        
