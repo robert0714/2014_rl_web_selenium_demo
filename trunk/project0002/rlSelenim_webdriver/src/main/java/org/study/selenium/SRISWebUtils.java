@@ -98,7 +98,8 @@ public class SRISWebUtils {
 
                                 WebUtils.scroolbarDownUp(driver);
                                
-
+                                LOGGER.info("轉動卷軸 " );
+                                
                                 //點擊關閉視窗
                                 driver.findElement(By.xpath(terminatorPrintXpath)).click();
                                 
@@ -114,7 +115,7 @@ public class SRISWebUtils {
                                 };
                                 wait.until(popupCloseExpected);
                                 //等到popup 關閉之後
-                                
+                                LOGGER.info("關閉預覽視窗結束 " );
                                 
                                 // Move back to the Parent Browser Window
                                 final Set<String> nowWindowHandles = driver.getWindowHandles();
