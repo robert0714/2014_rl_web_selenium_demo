@@ -97,13 +97,25 @@ public class SRISWebUtils {
                                 wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
 
                                 WebUtils.scroolbarDownUp(driver);
-                                // *[@id="j_id4_j_id_9:j_id_y"]/span
-                                // *[@id="j_id4_j_id_9:j_id_y"]
-                                driver.findElement(By.xpath(terminatorPrintXpath)).click();
-                                // 端未列印
-                                // form/div/div/div/div[2]/button[2]
-                                // selenium.click("//form/div/div/div/div[2]/button[2]");//關閉
+                               
 
+                                //點擊關閉視窗
+                                driver.findElement(By.xpath(terminatorPrintXpath)).click();
+                                
+                                final ExpectedCondition<Boolean> popupCloseExpected = new ExpectedCondition<Boolean>() {
+                                    public Boolean apply(WebDriver input) {
+                                    	 final Set<String> nowWindowHandles = driver.getWindowHandles();
+                                         if (!nowWindowHandles.contains(windowId)) {
+                                        	 return true;
+                                         }else{
+                                        	 return false;
+                                         }
+                                    }
+                                };
+                                wait.until(popupCloseExpected);
+                                //等到popup 關閉之後
+                                
+                                
                                 // Move back to the Parent Browser Window
                                 final Set<String> nowWindowHandles = driver.getWindowHandles();
                                 nowWindowHandles.remove(parentWindowId);
