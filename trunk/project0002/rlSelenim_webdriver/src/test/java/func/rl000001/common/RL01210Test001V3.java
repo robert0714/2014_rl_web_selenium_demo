@@ -61,6 +61,8 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         homepage.login(this.driver, this.user, this.passwd);
         final Rl00001PageV3 rl00001Page = new Rl00001PageV3(driver);
         if (CollectionUtils.isNotEmpty(this.personIdSiteIdList)) {
+        	int count = 0 ; 
+        	
             for (String[] stringArray : this.personIdSiteIdList) {
                 final String personId = stringArray[0];
                 if (StringUtils.contains(personId, "*")) {
@@ -68,6 +70,11 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                 }
                 final String siteId = stringArray[1];
                 final String txId = rl00001Page.displayTxId();
+                count++;
+                
+                LOGGER.info("第{}組測試資料  " ,count);
+                
+                
                 rl00001Page.get();
                 
                 pageLoadTimeout(this.driver);  
@@ -184,9 +191,7 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         pageLoadTimeout(this.driver);    
         
         rl01210Page.tabBasicHouseholdData.click();
-        
-        this.driver.navigate().refresh();
-        
+         
         
         WebUtils.scroolbarDownUp(this.driver);
         
