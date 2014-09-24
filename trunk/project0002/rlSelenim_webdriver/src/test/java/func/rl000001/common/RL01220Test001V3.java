@@ -102,21 +102,9 @@ public class RL01220Test001V3 extends AbstractSeleniumV2TestCase {
                 if (rl01220Page != null) {
                     demo01(rl01220Page);
                 }
-                HouseholdMaintainPageV3 householdMaintainPage = null;
+                HouseholdMaintainPageV3 householdMaintainPage = new HouseholdMaintainPageV3(driver, rl01220Page);
 
-                //頁籤翻轉測試
-                pageLoadTimeout(this.driver);
-
-                if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
-
-                    householdMaintainPage = new HouseholdMaintainPageV3(driver, rl01220Page);
-
-                    while (!householdMaintainPage.switchTab()) {
-                        LOGGER.debug("轉不過去");
-                    }
-                    isAlertPresent();
-                }
-                pageLoadTimeout(this.driver);
+                 
 
                 if (householdMaintainPage != null
                         && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
