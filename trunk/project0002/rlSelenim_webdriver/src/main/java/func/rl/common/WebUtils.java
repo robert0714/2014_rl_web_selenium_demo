@@ -457,7 +457,7 @@ public class WebUtils {
 
         dc.setCapability("screenrecorder", true);
         dc.setCapability("screenshot", true);
-        dc.setCapability("applicationCacheEnabled", false);
+//        dc.setCapability("applicationCacheEnabled", false);
           
 
         if (StringUtils.isNotBlank(spcificIp)) {
@@ -494,7 +494,7 @@ public class WebUtils {
 
         dc.setCapability("screenrecorder", true);
         dc.setCapability("screenshot", true);
-        dc.setCapability("applicationCacheEnabled", false);
+//        dc.setCapability("applicationCacheEnabled", false);
           
 
         final RemoteWebDriver driver = new RemoteWebDriver(remoteAddress, dc);
