@@ -27,6 +27,7 @@ import com.gargoylesoftware.htmlunit.util.UrlUtils;
 import func.rl.common.WebUtils;
 import func.rl.common.internal.GrowlMsg;
 import func.rl00001._rl01210.Rl01210PageV3;
+import func.rl00001._rl01220.Rl01220PageV3;
 
 /**
  * The Class Rl00001PageV2.
@@ -102,26 +103,22 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
     @Override
     protected void isLoaded() throws Error {
         final String currentUrl = this.driver.getCurrentUrl();
-		if (this.loadPage != null) {
-			try {
-				URL url1 = new URL(StringUtils.substringBefore(currentUrl, "?"));
-				URL url2 = new URL(StringUtils.substringBefore(this.loadPage, "?"));
-				if (!url1.equals(url2)) {
-					logger.info("current url: {}", currentUrl);
-					throw new Error(String.format(
-							"The wrong page has loaded: ",
-							this.driver.getCurrentUrl()));
-				}
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-        
-     else   if(! StringUtils.contains(currentUrl, this.loadPage)){ //由於頁面網址會帶上windowId,會造成誤判      		
-            logger.info("current url: {}" , currentUrl);
+        if (this.loadPage != null) {
+            try {
+                URL url1 = new URL(StringUtils.substringBefore(currentUrl, "?"));
+                URL url2 = new URL(StringUtils.substringBefore(this.loadPage, "?"));
+                if (!url1.equals(url2)) {
+                    logger.info("current url: {}", currentUrl);
+                    throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
+                }
+            } catch (MalformedURLException e) {
+                logger.error(e.getMessage() ,e );
+            }
+        }
+        else if (!StringUtils.contains(currentUrl, this.loadPage)) { //由於頁面網址會帶上windowId,會造成誤判      		
+            logger.info("current url: {}", currentUrl);
             throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
-        } 
+        }
     }
     /**
      * Type txn person.
@@ -238,17 +235,19 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
      * @return true, if successful
      * @throws InterruptedException the interrupted exception
      */
-    public boolean clickRl01220() throws InterruptedException {
+    public Rl01220PageV3 clickRl01220() throws InterruptedException {
         logger.info("點選 死亡（死亡宣告）登記 Rl01220" );
         
         final GrowlMsg result = WebUtils.clickBtn(this.driver, this.rl01220Click);
         WebUtils.pageLoadTimeout(this.driver);
+        
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         isAlertPresent();
+        
         if (result.isGiveUpOperation()) {
-            return false;
+            return null;
         } else {
-            return true;
+            return new Rl01220PageV3(this.driver,this);
         }
     }
 
