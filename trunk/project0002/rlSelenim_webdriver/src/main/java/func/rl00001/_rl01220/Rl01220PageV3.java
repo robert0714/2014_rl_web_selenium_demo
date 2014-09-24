@@ -7,13 +7,18 @@ import com.thoughtworks.selenium.SeleniumException;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 import func.rl.common.WebUtils;
-import func.rl.common.internal.GrowlMsg;
+import func.rl.common.internal.GrowlMsg; 
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +29,10 @@ import org.study.selenium.SRISWebUtils;
  * The Class Rl01220Page.
  * 死亡登記/死亡宣告登記 頁面
  */
-public class Rl01220PageV2 {
+public class Rl01220PageV3 extends LoadableComponent<Rl01220PageV3>{
 
     /** The Constant LOGGER. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(Rl01220PageV2.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Rl01220PageV3.class);
 
     /** The driver. */
     private WebDriver driver;
@@ -36,19 +41,80 @@ public class Rl01220PageV2 {
     /** The rl01220 partial url. */
     private final String partialURL = "_rl01220/rl01220.xhtml";
 
+    private final LoadableComponent<?> parent;
+    
+    /** The wait. */
+    private  WebDriverWait wait  ;
+        
+    
+
+
+    
+    /***
+     * 戶籍記事/罰鍰清單 頁籤
+     * */
+    @FindBy(how = How.XPATH, using = "//a[contains(text(),'戶籍記事/罰鍰清單')]")
+    public WebElement tabNotes;
+    
+    /***
+     * 死亡者基本資料 頁籤
+     * */
+    @FindBy(how = How.XPATH, using = "//a[contains(text(),'死亡者')]")
+    public  WebElement tabDeadPersonData;    
+    
+    
+    /***
+     * 關閉視窗按鈕
+     * */
+    @FindBy(how = How.XPATH, using = "//span[contains(@id,'button')]/button[4]")
+    public   WebElement closeBtn;
+    
+    /***
+     * 暫存按鈕
+     * */
+    @FindBy(how = How.XPATH, using = "//button[contains(@id,'saveBtn')]")
+    public   WebElement tempSaveBtn;
+    
+    
+    /***
+     *  死亡原因 inputText
+     * */
+    @FindBy(how = How.XPATH, using = "//fieldset[@id='tabView:relatedApplyItems']/div/table[2]/tbody/tr/td/input")
+    public WebElement deathReason;
+
+    @FindBy(how = How.XPATH, using = "//div[contains(@id,'content')]/button")
+    public WebElement verifyBtn;    
+    
     /**
      * Instantiates a new rl01220 page.
      *
-     * @param selenium the selenium
      * @param driver the driver
-     * @throws UnhandledAlertException the unhandled alert exception
-     * @throws SeleniumException the selenium exception
      */
-    public Rl01220PageV2( final WebDriver driver) throws UnhandledAlertException, SeleniumException {
+    public Rl01220PageV3( final WebDriver driver,final LoadableComponent<?> parent )  {
         super(); 
         this.driver = driver;
+        this.parent = parent;
+        this.wait = new WebDriverWait(driver, 60);
+        PageFactory.initElements(driver, this);
     }
 
+    @Override
+    protected void load() {
+        final String mainUrl = WebUtils .getMainUrl( this.driver.getCurrentUrl());
+        //http://192.168.10.18:6280/rl/faces/pages/func/rl00001/_rl01240/rl01240.xhtml?windowId=846
+        final String url = String.format("%s/rl/faces/pages/func/rl00001/%s", mainUrl,partialURL);
+        this.driver.get(url);
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        final String currentUrl = this.driver.getCurrentUrl();
+        //由於頁面網址會帶上windowId,會造成誤判       
+        if(! StringUtils.contains(currentUrl, this.partialURL)){
+            throw new Error(String.format("The wrong page has loaded: ", this.driver.getCurrentUrl()));
+        } 
+    }
+    
     /**
      * Gets the today yyy m mdd.
      *
@@ -59,16 +125,8 @@ public class Rl01220PageV2 {
 
         return String.format("103%s", mmdd);
     }
-
-    /**
-     * The main method.
-     *
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-        System.out.println(String.format("%1$,03d", 31));
-    }
-
+    
+    
     /**
      * Switch tab.
      *
@@ -80,14 +138,14 @@ public class Rl01220PageV2 {
         final String currentUrl = this.driver.getCurrentUrl();
         if (StringUtils.contains(currentUrl, this.partialURL)) {
             this.driver.navigate().refresh();
-            WebUtils.pageLoadTimeout(this.driver);
-            this.driver.findElement(By.xpath("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();           
-            WebUtils.pageLoadTimeout(this.driver);
-            this.driver.findElement(By.xpath("//a[contains(text(),'死亡者')]")).click();
             
-            inputOnTab01();            
-            WebUtils.pageLoadTimeout(this.driver);            
-            inputOnTab02();
+            WebUtils.pageLoadTimeout(this.driver);
+            this.tabNotes.click();   
+            
+            WebUtils.pageLoadTimeout(this.driver);
+            this.tabDeadPersonData.click();
+            
+            
         }
     }
 
@@ -96,11 +154,8 @@ public class Rl01220PageV2 {
     /**
      * Input data01.
      *
-     * @throws UnhandledAlertException the unhandled alert exception
-     * @throws SeleniumException the selenium exception
-     * @throws InterruptedException the interrupted exception
      */
-    public void inputOnTab01() throws UnhandledAlertException, SeleniumException, InterruptedException {
+    public void inputOnTab01() {
         WebUtils.pageLoadTimeout(this.driver);
         this.driver.findElement(By.xpath("//a[contains(text(),'死亡者')]")).click();
         WebUtils.pageLoadTimeout(this.driver);
@@ -135,39 +190,33 @@ public class Rl01220PageV2 {
     /**
      * Input data02.
      *
-     * @throws UnhandledAlertException the unhandled alert exception
-     * @throws SeleniumException the selenium exception
-     * @throws InterruptedException the interrupted exception
      */
-    public void inputOnTab02() throws UnhandledAlertException, SeleniumException, InterruptedException {
-        this.driver.findElement(By.xpath("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();           
+    public void inputOnTab02()  {
+        this.tabNotes.click();           
         WebUtils.pageLoadTimeout(this.driver);
-        // 資料驗證 
-        final String verifyBtnXpath = "//div[contains(@id,'content')]/button";
         
         // 資料驗證
-        GrowlMsg verify = WebUtils.clickBtn(this.driver, verifyBtnXpath);
+        GrowlMsg verify = WebUtils.clickBtn(this.driver, this.verifyBtn);
         final String errorExtMessage = verify.getErrorExtMessage();
         final String errorMessage = verify.getErrorMessage();
         if (org.apache.commons.lang.StringUtils.isNotBlank(errorMessage)
                 || org.apache.commons.lang.StringUtils.isNotBlank(errorExtMessage)) {
-            int count =0; 
-            while (count < 10) {
+            
+            while (true) {
                 if (StringUtils.equalsIgnoreCase("請輸入死亡原因", errorExtMessage)) {
                     
-                    this.driver.findElement(By.xpath("//a[contains(text(),'死亡者')]")).click();
+                    this.tabDeadPersonData.click();
                     WebUtils.pageLoadTimeout(this.driver);
                     typeDeathReason("死亡原因");
                     WebUtils.pageLoadTimeout(this.driver);
                     
-                    this.driver.findElement(By.xpath("//a[contains(text(),'戶籍記事/罰鍰清單')]")).click();           
+                    this.tabNotes.click();           
                     WebUtils.pageLoadTimeout(this.driver);
 
-                    verify = WebUtils.clickBtn(this.driver, verifyBtnXpath);
+                    verify = WebUtils.clickBtn(this.driver, verifyBtn);
                     if (!verify.isGiveUpOperation()) {
                         break;
                     }
-                    count++;
                 }
             }
 
@@ -178,9 +227,11 @@ public class Rl01220PageV2 {
 
         // 暫存//button[@id='tabView:saveBtn']
         //selenium.click("//button[contains(@id,'saveBtn')]");
-        WebUtils.handleClickBtn(this.driver, "//button[contains(@id,'saveBtn')]");
+        WebUtils.handleClickBtn(this.driver,tempSaveBtn);
         WebUtils.pageLoadTimeout(this.driver);
     }
+   
+    
     /**
      * 死亡原因.
      *
@@ -190,8 +241,7 @@ public class Rl01220PageV2 {
         // //fieldset[@id='tabView:relatedApplyItems']/div/table[2]/tbody/tr/td/input
 //        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table[2]/tbody/tr/td/input", reason);
 //        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table[2]/tbody/tr/td/input", "blur");
-        this. driver.findElement(By.xpath("//fieldset[@id='tabView:relatedApplyItems']/div/table[2]/tbody/tr/td/input")).sendKeys(reason); 
-
+        this. deathReason.sendKeys(reason); 
     }
 
     /**
@@ -344,7 +394,7 @@ public class Rl01220PageV2 {
     /**
      * The Enum IDPolicy.
      */
-    enum IDPolicy {
+    public enum IDPolicy {
 
         /** The return. 國民身分證繳回,是*/
         RETURN(0),  
@@ -369,7 +419,7 @@ public class Rl01220PageV2 {
     /**
      * The Enum DeathItem.
      */
-    enum DeathItem {
+    public enum DeathItem {
 
         /** The death. 死忙*/
         DEATH(0),  
@@ -392,7 +442,7 @@ public class Rl01220PageV2 {
     /**
      * The Enum DeathWay.
      */
-    enum DeathWay {
+    public enum DeathWay {
 
         /** The sure.確定 */
         SURE(0),  
@@ -417,7 +467,7 @@ public class Rl01220PageV2 {
     /**
      * The Enum DeathPlace.
      */
-    enum DeathPlace {
+    public enum DeathPlace {
 
         /** The hospital.醫院 */
         HOSPITAL(2),  
@@ -444,4 +494,5 @@ public class Rl01220PageV2 {
         /** The value. */
         private int value;
     }
+
 }
