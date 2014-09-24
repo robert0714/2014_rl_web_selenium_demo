@@ -77,7 +77,7 @@ public class SRISWebUtils {
                             if (StringUtils.contains(currentUrl, "common/popupContent.xhtml")) {
                                 // 戶役資訊服務網
                                 String title = driver.getTitle();
-                                LOGGER.debug("title: " + title);
+                                LOGGER.debug("title: {}" , title);
                                 final String terminatorPrintXpath = "//span[contains(@id,'pdfbanner')]/span[2]/button[2]";
                                 wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
                                 LOGGER.info("等待預覽列印網頁");
