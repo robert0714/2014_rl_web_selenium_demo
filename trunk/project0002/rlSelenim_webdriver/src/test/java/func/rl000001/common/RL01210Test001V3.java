@@ -82,15 +82,16 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                         
                 rl00001Page.typeApplicat1(personId, siteId, "爸媽");
                 rl01210Page = rl00001Page.clickRl01210();
+                boolean saveTmpSuccess =false;
                 if (rl01210Page != null) {
-                    demo01(rl01210Page);
+                    saveTmpSuccess =demo01(rl01210Page);
                 }
                 HouseholdMaintainPageV3 householdMaintainPage = null;
 
                 //頁籤翻轉測試
                 pageLoadTimeout(this.driver);  
                 
-                if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
+                if (saveTmpSuccess && StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
 
                     householdMaintainPage = new HouseholdMaintainPageV3(driver,rl01210Page);
 
@@ -101,7 +102,7 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                 }
                 pageLoadTimeout(this.driver);  
                 
-                if (householdMaintainPage != null
+                if (saveTmpSuccess && householdMaintainPage != null
                         && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
                     householdMaintainPage.processPrintView();
                     isAlertPresent();
@@ -117,7 +118,7 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
     /**
      * Demo Scenario. 展示為無依兒童的情境
      */
-    public void demo01(Rl01210PageV3 rl01210Page)  {
+    public boolean demo01(Rl01210PageV3 rl01210Page)  {
         LOGGER.info("展示為無依兒童的情境");
         WebUtils.pageLoadTimeout(this.driver);
         rl01210Page.clickTabBasicHouseholdData();
@@ -127,13 +128,16 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         
         WebUtils.pageLoadTimeout(this.driver);
         
-        inputOnTab02(rl01210Page);
+        boolean result  = inputOnTab02(rl01210Page);
+        
+        return result;
     }
 
     /**
      * Input data02.
      */
-    public void inputOnTab02(final Rl01210PageV3 rl01210Page)  {
+    public boolean inputOnTab02(final Rl01210PageV3 rl01210Page)  {
+        boolean success = false ; 
         WebUtils.pageLoadTimeout(this.driver);
         rl01210Page.clickTabNotes();
         WebUtils.pageLoadTimeout(this.driver);
@@ -173,6 +177,8 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         if (verify.isGiveUpOperation()) {
             LOGGER.info("點選關閉視窗");
             rl01210Page.clickCloseBtn();
+            success =false;
+            return false ;
         }
 
         //暫存
@@ -182,7 +188,11 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         if(!result.isGiveUpOperation()){
             final HouseholdMaintainPageV3 l2page =  new HouseholdMaintainPageV3(this.driver , rl01210Page);
             l2page.get();
+            
+            success = true;
+            return true ;
         }
+        return success;
     }
     
     
