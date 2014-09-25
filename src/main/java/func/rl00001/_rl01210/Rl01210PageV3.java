@@ -219,7 +219,6 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
      */
     public void typeBirthYyymmdd(final String birthYyymmdd) {
         LOGGER.debug("輸入出生日期: {}", birthYyymmdd);
-        
         SRISWebUtils.typeYyymmdd(birthYyymmdd, driver, "//span[contains(@id,'birthYyymmdd')]");
        
     }

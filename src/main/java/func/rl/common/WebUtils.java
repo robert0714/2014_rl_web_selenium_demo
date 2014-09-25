@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -30,16 +29,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.internal.Extension;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.BrowserType;
@@ -145,7 +141,7 @@ public class WebUtils {
           
         //等待6秒...不見得msg出來,改成60秒
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-        final String originalUrl = driver.getCurrentUrl();
+        
         final Actions oAction = new Actions(driver);
         
         oAction.moveToElement(btnElement).build().perform();
@@ -154,37 +150,20 @@ public class WebUtils {
          
         
         if (driver.findElements(By.xpath("//*[@id='growl2_container']/div/div")).size() != 0 ) {
-            int count = 0;
-            while (true) {
-                final WebElement mainElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/span")));
-                final String mainMessage = mainElement.getText();
+            
+            
+                //這邊的風險是
+                final String mainMessage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/span"))).getText();
                 //driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")).getText();
-                
-                final WebElement extElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")));
-                
-                final String extMessage = extElement.getText();
+                 
+                final String extMessage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p"))).getText();
                 LOGGER.info(mainMessage);
                 LOGGER.info(extMessage);
                 result.setErrorMessage(mainMessage);
                 result.setErrorExtMessage(extMessage);
                 result.setGiveUpOperation(giveUpOperation);
-                if(!StringUtils.equalsIgnoreCase(originalUrl, driver.getCurrentUrl())){
-                    break; 
-                }
-                
-                oAction.moveToElement(btnElement).build().perform();
-                
-                oAction.click(btnElement).build().perform();
-                
-                
-                if (count > 4) {
-                    driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
-                    giveUpOperation = true;
-                    result.setGiveUpOperation(giveUpOperation);
-                    break;
-                }
-                count++;
-            }
+                 
+             
         }
         return result;
     }
@@ -205,7 +184,7 @@ public class WebUtils {
     }
     
     public  static void pageLoadTimeout(final WebDriver driver){       
-        driver.manage().timeouts().implicitlyWait(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         driver.manage().timeouts().setScriptTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
    }
