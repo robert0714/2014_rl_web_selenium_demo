@@ -31,6 +31,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -149,21 +150,27 @@ public class WebUtils {
         oAction.click(btnElement).build().perform();  
          
         
-        if (driver.findElements(By.xpath("//*[@id='growl2_container']/div/div")).size() != 0 ) {
-            
-            
+        if (driver.findElements(By.xpath("//*[@id='growl2_container']/div/div")).size() != 0) {
+
+            try {
                 //這邊的風險是
-                final String mainMessage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/span"))).getText();
+                final String mainMessage = wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/span")))
+                        .getText();
                 //driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")).getText();
-                 
-                final String extMessage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p"))).getText();
+
+                final String extMessage = wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")))
+                        .getText();
                 LOGGER.info(mainMessage);
                 LOGGER.info(extMessage);
                 result.setErrorMessage(mainMessage);
                 result.setErrorExtMessage(extMessage);
                 result.setGiveUpOperation(giveUpOperation);
-                 
-             
+            } catch (StaleElementReferenceException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+
         }
         return result;
     }
