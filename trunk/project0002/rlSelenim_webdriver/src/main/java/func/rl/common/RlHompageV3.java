@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException; 
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -95,7 +96,6 @@ public class RlHompageV3 {
     public void enterRl00001() {
 	isAlertPresent() ;
 	driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);   
-//	WebUtils.pageLoadTimeout(this.driver);
 	
         this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
         
@@ -106,13 +106,17 @@ public class RlHompageV3 {
         
         final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
          
+
+        final WebElement rl00001ClickLink = wait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(rl00001Xpath)));
+        
         
         WebUtils.pageLoadTimeout(this.driver); 
         isAlertPresent();
         
         logger.info("進入左邊選單: 點選現戶簿頁");
         
-        this.driver.findElement(By.xpath(rl00001Xpath)).click();
+        rl00001ClickLink.click();
         
         isAlertPresent();
         final String currentUrl = this.driver.getCurrentUrl();
@@ -122,21 +126,29 @@ public class RlHompageV3 {
     }   
     public void enterRl01Z00() {
 	isAlertPresent() ;
-	driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);   
-//	WebUtils.pageLoadTimeout(this.driver);
+	driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);  
+
+	this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
 	
-        this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
-	
+
      // 進入戶籍申請書管理, 
-        this.driver.findElement(By.xpath("//*[@id='navmenu-v']/li[10]")).click();
+//        this.driver.findElement(By.xpath("//*[@id='navmenu-v']/li[10]")).click();
         
-        final String rl01z00Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl01z00/rl01z00.xhtml')]";
+        final WebElement submenuClickLink = wait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='navmenu-v']/li[10]")));        
+        submenuClickLink.click();
+        
+        
+        final String rl01z00Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl01z00/rl01z00.xhtml')]";        
+
+        final WebElement rl01z00ClickLink = wait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(rl01z00Xpath)));
         
         WebUtils.pageLoadTimeout(this.driver);
-//      isBeforeUnloadEventPresent();
+        
         isAlertPresent();
       
-        this.driver.findElement(By.xpath(rl01z00Xpath)).click();
+        rl01z00ClickLink.click();
         
         final String currentUrl = this.driver.getCurrentUrl();
         

@@ -120,7 +120,7 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
     public void demo01(Rl01210PageV3 rl01210Page)  {
         LOGGER.info("展示為無依兒童的情境");
         WebUtils.pageLoadTimeout(this.driver);
-        rl01210Page.tabBasicHouseholdData.click();
+        rl01210Page.clickTabBasicHouseholdData();
         WebUtils.pageLoadTimeout(this.driver);
 
         inputOnTab01ForDemo(rl01210Page);
@@ -135,13 +135,13 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
      */
     public void inputOnTab02(final Rl01210PageV3 rl01210Page)  {
         WebUtils.pageLoadTimeout(this.driver);
-        rl01210Page.tabNotes.click();
+        rl01210Page.clickTabNotes();
         WebUtils.pageLoadTimeout(this.driver);
 
         int count = 0;
         //資料驗證
         LOGGER.info("點選資料驗證");
-        GrowlMsg verify = WebUtils.clickBtn(this.driver, rl01210Page.verifyBtn);
+        GrowlMsg verify = rl01210Page.clickVerifyBtn();
         final String errorExtMessage = verify.getErrorExtMessage();
         final String errorMessage = verify.getErrorMessage();
         if (org.apache.commons.lang.StringUtils.isNotBlank(errorMessage)
@@ -151,16 +151,16 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                 //超過10次資料驗證...要點選關閉視窗放棄
                 if (StringUtils.equalsIgnoreCase("請輸入發現地點", errorExtMessage)) {
 
-                    rl01210Page.tabBasicHouseholdData.click();
+                    rl01210Page.clickTabBasicHouseholdData();
                     WebUtils.pageLoadTimeout(this.driver);
 
                     rl01210Page.typeBirthPlaceAC("63000");
 
                     WebUtils.pageLoadTimeout(this.driver);
 
-                    rl01210Page.tabNotes.click();
+                    rl01210Page.clickTabNotes();
 
-                    verify = WebUtils.clickBtn(this.driver, rl01210Page.verifyBtn);
+                    verify = rl01210Page.clickVerifyBtn();;
                     if (!verify.isGiveUpOperation()) {
                         break;
                     }
@@ -172,13 +172,13 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         WebUtils.pageLoadTimeout(this.driver);
         if (verify.isGiveUpOperation()) {
             LOGGER.info("點選關閉視窗");
-            WebUtils.clickBtn(this.driver, rl01210Page.closeBtn);
+            rl01210Page.clickCloseBtn();
         }
 
         //暫存
         WebUtils.pageLoadTimeout(this.driver);
         LOGGER.info("點選暫存");
-        final GrowlMsg result = WebUtils.clickBtn(this.driver, rl01210Page.tempSaveBtn);
+        final GrowlMsg result = rl01210Page.clickTempSaveBtn();
         if(!result.isGiveUpOperation()){
             final HouseholdMaintainPageV3 l2page =  new HouseholdMaintainPageV3(this.driver , rl01210Page);
             l2page.get();
@@ -192,7 +192,7 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
     public void inputOnTab01ForDemo(Rl01210PageV3 rl01210Page) {
         pageLoadTimeout(this.driver);    
         
-        rl01210Page.tabBasicHouseholdData.click();
+        rl01210Page.clickTabBasicHouseholdData();
          
         
         WebUtils.scroolbarDownUp(this.driver);
@@ -237,7 +237,7 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         
         rl01210Page.typeLastName("無姓");
         
-        rl01210Page. typeFirstName("無名");
+        rl01210Page.typeFirstName("無名");
         
         rl01210Page. typeBirthYyymmdd("1010203");
         
@@ -250,11 +250,11 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
     }
     private void pageLoadTimeout (WebDriver driver){
         WebUtils.pageLoadTimeout(this.driver);
-        try {
-            Thread.sleep(3000l);
-        } catch (InterruptedException e) {
-           LOGGER.error( e.getMessage(), e);
-        }
+//        try {
+//            Thread.sleep(3000l);
+//        } catch (InterruptedException e) {
+//           LOGGER.error( e.getMessage(), e);
+//        }
     }
     private List<String[]> getPsedoData() {
         final List<String[]> result = new ArrayList<String[]>();
