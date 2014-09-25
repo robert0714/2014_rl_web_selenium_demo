@@ -10,13 +10,16 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import com.thoughtworks.selenium.Selenium;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 import func.rl.common.WebUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchWindowException;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -168,6 +171,35 @@ public class SRISWebUtils {
         newPdfPreview(driver, printBtn);
     }
 
+    /**
+     * 輸入出生日期
+     * Type birth yyymmdd.
+     *
+     * @param birthYyymmdd the birth yyymmdd
+     */
+    public static void typeYyymmdd(final String birthYyymmdd,final WebDriver driver,final  String xpath) {
+        final WebDriverWait wait =    new WebDriverWait(driver, 60);
+        
+        //input[@id='j_id_2k:birthYyymmdd:j_id_uj']
+        final String yyy = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 0, 3);
+        final String mm = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 3, 5);
+        final String dd = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 5, 7);
+       
+        final String  yyyXpath= xpath+"/input";
+        final String  mmXpath= xpath+"/input[2]";
+        final String  ddXpath= xpath+"/input[3]";
+        
+        
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(yyyXpath))).sendKeys(yyy);
+        WebUtils.pageLoadTimeout(driver);
+        
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(mmXpath))).sendKeys(mm);
+        WebUtils.pageLoadTimeout(driver);
+        
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(ddXpath))).sendKeys(dd);
+        WebUtils.pageLoadTimeout(driver);
+    }
+    
     private static boolean isAlertPresent(final WebDriver driver) {
         try {
             Alert alert = driver.switchTo().alert();
@@ -194,12 +226,16 @@ public class SRISWebUtils {
          * ex: //td[contains(@id,'currentPersonSiteIdTD')]/span/span/img
          * **/
         final String closeXpath = xpath + "/span/span/img";
-
+        
+        final String selectXpath = xpath + "/span/div";
+        
+        final Actions oAction = new Actions(driver);
+        
         for (int i = 0; i < 1; ++i) {
             WebUtils.pageLoadTimeout(driver);
             driver.findElement(By.xpath(typeXpath)).click();
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-            Actions oAction = new Actions(driver);
+           
             oAction.moveToElement(oWE);
             oAction.doubleClick(oWE).build().perform();
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -208,10 +244,25 @@ public class SRISWebUtils {
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             }
             oWE.sendKeys(value);
-            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        }
-        driver.findElement(By.xpath(closeXpath)).click();
-        WebUtils.pageLoadTimeout(driver);
+        } 
+        
+        /**
+         * 使用debug mode可以正常...但是normal mode就是發生異常...社群建議直接使用 javascript work around
+         * **/
+//        final  WebDriverWait wait = new WebDriverWait(driver, 10);        
+//        final WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(selectXpath)));
+//        oAction.moveToElement(element).build().perform();
+//        WebUtils.pageLoadTimeout(driver);
+//        oAction.doubleClick(element).build().perform();
+        
+        /***
+         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1) ,使用closeXpath又不是每次都ok
+         * ***/
+        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
+        
+        selenium.fireEvent(typeXpath, "blur");
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        
     }
 
     public static void typeAutoCompleteBySpanXpath(final WebDriver driver, final String spanXpath, final String value) {
@@ -224,14 +275,21 @@ public class SRISWebUtils {
          * ex: //td[contains(@id,'currentPersonSiteIdTD')]/span/span/img
          * **/
         final String closeXpath = spanXpath + "/span/img";
+        
+        final String selectXpath = spanXpath + "/div";
 
         final WebElement oWE = driver.findElement(By.xpath(typeXpath));
+        
+        final Actions oAction = new Actions(driver);
         for (int i = 0; i < 1; ++i) {
             WebUtils.pageLoadTimeout(driver);
             driver.findElement(By.xpath(typeXpath)).click();
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-            Actions oAction = new Actions(driver);
-            oAction.moveToElement(oWE);
+            
+           
+            oAction.moveToElement(oWE).build().perform();
+            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+            
             oAction.doubleClick(oWE).build().perform();
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             ;
@@ -239,11 +297,21 @@ public class SRISWebUtils {
                 oWE.clear();
                 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             }
-            oWE.sendKeys(value);
+            oAction.sendKeys(oWE,value).build().perform(); 
             WebUtils.pageLoadTimeout(driver);
         }
-        driver.findElement(By.xpath(closeXpath)).click();
-        WebUtils.pageLoadTimeout(driver);
+        
+//        oAction.moveToElement(driver.findElement(By.xpath(selectXpath))).build().perform();
+//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//        oAction.doubleClick(driver.findElement(By.xpath(selectXpath))).build().perform();
+//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        
+        /***
+         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1) ,使用closeXpath又不是每次都ok
+         * ***/
+        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
+        
+        selenium.fireEvent(typeXpath, "blur");
 
     }
 
