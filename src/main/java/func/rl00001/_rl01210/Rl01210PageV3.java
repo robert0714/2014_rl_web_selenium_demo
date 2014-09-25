@@ -95,7 +95,7 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
     }
     /**
      * Instantiates a new rl01210 page.
-     *
+     * 為了使 PageFactory.initElements(this.driver, Rl01210PageV3.class)可以正常使用
      * @param driver the driver
      */
     public Rl01210PageV3(final WebDriver driver )   {
@@ -175,9 +175,9 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
 	/***
          * 由於發現使用Selenium2 (WebDrvier在firefox 17下 有異常不能正常操作,所以實作暫時改用Selenium1)
          * ***/
-	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-//        SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, typeXpath, birthPlaceAC);
-        SRISWebUtils.typeAutoCompleteBySpanXpath(selenium, typeXpath, birthPlaceAC);
+//	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
+        SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, typeXpath, birthPlaceAC);
+//        SRISWebUtils.typeAutoCompleteBySpanXpath(selenium, typeXpath, birthPlaceAC);
     }
 
      
@@ -201,14 +201,11 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
      * Type birth order sex select one menu.
      */
     public void typeBirthOrderSexSelectOneMenu() {
-        LOGGER.debug("輸入出生別" );
-//        this.driver.findElement(By.xpath("//label[contains(@id,'birthOrderSexSelectOneMenu')]")).click();
+        LOGGER.debug("輸入出生別" ); 
+        
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(@id,'birthOrderSexSelectOneMenu')]"))).click();
-        WebUtils.pageLoadTimeout(this.driver);
+        WebUtils.pageLoadTimeout(this.driver); 
         
-       
-        
-//        this.driver.findElement(By.xpath("//div[contains(@id,'birthOrderSexSelectOneMenu')]/div/ul/li[2]")).click(); 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@id,'birthOrderSexSelectOneMenu')]/div/ul/li[2]"))).click();
         
         WebUtils.pageLoadTimeout(this.driver);
@@ -223,55 +220,8 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
     public void typeBirthYyymmdd(final String birthYyymmdd) {
         LOGGER.debug("輸入出生日期: {}", birthYyymmdd);
         
-        //input[@id='j_id_2k:birthYyymmdd:j_id_uj']
-        final String yyy = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 0, 3);
-        final String mm = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 3, 5);
-        final String dd = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 5, 7);
+        SRISWebUtils.typeYyymmdd(birthYyymmdd, driver, "//span[contains(@id,'birthYyymmdd')]");
        
-        final String  yyyXpath= "//span[contains(@id,'birthYyymmdd')]/input";
-        final String  mmXpath= "//span[@id='birthYyymmdd__calendar']/input[2]";
-        final String  ddXpath= "//span[@id='birthYyymmdd__calendar']/input[3]";
-        
-//        this.driver.findElement(By.xpath(yyyXpath)).sendKeys(yyy); 
-//        
-//	WebUtils.pageLoadTimeout(this.driver);
-//        
-//        this. driver.findElement(By.xpath(mmXpath)).sendKeys(mm); 
-//        
-//        WebUtils.pageLoadTimeout(this.driver);
-//        
-//        this.driver.findElement(By.xpath(ddXpath)).sendKeys(dd);
-//        
-//        WebUtils.pageLoadTimeout(this.driver);
-        
-        
-//        /***
-//         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1)
-//         * ***/
-//        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-//        selenium.type(yyyXpath, yyy);
-//        selenium.fireEvent(yyyXpath, "blur");
-//        
-//        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-//        selenium.type(mmXpath, mm);
-//        selenium.fireEvent(mmXpath, "blur");
-//        WebUtils.pageLoadTimeout(this.driver);
-//        selenium.type(ddXpath, dd);
-//        selenium.fireEvent(ddXpath, "blur");
-//        WebUtils.pageLoadTimeout(this.driver);
-//        selenium.click("//span[@id='birthYyymmdd__calendar']/img");
-//        WebUtils.pageLoadTimeout(this.driver);
-//         
-//        selenium=null;
-        
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(yyyXpath))).sendKeys(yyy);
-        WebUtils.pageLoadTimeout(this.driver);
-        
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(mmXpath))).sendKeys(mm);
-        WebUtils.pageLoadTimeout(this.driver);
-        
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(ddXpath))).sendKeys(dd);
-        WebUtils.pageLoadTimeout(this.driver);
     }
 
     /**
@@ -284,21 +234,15 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
         LOGGER.debug("輸入出生者資料的姓: {}" ,lastName);
         final String xpath = "//span[contains(@id,'lastName')]/span/input";
         ////span[@id='j_id_2k:lastName']/span/input   
-	
-//        this. driver.findElement(By.xpath(xpath)).sendKeys(lastName);  
-//        WebUtils.pageLoadTimeout(this.driver);
-        
-//	 /***
-//         * 由於發現使用Selenium2 (WebDrvier在firefox 17下 有異常不能正常操作,所以實作暫時改用Selenium1)
-//         * ***/
-//	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-//        selenium.type("//span[contains(@id,'lastName')]/span/input", lastName);
-//        selenium = null;
         
         final WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
        
-        oAction.moveToElement(element).clickAndHold(element).build().perform();
+        oAction.moveToElement(element).build().perform();
         WebUtils.pageLoadTimeout(this.driver);
+        
+        oAction.doubleClick(element).build().perform();        
+        WebUtils.pageLoadTimeout(this.driver);
+        
         oAction.sendKeys(element,lastName).build().perform();  
         WebUtils.pageLoadTimeout(this.driver);
     }
@@ -312,16 +256,8 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
     public void typeFirstName(final String firstName) {
         LOGGER.debug("輸入出生者資料的名: {}" ,firstName);
         final String xpath = "//span[contains(@id,'firstName')]/span/input";
-        ////span[@id='j_id_2k:firstName']/span/input
-//        this. driver.findElement(By.xpath(xpath)).sendKeys(firstName);  
-//        WebUtils.pageLoadTimeout(this.driver);
-	
-//	 /***
-//         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1)
-//         * ***/
-//        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-//        selenium.type(xpath, firstName);
-//        selenium = null;
+        ////span[@id='j_id_2k:firstName']/span/input 
+        
         final WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
         
         oAction.moveToElement(element).build().perform();
@@ -338,8 +274,7 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
      */
     public void getRLDF001MByClickBtn() {
         LOGGER.debug("取得全戶基本資料" );
-        //span[@id='j_id_2k:household']/table/tbody/tr/td/button
-//        this.driver.findElement(By.xpath("//span[contains(@id,'household')]/table/tbody/tr/td/button")).click();
+        //span[@id='j_id_2k:household']/table/tbody/tr/td/button 
         final WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(@id,'household')]/table/tbody/tr/td/button")));
         element.click();
         WebUtils.pageLoadTimeout(this.driver);
@@ -351,8 +286,7 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
      * @param householdHeadId the household head id
      */
     public void typeHouseholdHeadId(final String householdHeadId) {
-        LOGGER.debug("輸入戶長統號: {}", householdHeadId);
-//        this. driver.findElement(By.xpath("//input[contains(@id,'oldHouseholdHeadPersonId')]")).sendKeys(householdHeadId); 
+        LOGGER.debug("輸入戶長統號: {}", householdHeadId); 
         final WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[contains(@id,'oldHouseholdHeadPersonId')]")));
         element.sendKeys(householdHeadId);
         WebUtils.pageLoadTimeout(this.driver);
