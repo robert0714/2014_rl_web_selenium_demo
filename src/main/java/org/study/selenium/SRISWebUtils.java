@@ -37,7 +37,11 @@ public class SRISWebUtils {
 
     public static void newPdfPreview(final WebDriver driver, final WebElement printBtn) {
         boolean giveUpOperation = false;
-
+        final String disabledAttribute = printBtn.getAttribute("disabled");
+        LOGGER.debug("disabledAttribute: {}" , disabledAttribute);
+        if (StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())) {
+           return ;
+        }  
         // Save the WindowHandle of Parent Browser Window
         final String parentWindowId = driver.getWindowHandle();
         LOGGER.debug("parentWindowId: " + parentWindowId);

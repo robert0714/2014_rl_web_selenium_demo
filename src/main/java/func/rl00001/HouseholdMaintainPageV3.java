@@ -127,9 +127,11 @@ public class HouseholdMaintainPageV3 extends LoadableComponent<HouseholdMaintain
     public void processPrintView() throws InterruptedException {
         //戶籍大簿列印頁面應該有交易序號,應該可以使用這交易序號進行申請書頁面畫面進行截圖
         final String txId = displayTxId();
-        logger.info("列印申請書測試程序: {}", txId); 
+        logger.info("列印申請書測試程序: {}", txId);
         
-	SRISWebUtils.newPdfPreview(driver, printHouseHoldAppBtn);
+        if(this.printHouseHoldAppBtn.isEnabled()){
+            SRISWebUtils.newPdfPreview(driver, this.printHouseHoldAppBtn);
+        }
     }
    
     
@@ -145,10 +147,16 @@ public class HouseholdMaintainPageV3 extends LoadableComponent<HouseholdMaintain
         //*[@id='saveBtnId']
         //div[contains(@id,'saveBtnId')]/button
         
-        wait.until(ExpectedConditions.elementToBeClickable(saveBtn));
- 
-        WebUtils.clickBtn(driver, saveBtn);
-        
+        if (printHouseHoldAppBtn.isEnabled()) {
+            try {
+                wait.until(ExpectedConditions.elementToBeClickable(saveBtn));
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
+        }        
+        if(printHouseHoldAppBtn.isEnabled() && saveBtn.isEnabled()){
+            WebUtils.clickBtn(driver, saveBtn);
+        }
     }
 
     /**
