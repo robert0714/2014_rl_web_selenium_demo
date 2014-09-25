@@ -139,7 +139,9 @@ public class WebUtils {
         final WebDriverWait wait = new WebDriverWait(driver, 60);
         final GrowlMsg result = new GrowlMsg();
         boolean giveUpOperation = false;
-          
+        
+        final  String originalUrl = driver.getCurrentUrl();
+        
         //等待6秒...不見得msg出來,改成60秒
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
         
@@ -158,7 +160,12 @@ public class WebUtils {
                         ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/span")))
                         .getText();
                 //driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")).getText();
-
+                final  String nowUrl01 = driver.getCurrentUrl();
+                if(originalUrl.equals(nowUrl01)){
+                    result.setGiveUpOperation(true);
+                }else{
+                    result.setGiveUpOperation(false);
+                }
                 final String extMessage = wait.until(
                         ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")))
                         .getText();
@@ -166,9 +173,20 @@ public class WebUtils {
                 LOGGER.info(extMessage);
                 result.setErrorMessage(mainMessage);
                 result.setErrorExtMessage(extMessage);
-                result.setGiveUpOperation(giveUpOperation);
+                final  String nowUrl02 = driver.getCurrentUrl();
+                if(originalUrl.equals(nowUrl02)){
+                    result.setGiveUpOperation(true);
+                }else{
+                    result.setGiveUpOperation(false);
+                }
+                
             } catch (StaleElementReferenceException e) {
                 LOGGER.error(e.getMessage(), e);
+                if(originalUrl.equals(driver.getCurrentUrl())){
+                    result.setGiveUpOperation(true);
+                }else{
+                    result.setGiveUpOperation(false);
+                }
             }
 
         }
