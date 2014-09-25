@@ -79,6 +79,17 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
     @FindBy(how = How.XPATH, using = "//span[contains(@id,'relationship')]/span/input")
     private   WebElement inputRelationship  ;
     
+    /***
+     * 自立新戶
+     * */
+    @FindBy(how = How.XPATH, using = "//input[contains(@id,'isNewHousehold:0')]")
+    private   WebElement newHousehold;
+    
+    /***
+     *非自立新戶(入他人戶)
+     * */
+    @FindBy(how = How.XPATH, using = "//input[contains(@id,'isNewHousehold:1')]")
+    private   WebElement oldHousehold;
     
     /**
      * Instantiates a new rl01210 page.
@@ -304,6 +315,9 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
         WebUtils.pageLoadTimeout(this.driver);
     }
 
+    
+    
+    
     /**
      * Sets the new household.
      * 自立新戶 true
@@ -312,10 +326,10 @@ public class Rl01210PageV3 extends LoadableComponent<Rl01210PageV3>{
      */
     public void setNewHousehold(final boolean isNewHousehold) {
         LOGGER.debug("自立新戶: {}", isNewHousehold);
-        //input[@id='j_id_2k:isNewHousehold:0']
-        final String xpath = String.format("//input[contains(@id,'isNewHousehold:%s')]", isNewHousehold ? 0 : 1);
+        //input[@id='j_id_2k:isNewHousehold:0'] 
+        WebUtils.pageLoadTimeout(this.driver);
         
-        final WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
+        final WebElement element = isNewHousehold ? this.newHousehold : this.oldHousehold;;
  
          
         oAction.moveToElement(element).build().perform();
