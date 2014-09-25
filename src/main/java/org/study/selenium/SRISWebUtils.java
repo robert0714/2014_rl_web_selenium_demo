@@ -262,7 +262,7 @@ public class SRISWebUtils {
         
         selenium.fireEvent(typeXpath, "blur");
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        
+        WebUtils.pageLoadTimeout(driver);
     }
 
     public static void typeAutoCompleteBySpanXpath(final WebDriver driver, final String spanXpath, final String value) {
@@ -312,7 +312,7 @@ public class SRISWebUtils {
         WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
         
         selenium.fireEvent(typeXpath, "blur");
-
+        WebUtils.pageLoadTimeout(driver);
     }
 
     public static void typeAutoCompleteBySpanXpath(final Selenium selenium, final String spanXpath, final String value) {
