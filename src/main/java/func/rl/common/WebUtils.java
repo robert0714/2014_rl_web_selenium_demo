@@ -40,6 +40,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.Extension;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
@@ -138,29 +139,44 @@ public class WebUtils {
      * @return true, if successful
      */
     public static GrowlMsg clickBtn(final WebDriver driver ,  final     WebElement btnElement ) {
+        final WebDriverWait wait = new WebDriverWait(driver, 60);
         final GrowlMsg result = new GrowlMsg();
         boolean giveUpOperation = false;
           
         //等待6秒...不見得msg出來,改成60秒
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
         final String originalUrl = driver.getCurrentUrl();
-        btnElement.click();
+        final Actions oAction = new Actions(driver);
+        
+        oAction.moveToElement(btnElement).build().perform();
+          
+        oAction.click(btnElement).build().perform();  
+         
         
         if (driver.findElements(By.xpath("//*[@id='growl2_container']/div/div")).size() != 0 ) {
             int count = 0;
-            while (true) {                
-                final String errorMessage = driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/span")).getText();
+            while (true) {
+                final WebElement mainElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/span")));
+                final String mainMessage = mainElement.getText();
                 //driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")).getText();
-                final String errorExtMessage = driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")).getText();
-                LOGGER.info(errorMessage);
-                LOGGER.info(errorExtMessage);
-                result.setErrorMessage(errorMessage);
-                result.setErrorExtMessage(errorExtMessage);
+                
+                final WebElement extElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")));
+                
+                final String extMessage = extElement.getText();
+                LOGGER.info(mainMessage);
+                LOGGER.info(extMessage);
+                result.setErrorMessage(mainMessage);
+                result.setErrorExtMessage(extMessage);
                 result.setGiveUpOperation(giveUpOperation);
                 if(!StringUtils.equalsIgnoreCase(originalUrl, driver.getCurrentUrl())){
                     break; 
                 }
-                btnElement.click();
+                
+                oAction.moveToElement(btnElement).build().perform();
+                
+                oAction.click(btnElement).build().perform();
+                
+                
                 if (count > 4) {
                     driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
                     giveUpOperation = true;

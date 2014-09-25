@@ -84,6 +84,8 @@ public class SRISWebUtils {
 
                                 final WebElement imgElement = driver.findElement(By.xpath("//*[@id='pdfpreviewimg']"));
                                 wait.until(ExpectedConditions.visibilityOf(imgElement));
+                                
+                                
                                 LOGGER.info("imgElement presented");
 
                                 final String pdfViewerContentXpath = "//*[contains(@id,'pdfViewerContent')]/input";
