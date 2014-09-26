@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
@@ -48,8 +49,8 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
 
     @Test
     public void testLogin() throws InterruptedException {
-        final RlHompageV3 homepage = new RlHompageV3(this.driver);
-
+//        final RlHompageV3 homepage = new RlHompageV3(this.driver);
+        final RlHompageV3 homepage =   PageFactory.initElements(driver, RlHompageV3.class);
         homepage.login(this.driver, this.user, this.passwd);
 
         assertTrue(true);
@@ -57,9 +58,11 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
 
     @Test
     public void testOpenRl01210() throws Exception {
-        final RlHompageV3 homepage = new RlHompageV3(this.driver);
+//        final RlHompageV3 homepage = new RlHompageV3(this.driver);
+        final RlHompageV3 homepage =   PageFactory.initElements(driver, RlHompageV3.class);
         homepage.login(this.driver, this.user, this.passwd);
-        final Rl00001PageV3 rl00001Page = new Rl00001PageV3(driver);
+//        final Rl00001PageV3 rl00001Page = new Rl00001PageV3(driver);
+        final Rl00001PageV3 rl00001Page =   PageFactory.initElements(driver, Rl00001PageV3.class);
         if (CollectionUtils.isNotEmpty(this.personIdSiteIdList)) {
         	int count = 0 ; 
         	
@@ -93,7 +96,8 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                 
                 if (saveTmpSuccess && StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
 
-                    householdMaintainPage = new HouseholdMaintainPageV3(driver,rl01210Page);
+//                    householdMaintainPage = new HouseholdMaintainPageV3(driver,rl01210Page); 
+                    householdMaintainPage = PageFactory.initElements(driver, HouseholdMaintainPageV3.class);
 
                     while (!householdMaintainPage.switchTab()) {
                         LOGGER.debug("轉不過去");
@@ -186,7 +190,8 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         LOGGER.info("點選暫存");
         final GrowlMsg result = rl01210Page.clickTempSaveBtn();
         if(!result.isGiveUpOperation()){
-            final HouseholdMaintainPageV3 l2page =  new HouseholdMaintainPageV3(this.driver , rl01210Page);
+//            final HouseholdMaintainPageV3 l2page =  new HouseholdMaintainPageV3(this.driver , rl01210Page);
+            final HouseholdMaintainPageV3 l2page =  PageFactory.initElements(this.driver, HouseholdMaintainPageV3.class);
             l2page.get();
             
             success = true;

@@ -53,7 +53,19 @@ public class HouseholdMaintainPageV3 extends LoadableComponent<HouseholdMaintain
     @FindBy(how = How.XPATH, using = "//*[@id='saveBtnId']" )
     private WebElement saveBtn;
     
-    
+    /**
+     * Instantiates a new household maintain page v3.
+     *
+     * @param driver the driver
+     * @param parent the parent
+     */
+    public HouseholdMaintainPageV3(final WebDriver driver) {
+        super();
+        this.driver = driver;
+        this.parent = null;
+        this.wait = new WebDriverWait(driver, 60);
+        PageFactory.initElements(driver, this);
+    }
     /**
      * Instantiates a new household maintain page v3.
      *

@@ -19,8 +19,11 @@ import func.rl00001.Rl00001PageV3;
 import func.rl00001.Rl00004PageV3;
 import func.rl00001._rl01210.Rl01210PageV3;
 import func.rl00001._rl02510.Rl02510PageV3;
+import func.rl00001._rl02510.Rl02510PageV3.ApplyItem;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -115,19 +118,43 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
      * Demo Scenario. 展示為戶口名簿
      */
     public void demo01(Rl02510PageV3 rl01210Page)  {
-        driver.findElement(By.xpath("//td[2]/table/tbody/tr/td[2]/input")).click();
-        driver.findElement(By.xpath("//td[2]/table/tbody/tr/td/input")).click();
-        driver.findElement(By.xpath("//td[3]/table/tbody/tr/td[2]/input")).click();
-        driver.findElement(By.xpath("//td[3]/table/tbody/tr/td/input")).click();
-        driver.findElement(By.xpath("//td[3]/table/tbody/tr/td[2]/input")).click();
-        driver.findElement(By.xpath("//textarea[@id='tabViewId:registerContent']")).clear();
-        driver.findElement(By.xpath("//textarea[@id='tabViewId:registerContent']")).sendKeys("1234565");
-        driver.findElement(By.xpath("//td/button")).click();
-        driver.findElement(By.xpath("//table[2]/tbody/tr/td/input")).clear();
-        driver.findElement(By.xpath("//table[2]/tbody/tr/td/input")).sendKeys("1A5wwxxxzzzz");
-        driver.findElement(By.xpath("//td/button")).click();
-        driver.findElement(By.xpath("//td[2]/button")).click();
-        driver.findElement(By.xpath("//td[2]/button")).click();
+             
+        //補領
+        rl01210Page.apply(ApplyItem.REAPPLY);
+        //換領
+        rl01210Page.apply(ApplyItem.RENEWAL);
+        //初領
+        rl01210Page.apply(ApplyItem.FIRST);  
+        
+        
+        //列印全戶動態記事(否)
+        rl01210Page.printDynamicNotes(false); 
+        
+        //列印全戶動態記事(是)
+        rl01210Page.printDynamicNotes(true); 
+       
+        //列印父、母、配偶統號(否)
+        rl01210Page.printRelationId(false);
+        
+        //列印父、母、配偶統號(是)
+        rl01210Page.printRelationId(true);
+        
+        
+        //戶口名簿封面編號        
+        rl01210Page.typeRl02510IdNo(String.valueOf(RandomUtils.nextInt(1000)));
+        
+        //填寫備註
+        rl01210Page.typeRegisterContent("填寫備註測試"); 
+        
+       
+        
+        //驗證查詢
+        rl01210Page.clickVerifyBtn();
+        
+        //列印戶口名簿
+        rl01210Page.clickPrintCertificate();
+        
+        //這時候要切換視窗
         driver.findElement(By.xpath("//div/span/span[2]/button[2]")).click();
         driver.findElement(By.xpath("//td[2]/button")).click();
         driver.findElement(By.xpath("//div/span/span[2]/button")).click();
