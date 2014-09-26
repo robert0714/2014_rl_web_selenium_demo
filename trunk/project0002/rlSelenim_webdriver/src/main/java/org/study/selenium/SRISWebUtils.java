@@ -243,10 +243,11 @@ public class SRISWebUtils {
             oAction.moveToElement(oWE);
             oAction.doubleClick(oWE).build().perform();
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-            if (StringUtils.isNotBlank(oWE.getText())) {
-                oWE.clear();
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-            }
+//            if (StringUtils.isNotBlank(oWE.getText())) {
+//                oWE.clear();
+//                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//            }
+            oWE.clear();
             oWE.sendKeys(value);
         } 
         
@@ -297,10 +298,12 @@ public class SRISWebUtils {
             oAction.doubleClick(oWE).build().perform();
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             ;
-            if (StringUtils.isNotBlank(oWE.getText())) {
-                oWE.clear();
-                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-            }
+//            if (StringUtils.isNotBlank(oWE.getText())) {
+//                oWE.clear();
+//                driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//            }
+            oWE.clear();
+            
             oAction.sendKeys(oWE,value).build().perform(); 
             WebUtils.pageLoadTimeout(driver);
         }
