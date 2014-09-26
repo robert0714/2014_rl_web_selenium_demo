@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.thoughtworks.selenium.SeleniumException;
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 import func.rl.common.WebUtils; 
 
@@ -16,7 +15,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -77,6 +75,18 @@ public class Rl01220PageV3 extends LoadableComponent<Rl01220PageV3> {
     @FindBy(how = How.XPATH, using = "//div[contains(@id,'content')]/button")
     public WebElement verifyBtn;
 
+    /**
+     * Instantiates a new rl01220 page.
+     *
+     * @param driver the driver
+     */
+    public Rl01220PageV3(final WebDriver driver) {
+        super();
+        this.driver = driver;
+        this.parent = null;
+        this.wait = new WebDriverWait(driver, 60);
+        PageFactory.initElements(driver, this);
+    }
     /**
      * Instantiates a new rl01220 page.
      *
@@ -146,8 +156,6 @@ public class Rl01220PageV3 extends LoadableComponent<Rl01220PageV3> {
      */
     public void typeDeathReason(final String reason) {
         // //fieldset[@id='tabView:relatedApplyItems']/div/table[2]/tbody/tr/td/input
-        //        selenium.type("//fieldset[@id='tabView:relatedApplyItems']/div/table[2]/tbody/tr/td/input", reason);
-        //        selenium.fireEvent("//fieldset[@id='tabView:relatedApplyItems']/div/table[2]/tbody/tr/td/input", "blur");
         this.deathReason.sendKeys(reason);
     }
 
@@ -157,13 +165,8 @@ public class Rl01220PageV3 extends LoadableComponent<Rl01220PageV3> {
      * @param birthPlaceAC the birth place ac
      */
     public void typeBirthPlaceAC(final String birthPlaceAC) {
-        /***
-         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1)
-         * ***/
-        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-        SRISWebUtils.typeAutoCompleteBySpanXpath(selenium, "//span[contains(@id,'deadPlaceNationalityAC')]", birthPlaceAC);
-        selenium = null;
-        //        SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, "//span[contains(@id,'deadPlaceNationalityAC')]", birthPlaceAC);
+        
+        SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, "//span[contains(@id,'deadPlaceNationalityAC')]", birthPlaceAC);
     }
 
     /**
@@ -174,18 +177,12 @@ public class Rl01220PageV3 extends LoadableComponent<Rl01220PageV3> {
     public void selectDeathPlace(final DeathPlace item) {
         // div[@id='tabView:deathPlaceCode']/div[2]/span
         // div[@id='tabView:deathPlaceCode_panel']/div/ul/li[2]
-        final String xpath = String.format("//div[@id='tabView:deathPlaceCode_panel']/div/ul/li[%s]", item.value);
+        final String xpath = String.format("//div[@id='tabView:deathPlaceCode_panel']/div/ul/li[%s]", item.value);        
         this.driver.findElement(By.xpath("//div[@id='tabView:deathPlaceCode']/div[2]/span")).click();
         WebUtils.pageLoadTimeout(this.driver);
         this.driver.findElement(By.xpath(xpath)).click();
         WebUtils.pageLoadTimeout(this.driver);
-        //        selenium.click("//div[@id='tabView:deathPlaceCode']/div[2]/span");
-        //        selenium.fireEvent("//div[@id='tabView:deathPlaceCode']/div[2]/span", "blur");        
-        //        selenium.click(xpath);
-        WebUtils.pageLoadTimeout(this.driver);
-        //        selenium.fireEvent(xpath, "blur");
-
-        //        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        
     }
 
     /**
@@ -196,11 +193,8 @@ public class Rl01220PageV3 extends LoadableComponent<Rl01220PageV3> {
     public void selectDeathWay(final DeathWay item) {
         // input[@id='tabView:deathWay:0']
         final String xpath = String.format("//input[@id='tabView:deathWay:%s']", item.value);
-        this.driver.findElement(By.xpath(xpath)).click();
-        //        selenium.click(xpath);
-        //        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-        //        selenium.fireEvent(xpath, "blur");
-        //        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+        this.driver.findElement(By.xpath(xpath)).click(); 
+        
     }
 
     /**
@@ -208,55 +202,9 @@ public class Rl01220PageV3 extends LoadableComponent<Rl01220PageV3> {
      *
      * @param birthYyymmdd the birth yyymmdd
      */
-    public void typeDeathYyymmdd(final String birthYyymmdd) {
-        final WebDriverWait wait = new WebDriverWait(driver, 60);
-        // input[@id='j_id_2k:birthYyymmdd:j_id_uj']
-        final String yyy = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 0, 3);
-        final String mm = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 3, 5);
-        final String dd = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 5, 7);
-        final String yyyXpath = "//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input";
-        final String mmXpath = "//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[2]";
-        final String ddXpath = "//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span/input[3]";
-
-        //        this. driver.findElement(By.xpath(yyyXpath)).sendKeys(yyy);
-        //        this. driver.findElement(By.xpath(mmXpath)).sendKeys(mm);
-        //        this. driver.findElement(By.xpath(ddXpath)).sendKeys(dd);
-
-        /***
-         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1)
-         * ***/
-        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(yyyXpath)));
-
-        selenium.type(yyyXpath, yyy);
-        selenium.fireEvent(yyyXpath, "blur");
-        WebUtils.pageLoadTimeout(this.driver);
-        //        try {
-        //            Thread.sleep(1000l);
-        //        } catch (InterruptedException e) {
-        //           LOGGER.error(e.getMessage(), e);
-        //        }
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(mmXpath)));
-
-        selenium.type(mmXpath, mm);
-        selenium.fireEvent(mmXpath, "blur");
-        WebUtils.pageLoadTimeout(this.driver);
-        //        try {
-        //            Thread.sleep(1000l);
-        //        } catch (InterruptedException e) {
-        //           LOGGER.error(e.getMessage(), e);
-        //        }
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(ddXpath)));
-
-        selenium.type(ddXpath, dd);
-        selenium.fireEvent(ddXpath, "blur");
-        WebUtils.pageLoadTimeout(this.driver);
-        //        try {
-        //            Thread.sleep(1000l);
-        //        } catch (InterruptedException e) {
-        //           LOGGER.error(e.getMessage(), e);
-        //        }
+    public void typeDeathYyymmdd(final String birthYyymmdd) { 
+        SRISWebUtils.typeYyymmdd(birthYyymmdd, driver, "//fieldset[@id='tabView:relatedApplyItems']/div/table/tbody/tr/td[3]/span");
+         
 
     }
 
@@ -270,11 +218,7 @@ public class Rl01220PageV3 extends LoadableComponent<Rl01220PageV3> {
         final String xpath = String.format("//input[@id='tabView:returnId:%s']", item.value);
 
         this.driver.findElement(By.xpath(xpath)).click();
-
-        //        selenium.click(xpath);
-        //        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-        //        selenium.fireEvent(xpath, "blur");
-        //        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+ 
     }
 
     /**
@@ -286,10 +230,7 @@ public class Rl01220PageV3 extends LoadableComponent<Rl01220PageV3> {
         // input[@id='tabView:deathItem:1']
         final String xpath = String.format("//input[@id='tabView:deathItem:%s']", item.value);
         this.driver.findElement(By.xpath(xpath)).click();
-        //        selenium.click(xpath);
-        //        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-        //        selenium.fireEvent(xpath, "blur");
-        //        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
+         
     }
 
     public String getPartialURL() {
