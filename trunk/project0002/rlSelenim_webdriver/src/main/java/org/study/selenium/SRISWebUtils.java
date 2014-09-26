@@ -11,18 +11,18 @@ import java.util.concurrent.TimeUnit;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+import common.PopupContentPageV3;
 
 import func.rl.common.WebUtils;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchWindowException;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -36,7 +36,7 @@ public class SRISWebUtils {
     private final static Logger LOGGER = LoggerFactory.getLogger(SRISWebUtils.class);
 
     public static void newPdfPreview(final WebDriver driver, final WebElement printBtn) {
-        boolean giveUpOperation = false;
+       
         final String disabledAttribute = printBtn.getAttribute("disabled");
         LOGGER.debug("disabledAttribute: {}" , disabledAttribute);
         if (StringUtils.equals(disabledAttribute, Boolean.TRUE.toString())) {
@@ -67,6 +67,7 @@ public class SRISWebUtils {
         wait.until(popupExpected);
         LOGGER.info("預覽列印視窗出現");
 
+        final PopupContentPageV3 popupContentPageV3 = PageFactory.initElements(driver, PopupContentPageV3.class);
         // 預覽申請書會彈跳出視窗
         int count = 0;
         privntViewLoop: while (count < 10) {
@@ -84,43 +85,61 @@ public class SRISWebUtils {
                         //    isAlertPresent(driver);
                         if (StringUtils.contains(currentUrl, "common/popupContent.xhtml")) {
                             // 戶役資訊服務網
-                            String title = driver.getTitle();
-                            LOGGER.debug("title: {}" , title);
-                            final String terminatorPrintXpath = "//span[contains(@id,'pdfbanner')]/span[2]/button[2]";
-                            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
+                            final String title = driver.getTitle();
+                            LOGGER.debug("title: {}" , title); 
+                            
+                           
+                            
+                            popupContentPageV3.waitCloseBtnClickable(wait);
                             LOGGER.info("等待預覽列印網頁");
 
-                            final WebElement imgElement = driver.findElement(By.xpath("//*[@id='pdfpreviewimg']"));
-                            wait.until(ExpectedConditions.visibilityOf(imgElement));
-                            
-                            
+                            popupContentPageV3. waitImgVisibale(wait);
                             LOGGER.info("imgElement presented");
 
-                            final String pdfViewerContentXpath = "//*[contains(@id,'pdfViewerContent')]/input";
-                            final WebElement hiddenElement = driver.findElement(By.xpath(pdfViewerContentXpath));
-                            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(pdfViewerContentXpath)));
-                            LOGGER.info("base64 presented");
+//                            popupContentPageV3.  waitBase64HiddenPresent(wait);
+//                            LOGGER.info("base64 presented");
 
-                            final String base64 = hiddenElement.getText();
-                            LOGGER.info("預覽列印網頁內容 (base64): {}", base64);
-
-                            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
+                            popupContentPageV3. getInfo();
+                            
+                            int total = popupContentPageV3.getTotalPage();
+                            LOGGER.info("總共{}頁 " ,total);
+                            
+                            popupContentPageV3.waitCloseBtnClickable(wait);
 
                             WebUtils.scroolbarDownUp(driver);
-                           
                             LOGGER.info("轉動卷軸 " );
                             
+                            for(int i = 2 ;i <= total ; ++i){
+                                popupContentPageV3.clickForwardPageBtn();
+                                popupContentPageV3. waitImgVisibale(wait);
+                                LOGGER.info("imgElement presented");
+
+//                                popupContentPageV3.  waitBase64HiddenPresent(wait);
+//                                LOGGER.info("base64 presented");
+                                
+                                int now = popupContentPageV3.getNowPage();
+                                LOGGER.info("目前在第{}頁 " ,now);
+                                
+                                popupContentPageV3.waitCloseBtnClickable(wait);
+
+                                WebUtils.scroolbarDownUp(driver);
+                                LOGGER.info("轉動卷軸 " );
+                            }
+                           
+                            //點擊端末列印
+                            popupContentPageV3.clickPrintBtn();
+                            
                             //點擊關閉視窗
-                            driver.findElement(By.xpath(terminatorPrintXpath)).click();
+                            popupContentPageV3.clickCloseBtn();
                             
                             final ExpectedCondition<Boolean> popupCloseExpected = new ExpectedCondition<Boolean>() {
                                 public Boolean apply(WebDriver input) {
-                                 final Set<String> nowWindowHandles = driver.getWindowHandles();
-                                     if (!nowWindowHandles.contains(windowId)) {
-                                     return true;
-                                     }else{
-                                     return false;
-                                     }
+                                    final Set<String> nowWindowHandles = driver.getWindowHandles();
+                                    if (!nowWindowHandles.contains(windowId)) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
                                 }
                             };
                             wait.until(popupCloseExpected);
