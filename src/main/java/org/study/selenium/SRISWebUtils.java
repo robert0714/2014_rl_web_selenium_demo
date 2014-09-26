@@ -126,8 +126,9 @@ public class SRISWebUtils {
                                 LOGGER.info("轉動卷軸 " );
                             }
                            
-                            //點擊端末列印
+                            //點擊端末列印(如果找不到印表機會有alert)
                             popupContentPageV3.clickPrintBtn();
+                            isAlertPresent(driver);
                             
                             //點擊關閉視窗
                             popupContentPageV3.clickCloseBtn();
