@@ -1,29 +1,26 @@
 package func.rl00001._rl02510;
- 
-
-import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+  
 
 import func.rl.common.WebUtils;
+import func.rl.common.internal.GrowlMsg;
 
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions; 
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.SRISWebUtils;
-import org.study.selenium.SeleniumConfig;
-
+ 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Rl02510PageV3
- *  戶口名簿請補換發
+ *  戶口名簿請補換發.
  */
 public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
 
@@ -33,50 +30,78 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
     /** The driver. */
     private WebDriver driver;
  
+    /** The o action. */
+    private final Actions oAction ;
+    
     /** The wait. */
     private  WebDriverWait wait  ;
     
     /** The rl01210 partial ulr. */
     private final String partialURL = "_rl01210/rl01210.xhtml";
 
+    /** The parent. */
     private final LoadableComponent<?> parent;
     
-    /***
-     * 戶籍記事/罰鍰清單 頁籤
-     * */
+    /** * 戶籍記事/罰鍰清單 頁籤. */
     @FindBy(how = How.XPATH, using = "//a[contains(text(),'戶籍記事/罰鍰清單')]")
-    public WebElement tabNotes;
+    private WebElement tabNotes;
     
-    /***
-     * 全戶基本資料 頁籤
-     * */
+    /** * 全戶基本資料 頁籤. */
     @FindBy(how = How.XPATH, using = "//a[contains(text(),'全戶基本資料')]")
-    public  WebElement tabBasicHouseholdData;
+    private  WebElement tabBasicHouseholdData;
     
-    /***
-     * 資料驗證按鈕
-     * */
-    @FindBy(how = How.XPATH, using = "//span[contains(@id,'button')]/button")
-    public  WebElement verifyBtn;
+    /** * 資料驗證按鈕. */
+    @FindBy(how = How.XPATH, using = "//td/button")
+    private  WebElement verifyBtn;
     
-    /***
-     * 暫存按鈕
-     * */
+    /** * 暫存按鈕. */
     @FindBy(how = How.XPATH, using = "//span[contains(@id,'button')]/button[3]")
-    public   WebElement tempSaveBtn;
+    private   WebElement tempSaveBtn;
     
-    /***
-     * 關閉視窗按鈕
-     * */
+    /** * 關閉視窗按鈕. */
     @FindBy(how = How.XPATH, using = "//span[contains(@id,'button')]/button[4]")
-    public   WebElement closeBtn;
+    private   WebElement closeBtn;
     
-    /***
-     * 稱謂input text
-     * */
-    @FindBy(how = How.XPATH, using = "//span[contains(@id,'relationship')]/span/input")
-    public   WebElement inputRelationship  ;
+    /** * 初領. */
+    @FindBy(how = How.XPATH, using = "//input[@id='tabViewId:applyCodeId:0']")
+    private   WebElement selectAppyCodeId0  ;
     
+    /** * 補領. */
+    @FindBy(how = How.XPATH, using = "//input[@id='tabViewId:applyCodeId:1']")
+    private   WebElement selectAppyCodeId1  ;
+    
+    /** * 換領. */
+    @FindBy(how = How.XPATH, using = "//input[@id='tabViewId:applyCodeId:2']")
+    private   WebElement selectAppyCodeId2  ;
+    
+    /** * 列印全戶動態記事(是). */
+    @FindBy(how = How.XPATH, using = "//td[2]/table/tbody/tr/td/input")
+    private   WebElement printDynamicNotesYes  ;
+    
+    /** * 列印全戶動態記事(否). */
+    @FindBy(how = How.XPATH, using = "//td[2]/table/tbody/tr/td[2]/input")
+    private   WebElement printDynamicNotesNo  ;
+    
+    /** * 列印父、母、配偶統號(是). */
+    @FindBy(how = How.XPATH, using = "//td[3]/table/tbody/tr/td/input")
+    private   WebElement printRelationIdYes  ;
+    
+    /** * 列印父、母、配偶統號(否). */
+    @FindBy(how = How.XPATH, using = "//td[3]/table/tbody/tr/td[2]/input")
+    private   WebElement printRelationIdNo  ;
+    
+    
+    /** * 戶口名簿封面編號. */
+    @FindBy(how = How.XPATH, using = "//table[2]/tbody/tr/td/input")
+    private   WebElement rl02510IdNo  ;
+    
+    /** * 填寫備註. */
+    @FindBy(how = How.XPATH, using = "//textarea[contains(@id,'registerContent')]")
+    private   WebElement registerContent  ;
+    
+    /** * 列印戶口名簿. */
+    @FindBy(how = How.XPATH, using = "//td[2]/button")
+    private   WebElement printCertificate  ;
     
     
     /**
@@ -84,13 +109,33 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
      *
      * @param driver the driver
      */
+    public Rl02510PageV3(final WebDriver driver )   {
+        super();
+        this.driver = driver;
+        this.parent = null;
+        this.wait = new WebDriverWait(driver, 60);
+        this.oAction = new Actions(this.driver);
+        PageFactory.initElements(driver, this);
+    }
+    
+    /**
+     * Instantiates a new rl01210 page.
+     *
+     * @param driver the driver
+     * @param parent the parent
+     */
     public Rl02510PageV3(final WebDriver driver ,final LoadableComponent<?> parent)   {
         super();
         this.driver = driver;
         this.parent = parent;
         this.wait = new WebDriverWait(driver, 60);
+        this.oAction = new Actions(this.driver);
         PageFactory.initElements(driver, this);
     }
+    
+    /**
+     * Load.
+     */
     @Override
     protected void load() {
         final String mainUrl = WebUtils .getMainUrl( this.driver.getCurrentUrl());
@@ -98,6 +143,12 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
         final String url = String.format("%s/rl/faces/pages/func/rl00001/%s", mainUrl,partialURL);
         this.driver.get(url);
     }
+    
+    /**
+     * Checks if is loaded.
+     *
+     * @throws Error the error
+     */
     @Override
     protected void isLoaded() throws Error {
         final String currentUrl = this.driver.getCurrentUrl();
@@ -123,211 +174,77 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
             this.tabBasicHouseholdData.click();
 
         }
+    } 
+    
+    /**
+     * Prints the dynamic notes.
+     * 列印全戶動態記事
+     * @param yes the yes
+     */
+    public void printDynamicNotes(boolean yes){
+        if(yes){
+            this.printDynamicNotesYes.click();
+        }else{
+            this.printDynamicNotesNo.click();
+        }
+    } 
+    /**
+     * Prints the relation ids.
+     * 列印父、母、配偶統號
+     * @param yes the yes
+     */
+    public void printRelationId(boolean yes){
+        if(yes){
+            this.printRelationIdYes.click();
+        }else{
+            this.printRelationIdNo.click();
+        }
+    } 
+    
+    /**
+     * Type register content.
+     * 填寫備註
+     * @param content the content
+     */
+    public void typeRegisterContent(final String content){
+        this.registerContent.clear();
+        this.registerContent.sendKeys(content);
     }
     
-     
+    
     /**
-     * Type birth place ac.
-     * 輸入出生地
-     * @param birthPlaceAC the birth place ac
-     */
-    public void typeBirthPlaceAC(final String birthPlaceAC) {
-        LOGGER.debug("輸入出生地: {}" ,birthPlaceAC);
-	final String typeXpath = "//span[contains(@id,'birthPlaceAC')]";
-	/***
-         * 由於發現使用Selenium2 (WebDrvier在firefox 17下 有異常不能正常操作,所以實作暫時改用Selenium1)
-         * ***/
-	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-//        SRISWebUtils.typeAutoCompleteBySpanXpath(this.driver, typeXpath, birthPlaceAC);
-        SRISWebUtils.typeAutoCompleteBySpanXpath(selenium, typeXpath, birthPlaceAC);
-    }
-
-     
-    /**
-     * Type relation ship.
-     * 輸入稱謂
-     * @param relationship the relationship
-     */
-    public void typeRelationShip(final String relationship) {
-        LOGGER.debug("輸入稱謂: {}" ,relationship); 
-        
-        final Actions oAction = new Actions(driver);
-        oAction.moveToElement(this.inputRelationship);
-        oAction.doubleClick(this.inputRelationship).build().perform();
-        WebUtils.pageLoadTimeout(this.driver);
-        this.inputRelationship.sendKeys(relationship); 
-        WebUtils.pageLoadTimeout(this.driver);
-    }
-
-    /**
-     * 輸入出生別
-     * Type birth order sex select one menu.
-     */
-    public void typeBirthOrderSexSelectOneMenu() {
-        LOGGER.debug("輸入出生別" );
-        this.driver.findElement(By.xpath("//label[contains(@id,'birthOrderSexSelectOneMenu')]")).click();
-        WebUtils.pageLoadTimeout(this.driver);
-        this.driver.findElement(By.xpath("//div[contains(@id,'birthOrderSexSelectOneMenu')]/div/ul/li[2]")).click(); 
-        WebUtils.pageLoadTimeout(this.driver);
-    }
-
-    /**
-     * 輸入出生日期
-     * Type birth yyymmdd.
+     * Type 戶口名簿封面編號
+     * 填寫戶口名簿封面編號.
      *
-     * @param birthYyymmdd the birth yyymmdd
+     * @param id the id
      */
-    public void typeBirthYyymmdd(final String birthYyymmdd) {
-        LOGGER.debug("輸入出生日期: {}", birthYyymmdd);
-        
-        //input[@id='j_id_2k:birthYyymmdd:j_id_uj']
-        final String yyy = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 0, 3);
-        final String mm = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 3, 5);
-        final String dd = org.apache.commons.lang.StringUtils.substring(birthYyymmdd, 5, 7);
-       
-//        this.driver.findElement(By.xpath("//span[contains(@id,'birthYyymmdd')]/input")).sendKeys(yyy); 
-//        
-//	WebUtils.pageLoadTimeout(this.driver);
-//        
-//        this. driver.findElement(By.xpath("//span[@id='birthYyymmdd__calendar']/input[2]")).sendKeys(mm); 
-//        
-//        WebUtils.pageLoadTimeout(this.driver);
-//        
-//        this.driver.findElement(By.xpath("//span[@id='birthYyymmdd__calendar']/input[3]")).sendKeys(dd);
-//        
-//        WebUtils.pageLoadTimeout(this.driver);
-        
-        
-        /***
-         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1)
-         * ***/
-        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-        selenium.type("//span[@id='birthYyymmdd__calendar']/input", yyy);
-        selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input", "blur");
-        
-        selenium.waitForPageToLoad(SeleniumConfig.waitForPageToLoad);
-        selenium.type("//span[@id='birthYyymmdd__calendar']/input[2]", mm);
-        selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input[2]", "blur");
-        WebUtils.pageLoadTimeout(this.driver);
-        selenium.type("//span[@id='birthYyymmdd__calendar']/input[3]", dd);
-        selenium.fireEvent("//span[@id='birthYyymmdd__calendar']/input[3]", "blur");
-        WebUtils.pageLoadTimeout(this.driver);
-        selenium.click("//span[@id='birthYyymmdd__calendar']/img");
-        WebUtils.pageLoadTimeout(this.driver);
-         
-        selenium=null;
+    public void typeRl02510IdNo(final String id){
+        this.rl02510IdNo.clear();
+        this.rl02510IdNo.sendKeys(id);
     }
-
+    
+    
     /**
-     * 輸入出生者資料的姓
-     * Type last name.
-     *
-     * @param lastName the last name
+     * Click verify btn.
+     * 驗證查詢
+     * @return the growl msg
      */
-    public void typeLastName(final String lastName) {
-        ////span[@id='j_id_2k:lastName']/span/input   
-	
-//        this. driver.findElement(By.xpath("//span[contains(@id,'lastName')]/span/input")).sendKeys(lastName);  
-//        WebUtils.pageLoadTimeout(this.driver);
-	 /***
-         * 由於發現使用Selenium2 (WebDrvier在firefox 17下 有異常不能正常操作,所以實作暫時改用Selenium1)
-         * ***/
-	WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-        selenium.type("//span[contains(@id,'lastName')]/span/input", lastName);
-        selenium = null;
-        
-        
+    public GrowlMsg clickVerifyBtn(){
+        oAction.moveToElement(this.verifyBtn);
+        final GrowlMsg verification = WebUtils.clickBtn(this.driver, this.verifyBtn);
+        return verification;
     }
-
     /**
-     * 輸入出生者資料的名
-     * Type first name.
-     *
-     * @param firstName the first name
+     * Click verify btn.
+     * 列印戶口名簿
+     * @return the growl msg
      */
-    public void typeFirstName(final String firstName) {
-        ////span[@id='j_id_2k:firstName']/span/input
-//        this. driver.findElement(By.xpath("//span[contains(@id,'firstName')]/span/input")).sendKeys(firstName);  
-//        WebUtils.pageLoadTimeout(this.driver);
-	
-	 /***
-         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1)
-         * ***/
-        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-        selenium.type("//span[contains(@id,'firstName')]/span/input", firstName);
-        selenium = null;
+    public void clickPrintCertificate(){
+        oAction.moveToElement(this.printCertificate);
+//        final GrowlMsg verification = WebUtils.clickBtn(this.driver, this.printCertificate);
+        SRISWebUtils.newPdfPreview(this.driver, this.printCertificate);
+//        return verification;
     }
-
-    /**
-     * 取得全戶基本資料
-     * Get the RLDF001M by click btn.
-     *
-     * @return the RLD f001 m by click btn
-     */
-    public void getRLDF001MByClickBtn() {
-        LOGGER.debug("取得全戶基本資料" );
-        //span[@id='j_id_2k:household']/table/tbody/tr/td/button
-        this.driver.findElement(By.xpath("//span[contains(@id,'household')]/table/tbody/tr/td/button")).click();
-        WebUtils.pageLoadTimeout(this.driver);
-    }
-
-    /**
-     * Type household head id.
-     *  輸入戶長統號
-     * @param householdHeadId the household head id
-     */
-    public void typeHouseholdHeadId(final String householdHeadId) {
-        LOGGER.debug("輸入戶長統號: {}", householdHeadId);
-        this. driver.findElement(By.xpath("//input[contains(@id,'oldHouseholdHeadPersonId')]")).sendKeys(householdHeadId); 
-        WebUtils.pageLoadTimeout(this.driver);
-    }
-
-    /**
-     * Type household id.
-     * 輸入戶號
-     * @param householdId the household id
-     */
-    public void typeHouseholdId(final String householdId) {
-        LOGGER.debug("輸入戶號: {}", householdId);
-        this.driver.findElement(By.xpath("//input[contains(@id,'oldHouseholdId')]")).sendKeys(householdId);  
-        WebUtils.pageLoadTimeout(this.driver);
-    }
-
-    /**
-     * Sets the new household.
-     * 自立新戶 true
-     * 非自立新戶(入他人戶) false
-     * @param isNewHousehold the new new household
-     */
-    public void setNewHousehold(final boolean isNewHousehold) {
-        LOGGER.debug("自立新戶: {}", isNewHousehold);
-        //input[@id='j_id_2k:isNewHousehold:0']
-        final String xpath = String.format("//input[contains(@id,'isNewHousehold:%s')]", isNewHousehold ? 0 : 1);
-        
-        final  WebElement element = this.driver.findElement(By.xpath(xpath));
-        
-        wait.until(ExpectedConditions.visibilityOf(element));
-        
-        final Actions oAction = new Actions(driver);
-        oAction.moveToElement(element);
-          
-        oAction.click(element).build().perform();  
-        
-        WebUtils.pageLoadTimeout(this.driver);
-    }
-
-    /**
-     * Check birth kind.
-     * 選擇出生類別
-     * @param type the type
-     */
-    public void checkBirthKind(final BirthKind type) {
-        LOGGER.debug("選擇出生類別: {}", type.toString().intern());
-        final String xpath = String.format("//input[contains(@id,'birthKind:%s')]", type.value);
-        this.driver.findElement(By.xpath(xpath)).click();  
-        WebUtils.pageLoadTimeout(this.driver);
-    }
-
     
     /**
      * Gets the partial url.
@@ -337,34 +254,51 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
     public String getPartialURL() {
         return this.partialURL;
     }
-
-
     /**
-     * The Enum BirthKind.
+     * 請領種類.
+     * 
+     * @param applyCode the apply code
      */
-   public enum BirthKind {
-
-        /** The wedlock.婚生 */
-        WEDLOCK(0),
-        /** The posthumous.遺腹子 */
-        POSTHUMOUS(1),
-        /** The OUTOFWEDLOC k1. 非婚生（續辦認領）*/
-        OUTOFWEDLOCK1(2),
-        /** The OUTOFWEDLOC k2. 非婚生（不續辦認領）*/
-        OUTOFWEDLOCK2(3),
-        /** The innocenti.無依兒童 */
-        INNOCENTI(4),
+    public void apply(final ApplyItem applyCode){
+        switch (applyCode) {
+            case FIRST:
+                this.selectAppyCodeId0.click();
+                break;
+            case REAPPLY:
+                this.selectAppyCodeId1.click();
+                break;
+            case RENEWAL:
+                this.selectAppyCodeId2.click();
+                break;
+        }
+    }
+    /**
+     * The Enum ApplyItem.
+     * 請領種類,初領 (FIRST), 補領(REAPPLY), 換領(RENEWAL)
+     */
+    public enum ApplyItem{
+        
+        /**  初領. */
+        FIRST(0),
+        
+        /**  補領. */
+        REAPPLY(1),        
+        
+        /**  換領. */
+        RENEWAL(2),
         /**
         * Instantiates a new birth kind.
         *
         * @param value the value
         */
         ;
-        private BirthKind(int value) {
+        private ApplyItem(int value) {
             this.value = value;
         }
 
         /** The value. */
         private int value;
     }
+
+   
 }

@@ -5,13 +5,7 @@
  * This software is the confidential and proprietary information of IISI.
  */
 package func.rl.common;
-
-import com.thoughtworks.selenium.SeleniumException;
-
-import java.util.Collection;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.openqa.selenium.UnhandledAlertException;
+ 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

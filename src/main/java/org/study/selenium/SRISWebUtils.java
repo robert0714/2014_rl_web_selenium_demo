@@ -61,113 +61,113 @@ public class SRISWebUtils {
                 return (driver.getWindowHandles().size() > originalSize);
             }
         };
-        if (!giveUpOperation) {
 
-            wait.until(popupExpected);
-            LOGGER.info("預覽列印視窗出現");
 
-            // 預覽申請書會彈跳出視窗
-            int count = 0;
-            privntViewLoop: while (count < 10) {
+        wait.until(popupExpected);
+        LOGGER.info("預覽列印視窗出現");
 
-                boolean printViewPresent = false;
-                try {
-                    final Set<String> windowHandles = driver.getWindowHandles();
-                    windowHandles.remove(parentWindowId);
-                    browerWindowLoop: for (final String windowId : windowHandles) {
-                        if (!StringUtils.equalsIgnoreCase(windowId, parentWindowId)) {
-                            // Switch to the Help Popup Browser Window
-                            driver.switchTo().window(windowId);
-                            String currentUrl = driver.getCurrentUrl();
-                            LOGGER.debug(currentUrl);
-                            //    isAlertPresent(driver);
-                            if (StringUtils.contains(currentUrl, "common/popupContent.xhtml")) {
-                                // 戶役資訊服務網
-                                String title = driver.getTitle();
-                                LOGGER.debug("title: {}" , title);
-                                final String terminatorPrintXpath = "//span[contains(@id,'pdfbanner')]/span[2]/button[2]";
-                                wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
-                                LOGGER.info("等待預覽列印網頁");
+        // 預覽申請書會彈跳出視窗
+        int count = 0;
+        privntViewLoop: while (count < 10) {
 
-                                final WebElement imgElement = driver.findElement(By.xpath("//*[@id='pdfpreviewimg']"));
-                                wait.until(ExpectedConditions.visibilityOf(imgElement));
-                                
-                                
-                                LOGGER.info("imgElement presented");
+            boolean printViewPresent = false;
+            try {
+                final Set<String> windowHandles = driver.getWindowHandles();
+                windowHandles.remove(parentWindowId);
+                browerWindowLoop: for (final String windowId : windowHandles) {
+                    if (!StringUtils.equalsIgnoreCase(windowId, parentWindowId)) {
+                        // Switch to the Help Popup Browser Window
+                        driver.switchTo().window(windowId);
+                        String currentUrl = driver.getCurrentUrl();
+                        LOGGER.debug(currentUrl);
+                        //    isAlertPresent(driver);
+                        if (StringUtils.contains(currentUrl, "common/popupContent.xhtml")) {
+                            // 戶役資訊服務網
+                            String title = driver.getTitle();
+                            LOGGER.debug("title: {}" , title);
+                            final String terminatorPrintXpath = "//span[contains(@id,'pdfbanner')]/span[2]/button[2]";
+                            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
+                            LOGGER.info("等待預覽列印網頁");
 
-                                final String pdfViewerContentXpath = "//*[contains(@id,'pdfViewerContent')]/input";
-                                final WebElement hiddenElement = driver.findElement(By.xpath(pdfViewerContentXpath));
-                                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(pdfViewerContentXpath)));
-                                LOGGER.info("base64 presented");
+                            final WebElement imgElement = driver.findElement(By.xpath("//*[@id='pdfpreviewimg']"));
+                            wait.until(ExpectedConditions.visibilityOf(imgElement));
+                            
+                            
+                            LOGGER.info("imgElement presented");
 
-                                final String base64 = hiddenElement.getText();
-                                LOGGER.info("預覽列印網頁內容 (base64): {}", base64);
+                            final String pdfViewerContentXpath = "//*[contains(@id,'pdfViewerContent')]/input";
+                            final WebElement hiddenElement = driver.findElement(By.xpath(pdfViewerContentXpath));
+                            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(pdfViewerContentXpath)));
+                            LOGGER.info("base64 presented");
 
-                                wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
+                            final String base64 = hiddenElement.getText();
+                            LOGGER.info("預覽列印網頁內容 (base64): {}", base64);
 
-                                WebUtils.scroolbarDownUp(driver);
-                               
-                                LOGGER.info("轉動卷軸 " );
-                                
-                                //點擊關閉視窗
-                                driver.findElement(By.xpath(terminatorPrintXpath)).click();
-                                
-                                final ExpectedCondition<Boolean> popupCloseExpected = new ExpectedCondition<Boolean>() {
-                                    public Boolean apply(WebDriver input) {
-                                    	 final Set<String> nowWindowHandles = driver.getWindowHandles();
-                                         if (!nowWindowHandles.contains(windowId)) {
-                                        	 return true;
-                                         }else{
-                                        	 return false;
-                                         }
-                                    }
-                                };
-                                wait.until(popupCloseExpected);
-                                //等到popup 關閉之後
-                                LOGGER.info("關閉預覽視窗結束 " );
-                                
-                                // Move back to the Parent Browser Window
-                                final Set<String> nowWindowHandles = driver.getWindowHandles();
-                                nowWindowHandles.remove(parentWindowId);
-                                if (!nowWindowHandles.contains(windowId)) {
-                                    //只有在被關閉的情形下才會找不到
-                                    driver.switchTo().window(parentWindowId);
-                                    if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
-                                        break privntViewLoop;
-                                    }
-                                } else {
-                                    printViewPresent = true;
-                                    break browerWindowLoop;
+                            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(terminatorPrintXpath)));
+
+                            WebUtils.scroolbarDownUp(driver);
+                           
+                            LOGGER.info("轉動卷軸 " );
+                            
+                            //點擊關閉視窗
+                            driver.findElement(By.xpath(terminatorPrintXpath)).click();
+                            
+                            final ExpectedCondition<Boolean> popupCloseExpected = new ExpectedCondition<Boolean>() {
+                                public Boolean apply(WebDriver input) {
+                                 final Set<String> nowWindowHandles = driver.getWindowHandles();
+                                     if (!nowWindowHandles.contains(windowId)) {
+                                     return true;
+                                     }else{
+                                     return false;
+                                     }
                                 }
-
+                            };
+                            wait.until(popupCloseExpected);
+                            //等到popup 關閉之後
+                            LOGGER.info("關閉預覽視窗結束 " );
+                            
+                            // Move back to the Parent Browser Window
+                            final Set<String> nowWindowHandles = driver.getWindowHandles();
+                            nowWindowHandles.remove(parentWindowId);
+                            if (!nowWindowHandles.contains(windowId)) {
+                                //只有在被關閉的情形下才會找不到
+                                driver.switchTo().window(parentWindowId);
+                                if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
+                                    break privntViewLoop;
+                                }
+                            } else {
+                                printViewPresent = true;
+                                break browerWindowLoop;
                             }
+
                         }
                     }
-                } catch (NoSuchWindowException e) {
-                    LOGGER.debug(e.getMessage(), e);
                 }
+            } catch (NoSuchWindowException e) {
+                LOGGER.debug(e.getMessage(), e);
+            }
 
-                try {
-                    //當點擊關閉預覽視窗按鈕失敗時,需要強制關閉
-                    if (printViewPresent && !StringUtils.equalsIgnoreCase(driver.getWindowHandle(), parentWindowId)) {
-                        // Close the Help Popup Window
-                        driver.close();
+            try {
+                //當點擊關閉預覽視窗按鈕失敗時,需要強制關閉
+                if (printViewPresent && !StringUtils.equalsIgnoreCase(driver.getWindowHandle(), parentWindowId)) {
+                    // Close the Help Popup Window
+                    driver.close();
 
-                        // Move back to the Parent Browser Window
-                        driver.switchTo().window(parentWindowId);
-                        break privntViewLoop;
-                    }
-                } catch (NoSuchWindowException e) {
-                    LOGGER.debug(e.getMessage(), e);
+                    // Move back to the Parent Browser Window
                     driver.switchTo().window(parentWindowId);
                     break privntViewLoop;
                 }
-                if (count > 10) {
-                    break privntViewLoop;
-                }
-                count++;
+            } catch (NoSuchWindowException e) {
+                LOGGER.debug(e.getMessage(), e);
+                driver.switchTo().window(parentWindowId);
+                break privntViewLoop;
             }
+            if (count > 10) {
+                break privntViewLoop;
+            }
+            count++;
         }
+    
     }
 
     public static void newPdfPreview(final WebDriver driver, final String printBtnXpath) {

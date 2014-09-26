@@ -137,8 +137,7 @@ public class WebUtils {
      */
     public static GrowlMsg clickBtn(final WebDriver driver ,  final     WebElement btnElement ) {
         final WebDriverWait wait = new WebDriverWait(driver, 60);
-        final GrowlMsg result = new GrowlMsg();
-        boolean giveUpOperation = false;
+        final GrowlMsg result = new GrowlMsg(); 
         
         final  String originalUrl = driver.getCurrentUrl();
         
@@ -151,6 +150,7 @@ public class WebUtils {
           
         oAction.click(btnElement).build().perform();  
          
+        pageLoadTimeoutAndSleep(driver);
         
         if (driver.findElements(By.xpath("//*[@id='growl2_container']/div/div")).size() != 0) {
 
@@ -158,14 +158,7 @@ public class WebUtils {
                 //這邊的風險是
                 final String mainMessage = wait.until(
                         ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/span")))
-                        .getText();
-                //driver.findElement(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")).getText();
-                final  String nowUrl01 = driver.getCurrentUrl();
-                if(originalUrl.equals(nowUrl01)){
-                    result.setGiveUpOperation(true);
-                }else{
-                    result.setGiveUpOperation(false);
-                }
+                        .getText();               
                 final String extMessage = wait.until(
                         ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='growl2_container']/div/div/div[2]/p")))
                         .getText();
@@ -212,6 +205,16 @@ public class WebUtils {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
         driver.manage().timeouts().setScriptTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+   }
+    public  static void pageLoadTimeoutAndSleep(final WebDriver driver){       
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);
+        try {
+            Thread.sleep(5000l);
+        } catch (InterruptedException e) { 
+            LOGGER.error(e.getMessage(), e);
+        }
    }
     /**
      * **
