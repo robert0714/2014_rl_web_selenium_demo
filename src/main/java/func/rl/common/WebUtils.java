@@ -150,7 +150,8 @@ public class WebUtils {
           
         oAction.click(btnElement).build().perform();  
          
-        pageLoadTimeoutAndSleep(driver);
+//        pageLoadTimeoutAndSleep(driver);
+        pageLoadTimeout(driver);
         
         if (driver.findElements(By.xpath("//*[@id='growl2_container']/div/div")).size() != 0) {
 

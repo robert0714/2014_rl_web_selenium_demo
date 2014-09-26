@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -163,6 +164,7 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
      * 進行頁籤轉換
      */
     public void switchTab()  {
+        LOGGER.info("進行頁籤轉換"   );
         final String currentUrl = this.driver.getCurrentUrl();
         if (StringUtils.contains(currentUrl, this.partialURL)) {
             this.driver.navigate().refresh();
@@ -182,6 +184,7 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
      * @param yes the yes
      */
     public void printDynamicNotes(boolean yes){
+        LOGGER.info("列印全戶動態記事: {}" ,yes );
         if(yes){
             this.printDynamicNotesYes.click();
         }else{
@@ -194,6 +197,7 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
      * @param yes the yes
      */
     public void printRelationId(boolean yes){
+        LOGGER.info("列印父、母、配偶統號: {}" ,yes );
         if(yes){
             this.printRelationIdYes.click();
         }else{
@@ -207,6 +211,7 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
      * @param content the content
      */
     public void typeRegisterContent(final String content){
+        LOGGER.info("填寫備註: {}" ,content );
         this.registerContent.clear();
         this.registerContent.sendKeys(content);
     }
@@ -219,6 +224,7 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
      * @param id the id
      */
     public void typeRl02510IdNo(final String id){
+        LOGGER.info("填寫戶口名簿封面編號.: {}" ,id );
         this.rl02510IdNo.clear();
         this.rl02510IdNo.sendKeys(id);
     }
@@ -230,9 +236,25 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
      * @return the growl msg
      */
     public GrowlMsg clickVerifyBtn(){
+        LOGGER.info("驗證查詢" );
         oAction.moveToElement(this.verifyBtn);
         final GrowlMsg verification = WebUtils.clickBtn(this.driver, this.verifyBtn);
         return verification;
+    }
+    /**
+     * wait .
+     * 等候預覽列印按鈕60秒內可以點擊
+     * */
+    public void waitPrintBtnClickable(){
+        LOGGER.info("等候預覽列印按鈕60秒內可以點擊" );
+        try {
+            final String disabledAttribute = this.printCertificate.getAttribute("disabled");
+            LOGGER.debug("disabledAttribute: {}" , disabledAttribute);
+            final WebDriverWait wait = new WebDriverWait(driver, 60);
+            wait.until(ExpectedConditions.elementToBeClickable(this.printCertificate));
+        } catch (Exception e) { 
+             LOGGER.error(e.getMessage(), e);
+        }
     }
     /**
      * Click verify btn.
@@ -240,6 +262,7 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
      * @return the growl msg
      */
     public void clickPrintCertificate(){
+        LOGGER.info("列印戶口名簿" );
         oAction.moveToElement(this.printCertificate);
 //        final GrowlMsg verification = WebUtils.clickBtn(this.driver, this.printCertificate);
         SRISWebUtils.newPdfPreview(this.driver, this.printCertificate);
@@ -260,6 +283,7 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
      * @param applyCode the apply code
      */
     public void apply(final ApplyItem applyCode){
+        LOGGER.info("請領種類: {}",applyCode );
         switch (applyCode) {
             case FIRST:
                 this.selectAppyCodeId0.click();
