@@ -49,7 +49,6 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
 
     @Test
     public void testLogin() throws InterruptedException {
-//        final RlHompageV3 homepage = new RlHompageV3(this.driver);
         final RlHompageV3 homepage =   PageFactory.initElements(driver, RlHompageV3.class);
         homepage.login(this.driver, this.user, this.passwd);
 

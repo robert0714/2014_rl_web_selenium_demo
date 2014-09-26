@@ -29,6 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
@@ -54,7 +55,7 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
 
     @Test
     public void testLogin() throws InterruptedException {
-        final RlHompageV3 homepage = new RlHompageV3(this.driver);
+        final RlHompageV3 homepage =   PageFactory.initElements(driver, RlHompageV3.class);
 
         homepage.login(this.driver, this.user, this.passwd);
 
@@ -63,9 +64,9 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
 
     @Test
     public void testOpenRl02500() throws Exception {
-        final RlHompageV3 homepage = new RlHompageV3(this.driver);
+        final RlHompageV3 homepage =   PageFactory.initElements(driver, RlHompageV3.class);
         homepage.login(this.driver, this.user, this.passwd);
-        final Rl00004PageV3 rl00004Page = new Rl00004PageV3(driver);
+        final Rl00004PageV3 rl00004Page = PageFactory.initElements(driver,Rl00004PageV3.class);
         if (CollectionUtils.isNotEmpty(this.personIdSiteIdList)) {
         	int count = 0 ; 
         	
@@ -150,6 +151,9 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
         
         //驗證查詢
         rl01210Page.clickVerifyBtn();
+        
+        
+        rl01210Page. waitPrintBtnClickable();
         
         //列印戶口名簿
         rl01210Page.clickPrintCertificate();

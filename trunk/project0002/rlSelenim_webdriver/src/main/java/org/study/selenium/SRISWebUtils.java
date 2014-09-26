@@ -47,13 +47,14 @@ public class SRISWebUtils {
         LOGGER.debug("parentWindowId: " + parentWindowId);
         //除了printBtnXpath不同 , 大部分都是不同的
 
-        final WebDriverWait wait = new WebDriverWait(driver, 60);
+        final WebDriverWait wait = new WebDriverWait(driver, 120);
 
         wait.until(ExpectedConditions.visibilityOf(printBtn));
 
         final int originalSize = driver.getWindowHandles().size();
         LOGGER.info("預覽列印");
-        giveUpOperation = WebUtils.handleClickBtn(driver, printBtn);
+        
+        WebUtils.handleClickBtn(driver, printBtn);
 
         final ExpectedCondition<Boolean> popupExpected = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver input) {
