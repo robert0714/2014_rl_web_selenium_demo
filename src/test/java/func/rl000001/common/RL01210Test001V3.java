@@ -70,13 +70,13 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
                     continue;
                 }
                 final String siteId = stringArray[1];
-                final String txId = rl00001Page.displayTxId();
                 count++;
-                
+                rl00001Page.get();
+                final String txId = rl00001Page.displayTxId();
                 LOGGER.info("第{}組測試資料  " ,count);
                 
                 
-                rl00001Page.get();
+               
                 
                 pageLoadTimeout(this.driver);  
                         

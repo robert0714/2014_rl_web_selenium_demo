@@ -90,40 +90,7 @@ public class RlHompageV3 {
         login(this.driver ,user, passwd);
     }
     
-    /**
-     * 進入現戶簿頁
-     * ***/
-    public void enterRl00001() {
-	isAlertPresent() ;
-	driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);   
-	
-        this.wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='navmenu-v']/li")));
-        
-        logger.info("進入左邊選單: 登記作業");
-        // 進入登記作業,
-        
-        this.driver.findElement(By.xpath("//*[@id='navmenu-v']/li")).click();
-        
-        final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
-         
-
-        final WebElement rl00001ClickLink = wait
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(rl00001Xpath)));
-        
-        
-        WebUtils.pageLoadTimeout(this.driver); 
-        isAlertPresent();
-        
-        logger.info("進入左邊選單: 點選現戶簿頁");
-        
-        rl00001ClickLink.click();
-        
-        isAlertPresent();
-        final String currentUrl = this.driver.getCurrentUrl();
-        
-        this.logger.debug(currentUrl);        
-
-    }   
+    
     public void enterRl01Z00() {
 	isAlertPresent() ;
 	driver.manage().timeouts().pageLoadTimeout(SeleniumConfig.waitForPageToLoadS, TimeUnit.SECONDS);  
