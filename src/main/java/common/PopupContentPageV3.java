@@ -7,23 +7,29 @@
 package common;
  
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import func.rl.common.WebUtils;
 
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
  
+// TODO: Auto-generated Javadoc
 /**
  * The Class PopupContentPageV3.
  */
 public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{ 
-    
     /** The driver. */
     private final WebDriver driver;
     
@@ -79,7 +85,15 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
     
     /** * 下一頁按鈕. */
     @FindBy(how = How.XPATH, using = "//button[3]")
-    private WebElement forwardPageBtn;
+    private WebElement forwardPageBtn;     
+    
+    /** * 影像. */
+    @FindBy(how = How.XPATH, using = "//*[@id='pdfpreviewimg']")
+    private WebElement imgElement;    
+    
+    /**  * base64 hidden element. */
+    @FindBy(how = How.XPATH, using = "//*[contains(@id,'pdfViewerContent')]/input")
+    private WebElement base64Element; 
     
     /** The current page num. */
     @FindBy(how = How.XPATH, using = "/html/body/table/tbody/tr/td/form/div/div/span/span[1]/span[1]/span")
@@ -126,6 +140,35 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
             logger.info(msg);           
             throw new Error(msg);
         } 
+    }
+    
+    /**
+     * 等候關閉視窗按鈕可以點擊.
+     *
+     * @param wait the wait
+     */
+    public void waitCloseBtnClickable(final WebDriverWait wait){
+        wait.until(ExpectedConditions.elementToBeClickable(this.closeBtn));
+    }
+    
+    /**
+     * 等候關閉視窗按鈕可以點擊.
+     *
+     * @param wait the wait
+     */
+    public void waitImgVisibale(final WebDriverWait wait){ 
+        wait.until(ExpectedConditions.visibilityOf(this.imgElement));
+    }
+    
+    /**
+     * 等候關閉視窗按鈕可以點擊.
+     *
+     * @param wait the wait
+     */
+    public void waitBase64HiddenPresent(final WebDriverWait wait){ 
+        wait.until(ExpectedConditions.visibilityOf(this.base64Element));
+        final String base64 = this.base64Element.getText();
+        logger.info("預覽列印網頁內容 (base64): {}", base64);
     }
 
     /**
@@ -178,11 +221,51 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
     public void clickForwardPageBtn(){
         this.forwardPageBtn.click();
     }
+    
+    /**
+     * Gets the info.
+     *
+     * @return the info
+     */
     public void getInfo(){
         final String currentPageNum =  this.currentPageNum.getText();
         final  String currentPageInfo =  this. currentPageInfo.getText();
         logger.info(currentPageNum);
         logger.info(currentPageInfo);
+    }
+    
+    /**
+     * Gets the max page.
+     *
+     * @return the max page
+     */
+    public int getTotalPage(){
+        final String currentPageNum =  this.currentPageNum.getText();
+        final String maxRegPattern =".*\\d*\\/(\\d*).*";
+        final Matcher matcher = Pattern.compile(maxRegPattern).matcher(currentPageNum);
+        if(matcher.find()){
+            final String data =   matcher.group(matcher.groupCount());
+            return NumberUtils.toInt(data, 1) ; 
+        }else{
+            return 1  ; 
+        }
+    }
+    
+    /**
+     * Gets the now page index.
+     *
+     * @return the now page index
+     */
+    public int getNowPage(){
+        final String currentPageNum =  this.currentPageNum.getText();
+        final String maxRegPattern ="(\\d*)\\/\\d*.*";
+        final Matcher matcher = Pattern.compile(maxRegPattern).matcher(currentPageNum);
+        if(matcher.find()){
+            final String data =   matcher.group(matcher.groupCount());
+            return NumberUtils.toInt(data, 1) ; 
+        }else{
+            return 1  ; 
+        }
     }
     /**
      * Prints the scope.
