@@ -10,29 +10,15 @@ package func.rl000001.common;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import func.rl.common.PagePartialURL;
-import func.rl.common.RlHompageV2;
-import func.rl.common.RlHompageV3;
-import func.rl.common.SecuredPageV3;
-import func.rl.common.WebUtils;
-import func.rl00001.HouseholdMaintainPageV2;
-import func.rl00001.Rl00001PageV2;
-import func.rl00001.Rl00001PageV3;
-import func.rl00001._rl01210.Rl01210PageV2;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
+ 
+import func.rl.common.RlHompageV3;  
+import func.rl00001.Rl00001PageV3;  
 import org.junit.Before;
-import org.junit.Test; 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.junit.Test;  
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
-
-import com.example.webdriver.SecuredPage;
+ 
 
 import static org.junit.Assert.assertTrue;
 

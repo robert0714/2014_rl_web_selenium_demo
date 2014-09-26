@@ -6,24 +6,22 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.UnhandledAlertException;
+import org.apache.commons.lang3.StringUtils; 
+import org.openqa.selenium.By; 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
-import org.study.selenium.SRISWebUtils;
-
-import com.gargoylesoftware.htmlunit.util.UrlUtils;
-
+import org.study.selenium.SRISWebUtils; 
+ 
 import func.rl.common.WebUtils;
 import func.rl.common.internal.GrowlMsg;
 import func.rl00001._rl01210.Rl01210PageV3;
@@ -39,6 +37,11 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
     
     /** The driver. */
     private WebDriver driver;
+    
+    /** The wait. */
+    private WebDriverWait wait;
+    
+    private final Actions oAction ;
     
     /** The rl00001 url. */
     private final String rl00001Url = "rl00001/rl00001.xhtml";
@@ -59,9 +62,11 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
      */
     public Rl00001PageV3(final WebDriver driver)  {
         super();
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+        this.driver = driver;        
+        this.wait = new WebDriverWait(driver, 60);
+        this.oAction = new Actions(this.driver);
         
+        PageFactory.initElements(driver, this);
     }
     
     
@@ -94,10 +99,57 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
     }
     @Override
     protected void load() {
-        final String url ="/rl/faces/pages/func/rl00001/rl00001.xhtml";       
-        loadPage = AbstractSeleniumV2TestCase.open(url);
         WebUtils.acceptAlertAndGetItsText(this.driver);
+        
+        final String currentUrl =  enterRl00001Action();
+        if(StringUtils.isBlank(currentUrl)){
+            final String url ="/rl/faces/pages/func/rl00001/rl00001.xhtml";            
+            this.loadPage = AbstractSeleniumV2TestCase.open(url);        
+            WebUtils.acceptAlertAndGetItsText(this.driver);
+        }else{
+            this.loadPage = currentUrl;
+        }
+        
         logger.info("open url: {}",this.driver .getCurrentUrl());
+    }
+
+    /**
+     * 進入現戶簿頁左邊選單動作
+     * ***/
+    public String enterRl00001Action() { 
+        try {
+            final WebElement mainMeunElement = (new WebDriverWait(driver, 10))
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='navmenu-v']/li"))); 
+
+            logger.info("進入左邊選單: 登記作業");
+            // 進入登記作業,
+            
+            oAction.moveToElement(mainMeunElement);
+            
+            oAction.click(mainMeunElement).build().perform();
+            
+
+            final String rl00001Xpath = "//a[contains(@href, '/rl/faces/pages/func/rl00001/rl00001.xhtml')]";
+
+            final WebElement rl00001ClickLink = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(rl00001Xpath)));
+   
+            oAction.moveToElement(rl00001ClickLink);        
+            
+            logger.info("進入左邊選單: 點選現戶簿頁");
+
+            oAction.click(rl00001ClickLink).build().perform();
+
+            WebUtils.acceptAlertAndGetItsText(this.driver);
+            
+         
+        } catch (Exception e) { 
+            logger.error(e.getMessage(), e);
+            return null;
+        }
+        String currentUrl = this.driver.getCurrentUrl();
+
+        this.logger.debug(currentUrl);
+        return currentUrl;
     }
 
     @Override
@@ -171,26 +223,7 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
                 .sendKeys(relationship);
     }
 
-    /**
-     * Checks if is alert present.
-     *
-     * @return true, if is alert present
-     */
-    private boolean isAlertPresent() {
-        try {
-            Alert alert = driver.switchTo().alert();
-            this.logger.info(String.format("\n\r %s", alert.getText()));
-            alert.accept();
-            this.logger.debug("alert was present");
-            return true;
-        } catch (NoAlertPresentException e) {
-            // Modal dialog showed
-            return false;
-        } catch (UnhandledAlertException e) {
-            // Modal dialog showed
-            return false;
-        }
-    }
+    
 
     /**
      * Type delegated person.
@@ -221,12 +254,11 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
         WebUtils.pageLoadTimeout(this.driver);
         
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        isAlertPresent();
+        WebUtils.acceptAlertAndGetItsText(this.driver);;
         if (result.isGiveUpOperation()) {
             return null;
         } else {
-            return PageFactory.initElements(this.driver, Rl01210PageV3.class);
-//            return new Rl01210PageV3(this.driver,this);
+            return PageFactory.initElements(this.driver, Rl01210PageV3.class); 
         }
     }
 
@@ -243,15 +275,12 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
         WebUtils.pageLoadTimeout(this.driver);
         
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        isAlertPresent();
+        WebUtils.acceptAlertAndGetItsText(this.driver);
         
         if (result.isGiveUpOperation()) {
             return null;
         } else {
-            return PageFactory.initElements(this.driver, Rl01220PageV3.class);
-//            return new Rl01220PageV3(this.driver,this);
+            return PageFactory.initElements(this.driver, Rl01220PageV3.class); 
         }
-    }
-
-    
+    }    
 }

@@ -77,12 +77,14 @@ public class RL01220Test001V3 extends AbstractSeleniumV2TestCase {
                     continue;
                 }
                 final String siteId = stringArray[1];
+                rl00001Page.get();
+                
                 final String txId = rl00001Page.displayTxId();
                 count++;
 
                 LOGGER.info("第{}組測試資料  ", count);
 
-                rl00001Page.get();
+                
 
                 pageLoadTimeout(this.driver);
 
@@ -221,7 +223,7 @@ public class RL01220Test001V3 extends AbstractSeleniumV2TestCase {
         pageLoadTimeout(this.driver);  
         
         // 死亡地點性質
-        rl01220Page.selectDeathPlace(Rl01220PageV3.DeathPlace.CLINIC);
+        rl01220Page.selectDeathPlace(Rl01220PageV3.DeathPlace.HOSPITAL);
         pageLoadTimeout(this.driver);  
         
         // 死忙地點(國別)
