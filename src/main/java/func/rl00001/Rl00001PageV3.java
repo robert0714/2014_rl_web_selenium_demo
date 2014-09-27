@@ -197,7 +197,10 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
         logger.debug("輸入申請人1統號: {} ,作業點: {},與當事人關係: {}", personId, siteId, relationship);
         //applicant1ApplyRelationshipTD
         //輸入申請人1統號
-        this.driver.findElement(By.xpath("//input[contains(@id,'applicant1PersonId')]")).sendKeys(personId);
+        final WebElement personIdElement = wait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[contains(@id,'applicant1PersonId')]")));
+        
+        personIdElement.sendKeys(personId);
         //輸入申請人1作業點 
         SRISWebUtils.typeAutoComplete(this.driver, "//td[contains(@id,'applicant1SiteIdTD')]", siteId);
 
@@ -214,8 +217,12 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
      */
     public void typeApplicat2(final String personId, final String siteId, final String relationship) {
         logger.debug("輸入申請人2統號: {} ,作業點: {},與當事人關係: {}", personId, siteId, relationship);
-        //輸入申請人2統號 
-        this.driver.findElement(By.xpath("//input[contains(@id,'applicant2PersonId')]")).sendKeys(personId);
+        //輸入申請人2統號
+        
+        final WebElement personIdElement = wait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[contains(@id,'applicant2PersonId')]")));        
+        personIdElement.sendKeys(personId);
+        
         //輸入申請人2作業點
         SRISWebUtils.typeAutoComplete(this.driver, "//td[contains(@id,'applicant2SiteIdTD')]", siteId);
 
@@ -234,7 +241,10 @@ public class Rl00001PageV3 extends LoadableComponent<Rl00001PageV3>{
     public void typeDelegatedPerson(final String personId, final String siteId) {
         logger.debug("輸入委託人1統號: {} ,作業點: {},與當事人關係: {}", personId, siteId);
         //輸入委託人統號 
-        this.driver.findElement(By.xpath("//input[contains(@id,'delegatedPersonId')]")).sendKeys(personId);
+        final WebElement personIdElement = wait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[contains(@id,'delegatedPersonId')]")));        
+        personIdElement.sendKeys(personId);
+         
 
         //輸入委託人作業點 
         SRISWebUtils.typeAutoComplete(this.driver, "//td[contains(@id,'delegatedSiteTd')]", siteId);

@@ -244,8 +244,9 @@ public class SRISWebUtils {
          * ex: //td[contains(@id,'currentPersonSiteIdTD')]/span/input
          * **/
         final String typeXpath = xpath + "/span/input";
-
-        final WebElement oWE = driver.findElement(By.xpath(typeXpath));
+        final WebElement oWE = (new WebDriverWait(driver, 60))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(typeXpath)));
+         
 
         /***
          * ex: //td[contains(@id,'currentPersonSiteIdTD')]/span/span/img
