@@ -271,19 +271,19 @@ public class SRISWebUtils {
         /**
          * 使用debug mode可以正常...但是normal mode就是發生異常...社群建議直接使用 javascript work around
          * **/
-        final  WebDriverWait wait = new WebDriverWait(driver, 10);        
-        final WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(selectXpath)));
-        oAction.moveToElement(element).build().perform();
-        WebUtils.pageLoadTimeout(driver);
-        oAction.doubleClick(element).build().perform();
+//        final  WebDriverWait wait = new WebDriverWait(driver, 10);        
+//        final WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(selectXpath)));
+//        oAction.moveToElement(element).build().perform();
+//        WebUtils.pageLoadTimeout(driver);
+//        oAction.doubleClick(element).build().perform();
         
-//        /***
-//         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1) ,使用closeXpath又不是每次都ok
-//         * ***/
-//        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-//        
-//        selenium.fireEvent(typeXpath, "blur");
-//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        /***
+         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1) ,使用closeXpath又不是每次都ok
+         * ***/
+        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
+        
+        selenium.fireEvent(typeXpath, "blur");
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         WebUtils.pageLoadTimeout(driver); 
         WebElement myDynamicElement = (new WebDriverWait(driver, 10))
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath + "/span")));
@@ -328,17 +328,17 @@ public class SRISWebUtils {
             WebUtils.pageLoadTimeout(driver); 
         }
         
-        oAction.moveToElement(driver.findElement(By.xpath(selectXpath))).build().perform();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        oAction.doubleClick(driver.findElement(By.xpath(selectXpath))).build().perform();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//        oAction.moveToElement(driver.findElement(By.xpath(selectXpath))).build().perform();
+//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//        oAction.doubleClick(driver.findElement(By.xpath(selectXpath))).build().perform();
+//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         
-//        /***
-//         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1) ,使用closeXpath又不是每次都ok
-//         * ***/
-//        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-//        
-//        selenium.fireEvent(typeXpath, "blur");
+        /***
+         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1) ,使用closeXpath又不是每次都ok
+         * ***/
+        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
+        
+        selenium.fireEvent(typeXpath, "blur");
         WebUtils.pageLoadTimeout(driver);
         WebElement myDynamicElement = (new WebDriverWait(driver, 10))
                 .until(ExpectedConditions.presenceOfElementLocated(By.xpath(spanXpath)));
