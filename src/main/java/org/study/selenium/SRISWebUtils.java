@@ -104,6 +104,8 @@ public class SRISWebUtils {
                             
                             popupContentPageV3.waitCloseBtnClickable(wait);
 
+                            popupContentPageV3.waitBase64HiddenPresent(wait);
+                            
                             WebUtils.scroolbarDownUp(driver);
                             LOGGER.info("轉動卷軸 " );
                             
@@ -118,6 +120,8 @@ public class SRISWebUtils {
                                 
                                 popupContentPageV3.waitCloseBtnClickable(wait);
 
+                                popupContentPageV3.waitBase64HiddenPresent(wait);
+                                
                                 WebUtils.scroolbarDownUp(driver);
                                 LOGGER.info("轉動卷軸 " );
                             }

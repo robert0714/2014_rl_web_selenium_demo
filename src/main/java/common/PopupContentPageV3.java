@@ -7,6 +7,7 @@
 package common;
  
 
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,11 +15,14 @@ import func.rl.common.WebUtils;
 
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -161,7 +165,29 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
         wait.until(ExpectedConditions.visibilityOf(this.imgElement));
     }
     
-    
+    private boolean isElementPresent(By by){
+        try {
+            driver.findElement(by);
+            return true ;
+        } catch (NoSuchElementException e) {
+            return false ;
+        }
+    }
+   /**
+     * 等候關閉視窗按鈕可以點擊.
+     *
+     * @param wait the wait
+     */
+    public void waitBase64HiddenPresent(final WebDriverWait wait){
+        final ExpectedCondition<Boolean> expected = new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver input) {
+                return isElementPresent(By.xpath("//*[contains(@id,'pdfViewerContent')]/input"));                
+            }
+        };
+        wait.until(expected);
+        final String base64 = this.base64Element.getText();
+        logger.info("預覽列印網頁內容 (base64): {}", base64);
+    }
 
     /**
      * 點擊端末列印按鈕
@@ -169,6 +195,7 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
      */
     public void clickPrintBtn(){
         this.printBtn.click();
+        WebUtils.pageLoadTimeout(driver);
         SRISWebUtils.isAlertPresent(driver);
     }
     
@@ -176,8 +203,8 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
      * 點擊關閉按鈕
      * Click close btn.
      */
-    public void clickCloseBtn(){
-        this.closeBtn.click();
+    public void clickCloseBtn(){ 
+        this.closeBtn.click(); 
     }
     
     /**
