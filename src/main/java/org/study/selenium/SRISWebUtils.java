@@ -124,7 +124,7 @@ public class SRISWebUtils {
                            
                             //點擊端末列印(如果找不到印表機會有alert)
                             popupContentPageV3.clickPrintBtn();
-                            isAlertPresent(driver);
+                           
                             
                             //點擊關閉視窗
                             popupContentPageV3.clickCloseBtn();
@@ -221,7 +221,7 @@ public class SRISWebUtils {
         WebUtils.pageLoadTimeout(driver);
     }
     
-    private static boolean isAlertPresent(final WebDriver driver) {
+    public static boolean isAlertPresent(final WebDriver driver) {
         try {
             Alert alert = driver.switchTo().alert();
             LOGGER.info(alert.getText());
