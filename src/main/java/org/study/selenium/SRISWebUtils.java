@@ -49,7 +49,7 @@ public class SRISWebUtils {
         LOGGER.debug("parentWindowId: " + parentWindowId);
         //除了printBtnXpath不同 , 大部分都是不同的
 
-        final WebDriverWait wait = new WebDriverWait(driver, 120);
+        final WebDriverWait wait = new WebDriverWait(driver, 60);
 
         wait.until(ExpectedConditions.visibilityOf(printBtn));
 
@@ -131,7 +131,13 @@ public class SRISWebUtils {
                             //點擊端末列印(如果找不到印表機會有alert)
                             popupContentPageV3.clickPrintBtn();
                            
-                            
+                            final ExpectedCondition<Boolean> alertExpected = new ExpectedCondition<Boolean>() {
+                                public Boolean apply(WebDriver input) {
+                                    //預覽列印是新增加視窗
+                                    return isAlertPresent(driver);
+                                }
+                            };
+                            wait.until(alertExpected);
                             //點擊關閉視窗
                             popupContentPageV3.clickCloseBtn();
                             

@@ -195,8 +195,6 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
      */
     public void clickPrintBtn(){
         this.printBtn.click();
-        WebUtils.pageLoadTimeout(driver);
-        SRISWebUtils.isAlertPresent(driver);
     }
     
     /**
