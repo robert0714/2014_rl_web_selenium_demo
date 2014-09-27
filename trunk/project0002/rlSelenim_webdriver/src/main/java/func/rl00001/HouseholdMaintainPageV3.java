@@ -155,7 +155,7 @@ public class HouseholdMaintainPageV3 extends LoadableComponent<HouseholdMaintain
      * @throws InterruptedException the interrupted exception
      */
     public void processAppyCahange() throws InterruptedException {
- 
+        logger.info("存檔測試程序  " );
         //*[@id='saveBtnId']
         //div[contains(@id,'saveBtnId')]/button
         

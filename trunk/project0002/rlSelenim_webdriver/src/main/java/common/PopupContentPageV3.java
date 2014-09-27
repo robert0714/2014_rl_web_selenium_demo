@@ -24,6 +24,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.study.selenium.SRISWebUtils;
  
 // TODO: Auto-generated Javadoc
 /**
@@ -160,16 +161,7 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
         wait.until(ExpectedConditions.visibilityOf(this.imgElement));
     }
     
-    /**
-     * 等候關閉視窗按鈕可以點擊.
-     *
-     * @param wait the wait
-     */
-    public void waitBase64HiddenPresent(final WebDriverWait wait){ 
-        wait.until(ExpectedConditions.visibilityOf(this.base64Element));
-        final String base64 = this.base64Element.getText();
-        logger.info("預覽列印網頁內容 (base64): {}", base64);
-    }
+    
 
     /**
      * 點擊端末列印按鈕
@@ -177,6 +169,7 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
      */
     public void clickPrintBtn(){
         this.printBtn.click();
+        SRISWebUtils.isAlertPresent(driver);
     }
     
     /**
