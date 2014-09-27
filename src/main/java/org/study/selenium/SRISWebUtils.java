@@ -95,10 +95,8 @@ public class SRISWebUtils {
 
                             popupContentPageV3. waitImgVisibale(wait);
                             LOGGER.info("imgElement presented");
-
-//                            popupContentPageV3.  waitBase64HiddenPresent(wait);
-//                            LOGGER.info("base64 presented");
-
+ 
+                            //由於真正loading完成是要看某個元件出現...所以抓取頁面資訊初始化舊進行抓取(會抓到0..selenium實做我這邊是設1不可能是0)
                             popupContentPageV3. getInfo();
                             
                             int total = popupContentPageV3.getTotalPage();
@@ -109,13 +107,11 @@ public class SRISWebUtils {
                             WebUtils.scroolbarDownUp(driver);
                             LOGGER.info("轉動卷軸 " );
                             
-                            for(int i = 2 ;i <= total ; ++i){
+                            for(int i = 1 ;i < total ; ++i){
                                 popupContentPageV3.clickForwardPageBtn();
                                 popupContentPageV3. waitImgVisibale(wait);
                                 LOGGER.info("imgElement presented");
-
-//                                popupContentPageV3.  waitBase64HiddenPresent(wait);
-//                                LOGGER.info("base64 presented");
+ 
                                 
                                 int now = popupContentPageV3.getNowPage();
                                 LOGGER.info("目前在第{}頁 " ,now);
@@ -275,20 +271,23 @@ public class SRISWebUtils {
         /**
          * 使用debug mode可以正常...但是normal mode就是發生異常...社群建議直接使用 javascript work around
          * **/
-//        final  WebDriverWait wait = new WebDriverWait(driver, 10);        
-//        final WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(selectXpath)));
-//        oAction.moveToElement(element).build().perform();
-//        WebUtils.pageLoadTimeout(driver);
-//        oAction.doubleClick(element).build().perform();
-        
-        /***
-         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1) ,使用closeXpath又不是每次都ok
-         * ***/
-        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-        
-        selenium.fireEvent(typeXpath, "blur");
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        final  WebDriverWait wait = new WebDriverWait(driver, 10);        
+        final WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(selectXpath)));
+        oAction.moveToElement(element).build().perform();
         WebUtils.pageLoadTimeout(driver);
+        oAction.doubleClick(element).build().perform();
+        
+//        /***
+//         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1) ,使用closeXpath又不是每次都ok
+//         * ***/
+//        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
+//        
+//        selenium.fireEvent(typeXpath, "blur");
+//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        WebUtils.pageLoadTimeout(driver); 
+        WebElement myDynamicElement = (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath + "/span")));
+        LOGGER.info("最新填入資料為: {}" ,myDynamicElement.getText ());;
     }
 
     public static void typeAutoCompleteBySpanXpath(final WebDriver driver, final String spanXpath, final String value) {
@@ -326,21 +325,24 @@ public class SRISWebUtils {
             oWE.clear();
             
             oAction.sendKeys(oWE,value).build().perform(); 
-            WebUtils.pageLoadTimeout(driver);
+            WebUtils.pageLoadTimeout(driver); 
         }
         
-//        oAction.moveToElement(driver.findElement(By.xpath(selectXpath))).build().perform();
-//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-//        oAction.doubleClick(driver.findElement(By.xpath(selectXpath))).build().perform();
-//        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        oAction.moveToElement(driver.findElement(By.xpath(selectXpath))).build().perform();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        oAction.doubleClick(driver.findElement(By.xpath(selectXpath))).build().perform();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         
-        /***
-         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1) ,使用closeXpath又不是每次都ok
-         * ***/
-        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
-        
-        selenium.fireEvent(typeXpath, "blur");
+//        /***
+//         * 由於發現使用Selenium2 (WebDrvier有異常不能正常操作,所以實作暫時改用Selenium1) ,使用closeXpath又不是每次都ok
+//         * ***/
+//        WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
+//        
+//        selenium.fireEvent(typeXpath, "blur");
         WebUtils.pageLoadTimeout(driver);
+        WebElement myDynamicElement = (new WebDriverWait(driver, 10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(spanXpath)));
+        LOGGER.info("最新填入資料為: {}" ,myDynamicElement.getText ());;
     }
 
     public static void typeAutoCompleteBySpanXpath(final Selenium selenium, final String spanXpath, final String value) {
