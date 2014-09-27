@@ -18,7 +18,9 @@ import func.rl.common.WebUtils;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchWindowException;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -232,7 +234,11 @@ public class SRISWebUtils {
             alert.accept();
             LOGGER.debug("alert was present");
             return true;
-        } catch (Exception e) {
+        } catch (UnhandledAlertException e) { 
+            return false;
+        } catch (NoAlertPresentException e) { 
+            return false;
+        }catch (Exception e) {
             LOGGER.info(e.getMessage(), e);
             // Modal dialog showed
             return false;
