@@ -118,6 +118,8 @@ public class WebUtils {
             final String alertText = alert.getText();
             alert.accept();
             return alertText;
+        }catch (org.openqa.selenium.NoAlertPresentException e) {
+            return null;
         }catch (Exception e) {
             LOGGER.error(e.getMessage() ,e);
             // Modal dialog showed
