@@ -239,8 +239,9 @@ public class SRISWebUtils {
     public static boolean isAlertPresent(final WebDriver driver) {
         try {
             Alert alert = driver.switchTo().alert();            
-            alert.accept();
+            
             LOGGER.info(alert.getText());
+            alert.accept();
             LOGGER.debug("alert was present");
             return true;
         } catch (UnhandledAlertException e) { 
