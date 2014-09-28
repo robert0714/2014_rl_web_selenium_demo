@@ -137,7 +137,10 @@ public class SRISWebUtils {
                                     return isAlertPresent(driver);
                                 }
                             };
+                            
                             wait.until(alertExpected);
+                            isAlertPresent(driver);
+                            
                             //點擊關閉視窗
                             popupContentPageV3.clickCloseBtn();
                             
@@ -235,9 +238,9 @@ public class SRISWebUtils {
     
     public static boolean isAlertPresent(final WebDriver driver) {
         try {
-            Alert alert = driver.switchTo().alert();
-            LOGGER.info(alert.getText());
+            Alert alert = driver.switchTo().alert();            
             alert.accept();
+            LOGGER.info(alert.getText());
             LOGGER.debug("alert was present");
             return true;
         } catch (UnhandledAlertException e) { 
