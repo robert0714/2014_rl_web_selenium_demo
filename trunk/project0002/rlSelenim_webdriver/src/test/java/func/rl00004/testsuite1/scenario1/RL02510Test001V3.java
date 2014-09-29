@@ -13,23 +13,24 @@ import java.util.List;
 import func.rl.common.PagePartialURL;
 import func.rl.common.RlHompageV3;
 import func.rl.common.WebUtils;
-import func.rl.common.internal.GrowlMsg; 
+import func.rl.common.internal.GrowlMsg;
 import func.rl00001.HouseholdMaintainPageV3;
-import func.rl00001.Rl00001PageV3;
 import func.rl00001.Rl00004PageV3;
-import func.rl00001._rl01210.Rl01210PageV3;
 import func.rl00001._rl02510.Rl02510PageV3;
 import func.rl00001._rl02510.Rl02510PageV3.ApplyItem;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
@@ -118,70 +119,75 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
     /**
      * Demo Scenario. 展示為戶口名簿
      */
-    public void demo01(Rl02510PageV3 rl01210Page)  {
+    public void demo01(final Rl02510PageV3 rl02510Page)  {
              
         //補領
-        rl01210Page.apply(ApplyItem.REAPPLY);
+        rl02510Page.apply(ApplyItem.REAPPLY);
         //換領
-        rl01210Page.apply(ApplyItem.RENEWAL);
+        rl02510Page.apply(ApplyItem.RENEWAL);
         //初領
-        rl01210Page.apply(ApplyItem.FIRST);  
+        rl02510Page.apply(ApplyItem.FIRST);  
         
         
         //列印全戶動態記事(否)
-        rl01210Page.printDynamicNotes(false); 
+        rl02510Page.printDynamicNotes(false); 
         
         //列印全戶動態記事(是)
-        rl01210Page.printDynamicNotes(true); 
+        rl02510Page.printDynamicNotes(true); 
        
         //列印父、母、配偶統號(否)
-        rl01210Page.printRelationId(false);
+        rl02510Page.printRelationId(false);
         
         //列印父、母、配偶統號(是)
-        rl01210Page.printRelationId(true);
+        rl02510Page.printRelationId(true);
         
-        
+         
+        String prefix = rl02510Page.getRandomCharachters() ;
         //戶口名簿封面編號        
-        rl01210Page.typeRl02510IdNo(String.valueOf(RandomUtils.nextInt(1000)));
+        rl02510Page.typeRl02510IdNo(prefix + RandomUtils.nextInt(10000));
         
         //填寫備註
-        rl01210Page.typeRegisterContent("填寫備註測試"); 
+        rl02510Page.typeRegisterContent("填寫備註測試"); 
         
        
         
         //驗證查詢
-        rl01210Page.clickVerifyBtn();
+        rl02510Page.clickVerifyBtn();
         
         
-        rl01210Page. waitPrintBtnClickable();
+        rl02510Page. waitPrintBtnClickable();
         
         //列印戶口名簿
-        rl01210Page.clickPrintCertificate();
+        rl02510Page.clickPrintCertificate();
         
         //這時候要切換視窗
-        driver.findElement(By.xpath("//div/span/span[2]/button[2]")).click();
-        driver.findElement(By.xpath("//td[2]/button")).click();
-        driver.findElement(By.xpath("//div/span/span[2]/button")).click();
-        driver.findElement(By.xpath("//div/span/span[2]/button[2]")).click();
-        driver.findElement(By.xpath("//tr[2]/td/button")).click();
-        driver.findElement(By.xpath("//div[5]/div[2]/div/div[2]/table/tbody/tr[2]/td/button[2]")).click();
-        driver.findElement(By.xpath("//div[5]/div/button")).click();
-        driver.findElement(By.xpath("//div/span/span[2]/button[2]")).click();
-        driver.findElement(By.xpath("//div[5]/div/button")).click();
-        driver.findElement(By.xpath("//div[5]/div/button")).click();
-        driver.findElement(By.xpath("//div[5]/div/button")).click();
-        driver.findElement(By.xpath("//div/span/span[2]/button[2]")).click();
-        driver.findElement(By.xpath("//tr[2]/td/button[2]")).click();
+        rl02510Page.waitForReceiptPanalPresent();
+        
+        
+        ///確定申請     
+        final GrowlMsg msg = rl02510Page.clickSureBtn();
+        
+        if( StringUtils.isNoneBlank( msg.getExtMessage()) && StringUtils.isNoneBlank(  msg.getMessage()) ){
+            if(StringUtils.containsAny(msg.getExtMessage(), "該戶口名簿封面編號已使用過，請重新輸入") ){
+                rl02510Page.clickRePrintBtn();
+            }
+        }
+        
+        pageLoadTimeout(driver);
+        
+
+        //等待確認暫存結束(由於會因為作業資料過多....而需要的時間而增加)
+        rl02510Page.waitForSaveTmpFinished();
     }
     
     
     private void pageLoadTimeout (WebDriver driver){
         WebUtils.pageLoadTimeout(this.driver);
-        try {
-            Thread.sleep(3000l);
-        } catch (InterruptedException e) {
-           LOGGER.error( e.getMessage(), e);
-        }
+//        try {
+//            Thread.sleep(3000l);
+//        } catch (InterruptedException e) {
+//           LOGGER.error( e.getMessage(), e);
+//        }
     }
     private List<String[]> getPsedoData() {
         final List<String[]> result = new ArrayList<String[]>();

@@ -147,8 +147,8 @@ public class Rl01220PageV2 {
         
         // 資料驗證
         GrowlMsg verify = WebUtils.clickBtn(this.driver, verifyBtnXpath);
-        final String errorExtMessage = verify.getErrorExtMessage();
-        final String errorMessage = verify.getErrorMessage();
+        final String errorExtMessage = verify.getExtMessage();
+        final String errorMessage = verify.getMessage();
         if (org.apache.commons.lang.StringUtils.isNotBlank(errorMessage)
                 || org.apache.commons.lang.StringUtils.isNotBlank(errorExtMessage)) {
             int count =0; 

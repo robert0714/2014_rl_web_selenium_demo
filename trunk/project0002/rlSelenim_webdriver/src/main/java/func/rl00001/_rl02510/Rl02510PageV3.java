@@ -4,21 +4,23 @@ package func.rl00001._rl02510;
 import func.rl.common.WebUtils;
 import func.rl.common.internal.GrowlMsg;
 
+import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.SRISWebUtils;
- 
-// TODO: Auto-generated Javadoc
+  
 /**
  * The Class Rl02510PageV3
  *  戶口名簿請補換發.
@@ -104,6 +106,17 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
     @FindBy(how = How.XPATH, using = "//td[2]/button")
     private   WebElement printCertificate  ;
     
+    /** * 重印戶口名簿按鈕. */
+    @FindBy(how = How.XPATH, using = "//tr[2]/td/button")
+    private   WebElement rePrintBtn  ;
+    
+    /** * 確定申請按鈕. */
+    @FindBy(how = How.XPATH,  using = "//td[2]/button")
+    private   WebElement sureBtn  ;
+    
+    /** * 放棄申請按鈕. */
+    @FindBy(how = How.XPATH,using = "//tr[2]/td/button[2]")
+    private   WebElement giveUpBtn  ;
     
     /**
      * Instantiates a new rl01210 page.
@@ -215,7 +228,74 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
         this.registerContent.clear();
         this.registerContent.sendKeys(content);
     }
+    /**
+     * 點擊重印戶口名簿按鈕
+     * Click re print btn.
+     */
+    public void clickRePrintBtn(){
+        this.rePrintBtn.click();
+    }
     
+    /**
+     * 點擊確定申請按鈕
+     * Click sure btn.
+     */
+    public GrowlMsg clickSureBtn(){
+        this.oAction.moveToElement(this.sureBtn);
+        final GrowlMsg msg = WebUtils.clickBtn(driver, this.sureBtn);
+        return msg ;
+    }
+    public String getRandomCharachters(){
+        char[] idNo = new char[10];
+        for(int i = 0 ; i <idNo.length ;++i ){ 
+            while(true){
+                int tmp = RandomUtils.nextInt(123);
+                if(tmp  > 64){
+                    idNo[i] = (char)tmp; 
+                    break;
+                }
+            }
+        }        
+        final String prefix = String.valueOf(String .valueOf(idNo)).intern() ;
+        return prefix;
+    }
+    /**
+     * 點擊放棄申請按鈕
+     * Click give up btn.
+     */
+    public void clickGiveUpBtn(){
+        this.giveUpBtn.click();
+    }
+    /**
+     * 等待確認暫存結束(由於會因為作業資料過多....而需要的時間而增加)
+     */
+    public void waitForSaveTmpFinished(){
+        final ExpectedCondition<Boolean> finaishExpected = new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver input) {
+                //預覽列印是新增加視窗
+                return !StringUtils.contains(driver.getCurrentUrl(), partialURL);
+            }
+        };
+        (new WebDriverWait(driver, 360)).until(finaishExpected);
+    }
+    /**
+     * Wait for receipt panal present.
+     */
+    public void waitForReceiptPanalPresent(){
+      //等後重印戶口名簿按鈕出現
+        WebElement myDynamicElement01 = this.wait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[2]/td/button")));
+        
+      //等後確定申請按鈕出現
+        WebElement myDynamicElement03 = this.wait                
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[2]/td/button[2]")));
+        
+        
+        WebElement myDynamicElement02 = this.wait
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[2]/button")));
+        //等後放棄申請按鈕.出現
+       
+    }
     
     /**
      * Type 戶口名簿封面編號

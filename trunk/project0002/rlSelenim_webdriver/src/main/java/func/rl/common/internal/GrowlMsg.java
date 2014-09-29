@@ -11,24 +11,24 @@ public class GrowlMsg implements Serializable{
     
     private boolean giveUpOperation = false;
     
-    private String errorMessage ;
+    private String message ;
     
-    private String errorExtMessage  ;
+    private String extMessage  ;
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String errorMessage) {
+        this.message = errorMessage;
     }
 
-    public String getErrorExtMessage() {
-        return errorExtMessage;
+    public String getExtMessage() {
+        return extMessage;
     }
 
-    public void setErrorExtMessage(String errorExtMessage) {
-        this.errorExtMessage = errorExtMessage;
+    public void setExtMessage(String errorExtMessage) {
+        this.extMessage = errorExtMessage;
     }
 
     public boolean isGiveUpOperation() {

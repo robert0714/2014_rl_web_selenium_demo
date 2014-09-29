@@ -167,8 +167,8 @@ public class WebUtils {
                         .getText();
                 LOGGER.info(mainMessage);
                 LOGGER.info(extMessage);
-                result.setErrorMessage(mainMessage);
-                result.setErrorExtMessage(extMessage);
+                result.setMessage(mainMessage);
+                result.setExtMessage(extMessage);
                 final  String nowUrl02 = driver.getCurrentUrl();
                 if(originalUrl.equals(nowUrl02)){
                     result.setGiveUpOperation(true);
@@ -241,8 +241,8 @@ public class WebUtils {
                 final String errorExtMessage = selenium.getText("//*[@id='growl2_container']/div/div/div[2]/p");
                 LOGGER.info(errorMessage);
                 LOGGER.info(errorExtMessage);
-                result.setErrorMessage(errorMessage);
-                result.setErrorExtMessage(errorExtMessage);
+                result.setMessage(errorMessage);
+                result.setExtMessage(errorExtMessage);
                 result.setGiveUpOperation(giveUpOperation);
                 selenium.click(clickBtnXpath);
 		try {
