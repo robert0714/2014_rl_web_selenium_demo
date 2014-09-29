@@ -167,8 +167,10 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
         ///確定申請     
         final GrowlMsg msg = rl02510Page.clickSureBtn();
         
-        if( StringUtils.isNoneBlank( msg.getExtMessage()) && StringUtils.isNoneBlank(  msg.getMessage()) ){
-            if(StringUtils.containsAny(msg.getExtMessage(), "該戶口名簿封面編號已使用過，請重新輸入") ){
+        if( StringUtils.isNoneBlank( msg.getExtMessage()) ||  StringUtils.isNoneBlank(  msg.getMessage()) ){
+            if(StringUtils.contains(msg.getExtMessage(), "該戶口名簿封面編號已使用過，請重新輸入") 
+                    || 
+                    StringUtils.contains(msg.getMessage(), "該戶口名簿封面編號已使用過，請重新輸入") ){
                 rl02510Page.clickRePrintBtn();
             }
         }
