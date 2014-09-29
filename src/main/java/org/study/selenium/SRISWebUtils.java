@@ -143,16 +143,16 @@ public class SRISWebUtils {
                             
                             wait.until(alertExpected);
                             
-                            try {
-                                Robot r = new Robot();
-                                r.keyPress(KeyEvent.VK_ESCAPE);
-                                r.keyRelease(KeyEvent.VK_ESCAPE);
-                            } catch (AWTException e) {
-                                // TODO Auto-generated catch block
-                                LOGGER.error(e.getMessage(), e);
-                            }
+//                            try {
+//                                Robot r = new Robot();
+//                                r.keyPress(KeyEvent.VK_ESCAPE);
+//                                r.keyRelease(KeyEvent.VK_ESCAPE);
+//                            } catch (AWTException e) {
+//                                // TODO Auto-generated catch block
+//                                LOGGER.error(e.getMessage(), e);
+//                            }
                             
-//                            isAlertPresent(driver);
+                            isAlertPresent(driver);
                             
                             //點擊關閉視窗
                             popupContentPageV3.clickCloseBtn();
