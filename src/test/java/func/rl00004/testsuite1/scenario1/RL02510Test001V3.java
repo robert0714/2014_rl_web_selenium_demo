@@ -6,7 +6,6 @@
  */
 package func.rl00004.testsuite1.scenario1;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +23,8 @@ import org.apache.commons.lang.math.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.study.selenium.AbstractSeleniumV2TestCase;
@@ -56,7 +50,7 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
 
     @Test
     public void testLogin() throws InterruptedException {
-        final RlHompageV3 homepage =   PageFactory.initElements(driver, RlHompageV3.class);
+        final RlHompageV3 homepage = PageFactory.initElements(driver, RlHompageV3.class);
 
         homepage.login(this.driver, this.user, this.passwd);
 
@@ -65,13 +59,13 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
 
     @Test
     public void testOpenRl02500() throws Exception {
-        final RlHompageV3 homepage =   PageFactory.initElements(driver, RlHompageV3.class);
+        final RlHompageV3 homepage = PageFactory.initElements(driver, RlHompageV3.class);
         homepage.login(this.driver, this.user, this.passwd);
-        final Rl00004PageV3 rl00004Page = PageFactory.initElements(driver,Rl00004PageV3.class);
+        final Rl00004PageV3 rl00004Page = PageFactory.initElements(driver, Rl00004PageV3.class);
         if (CollectionUtils.isNotEmpty(this.personIdSiteIdList)) {
-        	int count = 0 ; 
-        	
-        	 LOGGER.info("測試資料共{}組  " ,this.personIdSiteIdList.size());
+            int count = 0;
+
+            LOGGER.info("測試資料共{}組  ", this.personIdSiteIdList.size());
             for (String[] stringArray : this.personIdSiteIdList) {
                 final String personId = stringArray[0];
                 if (StringUtils.contains(personId, "*")) {
@@ -80,126 +74,116 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
                 final String siteId = stringArray[1];
                 final String txId = rl00004Page.displayTxId();
                 count++;
-                
-                LOGGER.info("第{}組測試資料  " ,count);
-                
-                
+
+                LOGGER.info("第{}組測試資料  ", count);
+
                 rl00004Page.get();
-                
-                pageLoadTimeout(this.driver);  
-                
-                
+
+                pageLoadTimeout(this.driver);
+
                 rl00004Page.typeTxnPerson(personId, siteId);
-                
+
                 rl00004Page.applicantSameTxnPerso.click();
-//                rl00004Page.typeApplicat1(personId, siteId, "爸媽");
+                //                rl00004Page.typeApplicat1(personId, siteId, "爸媽");
                 rl02510Page = rl00004Page.clickRl02510();
-                pageLoadTimeout(this.driver);  
+                pageLoadTimeout(this.driver);
                 if (rl02510Page != null) {
                     demo01(rl02510Page);
                 }
                 HouseholdMaintainPageV3 householdMaintainPage = null;
 
-                 
-                pageLoadTimeout(this.driver);  
-                
+                pageLoadTimeout(this.driver);
+
                 if (householdMaintainPage != null
                         && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
                     householdMaintainPage.processPrintView();
                     isAlertPresent();
                     householdMaintainPage.processAppyCahange();
+                } else {
+                    LOGGER.info("沒有進入列印申請書、存檔程序 ");
                 }
-                LOGGER.info("第{}組測試資料測試完成  " ,count);
+                LOGGER.info("第{}組測試資料測試完成  ", count);
             }
         }
-        LOGGER.info("測試資料共{}組完成  " ,this.personIdSiteIdList.size());
+        LOGGER.info("測試資料共{}組完成  ", this.personIdSiteIdList.size());
         assertTrue(true);
     }
 
     /**
      * Demo Scenario. 展示為戶口名簿
      */
-    public void demo01(final Rl02510PageV3 rl02510Page)  {
-             
+    public void demo01(final Rl02510PageV3 rl02510Page) {
+
         //補領
         rl02510Page.apply(ApplyItem.REAPPLY);
         //換領
         rl02510Page.apply(ApplyItem.RENEWAL);
         //初領
-        rl02510Page.apply(ApplyItem.FIRST);  
-        
-        
+        rl02510Page.apply(ApplyItem.FIRST);
+
         //列印全戶動態記事(否)
-        rl02510Page.printDynamicNotes(false); 
-        
+        rl02510Page.printDynamicNotes(false);
+
         //列印全戶動態記事(是)
-        rl02510Page.printDynamicNotes(true); 
-       
+        rl02510Page.printDynamicNotes(true);
+
         //列印父、母、配偶統號(否)
         rl02510Page.printRelationId(false);
-        
+
         //列印父、母、配偶統號(是)
         rl02510Page.printRelationId(true);
-        
-         
-        String prefix = rl02510Page.getRandomCharachters() ;
+
+        String prefix = rl02510Page.getRandomCharachters();
         //戶口名簿封面編號        
         rl02510Page.typeRl02510IdNo(prefix + RandomUtils.nextInt(10000));
-        
+
         //填寫備註
-        rl02510Page.typeRegisterContent("填寫備註測試"); 
-        
-       
-        
+        rl02510Page.typeRegisterContent("填寫備註測試");
+
         //驗證查詢
         rl02510Page.clickVerifyBtn();
-        
-        
-        rl02510Page. waitPrintBtnClickable();
-        
+
+        rl02510Page.waitPrintBtnClickable();
+
         //列印戶口名簿
         rl02510Page.clickPrintCertificate();
-        
+
         //這時候要切換視窗
         rl02510Page.waitForReceiptPanalPresent();
-        
-        
+
         ///確定申請     
         final GrowlMsg msg = rl02510Page.clickSureBtn();
-        
-        if( StringUtils.isNoneBlank( msg.getExtMessage()) ||  StringUtils.isNoneBlank(  msg.getMessage()) ){
-            if(StringUtils.contains(msg.getExtMessage(), "該戶口名簿封面編號已使用過，請重新輸入") 
-                    || 
-                    StringUtils.contains(msg.getMessage(), "該戶口名簿封面編號已使用過，請重新輸入") ){
-                String  tmp = rl02510Page.getRandomCharachters() ;
+
+        if (StringUtils.isNoneBlank(msg.getExtMessage()) || StringUtils.isNoneBlank(msg.getMessage())) {
+            if (StringUtils.contains(msg.getExtMessage(), "該戶口名簿封面編號已使用過，請重新輸入")
+                    || StringUtils.contains(msg.getMessage(), "該戶口名簿封面編號已使用過，請重新輸入")) {
+                String tmp = rl02510Page.getRandomCharachters();
                 rl02510Page.clickRePrintBtn();
-                rl02510Page. typeRePrintRl02510IdNo(tmp+RandomUtils.nextInt(10));
-                rl02510Page. clickRePrintCertificate();
+                rl02510Page.typeRePrintRl02510IdNo(tmp + RandomUtils.nextInt(10));
+                rl02510Page.clickRePrintCertificate();
                 //這時候要切換視窗
                 rl02510Page.waitForReceiptPanalPresent();
-                
-                
+
                 ///確定申請     
                 rl02510Page.clickSureBtn();
             }
         }
-        
+
         pageLoadTimeout(driver);
-        
 
         //等待確認暫存結束(由於會因為作業資料過多....而需要的時間而增加)
         rl02510Page.waitForSaveTmpFinished();
     }
-    
-    
-    private void pageLoadTimeout (WebDriver driver){
+
+    private void pageLoadTimeout(WebDriver driver) {
         WebUtils.pageLoadTimeout(this.driver);
-//        try {
-//            Thread.sleep(3000l);
-//        } catch (InterruptedException e) {
-//           LOGGER.error( e.getMessage(), e);
-//        }
+        //        try {
+        //            Thread.sleep(3000l);
+        //        } catch (InterruptedException e) {
+        //           LOGGER.error( e.getMessage(), e);
+        //        }
     }
+
     private List<String[]> getPsedoData() {
         final List<String[]> result = new ArrayList<String[]>();
         //        result.add(new String[]{"B120138605","10010070"});
