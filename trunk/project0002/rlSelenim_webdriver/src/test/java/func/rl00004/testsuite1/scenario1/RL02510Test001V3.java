@@ -171,7 +171,16 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
             if(StringUtils.contains(msg.getExtMessage(), "該戶口名簿封面編號已使用過，請重新輸入") 
                     || 
                     StringUtils.contains(msg.getMessage(), "該戶口名簿封面編號已使用過，請重新輸入") ){
+                String  tmp = rl02510Page.getRandomCharachters() ;
                 rl02510Page.clickRePrintBtn();
+                rl02510Page. typeRePrintRl02510IdNo(tmp+RandomUtils.nextInt(10));
+                rl02510Page. clickRePrintCertificate();
+                //這時候要切換視窗
+                rl02510Page.waitForReceiptPanalPresent();
+                
+                
+                ///確定申請     
+                rl02510Page.clickSureBtn();
             }
         }
         

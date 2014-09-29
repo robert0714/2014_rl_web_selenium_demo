@@ -5,16 +5,14 @@
  * This software is the confidential and proprietary information of IISI.
  */
 package org.study.selenium;
-
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
+ 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import com.thoughtworks.selenium.Selenium;
 import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 import common.PopupContentPageV3;
+import common.PopupContentPageV3.PrintScopeParm;
 
 import func.rl.common.WebUtils;
 
@@ -133,9 +131,16 @@ public class SRISWebUtils {
 //                                WebUtils.scroolbarDownUp(driver);
 //                                LOGGER.info("轉動卷軸 " );
 //                            }
-                           
-                            //點擊端末列印(如果找不到印表機會有alert)
+                            
+                            if(total >4 ){
+                                //頁數過多會影響速度
+                                popupContentPageV3.printScope(PrintScopeParm.CURRENT, 0, 0);
+                            }
+                            
+                          //點擊端末列印(如果找不到印表機會有alert)
                             popupContentPageV3.clickPrintBtn();
+                           
+                           
                            
                             final ExpectedCondition<Boolean> alertExpected = new ExpectedCondition<Boolean>() {
                                 public Boolean apply(WebDriver input) {
