@@ -108,8 +108,8 @@ public class Rl01210PageV2 {
         //資料驗證
         LOGGER.info("點選資料驗證");
         GrowlMsg verify = WebUtils.clickBtn(this.driver, verifyBtnXpath);
-        final String errorExtMessage = verify.getErrorExtMessage();
-        final String errorMessage = verify.getErrorMessage();
+        final String errorExtMessage = verify.getExtMessage();
+        final String errorMessage = verify.getMessage();
         if (org.apache.commons.lang.StringUtils.isNotBlank(errorMessage)
                 || org.apache.commons.lang.StringUtils.isNotBlank(errorExtMessage)) {
             LOGGER.info(".....");
@@ -147,7 +147,7 @@ public class Rl01210PageV2 {
         LOGGER.info("點選暫存");
 //        this.driver.findElement(By.xpath("//span[contains(@id,'button')]/button[3]")).click(); 
         final GrowlMsg saveResult = WebUtils.clickBtn(this.driver, "//span[contains(@id,'button')]/button[3]");
-        if(StringUtils.isNotBlank(saveResult.getErrorExtMessage()) && StringUtils.isNotBlank(saveResult.getErrorMessage())){
+        if(StringUtils.isNotBlank(saveResult.getExtMessage()) && StringUtils.isNotBlank(saveResult.getMessage())){
             
         }
     }

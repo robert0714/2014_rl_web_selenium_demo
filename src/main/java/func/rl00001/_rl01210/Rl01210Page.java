@@ -88,8 +88,8 @@ public class Rl01210Page {
         //     this.selenium.click(verifyBtnXpath );        
         //資料驗證
         GrowlMsg verify = WebUtils.clickBtn(selenium, verifyBtnXpath);
-        final String errorExtMessage = verify.getErrorExtMessage();
-        final String errorMessage = verify.getErrorMessage();
+        final String errorExtMessage = verify.getExtMessage();
+        final String errorMessage = verify.getMessage();
         if (org.apache.commons.lang.StringUtils.isNotBlank(errorMessage)
                 || org.apache.commons.lang.StringUtils.isNotBlank(errorExtMessage)) {
             System.out.println(".....");

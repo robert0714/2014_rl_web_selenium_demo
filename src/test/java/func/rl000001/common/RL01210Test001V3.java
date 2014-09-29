@@ -149,8 +149,8 @@ public class RL01210Test001V3 extends AbstractSeleniumV2TestCase {
         //資料驗證
         LOGGER.info("點選資料驗證");
         GrowlMsg verify = rl01210Page.clickVerifyBtn();
-        final String errorExtMessage = verify.getErrorExtMessage();
-        final String errorMessage = verify.getErrorMessage();
+        final String errorExtMessage = verify.getExtMessage();
+        final String errorMessage = verify.getMessage();
         if (org.apache.commons.lang.StringUtils.isNotBlank(errorMessage)
                 || org.apache.commons.lang.StringUtils.isNotBlank(errorExtMessage)) {
             LOGGER.info(".....");

@@ -106,6 +106,8 @@ public class SRISWebUtils {
                             
                             int total = popupContentPageV3.getTotalPage();
                             LOGGER.info("總共{}頁 " ,total);
+                             
+                            LOGGER.info("目前在第{}頁 " ,popupContentPageV3.getNowPage());
                             
                             popupContentPageV3.waitCloseBtnClickable(wait);
 
@@ -114,22 +116,23 @@ public class SRISWebUtils {
                             WebUtils.scroolbarDownUp(driver);
                             LOGGER.info("轉動卷軸 " );
                             
-                            for(int i = 1 ;i < total ; ++i){
-                                popupContentPageV3.clickForwardPageBtn();
-                                popupContentPageV3. waitImgVisibale(wait);
-                                LOGGER.info("imgElement presented");
- 
-                                
-                                int now = popupContentPageV3.getNowPage();
-                                LOGGER.info("目前在第{}頁 " ,now);
-                                
-                                popupContentPageV3.waitCloseBtnClickable(wait);
-
-                                popupContentPageV3.waitBase64HiddenPresent(wait);
-                                
-                                WebUtils.scroolbarDownUp(driver);
-                                LOGGER.info("轉動卷軸 " );
-                            }
+//                            for(int i = 1 ;i < total ; ++i){
+//                                popupContentPageV3.clickForwardPageBtn();
+//                                popupContentPageV3. waitImgVisibale(wait);
+//                                LOGGER.info("imgElement presented");
+// 
+//                                
+//                                int now = popupContentPageV3.getNowPage();
+//                                LOGGER.info("目前在第{}頁 " ,now);
+//
+//                                popupContentPageV3.waitBase64HiddenPresent(wait);
+//                                
+//                                
+//                                popupContentPageV3.waitCloseBtnClickable(wait);
+//                                
+//                                WebUtils.scroolbarDownUp(driver);
+//                                LOGGER.info("轉動卷軸 " );
+//                            }
                            
                             //點擊端末列印(如果找不到印表機會有alert)
                             popupContentPageV3.clickPrintBtn();
