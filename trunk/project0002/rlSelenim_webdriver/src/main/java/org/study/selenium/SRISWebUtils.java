@@ -169,7 +169,9 @@ public class SRISWebUtils {
                             wait.until(popupCloseExpected);
                             //等到popup 關閉之後
                             LOGGER.info("關閉預覽視窗結束 " );
-                            
+                            if (!StringUtils.contains(driver.getCurrentUrl(), "common/popupContent.xhtml")) {
+                                break privntViewLoop;
+                            }
                             // Move back to the Parent Browser Window
                             final Set<String> nowWindowHandles = driver.getWindowHandles();
                             nowWindowHandles.remove(parentWindowId);
@@ -177,6 +179,9 @@ public class SRISWebUtils {
                                 //只有在被關閉的情形下才會找不到
                                 driver.switchTo().window(parentWindowId);
                                 if (StringUtils.contains(driver.getCurrentUrl(), "/rl00001/householdMaintain.xhtml")) {
+                                    break privntViewLoop;
+                                }
+                                if (!StringUtils.contains(driver.getCurrentUrl(), "common/popupContent.xhtml")) {
                                     break privntViewLoop;
                                 }
                             } else {
