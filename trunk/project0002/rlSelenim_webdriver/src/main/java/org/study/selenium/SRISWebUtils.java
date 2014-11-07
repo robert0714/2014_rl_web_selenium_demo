@@ -153,6 +153,10 @@ public class SRISWebUtils {
                              
                             isAlertPresent(driver);
                             
+                            if (!StringUtils.contains(driver.getCurrentUrl(), "common/popupContent.xhtml")) {
+                                break privntViewLoop;
+                            }
+                            
                             //點擊關閉視窗
                             popupContentPageV3.clickCloseBtn();
                             
