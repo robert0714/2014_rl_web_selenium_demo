@@ -139,9 +139,11 @@ public class SRISWebUtils {
                             
                           //點擊端末列印(如果找不到印表機會有alert)
                             try {
+                                LOGGER.info("點擊端末列印 " );
                                 popupContentPageV3.clickPrintBtn();
                                 for(int i = 0  ; i< 10 ;++i){
-                                    WebUtils.pageLoadTimeout(driver);
+                                    LOGGER.info("第{}次等待頁面 ",i+1 );
+                                    WebUtils.pageLoadTimeoutAndSleep(driver);
                                 }
                             }  catch (UnhandledAlertException e)   {                                
                                 LOGGER.info( "alert content: {}" , e.getAlertText());
