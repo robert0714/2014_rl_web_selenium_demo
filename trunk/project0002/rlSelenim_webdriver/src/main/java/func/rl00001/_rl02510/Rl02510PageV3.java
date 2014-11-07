@@ -98,6 +98,10 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
     @FindBy(how = How.XPATH, using = "//table[2]/tbody/tr/td/input")
     private   WebElement rl02510IdNo  ;
     
+    /** * 戶口名簿封面編號. */
+    @FindBy(how = How.ID, using = "coverNo2")
+    private   WebElement rl02510IdNo2  ;
+    
     /** * 填寫備註. */
     @FindBy(how = How.XPATH, using = "//textarea[contains(@id,'registerContent')]")
     private   WebElement registerContent  ;
@@ -402,6 +406,17 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
 
         /** The value. */
         private int value;
+    }
+    public void typeRePrintRl02510IdNo(String string) {
+        // TODO Auto-generated method stub
+//        this.driver.findElement(By.id("coverNo2")).clear(); 
+        this.oAction.moveToElement(this.rl02510IdNo2).build().perform();
+        this.rl02510IdNo2.clear();
+        this.oAction.sendKeys(string).build().perform();
+    }
+
+    public void clickRePrintCertificate() {
+        driver.findElement(By.xpath("//td[@id='printAgainPanelBtns']/button")).click();
     }
 
    
