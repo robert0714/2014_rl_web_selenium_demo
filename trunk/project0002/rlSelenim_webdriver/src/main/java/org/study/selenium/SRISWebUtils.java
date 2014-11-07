@@ -140,7 +140,10 @@ public class SRISWebUtils {
                           //點擊端末列印(如果找不到印表機會有alert)
                             popupContentPageV3.clickPrintBtn();
                            
-                           
+                            try {
+                                wait.until(ExpectedConditions.alertIsPresent());
+                            } catch (Exception e) {
+                            }
                            
                             final ExpectedCondition<Boolean> alertExpected = new ExpectedCondition<Boolean>() {
                                 public Boolean apply(WebDriver input) {
@@ -157,6 +160,8 @@ public class SRISWebUtils {
                                 break privntViewLoop;
                             }
                             
+                            popupContentPageV3. waitCloseBtnPresent(wait);
+                           
                             //點擊關閉視窗
                             popupContentPageV3.clickCloseBtn();
                             
