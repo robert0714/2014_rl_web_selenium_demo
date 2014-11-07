@@ -138,23 +138,16 @@ public class SRISWebUtils {
                             }
                             
                           //點擊端末列印(如果找不到印表機會有alert)
-                            popupContentPageV3.clickPrintBtn();
-                           
                             try {
-                                wait.until(ExpectedConditions.alertIsPresent());
-                            } catch (Exception e) {
+                                popupContentPageV3.clickPrintBtn();
+                                for(int i = 0  ; i< 10 ;++i){
+                                    WebUtils.pageLoadTimeout(driver);
+                                }
+                            }  catch (UnhandledAlertException e)   {                                
+                                LOGGER.info( "alert content: {}" , e.getAlertText());
+                                WebUtils.pageLoadTimeout(driver);
                             }
                            
-                            final ExpectedCondition<Boolean> alertExpected = new ExpectedCondition<Boolean>() {
-                                public Boolean apply(WebDriver input) {
-                                    //預覽列印是新增加視窗
-                                    return isAlertPresent(driver);
-                                }
-                            };
-                            
-                            wait.until(alertExpected);
-                             
-                            isAlertPresent(driver);
                             
                             if (!StringUtils.contains(driver.getCurrentUrl(), "common/popupContent.xhtml")) {
                                 driver.switchTo().window(parentWindowId);
@@ -229,7 +222,8 @@ public class SRISWebUtils {
             }
             count++;
         }
-    
+        // Move back to the Parent Browser Window
+        driver.switchTo().window(parentWindowId);
     }
 
     public static void newPdfPreview(final WebDriver driver, final String printBtnXpath) {
