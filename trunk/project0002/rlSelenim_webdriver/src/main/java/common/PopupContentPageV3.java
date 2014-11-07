@@ -204,7 +204,9 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
     public void clickCloseBtn(){ 
         this.closeBtn.click(); 
     }
-    
+    public void waitCloseBtnPresent(final WebDriverWait wait){
+        wait.until(ExpectedConditions.elementToBeClickable(this.closeBtn));
+    };
     /**
      * 輸入跳頁頁碼
      * Type gotopages.

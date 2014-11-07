@@ -288,20 +288,13 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
     }
     /**
      * Wait for receipt panal present.
+     * 等候收費處理版面出現
      */
     public void waitForReceiptPanalPresent(){
-      //等後重印戶口名簿按鈕出現
+        //等後份數inoput出現
         WebElement myDynamicElement01 = this.wait
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[2]/td/button")));
+                .until(ExpectedConditions.presenceOfElementLocated(By.id("ui-dialog")));
         
-      //等後確定申請按鈕出現
-        WebElement myDynamicElement03 = this.wait                
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//tr[2]/td/button[2]")));
-        
-        
-        WebElement myDynamicElement02 = this.wait
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//td[2]/button")));
-        //等後放棄申請按鈕.出現
        
     }
     
