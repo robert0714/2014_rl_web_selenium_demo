@@ -1,6 +1,8 @@
 package func.rl00001._rl02510;
   
 
+import java.util.concurrent.TimeUnit;
+
 import func.rl.common.WebUtils;
 import func.rl.common.internal.GrowlMsg;
 
@@ -292,9 +294,9 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
      */
     public void waitForReceiptPanalPresent(){
         //等後份數inoput出現
-        WebElement myDynamicElement01 = this.wait
-                .until(ExpectedConditions.presenceOfElementLocated(By.id("ui-dialog")));
-        
+//        WebElement myDynamicElement01 = this.wait
+//                .until(ExpectedConditions.presenceOfElementLocated(By.id("ui-dialog")));
+        WebUtils.pageLoadTimeout(this.driver);
        
     }
     
