@@ -132,6 +132,10 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
 
         //列印父、母、配偶統號(是)
         rl02510Page.printRelationId(true);
+        
+        //得到當下戶口名簿封面編號
+        final String currentRl02510IdNo =  rl02510Page.getCurrentRl02510IdNo();
+        LOGGER.info("得到當下戶口名簿封面編號:{} " , currentRl02510IdNo );
 
         String prefix = rl02510Page.getRandomCharachters();
         //戶口名簿封面編號        
