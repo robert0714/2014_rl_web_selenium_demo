@@ -72,9 +72,9 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
     @FindBy(how = How.XPATH, using = "//span[contains(@id,'pdfbanner')]/span[2]/button")
     private WebElement printBtn;
         
-    /** * 關閉按鈕. */
-    @FindBy(how = How.XPATH, using = "//span[contains(@id,'pdfbanner')]/span[2]/button[2]")
-    private WebElement closeBtn;
+//    /** * 關閉按鈕. */
+//    @FindBy(how = How.XPATH, using = "//span[contains(@id,'pdfbanner')]/span[2]/button[2]")
+//    private WebElement closeBtn;
     
     /** * 輸入跳頁頁碼. */
     @FindBy(how = How.XPATH, using = "//input[contains(@id,'gotopages')]")
@@ -146,14 +146,18 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
             throw new Error(msg);
         } 
     }
-    
+    private  String CloseBtnXpath ="//span[contains(@id,'pdfbanner')]/span[2]/button[2]";
     /**
      * 等候關閉視窗按鈕可以點擊.
      *
      * @param wait the wait
      */
     public void waitCloseBtnClickable(final WebDriverWait wait){
-        wait.until(ExpectedConditions.elementToBeClickable(this.closeBtn));
+        /** * 關閉按鈕. */
+//        @FindBy(how = How.XPATH, using = "//span[contains(@id,'pdfbanner')]/span[2]/button[2]")
+//        private WebElement closeBtn;
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(CloseBtnXpath)));
+        
     }
     
     /**
@@ -202,10 +206,14 @@ public class PopupContentPageV3 extends LoadableComponent<PopupContentPageV3>{
      * Click close btn.
      */
     public void clickCloseBtn(){ 
-        this.closeBtn.click(); 
+//        this.closeBtn.click(); 
+        final WebDriverWait wait =  new WebDriverWait(driver, 60); 
+        waitCloseBtnPresent(wait);
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(CloseBtnXpath)));
+        element.click();
     }
     public void waitCloseBtnPresent(final WebDriverWait wait){
-        wait.until(ExpectedConditions.elementToBeClickable(this.closeBtn));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(CloseBtnXpath)));
     };
     /**
      * 輸入跳頁頁碼
