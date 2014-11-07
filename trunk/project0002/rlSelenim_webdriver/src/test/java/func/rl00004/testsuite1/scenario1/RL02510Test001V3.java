@@ -93,11 +93,14 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
                 HouseholdMaintainPageV3 householdMaintainPage = null;
 
                 pageLoadTimeout(this.driver);
+                if (StringUtils.contains(driver.getCurrentUrl(),
+                        PagePartialURL.householdMaintain.toString())) {
 
-                if (householdMaintainPage != null
-                        && StringUtils.contains(driver.getCurrentUrl(), PagePartialURL.householdMaintain.toString())) {
+                    householdMaintainPage = new HouseholdMaintainPageV3(driver,
+                            rl02510Page);
+
                     householdMaintainPage.processPrintView();
-                    isAlertPresent();
+                     
                     householdMaintainPage.processAppyCahange();
                 } else {
                     LOGGER.info("沒有進入列印申請書、存檔程序 ");
@@ -156,9 +159,10 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
         rl02510Page.waitForReceiptPanalPresent();
 
         ///確定申請     
-        final GrowlMsg msg = rl02510Page.clickSureBtn();
+        final  GrowlMsg msg = rl02510Page.clickSureBtn();
 
         if (StringUtils.isNoneBlank(msg.getExtMessage()) || StringUtils.isNoneBlank(msg.getMessage())) {
+            
             if (StringUtils.contains(msg.getExtMessage(), "該戶口名簿封面編號已使用過，請重新輸入")
                     || StringUtils.contains(msg.getMessage(), "該戶口名簿封面編號已使用過，請重新輸入")) {
                 String tmp = rl02510Page.getRandomCharachters();
@@ -176,7 +180,16 @@ public class RL02510Test001V3 extends AbstractSeleniumV2TestCase {
         pageLoadTimeout(driver);
 
         //等待確認暫存結束(由於會因為作業資料過多....而需要的時間而增加)
-        rl02510Page.waitForSaveTmpFinished();
+//        rl02510Page.waitForSaveTmpFinished();
+        HouseholdMaintainPageV3 householdMaintainPage = new HouseholdMaintainPageV3(driver, rl02510Page);
+
+        if (householdMaintainPage != null
+                && StringUtils.contains(driver.getCurrentUrl(), "/rl00001/certificateMaintain.xhtml")) {
+            householdMaintainPage.processPrintView();
+            isAlertPresent();
+            householdMaintainPage.processAppyCahange();
+        }
+//        LOGGER.info("第{}組測試資料測試完成  ", count);
     }
 
     private void pageLoadTimeout(WebDriver driver) {
