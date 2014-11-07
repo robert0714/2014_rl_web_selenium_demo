@@ -106,8 +106,12 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
     @FindBy(how = How.XPATH, using = "//textarea[contains(@id,'registerContent')]")
     private   WebElement registerContent  ;
     
-    /** * 列印戶口名簿. */
+    /** * 直接列印戶口名簿. */
     @FindBy(how = How.XPATH, using = "//td[2]/button")
+    private   WebElement instantlyPrintCertificate  ;
+    
+    /** * 列印戶口名簿. */
+    @FindBy(how = How.XPATH, using = "//td[3]/button")
     private   WebElement printCertificate  ;
     
     /** * 重印戶口名簿按鈕. */
@@ -301,6 +305,9 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
        
     }
     
+    public String getCurrentRl02510IdNo(){
+       return  this.rl02510IdNo.getText();
+    }
     /**
      * Type 戶口名簿封面編號
      * 填寫戶口名簿封面編號.
@@ -339,6 +346,17 @@ public class Rl02510PageV3 extends LoadableComponent<Rl02510PageV3>{
         } catch (Exception e) { 
              LOGGER.error(e.getMessage(), e);
         }
+    }
+    /**
+     * Click verify btn.
+     * 直接列印戶口名簿
+     * @return the growl msg
+     */
+    public void instantlyClickPrintCertificate(){
+        LOGGER.info("直接列印戶口名簿" );
+        oAction.moveToElement(this.instantlyPrintCertificate).build().perform();
+        oAction.click(this.instantlyPrintCertificate).build().perform();
+        SRISWebUtils.isAlertPresent(this.driver);
     }
     /**
      * Click verify btn.
