@@ -7,9 +7,7 @@
 package org.study.selenium;
 
 import com.thoughtworks.selenium.webdriven.WebDriverCommandProcessor;
-
-import func.rl000001.common.RL01210Test001V2;
-
+ 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;

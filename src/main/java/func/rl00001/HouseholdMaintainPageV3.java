@@ -136,7 +136,7 @@ public class HouseholdMaintainPageV3 extends LoadableComponent<HouseholdMaintain
      *
      * @throws InterruptedException the interrupted exception
      */
-    public void processPrintView() throws InterruptedException {
+    public void processPrintView()   {
         //戶籍大簿列印頁面應該有交易序號,應該可以使用這交易序號進行申請書頁面畫面進行截圖
         final String txId = displayTxId();
         logger.info("列印申請書測試程序: {}", txId);
@@ -154,7 +154,7 @@ public class HouseholdMaintainPageV3 extends LoadableComponent<HouseholdMaintain
      *
      * @throws InterruptedException the interrupted exception
      */
-    public void processAppyCahange() throws InterruptedException {
+    public void processAppyCahange()   {
         logger.info("存檔測試程序  " );
         //*[@id='saveBtnId']
         //div[contains(@id,'saveBtnId')]/button
