@@ -9,16 +9,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.POIXMLDocument;
+import org.apache.commons.lang3.StringUtils;  
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ooxml.POIXMLDocument;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 
 public class POIUtils {
@@ -39,35 +44,35 @@ public class POIUtils {
                     for (int j = 0; j < headerNumberOfCells; j++) {
                         Cell cell = row.getCell(j);
                         if (cell != null) {
-                            int cellStyle = cell.getCellType();
+                        	CellType cellStyle = cell.getCellType();
                             switch (cellStyle) {
-                            case Cell.CELL_TYPE_BLANK:
+                            case BLANK:
                                 // System.out.println("Cell.CELL_TYPE_BLANK");
                                 contants[j] = "";
                                 break;
-                            case Cell.CELL_TYPE_BOOLEAN:
+                            case  BOOLEAN:
                                 // System.out.println("Cell.CELL_TYPE_BOOLEAN");
                                 boolean booleanCell = cell.getBooleanCellValue();
                                 contants[j] = StringUtils.trim(Boolean.toString(booleanCell));
                                 break;
-                            case Cell.CELL_TYPE_ERROR:
+                            case  ERROR:
                                 // System.out.println("Cell.CELL_TYPE_ERROR");
                                 byte error = cell.getErrorCellValue();
                                 contants[j] = "";
                                 break;
-                            case Cell.CELL_TYPE_FORMULA:
+                            case  FORMULA:
                                 // System.out.print("Cell.CELL_TYPE_FORMULA");
                                 String cellFormula =StringUtils.trim( cell.getCellFormula());
                                 // System.out.println("cellFormula: " +
                                 // cellFormula);
                                 contants[j] = "";
                                 break;
-                            case Cell.CELL_TYPE_NUMERIC:
+                            case  NUMERIC:
                                 // System.out.println("Cell.CELL_TYPE_NUMERIC");
                             	double tmp = cell.getNumericCellValue();                               
                                 contants[j] =StringUtils.trim(new BigDecimal(tmp).toString());
                                 break;
-                            case Cell.CELL_TYPE_STRING:
+                            case  STRING:
                                 // System.out.println("Cell.CELL_TYPE_STRING");
                                 contants[j] = StringUtils.trim(cell.getStringCellValue());
                                 break;
@@ -108,22 +113,22 @@ public class POIUtils {
      */
     public static CellStyle buildCellStyle(Sheet sheet, Integer fontSize, short columnStyle, boolean line,
             boolean bold, Integer color) {
-        return buildCellStyle(sheet, fontSize, columnStyle, line, bold, color, CellStyle.VERTICAL_CENTER);
+        return buildCellStyle(sheet, fontSize, columnStyle, line, bold, color, VerticalAlignment.CENTER);
     }
 
     private static CellStyle buildCellStyle(Sheet sheet, Integer fontSize, short columnStyle, boolean line,
-            boolean bold, Integer color, short aligment) {
+            boolean bold, Integer color, VerticalAlignment aligment) {
         HSSFWorkbook wb = (HSSFWorkbook) sheet.getWorkbook();
         HSSFCellStyle cellStyle = (HSSFCellStyle) wb.createCellStyle();
         // HSSFCellStyle cellStyle = new
         // TestHSSFCellStyle(wb).getHSSFCellStyle();
-        cellStyle.setAlignment(columnStyle); // 置中對齊
-        cellStyle.setVerticalAlignment(aligment); // 水平對齊
+        cellStyle.setAlignment(HorizontalAlignment.CENTER); // 置中對齊
+        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER); // 水平對齊
         cellStyle.setWrapText(true);
 
         Font titleFont = wb.createFont();
         if (bold) {
-            titleFont.setBoldweight(Font.BOLDWEIGHT_BOLD); // 粗體
+            titleFont.setBold(true); // 粗體
         }
         titleFont.setFontName("微軟正黑體");
         if (fontSize != null) {
@@ -133,16 +138,16 @@ public class POIUtils {
         cellStyle.setFont(titleFont);
         if (color != null) {
             cellStyle.setFillForegroundColor((short) (int) color);
-            cellStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+            cellStyle.setFillPattern(FillPatternType.ALT_BARS);
         }
         // cellStyle.setDataFormat(sheet.getWorkbook().createDataFormat().getFormat("#,##0"));
         // // 千分位數學符號(ex. 1,000)
 
         if (line) {
-            cellStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            cellStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            cellStyle.setBorderRight(CellStyle.BORDER_THIN);
-            cellStyle.setBorderTop(CellStyle.BORDER_THIN);
+            cellStyle.setBorderBottom(BorderStyle.THIN);
+            cellStyle.setBorderLeft(BorderStyle.THIN);
+            cellStyle.setBorderRight(BorderStyle.THIN);
+            cellStyle.setBorderTop(BorderStyle.THIN);
         }
 
         return cellStyle;
@@ -154,13 +159,13 @@ public class POIUtils {
         HSSFCellStyle cellStyle = (HSSFCellStyle) wb.createCellStyle();
         // HSSFCellStyle cellStyle = new
         // TestHSSFCellStyle(wb).getHSSFCellStyle();
-        cellStyle.setAlignment(columnStyle); // 置中對齊
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);  
 
         cellStyle.setWrapText(true);
 
         Font titleFont = wb.createFont();
-        if (bold) {
-            titleFont.setBoldweight(Font.BOLDWEIGHT_BOLD); // 粗體
+        if (bold) { 
+            titleFont.setBold(true); // 粗體
         }
         if (fontName != null)
             titleFont.setFontName(fontName);
